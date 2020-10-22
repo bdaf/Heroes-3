@@ -4,7 +4,7 @@ import pl.sdk.Point;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class ExampleTest {
+public class PointTest {
     @Test
     void distanceFromPointShouldBeFive() {
         //given
@@ -16,6 +16,13 @@ public class ExampleTest {
         //then
         assertEquals(5.0,result);
         assertEquals(10.0,result2);
+    }
+
+    @Test
+    void pointsShouldBeEquals(){
+        Point p1 = new Point(1,1);
+        Point p2 = new Point(1,1);
+        assertEquals(p1,p2);
     }
 
 }
