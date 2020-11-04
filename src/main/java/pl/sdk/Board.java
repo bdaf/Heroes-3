@@ -23,7 +23,7 @@ public class Board {
 
 
     void move(Point sourcePoint , Point targetPoint) {
-        if(!map.containsValue(map.get(sourcePoint))){
+        if(!map.containsValue(map.get(sourcePoint)) || map.get(sourcePoint)!=null){
             throw new IllegalArgumentException();
         }
         Creature creature = map.get(sourcePoint);
