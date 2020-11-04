@@ -11,6 +11,9 @@ public class Board {
     }
 
     void add(int x, int y, Creature creature) {
+        if(map.containsKey(new Point(x,y))) {
+        throw new IllegalArgumentException();
+        }
         map.put(new Point(x,y),creature);
     }
 

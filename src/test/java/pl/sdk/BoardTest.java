@@ -4,8 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
 
@@ -31,4 +30,16 @@ public class BoardTest {
         creature = board.get(0,0);
         assertNull(creature);
     }
+
+    @Test
+    void shouldBeNotOverWrittenWhenyouTryToPutCreatureOnFieldWhenFieldIsTaken(){
+        board.add(0,0,creature);
+        Creature creature2 = new Creature();
+
+        assertThrows(IllegalArgumentException.class, () -> board.add(0,0,creature2));
+        Creature creatureFromBoard = board.get(0,0);
+
+        assertEquals(creature, creatureFromBoard);
+    }
+
 }
