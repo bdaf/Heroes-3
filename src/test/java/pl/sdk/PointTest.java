@@ -1,3 +1,5 @@
+package pl.sdk;
+
 import org.junit.jupiter.api.Test;
 import pl.sdk.Point;
 

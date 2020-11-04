@@ -19,7 +19,7 @@ public class BoardTest {
 
     @Test
     void shouldAddCreature(){
-        board.add(0,0,creature);
+        board.add(new Point(0,0),creature);
         Creature creatureFromBoard = board.get(0,0);
 
         assertEquals(creature, creatureFromBoard);
@@ -33,13 +33,15 @@ public class BoardTest {
 
     @Test
     void shouldBeNotOverWrittenWhenyouTryToPutCreatureOnFieldWhenFieldIsTaken(){
-        board.add(0,0,creature);
+        board.add(new Point(0,0),creature);
         Creature creature2 = new Creature();
 
-        assertThrows(IllegalArgumentException.class, () -> board.add(0,0,creature2));
+        assertThrows(IllegalArgumentException.class, () -> board.add(new Point(0,0),creature2));
         Creature creatureFromBoard = board.get(0,0);
 
         assertEquals(creature, creatureFromBoard);
     }
+
+
 
 }
