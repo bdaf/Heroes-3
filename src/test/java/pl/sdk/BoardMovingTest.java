@@ -15,13 +15,12 @@ public class BoardMovingTest {
     void init(){
         board = new Board();
         creature = new Creature();
+        board.add(new Point(0,0), creature);
     }
 
     @Test
     void shouldMoveCreatureToSomePoint(){
-        board.add(new Point(0,0), creature);
-        //board.move(creature,2,3);
-        board.move(0,0,2,3);
+        board.move(new Point(0,0), new Point(2,3));
 
         Creature creatureFromBoard = board.get(2,3);
 
