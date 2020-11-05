@@ -55,7 +55,7 @@ public class BoardMovingTest {
     }
 
 
-    @Test
+    @Test //2 the shortest tests
     void shouldNotMoveCreatureToSomePointWhenThereIsNoCreature(){
         assertThrows(IllegalArgumentException.class, () -> board.move(new Point(0,1), new Point(2,3)));
     }
