@@ -59,4 +59,9 @@ public class BoardMovingTest {
     void shouldNotMoveCreatureToSomePointWhenThereIsNoCreature(){
         assertThrows(IllegalArgumentException.class, () -> board.move(new Point(0,1), new Point(2,3)));
     }
+
+    @Test
+    void shouldThrowExceptionWhenTryingToAddCreatureOutsideTheMap(){
+        assertThrows(IllegalArgumentException.class, ()->board.add(new Point(20,16),creature));
+    }
 }

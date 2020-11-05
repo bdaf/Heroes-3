@@ -14,14 +14,14 @@ public class Board {
     }
 
     void add(Point point, Creature creature) {
-        throwExceptionWhenFieldIsTakenOutsideTheMap(point);
+        throwExceptionWhenFieldIsTakenOrOutsideTheMap(point);
         map.put(point, creature);
     }
 
 
 
-    private void throwExceptionWhenFieldIsTakenOutsideTheMap(Point point) {
-        if(map.containsKey(point) || point.getX()<0 || point.getX()>20 || point.getY()<0 || point.getY()>15) {
+    private void throwExceptionWhenFieldIsTakenOrOutsideTheMap(Point point) {
+        if(map.containsKey(point) || point.getX()<0 || point.getX()>WIDTH || point.getY()<0 || point.getY()> HEIGHT) {
         throw new IllegalArgumentException();
         }
     }
@@ -32,7 +32,7 @@ public class Board {
 
 
     void move(Point sourcePoint , Point targetPoint) {
-        throwExceptionWhenFieldIsTakenOutsideTheMap(targetPoint);
+        throwExceptionWhenFieldIsTakenOrOutsideTheMap(targetPoint);
         throwExceptionWhenThereIsNoChampionToMove(sourcePoint);
         Creature creature = map.get(sourcePoint);
         map.remove(sourcePoint);
