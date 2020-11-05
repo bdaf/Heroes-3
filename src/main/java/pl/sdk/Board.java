@@ -11,10 +11,14 @@ public class Board {
     }
 
     void add(Point point, Creature creature) {
+        throwExceptionWhenFieldIsTaken(point);
+        map.put(point, creature);
+    }
+
+    private void throwExceptionWhenFieldIsTaken(Point point) {
         if(map.containsKey(point)) {
         throw new IllegalArgumentException();
         }
-        map.put(point, creature);
     }
 
     Creature get(int x, int y) {
@@ -23,11 +27,16 @@ public class Board {
 
 
     void move(Point sourcePoint , Point targetPoint) {
-        if(!map.containsValue(map.get(sourcePoint)) || map.get(sourcePoint)!=null){
-            throw new IllegalArgumentException();
-        }
+        throwExceptionWhenFieldIsTaken(targetPoint);
+        throwExceptionWhenThereIsNoChampionToMove(sourcePoint);
         Creature creature = map.get(sourcePoint);
         map.remove(sourcePoint);
         map.put(targetPoint,creature);
+    }
+
+    private void throwExceptionWhenThereIsNoChampionToMove(Point sourcePoint) {
+        if(!map.containsKey(sourcePoint)){
+            throw new IllegalArgumentException();
+        }
     }
 }

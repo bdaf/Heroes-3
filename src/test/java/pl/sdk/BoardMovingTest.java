@@ -42,8 +42,21 @@ public class BoardMovingTest {
     }
 
     @Test
+    void shouldThrowExceptionWhenCreatureIsTryingToBeAddedToNotEmptyField(){
+
+        Creature creature2 = new Creature();
+        board.add(new Point(2,3), creature2);
+
+        assertThrows(IllegalArgumentException.class, () ->board.add(new Point(2,3),new Creature()));
+        Creature creatureFromBoard = board.get(2,3);
+
+        assertEquals(creature2, creatureFromBoard);
+
+    }
+
+
+    @Test
     void shouldNotMoveCreatureToSomePointWhenThereIsNoCreature(){
         assertThrows(IllegalArgumentException.class, () -> board.move(new Point(0,1), new Point(2,3)));
-
     }
 }
