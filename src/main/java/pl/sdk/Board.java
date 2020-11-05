@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
+    public static int WIDTH = 20;
+    public static int HEIGHT = 15;
+
     private Map<Point, Creature> map;
 
     Board() {
@@ -11,12 +14,14 @@ public class Board {
     }
 
     void add(Point point, Creature creature) {
-        throwExceptionWhenFieldIsTaken(point);
+        throwExceptionWhenFieldIsTakenOutsideTheMap(point);
         map.put(point, creature);
     }
 
-    private void throwExceptionWhenFieldIsTaken(Point point) {
-        if(map.containsKey(point)) {
+
+
+    private void throwExceptionWhenFieldIsTakenOutsideTheMap(Point point) {
+        if(map.containsKey(point) || point.getX()<0 || point.getX()>20 || point.getY()<0 || point.getY()>15) {
         throw new IllegalArgumentException();
         }
     }
@@ -27,7 +32,7 @@ public class Board {
 
 
     void move(Point sourcePoint , Point targetPoint) {
-        throwExceptionWhenFieldIsTaken(targetPoint);
+        throwExceptionWhenFieldIsTakenOutsideTheMap(targetPoint);
         throwExceptionWhenThereIsNoChampionToMove(sourcePoint);
         Creature creature = map.get(sourcePoint);
         map.remove(sourcePoint);
