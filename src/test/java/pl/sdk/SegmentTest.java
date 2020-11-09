@@ -1,12 +1,17 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
-import pl.sdk.Point;
-import pl.sdk.Segment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class SegmentTest {
+
+    @Test
+    void example(){
+        assertNull(null);
+    }
+
     @Test
     void segmentsShouldBeEquals(){
         Point p1 = new Point(1,1);

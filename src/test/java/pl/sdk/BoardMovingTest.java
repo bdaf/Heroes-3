@@ -17,6 +17,8 @@ public class BoardMovingTest {
         board.add(new Point(0,0), creature);
     }
 
+
+
     @Test
     void shouldMoveCreatureToSomePoint(){
         board.move(new Point(0,0), new Point(2,3));

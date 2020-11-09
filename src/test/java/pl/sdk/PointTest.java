@@ -1,10 +1,10 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
-import pl.sdk.Point;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+
 
 public class PointTest {
     @Test
