@@ -14,7 +14,11 @@ public class CreatureTurnQuene {
     public CreatureTurnQuene(Collection<Creature> creatures) {
         this.creatures = creatures;
         creatureQuene = new LinkedList<>();
-        creatureQuene.addAll(creatures);
+        initQuene();
+    }
+
+    private void initQuene() {
+        creatureQuene.addAll(this.creatures);
         next();
     }
 
@@ -23,9 +27,7 @@ public class CreatureTurnQuene {
     }
 
     void next() {
-        if(creatureQuene.isEmpty()){
-            creatureQuene.addAll(creatures);
-        }
-        activeCreature = creatureQuene.poll();
+        if(creatureQuene.isEmpty()) initQuene();
+        else activeCreature = creatureQuene.poll();
     }
 }
