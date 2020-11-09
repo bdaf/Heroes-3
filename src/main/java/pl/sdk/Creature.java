@@ -6,9 +6,8 @@ public class Creature {
 
     public Creature() {
         stats = new CreatureStatistic("DefName",1,1,1,1);
-        currentHP = stats.getMaxHP();
     }
-
+//test
     public Creature(String name, int attack, int armor, int maxHP, int moveRange) {
         stats = new CreatureStatistic(name,attack,armor,maxHP,moveRange);
     }
