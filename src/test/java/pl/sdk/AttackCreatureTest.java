@@ -28,4 +28,6 @@ public class AttackCreatureTest {
 
         assertEquals(100,defender.getCurrentHp());
     }
+
+
 }

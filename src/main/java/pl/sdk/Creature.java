@@ -15,9 +15,20 @@ public class Creature {
     }
 
     public void attack(Creature defender) {
-        int damageToDeal = this.getStats().getAttack() - defender.getStats().getArmor();
-        if(damageToDeal<0) damageToDeal = 0;
-        defender.setCurrentHP(defender.getCurrentHp()-damageToDeal);
+        this.dealDamage(defender);
+        defender.dealDamage(this);
+    }
+
+    private void dealDamage(Creature defender) {
+        if(isAlive()){
+            int damageToDeal = this.getStats().getAttack() - defender.getStats().getArmor();
+            if(damageToDeal<0) damageToDeal = 0;
+            defender.setCurrentHP(defender.getCurrentHp()-damageToDeal);
+        }
+    }
+
+    private boolean isAlive() {
+        return currentHp>0;
     }
 
     public int getCurrentHp() {
