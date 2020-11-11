@@ -8,10 +8,10 @@ import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CreatureTurnQueneTest {
+public class CreatureTurnQueueTest {
 
     Creature a,b,c;
-    CreatureTurnQuene creatureTurnQuene;
+    CreatureTurnQueue creatureTurnQueue;
     Collection<Creature> creatureList;
 
     @BeforeEach
@@ -29,15 +29,15 @@ public class CreatureTurnQueneTest {
     @Test
     void shouldCreatureABeInQueneAndAfterThatCreatureBThenC(){
 
-        creatureTurnQuene = new CreatureTurnQuene(creatureList);
+        creatureTurnQueue = new CreatureTurnQueue(creatureList);
 
-        assertEquals(a,creatureTurnQuene.getActiveCreature());
-        creatureTurnQuene.next();
-        assertEquals(b,creatureTurnQuene.getActiveCreature());
-        creatureTurnQuene.next();
-        assertEquals(c,creatureTurnQuene.getActiveCreature());
-        creatureTurnQuene.next();
-        assertEquals(a,creatureTurnQuene.getActiveCreature());
+        assertEquals(a, creatureTurnQueue.getActiveCreature());
+        creatureTurnQueue.next();
+        assertEquals(b, creatureTurnQueue.getActiveCreature());
+        creatureTurnQueue.next();
+        assertEquals(c, creatureTurnQueue.getActiveCreature());
+        creatureTurnQueue.next();
+        assertEquals(a, creatureTurnQueue.getActiveCreature());
 
 
 

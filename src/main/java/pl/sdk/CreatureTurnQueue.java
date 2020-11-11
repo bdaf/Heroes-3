@@ -1,23 +1,22 @@
 package pl.sdk;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class CreatureTurnQuene {
+public class CreatureTurnQueue {
 
     Collection<Creature> creatures;
     Queue<Creature> creatureQuene;
     Creature activeCreature;
 
-    public CreatureTurnQuene(Collection<Creature> creatures) {
+    public CreatureTurnQueue(Collection<Creature> creatures) {
         this.creatures = creatures;
         creatureQuene = new LinkedList<>();
-        initQuene();
+        initQueue();
     }
 
-    private void initQuene() {
+    private void initQueue() {
         creatureQuene.addAll(this.creatures);
         next();
     }
@@ -27,7 +26,7 @@ public class CreatureTurnQuene {
     }
 
     void next() {
-        if(creatureQuene.isEmpty()) initQuene();
+        if(creatureQuene.isEmpty()) initQueue();
         else activeCreature = creatureQuene.poll();
     }
 }

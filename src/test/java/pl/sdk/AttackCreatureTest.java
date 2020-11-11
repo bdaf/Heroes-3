@@ -16,6 +16,6 @@ public class AttackCreatureTest {
 
         attacker.attack(defender);
 
-        assertEquals(8,defender.getCurrentHP());
+        assertEquals(8,defender.getCurrentHp());
     }
 }
