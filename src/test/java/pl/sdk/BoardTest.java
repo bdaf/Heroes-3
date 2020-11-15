@@ -42,6 +42,15 @@ public class BoardTest {
         assertEquals(creature, creatureFromBoard);
     }
 
-
+    @Test
+    void shouldReturnCorrectLocationForGetWithArgumentCreature(){
+        Creature creature1 = new Creature();
+        Creature creature2 = new Creature();
+        board.add(new Point(2,1),creature1);
+        board.add(new Point(1,1),creature);
+        board.add(new Point(1,3),creature2);
+        Point result = board.get(creature);
+        assertEquals(new Point(1,1),result);
+    }
 
 }

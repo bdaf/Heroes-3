@@ -31,6 +31,17 @@ public class BoardMovingTest {
     }
 
     @Test
+    void shouldMoveCreatureToSomePointWhenArgumentIsCreature(){
+        board.move(creature, new Point(2,3));
+
+        Creature creatureFromBoard = board.get(2,3);
+
+        assertEquals(creature, creatureFromBoard);
+        assertNull(board.get(0,0));
+
+    }
+
+    @Test
     void shouldThrowExceptionWhenCreatureIsTryingToGoToNotEmptyField(){
 
         Creature creature2 = new Creature();

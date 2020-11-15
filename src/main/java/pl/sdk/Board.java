@@ -18,8 +18,8 @@ public class Board {
         map.put(point, creature);
     }
 
-    private void throwExceptionWhenFieldIsTakenOrOutsideTheMap(Point point) {
-        if (map.containsKey(point) || point.getX() < 0 || point.getX() > WIDTH || point.getY() < 0 || point.getY() > HEIGHT) {
+    private void throwExceptionWhenFieldIsTakenOrOutsideTheMap(Point targetPoint) {
+        if (map.containsKey(targetPoint) || targetPoint.getX() < 0 || targetPoint.getX() > WIDTH || targetPoint.getY() < 0 || targetPoint.getY() > HEIGHT) {
             throw new IllegalArgumentException();
         }
     }
@@ -28,6 +28,13 @@ public class Board {
         return map.get(new Point(x, y));
     }
 
+    Point get(Creature creature){
+        return map.keySet().stream().filter(p -> map.get(p).equals(creature)).findAny().get();
+    }
+
+    void move(Creature creature, Point targetPoint){
+        move(get(creature),targetPoint);
+    }
 
     void move(Point sourcePoint, Point targetPoint) {
         throwExceptionWhenFieldIsTakenOrOutsideTheMap(targetPoint);
@@ -42,4 +49,6 @@ public class Board {
             throw new IllegalArgumentException();
         }
     }
+
+
 }
