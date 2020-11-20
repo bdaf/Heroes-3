@@ -2,28 +2,28 @@ package pl.sdk;
 
 import java.util.Objects;
 
-public class Segment {
+ class Segment {
     private Point startPoint;
     private Point endPoint;
 
-    public Segment(Point startPoint, Point endPoint) {
+     Segment(Point startPoint, Point endPoint) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
     }
 
-    public Point getStartPoint() {
+     Point getStartPoint() {
         return startPoint;
     }
 
-    public void setStartPoint(Point startPoint) {
+     void setStartPoint(Point startPoint) {
         this.startPoint = startPoint;
     }
 
-    public Point getEndPoint() {
+     Point getEndPoint() {
         return endPoint;
     }
 
-    public void setEndPoint(Point endPoint) {
+     void setEndPoint(Point endPoint) {
         this.endPoint = endPoint;
     }
 
@@ -36,7 +36,7 @@ public class Segment {
                 '}';
     }
 
-    public int countDistance() {
+     int countDistance() {
         int distanceX = startPoint.getX()-endPoint.getX();
         int distanceY = startPoint.getY()-endPoint.getY();
 
@@ -50,7 +50,7 @@ public class Segment {
         Segment segment = (Segment) o;
         return this.countDistance() == ((Segment) o).countDistance();
     }
-    public boolean equalsLength(Object o) {
+     boolean equalsLength(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Segment segment = (Segment) o;

@@ -1,21 +1,21 @@
 package pl.sdk;
 
-public class Creature {
+ class Creature {
 
     private CreatureStatistic stats;
     private int currentHp;
     private boolean counterAttackInThisTurn;
 
-    public Creature() {
+     Creature() {
         this("DefName",1,1,1,1);
     }
     
-    public Creature(String name, int attack, int armor, int maxHP, int moveRange) {
+     Creature(String name, int attack, int armor, int maxHP, int moveRange) {
         stats = new CreatureStatistic(name,attack,armor,maxHP,moveRange);
         currentHp = stats.getMaxHP();
     }
 
-    public void attack(Creature defender) {
+     void attack(Creature defender) {
         if(isAlive()){
             int damageToDeal = getDamageToDeal(defender);
             defender.currentHp-=damageToDeal;
@@ -38,19 +38,19 @@ public class Creature {
         return currentHp>0;
     }
 
-    public int getCurrentHp() {
+     int getCurrentHp() {
         return currentHp;
     }
 
-    public void setCurrentHP(int currentHP) {
+     void setCurrentHP(int currentHP) {
         this.currentHp = currentHP;
     }
 
-    public CreatureStatistic getStats() {
+     CreatureStatistic getStats() {
         return stats;
     }
 
-    public void setStats(CreatureStatistic stats) {
+     void setStats(CreatureStatistic stats) {
         this.stats = stats;
     }
 }

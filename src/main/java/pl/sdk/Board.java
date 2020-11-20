@@ -3,7 +3,7 @@ package pl.sdk;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Board {
+ class Board {
     public static int WIDTH = 20;
     public static int HEIGHT = 15;
 
