@@ -33,6 +33,7 @@ public class GameEngine {
 
     public void move(Point targetPoint){
         board.move(queue.getActiveCreature(),targetPoint);
+        pass();
     }
 
     public void pass(){

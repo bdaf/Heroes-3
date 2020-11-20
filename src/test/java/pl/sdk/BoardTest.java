@@ -53,4 +53,10 @@ public class BoardTest {
         assertEquals(new Point(1,1),result);
     }
 
+    @Test
+    void shouldThrowExceptionWhenCreatureIsBeenTryingToBeCatchedWhereFieldIsEmpty(){
+        assertThrows(IllegalArgumentException.class, () -> board.get(0,0));
+    }
+
+
 }

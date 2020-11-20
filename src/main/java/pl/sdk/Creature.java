@@ -1,32 +1,33 @@
 package pl.sdk;
 
- class Creature {
+class Creature {
 
     private CreatureStatistic stats;
     private int currentHp;
 
-     void setCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
-         counterAttackInThisTurn = aCounterAttackInThisTurn;
-     }
-
-     private boolean counterAttackInThisTurn;
-
-     Creature() {
-        this("DefName",1,1,1,1);
+    void setCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
+        counterAttackInThisTurn = aCounterAttackInThisTurn;
     }
-    
-     Creature(String name, int attack, int armor, int maxHP, int moveRange) {
-        stats = new CreatureStatistic(name,attack,armor,maxHP,moveRange);
+
+    private boolean counterAttackInThisTurn;
+
+    Creature() {
+        this("DefName", 1, 1, 1, 1);
+    }
+
+    Creature(String name, int attack, int armor, int maxHP, int moveRange) {
+        stats = new CreatureStatistic(name, attack, armor, maxHP, moveRange);
         currentHp = stats.getMaxHP();
     }
 
-     void attack(Creature defender) {
-        if(isAlive()){
+    void attack(Creature defender) {
+        if (this == defender) throw new IllegalArgumentException();
+        if (isAlive()) {
             int damageToDeal = getDamageToDeal(defender);
-            defender.currentHp-=damageToDeal;
-            if(!defender.counterAttackInThisTurn && defender.isAlive()){
+            defender.currentHp -= damageToDeal;
+            if (!defender.counterAttackInThisTurn && defender.isAlive()) {
                 int damageToDealInCounterAttack = defender.getDamageToDeal(this);
-                currentHp-=damageToDealInCounterAttack;
+                currentHp -= damageToDealInCounterAttack;
                 defender.counterAttackInThisTurn = true;
             }
         }
@@ -35,27 +36,27 @@ package pl.sdk;
 
     private int getDamageToDeal(Creature defender) {
         int damageToDeal = this.getStats().getAttack() - defender.getStats().getArmor();
-        if(damageToDeal<0) damageToDeal = 0;
+        if (damageToDeal < 0) damageToDeal = 0;
         return damageToDeal;
     }
 
     private boolean isAlive() {
-        return currentHp>0;
+        return currentHp > 0;
     }
 
-     int getCurrentHp() {
+    int getCurrentHp() {
         return currentHp;
     }
 
-     void setCurrentHP(int currentHP) {
+    void setCurrentHP(int currentHP) {
         this.currentHp = currentHP;
     }
 
-     CreatureStatistic getStats() {
+    CreatureStatistic getStats() {
         return stats;
     }
 
-     void setStats(CreatureStatistic stats) {
+    void setStats(CreatureStatistic stats) {
         this.stats = stats;
     }
 }
