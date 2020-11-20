@@ -4,7 +4,12 @@ package pl.sdk;
 
     private CreatureStatistic stats;
     private int currentHp;
-    private boolean counterAttackInThisTurn;
+
+     void setCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
+         counterAttackInThisTurn = aCounterAttackInThisTurn;
+     }
+
+     private boolean counterAttackInThisTurn;
 
      Creature() {
         this("DefName",1,1,1,1);

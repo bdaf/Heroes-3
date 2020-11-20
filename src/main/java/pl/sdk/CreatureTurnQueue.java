@@ -17,6 +17,7 @@ public class CreatureTurnQueue {
     }
 
     private void initQueue() {
+        this.creatures.stream().forEach(x -> x.setCounterAttackInThisTurn(false));
         creatureQuene.addAll(this.creatures);
         next();
     }
