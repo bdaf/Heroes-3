@@ -2,6 +2,9 @@ package pl.sdk;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreatureCounterAttackTest {
@@ -37,5 +40,22 @@ public class CreatureCounterAttackTest {
         assertEquals(91,attacker.getCurrentHp());
         attacker.attack(defender);
         assertEquals(91,attacker.getCurrentHp());
+    }
+
+    @Test
+    void defenderShouldCounterAttackOnesInTourNotOnesInGame(){
+        List<Creature> creaturesLeft = new LinkedList<Creature>();
+        List<Creature> creaturesRight = new LinkedList<Creature>();
+        Creature attacker = new Creature("c1",5,1,100, NOT_IMPORTANT);
+        Creature defender = new Creature("c2", 10,2,80,NOT_IMPORTANT);
+        creaturesLeft.add(attacker);
+        creaturesRight.add(defender);
+        GameEngine game = new GameEngine(creaturesLeft,creaturesRight);
+
+        game.attack(19,0); // attacker
+        game.pass(); // defender
+        game.attack(19,0); // attacker
+        assertEquals(82,attacker.getCurrentHp());
+
     }
 }
