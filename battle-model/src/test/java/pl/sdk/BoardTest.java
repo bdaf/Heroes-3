@@ -26,12 +26,6 @@ public class BoardTest {
     }
 
     @Test
-    void shouldReturnNullWhenFieldIsEmpty(){
-        creature = board.get(0,0);
-        assertNull(creature);
-    }
-
-    @Test
     void shouldBeNotOverWrittenWhenyouTryToPutCreatureOnFieldWhenFieldIsTaken(){
         board.add(new Point(0,0),creature);
         Creature creature2 = new Creature();

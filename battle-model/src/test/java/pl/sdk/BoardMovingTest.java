@@ -26,8 +26,6 @@ public class BoardMovingTest {
         Creature creatureFromBoard = board.get(2,3);
 
         assertEquals(creature, creatureFromBoard);
-        assertNull(board.get(0,0));
-
     }
 
     @Test
@@ -37,7 +35,6 @@ public class BoardMovingTest {
         Creature creatureFromBoard = board.get(2,3);
 
         assertEquals(creature, creatureFromBoard);
-        assertNull(board.get(0,0));
 
     }
 
