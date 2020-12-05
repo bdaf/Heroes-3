@@ -2,7 +2,7 @@ package pl.sdk.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
 import pl.sdk.Creature;
 import pl.sdk.GameEngine;
 
@@ -35,6 +35,10 @@ public class BattleMapController {
             for (int y = 0; y < 15; y++) {
                 MapTile mapTile = new MapTile();
                 gridMap.add(mapTile,x,y);
+
+                Creature c = gameEngine.get(x,y);
+                if(c!=null)
+                    mapTile.createLabel(c.getName());
             }
         }
     }

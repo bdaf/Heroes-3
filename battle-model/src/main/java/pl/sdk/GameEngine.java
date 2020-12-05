@@ -44,4 +44,8 @@ public class GameEngine {
         queue.getActiveCreature().attack(board.get(x,y));
         pass();
     }
+
+    public Creature get(int x, int y) {
+        return board.get(x,y);
+    }
 }

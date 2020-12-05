@@ -25,7 +25,7 @@ import java.util.Map;
     }
 
     Creature get(int x, int y) {
-        if(map.get(new Point(x, y)) == null) throw new IllegalArgumentException();
+        //if(map.get(new Point(x, y)) == null) throw new IllegalArgumentException();
         return map.get(new Point(x, y));
     }
 

@@ -19,7 +19,6 @@
     -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
 }
 .label{
-    -fx-padding: 15 30 15 30;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
 }

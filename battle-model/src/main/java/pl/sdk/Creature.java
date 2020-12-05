@@ -59,4 +59,8 @@ public class Creature {
     void setStats(CreatureStatistic stats) {
         this.stats = stats;
     }
+
+    public String getName() {
+        return stats.getName();
+    }
 }
