@@ -1,6 +1,6 @@
 package pl.sdk;
 
-class Creature {
+public class Creature {
 
     private CreatureStatistic stats;
     private int currentHp;
@@ -11,7 +11,7 @@ class Creature {
 
     private boolean counterAttackInThisTurn;
 
-    Creature() {
+    public Creature() {
         this("DefName", 1, 1, 1, 1);
     }
 
