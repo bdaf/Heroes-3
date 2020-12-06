@@ -48,4 +48,8 @@ public class GameEngine {
     public Creature get(int x, int y) {
         return board.get(x,y);
     }
+
+    public Creature getActiveCreature() {
+        return queue.getActiveCreature();
+    }
 }
