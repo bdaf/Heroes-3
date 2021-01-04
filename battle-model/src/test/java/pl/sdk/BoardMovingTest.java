@@ -102,4 +102,14 @@ public class BoardMovingTest {
         assertFalse(board.canMove(creature1,0,0));
 
     }
+
+    @Test
+    void shouldBeAbleToGoToFieldWhenHisMoveIsAttemptingForThisInParts(){
+        Creature creature1 = new Creature("DefName", 1, 1, 1, 2);
+        board.add(new Point(5,5), creature1);
+        assertTrue(board.canMove(creature1,5,6));
+        board.move(creature1, new Point(5,6));
+        assertTrue(board.canMove(creature1,5,7));
+        assertFalse(board.canMove(creature1,5,8));
+    }
 }

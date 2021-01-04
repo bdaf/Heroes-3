@@ -7,17 +7,19 @@ public class Creature implements PropertyChangeListener {
 
     private CreatureStatistic stats;
     private int currentHp;
+    private double currentMovePoints;
 
 
     private boolean counterAttackInThisTurn;
 
     public Creature() {
-        this("DefName", 2, 1, 2, 1);
+        this("DefName", 2, 1, 2, 10);
     }
 
     Creature(String name, int attack, int armor, int maxHP, int moveRange) {
         stats = new CreatureStatistic(name, attack, armor, maxHP, moveRange);
         currentHp = stats.getMaxHP();
+        currentMovePoints = stats.getMoveRange();
     }
 
     void attack(Creature defender) {
@@ -52,6 +54,8 @@ public class Creature implements PropertyChangeListener {
         this.currentHp = currentHP;
     }
 
+    double getCurrentMovePoints() { return currentMovePoints; }
+
     CreatureStatistic getStats() {
         return stats;
     }
@@ -68,13 +72,13 @@ public class Creature implements PropertyChangeListener {
         return !counterAttackInThisTurn;
     }
 
-    void update() {
-        counterAttackInThisTurn = false;
-    }
-
-
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        update();
+        counterAttackInThisTurn = false;
+        currentMovePoints = stats.getMoveRange();
+    }
+
+    void setCurrentMovePoints(double aCurrentMovePoints) {
+        currentMovePoints = aCurrentMovePoints;
     }
 }

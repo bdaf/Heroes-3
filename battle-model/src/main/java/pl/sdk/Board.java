@@ -35,17 +35,24 @@ import java.util.Map;
     }
 
     void move(Creature aCreature, Point targetPoint){
-        throwExceptionWhenOutsideTheMap(targetPoint);
-        throwExceptionWhenThereIsNoChampionToAct(aCreature, "There is no champion to move!");
+        //throwExceptionWhenThereIsNoChampionToAct(aCreature, "There is no champion to move!");
         move(get(aCreature),targetPoint);
+
+
     }
 
     void move(Point sourcePoint, Point targetPoint) {
-        throwExceptionWhenThereIsNoChampionToAct(sourcePoint, "There is no champion to move!");
+        throwExceptionWhenOutsideTheMap(targetPoint);
+        throwExceptionWhenThereIsNoChampionToAct(sourcePoint, "Creature isn't on board!");
         throwExceptionWhenTitleIsTaken(targetPoint);
         Creature creature = map.get(sourcePoint);
+
+        double distance = sourcePoint.distance(targetPoint);
+        creature.setCurrentMovePoints(creature.getCurrentMovePoints() - distance);
+
         map.remove(sourcePoint);
         map.put(targetPoint, creature);
+
     }
 
      private void throwExceptionWhenTitleIsTaken(Point aPoint) {
@@ -70,10 +77,10 @@ import java.util.Map;
 
      boolean canMove(Creature aCreature, int aX, int aY) {
         throwExceptionWhenOutsideTheMap(new Point(aX,aY));
-        throwExceptionWhenThereIsNoChampionToAct(aCreature, "There is no champion to move!");
+        throwExceptionWhenThereIsNoChampionToAct(aCreature, "Creature isn't on board!");
         Point currentPosition = get(aCreature);
         double distance = currentPosition.distance(new Point(aX,aY));
-        return distance <= aCreature.getStats().getMoveRange() && !isTitleTaken(new Point(aX,aY));
+        return distance <= aCreature.getCurrentMovePoints() && !isTitleTaken(new Point(aX,aY));
      }
 
      boolean canAttack(Creature aCreature, int aX, int aY) {
