@@ -1,6 +1,9 @@
 package pl.sdk;
 
-public class Creature {
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public class Creature implements PropertyChangeListener {
 
     private CreatureStatistic stats;
     private int currentHp;
@@ -9,7 +12,7 @@ public class Creature {
     private boolean counterAttackInThisTurn;
 
     public Creature() {
-        this("DefName", 1, 1, 1, 1);
+        this("DefName", 2, 1, 2, 1);
     }
 
     Creature(String name, int attack, int armor, int maxHP, int moveRange) {
@@ -37,7 +40,7 @@ public class Creature {
         return damageToDeal;
     }
 
-    private boolean isAlive() {
+    boolean isAlive() {
         return currentHp > 0;
     }
 
@@ -70,4 +73,8 @@ public class Creature {
     }
 
 
+    @Override
+    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
+        update();
+    }
 }

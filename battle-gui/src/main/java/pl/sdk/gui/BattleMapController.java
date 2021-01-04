@@ -11,6 +11,7 @@ import pl.sdk.Point;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class BattleMapController implements PropertyChangeListener {
     void initialize(){
         gameEngine.addObserver(gameEngine.CURRENT_CREATURE_CHANGED , this);
         gameEngine.addObserver(gameEngine.CREATURE_MOVED , this);
+        gameEngine.addObserver(gameEngine.CURRENT_CREATURE_ATTACKED , this);
         passButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->{
             gameEngine.pass();
         });
@@ -63,13 +65,22 @@ public class BattleMapController implements PropertyChangeListener {
                     mapTile.addNameOfCreature(c.getName());
                     if(c == gameEngine.getActiveCreature())
                         mapTile.setBackgroundColor(Color.GREEN);
+                    else if(gameEngine.canAttack(x,y)){
+                        final int FX = x;
+                        final int FY = y;
+                        mapTile.setBackgroundColor((Color.RED));
+                        mapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->{
+                            gameEngine.attack(new Point(FX,FY));
+                        });
+                    }
                 }
                 else if(gameEngine.canMove(x,y)){
-                    mapTile.setBackgroundColor((Color.GRAY));
                     final int FX = x;
                     final int FY = y;
+                    mapTile.setBackgroundColor((Color.GRAY));
                     mapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->{
                         gameEngine.move(new Point(FX,FY));
+                        
                     });
                 }
             }

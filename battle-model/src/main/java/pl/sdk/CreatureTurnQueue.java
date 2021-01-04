@@ -7,12 +7,12 @@ public class CreatureTurnQueue {
     private final Collection<Creature> creatures;
     private final Queue<Creature> creatureQuene;
     private Creature activeCreature;
-    private Set<Creature> observers;
+    private Set<GameEngine> observers;
 
     public CreatureTurnQueue(Collection<Creature> aCreatures) {
         creatures = aCreatures;
         creatureQuene = new LinkedList<>();
-        observers = new HashSet<Creature>();
+        observers = new HashSet<GameEngine>();
         initQueue();
 
     }
@@ -23,14 +23,14 @@ public class CreatureTurnQueue {
         next();
     }
 
-    void addObserver(Creature aObserver){
+    void addObserver(GameEngine aObserver){
         observers.add(aObserver);
     }
-    void removeObserver(Creature aObserver){
+    void removeObserver(GameEngine aObserver){
         observers.remove((aObserver));
     }
     void notifyObservers(){
-        observers.forEach(o -> o.update());
+        observers.forEach(o -> o.makeChangesOfNewTurn());
     }
 
 

@@ -5,12 +5,15 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class GameEngine {
 
 
     public static final String CURRENT_CREATURE_CHANGED = "CURRENT_CREATURE_CHANGED";
     public static final String CREATURE_MOVED = "CREATURE_MOVED";
+    public static final String UPDATE_AFTER_EVERY_TURN = "UPDATE_AFTER_EVERY_TURN";
+    public static final String CURRENT_CREATURE_ATTACKED = "CURRENT_CREATURE_ATTACKED";
     private final Board board;
     private final CreatureTurnQueue queue;
     private PropertyChangeSupport observerSupport;
@@ -24,7 +27,8 @@ public class GameEngine {
         queue = new CreatureTurnQueue(creaturesOnBothSides);
 
         observerSupport = new PropertyChangeSupport(this);
-        creaturesOnBothSides.forEach(c -> queue.addObserver(c));
+        queue.addObserver(this);
+        creaturesOnBothSides.forEach(c -> addObserver(UPDATE_AFTER_EVERY_TURN,c));
 
     }
 
@@ -67,8 +71,14 @@ public class GameEngine {
     }
 
     public void attack(int x, int y){
+        Creature oldCreature = queue.getActiveCreature();
         queue.getActiveCreature().attack(board.get(x,y));
-        pass();
+        Creature newCreature = queue.getActiveCreature();
+        notifyObserver(new PropertyChangeEvent(this, CURRENT_CREATURE_ATTACKED, oldCreature, newCreature));
+    }
+
+    public void attack(Point aPoint) {
+        attack(aPoint.getX(),aPoint.getY());
     }
 
     public Creature get(int x, int y) {
@@ -82,4 +92,15 @@ public class GameEngine {
     public boolean canMove(int aX, int aY) {
         return board.canMove(getActiveCreature(), aX, aY);
     }
+
+    public boolean canAttack(int aX, int aY) {
+        return board.canAttack(getActiveCreature(), aX, aY);
+    }
+
+    void makeChangesOfNewTurn() {
+        notifyObserver(new PropertyChangeEvent(this, UPDATE_AFTER_EVERY_TURN, null, null));
+    }
+
+
+
 }
