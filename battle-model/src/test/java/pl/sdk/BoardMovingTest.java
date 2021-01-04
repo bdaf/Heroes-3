@@ -57,7 +57,7 @@ public class BoardMovingTest {
         Creature creature2 = new Creature();
         board.add(new Point(2,3), creature2);
 
-        assertThrows(IllegalArgumentException.class, () ->board.add(new Point(2,3),new Creature()));
+        assertThrows(IllegalArgumentException.class, () -> board.add(new Point(2,3),new Creature()));
         Creature creatureFromBoard = board.get(2,3);
 
         assertEquals(creature2, creatureFromBoard);
@@ -73,5 +73,33 @@ public class BoardMovingTest {
     @Test
     void shouldThrowExceptionWhenTryingToAddCreatureOutsideTheMap(){
         assertThrows(IllegalArgumentException.class, ()->board.add(new Point(20,16),creature));
+    }
+
+    @Test
+    void shouldBeAbleToGoToFieldWhenHisMoveIsAttemptingForThis(){
+        Creature creature1 = new Creature("DefName", 1, 1, 1, 1);
+        board.add(new Point(5,5), creature1);
+        assertTrue(board.canMove(creature1,5,6));
+        assertTrue(board.canMove(creature1,6,5));
+        assertTrue(board.canMove(creature1,5,4));
+        assertTrue(board.canMove(creature1,4,5));
+    }
+
+    @Test
+    void shouldNotBeAbleToGoToFieldWhenHisMoveIsNotAttemptingForThis(){
+        Creature creature1 = new Creature("DefName", 1, 1, 1, 1);
+        board.add(new Point(5,5), creature1);
+
+        assertFalse(board.canMove(creature1,6,6));
+        assertFalse(board.canMove(creature1,4,4));
+    }
+
+    @Test
+    void cannotGoWhenFieldIsTaken(){
+        Creature creature1 = new Creature("DefName", 1, 1, 1, 10);
+        board.add(new Point(5,5),creature1);
+
+        assertFalse(board.canMove(creature1,0,0));
+
     }
 }

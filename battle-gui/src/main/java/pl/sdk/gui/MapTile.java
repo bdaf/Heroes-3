@@ -13,7 +13,7 @@ class MapTile extends StackPane {
         getChildren().add(rec);
     }
 
-    public void createLabel(String text) {
+    public void addNameOfCreature(String text) {
         getChildren().add(new Label(text));
     }
 

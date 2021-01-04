@@ -7,17 +7,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import pl.sdk.Creature;
 import pl.sdk.GameEngine;
+import pl.sdk.Point;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BattleMapController {
+public class BattleMapController implements PropertyChangeListener {
 
     @FXML
     private GridPane gridMap;
     private GameEngine gameEngine;
     @FXML
     private Button passButton;
+    @FXML
+    private Button escapeButton;
 
     public BattleMapController(){
         List<Creature> listOfCreatures1 = new ArrayList<Creature>();
@@ -37,10 +42,12 @@ public class BattleMapController {
 
     @FXML
     void initialize(){
+        gameEngine.addObserver(gameEngine.CURRENT_CREATURE_CHANGED , this);
+        gameEngine.addObserver(gameEngine.CREATURE_MOVED , this);
         passButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->{
             gameEngine.pass();
-            refreshGui();
         });
+
 
         refreshGui();
     }
@@ -53,13 +60,25 @@ public class BattleMapController {
 
                 Creature c = gameEngine.get(x,y);
                 if(c!=null) {
-                    mapTile.createLabel(c.getName());
+                    mapTile.addNameOfCreature(c.getName());
                     if(c == gameEngine.getActiveCreature())
                         mapTile.setBackgroundColor(Color.GREEN);
+                }
+                else if(gameEngine.canMove(x,y)){
+                    mapTile.setBackgroundColor((Color.GRAY));
+                    final int FX = x;
+                    final int FY = y;
+                    mapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->{
+                        gameEngine.move(new Point(FX,FY));
+                    });
                 }
             }
         }
     }
 
 
+    @Override
+    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
+        refreshGui();
+    }
 }

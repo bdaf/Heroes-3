@@ -1,26 +1,38 @@
 package pl.sdk;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class CreatureTurnQueue {
 
-    Collection<Creature> creatures;
-    Queue<Creature> creatureQuene;
-    Creature activeCreature;
+    private final Collection<Creature> creatures;
+    private final Queue<Creature> creatureQuene;
+    private Creature activeCreature;
+    private Set<Creature> observers;
 
-    public CreatureTurnQueue(Collection<Creature> creatures) {
-        this.creatures = creatures;
+    public CreatureTurnQueue(Collection<Creature> aCreatures) {
+        creatures = aCreatures;
         creatureQuene = new LinkedList<>();
+        observers = new HashSet<Creature>();
         initQueue();
+
     }
 
     private void initQueue() {
-        this.creatures.stream().forEach(x -> x.setCounterAttackInThisTurn(false));
         creatureQuene.addAll(this.creatures);
+        notifyObservers();
         next();
     }
+
+    void addObserver(Creature aObserver){
+        observers.add(aObserver);
+    }
+    void removeObserver(Creature aObserver){
+        observers.remove((aObserver));
+    }
+    void notifyObservers(){
+        observers.forEach(o -> o.update());
+    }
+
 
     Creature getActiveCreature() {
         return activeCreature;

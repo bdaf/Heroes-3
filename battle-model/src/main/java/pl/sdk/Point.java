@@ -28,7 +28,7 @@ import java.util.Objects;
                 '}';
     }
 
-    double countDistanceFromXY() {
+    double countDistanceFromX0andY0() {
         return Math.sqrt(x*x+y*y);
     }
 
@@ -45,4 +45,10 @@ import java.util.Objects;
     public int hashCode() {
         return Objects.hash(x, y);
     }
-}
+
+     double distance(Point aPoint) {
+        double tmpX = x-aPoint.getX();
+        double tmpY = y-aPoint.getY();
+         return Math.sqrt(tmpX*tmpX + tmpY*tmpY);
+     }
+ }

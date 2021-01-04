@@ -45,19 +45,19 @@ public class CreatureCounterAttackTest {
 
     @Test
     void defenderShouldCounterAttackOnesInTourNotOnesInGame(){
-        List<Creature> creaturesLeft = new LinkedList<Creature>();
-        List<Creature> creaturesRight = new LinkedList<Creature>();
-        Creature attacker = new Creature("c1",5,1,100, 20);
-        Creature defender = new Creature("c2", 10,2,80,20);
-        creaturesLeft.add(attacker);
-        creaturesRight.add(defender);
-        GameEngine game = new GameEngine(creaturesLeft,creaturesRight);
-        game.move(new Point(18,0)); // attacker
-        game.pass(); // defender
-        game.attack(19,0); // attacker
-        game.pass(); // defender
-        game.attack(19,0); // attacker
-        assertEquals(82,attacker.getCurrentHp());
+
+        Creature attacker = new Creature();
+        Creature defender = new Creature();
+
+        GameEngine game = new GameEngine(List.of(attacker),List.of(defender));
+        assertEquals(true,defender.canCounterAttack());
+        attacker.attack(defender);
+        assertEquals(false,defender.canCounterAttack());
+
+        game.pass();
+        game.pass();
+        assertEquals(true,defender.canCounterAttack());
+
 
     }
 
