@@ -9,8 +9,8 @@ public class Creature implements PropertyChangeListener {
     private int currentHp;
     private double currentMovePoints;
 
-
     private boolean counterAttackInThisTurn;
+    private int attacksInTurn;
 
     public Creature() {
         this("DefName", 2, 1, 2, 10);
@@ -20,6 +20,7 @@ public class Creature implements PropertyChangeListener {
         stats = new CreatureStatistic(name, attack, armor, maxHP, moveRange);
         currentHp = stats.getMaxHP();
         currentMovePoints = stats.getMoveRange();
+        attacksInTurn = 1;
     }
 
     void attack(Creature defender) {
@@ -68,6 +69,14 @@ public class Creature implements PropertyChangeListener {
         return stats.getName();
     }
 
+    int getAttacksInTurn() {
+        return attacksInTurn;
+    }
+
+    void setAttacksInTurn(int aAttacksInTurn) {
+        attacksInTurn = aAttacksInTurn;
+    }
+
     boolean canCounterAttack() {
         return !counterAttackInThisTurn;
     }
@@ -76,6 +85,18 @@ public class Creature implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         counterAttackInThisTurn = false;
         currentMovePoints = stats.getMoveRange();
+        attacksInTurn = 1;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getName());
+        sb.append(System.lineSeparator());
+        sb.append(getCurrentHp());
+        sb.append("/");
+        sb.append(getStats().getMaxHP());
+        return sb.toString();
     }
 
     void setCurrentMovePoints(double aCurrentMovePoints) {

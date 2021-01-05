@@ -30,7 +30,7 @@ public class CreatureTurnQueue {
         observers.remove((aObserver));
     }
     void notifyObservers(){
-        observers.forEach(o -> o.makeChangesOfNewTurn());
+        observers.forEach(GameEngine::makeChangesOfNewTurn);
     }
 
 

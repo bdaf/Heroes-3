@@ -1,6 +1,7 @@
 package pl.sdk;
 
 public class CreatureStatistic {
+
     final private String name;
     final private int attack;
     final private int armor;
@@ -15,6 +16,7 @@ public class CreatureStatistic {
         this.attack = attack;
         this.moveRange = moveRange;
     }
+
 
     public String getName() {
         return name;

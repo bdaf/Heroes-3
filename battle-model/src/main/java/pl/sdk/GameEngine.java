@@ -5,7 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 public class GameEngine {
 
@@ -71,10 +70,11 @@ public class GameEngine {
     }
 
     public void attack(int x, int y){
-        Creature oldCreature = queue.getActiveCreature();
+        getActiveCreature().setAttacksInTurn(getActiveCreature().getAttacksInTurn()-1);
+        if(getActiveCreature().getAttacksInTurn() == 0)
+            getActiveCreature().setCurrentMovePoints(0);
         queue.getActiveCreature().attack(board.get(x,y));
-        Creature newCreature = queue.getActiveCreature();
-        notifyObserver(new PropertyChangeEvent(this, CURRENT_CREATURE_ATTACKED, oldCreature, newCreature));
+        notifyObserver(new PropertyChangeEvent(this, CURRENT_CREATURE_ATTACKED, null, null));
     }
 
     public void attack(Point aPoint) {
@@ -94,7 +94,7 @@ public class GameEngine {
     }
 
     public boolean canAttack(int aX, int aY) {
-        return board.canAttack(getActiveCreature(), aX, aY);
+        return board.canAttack(getActiveCreature(), aX, aY) && getActiveCreature().getAttacksInTurn() > 0;
     }
 
     void makeChangesOfNewTurn() {

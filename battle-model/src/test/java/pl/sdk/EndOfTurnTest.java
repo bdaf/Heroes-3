@@ -22,4 +22,19 @@ public class EndOfTurnTest {
         engine.pass();
         assertEquals(true, defender.canCounterAttack());
     }
+
+    @Test
+    void shouldResetAttackFlagAfterEndOfTurn(){
+        Creature attacker = new Creature();
+        Creature defender = new Creature();
+        GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
+
+        assertEquals(1, defender.getAttacksInTurn());
+//        engine.canAttack()
+        assertEquals(0, defender.getAttacksInTurn());
+
+        engine.pass();
+        engine.pass();
+        assertEquals(true, defender.canCounterAttack());
+    }
 }
