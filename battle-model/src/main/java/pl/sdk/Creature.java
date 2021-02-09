@@ -1,5 +1,7 @@
 package pl.sdk;
 
+import com.google.common.collect.Range;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -17,9 +19,9 @@ public class Creature implements PropertyChangeListener {
     }
 
     Creature(String name, int attack, int armor, int maxHP, int moveRange, int aDamage) {
-        this(name, attack, armor, maxHP, moveRange, new NewDamageCalculator(), aDamage);
+        this(name, attack, armor, maxHP, moveRange, new NewDamageCalculator(), Range.closed(aDamage,aDamage));
     }
-    Creature(String name, int attack, int armor, int maxHP, int moveRange, DamageCalculator aDamageCalculator, int aDamage) {
+    Creature(String name, int attack, int armor, int maxHP, int moveRange, DamageCalculator aDamageCalculator, Range<Integer> aDamage) {
         stats = new CreatureStatistic(name, attack, armor, maxHP, moveRange, aDamage);
         currentHp = stats.getMaxHP();
         currentMovePoints = stats.getMoveRange();

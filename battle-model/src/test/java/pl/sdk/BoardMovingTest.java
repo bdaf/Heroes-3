@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static pl.sdk.AttackCreatureTest.NOT_IMPORTANT_RANGE;
 
 public class BoardMovingTest {
 
@@ -78,7 +79,7 @@ public class BoardMovingTest {
 
     @Test
     void shouldBeAbleToGoToFieldWhenHisMoveIsAttemptingForThis(){
-        Creature creature1 = new Creature("DefName", 1, 1, 1, 1, new DamageCalculator(), NOT_IMPORTANT);
+        Creature creature1 = new Creature("DefName", 1, 1, 1, 1, new DamageCalculator(), NOT_IMPORTANT_RANGE);
         board.add(new Point(5,5), creature1);
         assertTrue(board.canMove(creature1,5,6));
         assertTrue(board.canMove(creature1,6,5));
@@ -88,7 +89,7 @@ public class BoardMovingTest {
 
     @Test
     void shouldNotBeAbleToGoToFieldWhenHisMoveIsNotAttemptingForThis(){
-        Creature creature1 = new Creature("DefName", 1, 1, 1, 1, new DamageCalculator(), NOT_IMPORTANT);
+        Creature creature1 = new Creature("DefName", 1, 1, 1, 1, new DamageCalculator(), NOT_IMPORTANT_RANGE);
         board.add(new Point(5,5), creature1);
 
         assertFalse(board.canMove(creature1,6,6));
@@ -97,7 +98,7 @@ public class BoardMovingTest {
 
     @Test
     void cannotGoWhenFieldIsTaken(){
-        Creature creature1 = new Creature("DefName", 1, 1, 1, 10, new DamageCalculator(), NOT_IMPORTANT);
+        Creature creature1 = new Creature("DefName", 1, 1, 1, 10, new DamageCalculator(), NOT_IMPORTANT_RANGE);
         board.add(new Point(5,5),creature1);
 
         assertFalse(board.canMove(creature1,0,0));
@@ -106,7 +107,7 @@ public class BoardMovingTest {
 
     @Test
     void shouldBeAbleToGoToFieldWhenHisMoveIsAttemptingForThisInParts(){
-        Creature creature1 = new Creature("DefName", 1, 1, 1, 2, new DamageCalculator(), NOT_IMPORTANT);
+        Creature creature1 = new Creature("DefName", 1, 1, 1, 2, new DamageCalculator(), NOT_IMPORTANT_RANGE);
         board.add(new Point(5,5), creature1);
         assertTrue(board.canMove(creature1,5,6));
         board.move(creature1, new Point(5,6));
