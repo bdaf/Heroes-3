@@ -14,8 +14,8 @@ public class CreatureCounterAttackTest {
 
     @Test
     void defenderShouldCounterAttack(){
-        Creature attacker = new Creature("c1",NOT_IMPORTANT,2,100, NOT_IMPORTANT);
-        Creature defender = new Creature("c2", 5,NOT_IMPORTANT,NOT_IMPORTANT,NOT_IMPORTANT);
+        Creature attacker = new Creature("c1",NOT_IMPORTANT,2,100, NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
+        Creature defender = new Creature("c2", 5,NOT_IMPORTANT,NOT_IMPORTANT,NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
 
         attacker.attack(defender);
 
@@ -24,8 +24,8 @@ public class CreatureCounterAttackTest {
 
     @Test
     void defenderShouldNotCounterAttackWhenHeSupposedToBeDead(){
-        Creature attacker = new Creature("c1",100,NOT_IMPORTANT,100, NOT_IMPORTANT);
-        Creature defender = new Creature("c2", NOT_IMPORTANT,20,80,NOT_IMPORTANT);
+        Creature attacker = new Creature("c1",100,NOT_IMPORTANT,100, NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
+        Creature defender = new Creature("c2", NOT_IMPORTANT,20,80,NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
 
         attacker.attack(defender);
 
@@ -34,8 +34,8 @@ public class CreatureCounterAttackTest {
 
     @Test
     void defenderShouldCounterAttackOnlyOnes(){
-        Creature attacker = new Creature("c1",5,1,100, NOT_IMPORTANT);
-        Creature defender = new Creature("c2", 10,NOT_IMPORTANT,80,NOT_IMPORTANT);
+        Creature attacker = new Creature("c1",5,1,100, NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
+        Creature defender = new Creature("c2", 10,NOT_IMPORTANT,80,NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
 
         attacker.attack(defender);
         assertEquals(91,attacker.getCurrentHp());
@@ -65,7 +65,7 @@ public class CreatureCounterAttackTest {
     void shouldThrowExceptionWhenattackerAttackHimself(){
         List<Creature> creaturesLeft = new LinkedList<Creature>();
         List<Creature> creaturesRight = new LinkedList<Creature>();
-        Creature attacker = new Creature("c1",5,NOT_IMPORTANT,100, NOT_IMPORTANT);
+        Creature attacker = new Creature("c1",5,NOT_IMPORTANT,100, NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
         creaturesLeft.add(attacker);
         GameEngine game = new GameEngine(creaturesLeft,creaturesRight);
         assertThrows(IllegalArgumentException.class, () -> game.attack(0,0));

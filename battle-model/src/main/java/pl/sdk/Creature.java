@@ -6,30 +6,41 @@ import java.beans.PropertyChangeListener;
 public class Creature implements PropertyChangeListener {
 
     private CreatureStatistic stats;
+    private DamageCalculator damageCalculator;
     private int currentHp;
     private double currentMovePoints;
-
     private boolean counterAttackInThisTurn;
+    private int damage;
     private int attacksInTurn;
 
     public Creature() {
-        this("DefName", 2, 1, 2, 10);
+        this("DefName", 2, 1, 2, 10,1);
     }
 
-    Creature(String name, int attack, int armor, int maxHP, int moveRange) {
+    Creature(String name, int attack, int armor, int maxHP, int moveRange, int aDamage) {
         stats = new CreatureStatistic(name, attack, armor, maxHP, moveRange);
         currentHp = stats.getMaxHP();
         currentMovePoints = stats.getMoveRange();
         attacksInTurn = 1;
+        damageCalculator = new DamageCalculator();
+        damage = aDamage;
+    }
+    Creature(String name, int attack, int armor, int maxHP, int moveRange, DamageCalculator aDamageCalculator, int aDamage) {
+        stats = new CreatureStatistic(name, attack, armor, maxHP, moveRange);
+        currentHp = stats.getMaxHP();
+        currentMovePoints = stats.getMoveRange();
+        attacksInTurn = 1;
+        damageCalculator = aDamageCalculator;
+        damage = aDamage;
     }
 
     void attack(Creature defender) {
         if (this == defender) throw new IllegalArgumentException();
         if (isAlive()) {
-            int damageToDeal = getDamageToDeal(defender);
+            int damageToDeal = damageCalculator.count(this, defender);
             defender.currentHp -= damageToDeal;
             if (!defender.counterAttackInThisTurn && defender.isAlive()) {
-                int damageToDealInCounterAttack = defender.getDamageToDeal(this);
+                int damageToDealInCounterAttack = defender.damageCalculator.count(defender, this);
                 currentHp -= damageToDealInCounterAttack;
                 defender.counterAttackInThisTurn = true;
             }
@@ -37,11 +48,7 @@ public class Creature implements PropertyChangeListener {
 
     }
 
-    private int getDamageToDeal(Creature defender) {
-        int damageToDeal = this.getStats().getAttack() - defender.getStats().getArmor();
-        if (damageToDeal < 0) damageToDeal = 0;
-        return damageToDeal;
-    }
+
 
     boolean isAlive() {
         return currentHp > 0;

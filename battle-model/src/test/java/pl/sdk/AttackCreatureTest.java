@@ -11,8 +11,8 @@ public class AttackCreatureTest {
 
     @Test
     void defenderShouldHaveLost2HPWhenAttackerHas3AttackAndDefenderHas1Armor(){
-        Creature attacker = new Creature("c1",3,NOT_IMPORTANT,10, NOT_IMPORTANT);
-        Creature defender = new Creature("c2", NOT_IMPORTANT,1,10,NOT_IMPORTANT);
+        Creature attacker = new Creature("c1",3,NOT_IMPORTANT,10, NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
+        Creature defender = new Creature("c2", NOT_IMPORTANT,1,10,NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
 
         attacker.attack(defender);
 
@@ -21,8 +21,8 @@ public class AttackCreatureTest {
 
     @Test
     void defenderShouldNotSelfHealWhenHasMoreArmorThatAttackerHasAttack(){
-        Creature attacker = new Creature("c1",10,NOT_IMPORTANT,100, NOT_IMPORTANT);
-        Creature defender = new Creature("c2", NOT_IMPORTANT,20,100,NOT_IMPORTANT);
+        Creature attacker = new Creature("c1",10,NOT_IMPORTANT,100, NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
+        Creature defender = new Creature("c2", NOT_IMPORTANT,20,100,NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
 
         attacker.attack(defender);
 

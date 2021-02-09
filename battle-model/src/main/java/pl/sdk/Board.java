@@ -87,7 +87,7 @@ import java.util.Map;
          throwExceptionWhenThereIsNoChampionToAct(aCreature, "There is no champion to make attack!");
          Point currentPosition = get(aCreature);
          double distance = currentPosition.distance(new Point(aX,aY));
-         return distance <= 1 && isTitleTaken(new Point(aX,aY));
+         return distance <= 1.5 && isTitleTaken(new Point(aX,aY));
 
      }
  }
