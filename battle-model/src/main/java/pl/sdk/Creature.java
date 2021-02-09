@@ -10,7 +10,6 @@ public class Creature implements PropertyChangeListener {
     private int currentHp;
     private double currentMovePoints;
     private boolean counterAttackInThisTurn;
-    private int damage;
     private int attacksInTurn;
 
     public Creature() {
@@ -18,20 +17,14 @@ public class Creature implements PropertyChangeListener {
     }
 
     Creature(String name, int attack, int armor, int maxHP, int moveRange, int aDamage) {
-        stats = new CreatureStatistic(name, attack, armor, maxHP, moveRange);
-        currentHp = stats.getMaxHP();
-        currentMovePoints = stats.getMoveRange();
-        attacksInTurn = 1;
-        damageCalculator = new DamageCalculator();
-        damage = aDamage;
+        this(name, attack, armor, maxHP, moveRange, new NewDamageCalculator(), aDamage);
     }
     Creature(String name, int attack, int armor, int maxHP, int moveRange, DamageCalculator aDamageCalculator, int aDamage) {
-        stats = new CreatureStatistic(name, attack, armor, maxHP, moveRange);
+        stats = new CreatureStatistic(name, attack, armor, maxHP, moveRange, aDamage);
         currentHp = stats.getMaxHP();
         currentMovePoints = stats.getMoveRange();
         attacksInTurn = 1;
         damageCalculator = aDamageCalculator;
-        damage = aDamage;
     }
 
     void attack(Creature defender) {

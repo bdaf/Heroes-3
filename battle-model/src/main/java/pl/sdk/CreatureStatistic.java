@@ -7,14 +7,18 @@ public class CreatureStatistic {
     final private int armor;
     final private int maxHP;
     final private int moveRange;
+    final private int damage;
 
 
-    public CreatureStatistic(String name, int attack, int armor, int maxHP, int moveRange) {
+
+
+    public CreatureStatistic(String name, int attack, int armor, int maxHP, int moveRange, int damage) {
         this.name = name;
         this.maxHP = maxHP;
         this.armor = armor;
         this.attack = attack;
         this.moveRange = moveRange;
+        this.damage = damage;
     }
 
 
@@ -37,4 +41,5 @@ public class CreatureStatistic {
     public int getMoveRange() {
         return moveRange;
     }
+    int getDamage() { return damage; }
 }

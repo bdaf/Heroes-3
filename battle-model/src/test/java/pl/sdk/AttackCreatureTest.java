@@ -19,6 +19,8 @@ public class AttackCreatureTest {
         assertEquals(8,defender.getCurrentHp());
     }
 
+
+
     @Test
     void defenderShouldNotSelfHealWhenHasMoreArmorThatAttackerHasAttack(){
         Creature attacker = new Creature("c1",10,NOT_IMPORTANT,100, NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT);
