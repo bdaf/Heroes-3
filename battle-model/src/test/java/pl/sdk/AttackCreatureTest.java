@@ -1,15 +1,29 @@
 package pl.sdk;
 
 import com.google.common.collect.Range;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class AttackCreatureTest {
 
     public static final int NOT_IMPORTANT = 2;
     public static final Range<Integer> NOT_IMPORTANT_RANGE = Range.closed(5,5);
+    private Random randomizer;
+
+    @BeforeEach
+    void init(){
+        randomizer = new Random();
+        randomizer = mock(Random.class);
+        when(randomizer.nextInt(anyInt())).thenReturn(5);
+    }
 
     @Test
     void defenderShouldHaveLost2HPWhenAttackerHas3AttackAndDefenderHas1Armor(){
@@ -39,8 +53,8 @@ public class AttackCreatureTest {
 
     @Test
     void defenderShouldHaveLostMaximum_400PercentAndAttackerShouldHaveMinimum_30Percent(){
-        Creature attacker = new Creature("c1",100,100,1000, NOT_IMPORTANT, new NewDamageCalculator(), Range.closed(100,100));
-        Creature defender = new Creature("c2", 1,1,1000, NOT_IMPORTANT, new NewDamageCalculator(), Range.closed(100,100));
+        Creature attacker = new Creature("c1",100,100,1000, NOT_IMPORTANT, new DefaultDamageCalculator(randomizer), Range.closed(95,100));
+        Creature defender = new Creature("c2", 1,1,1000, NOT_IMPORTANT, new DefaultDamageCalculator(randomizer), Range.closed(95,100));
 
         attacker.attack(defender);
 
@@ -50,12 +64,11 @@ public class AttackCreatureTest {
 
     @Test
     void defenderShouldHaveLost200PercenOfAttackersAttackAndAttackerShouldHaveLost75PecentOfDefendersAttack(){
-        Creature attacker = new Creature("c1",100,60,1000, NOT_IMPORTANT, new NewDamageCalculator(), Range.closed(50,50));
-        Creature defender = new Creature("c2", 50,80,1000, NOT_IMPORTANT, new NewDamageCalculator(), Range.closed(100,100));
+        Creature attacker = new Creature("c1",100,60,1000, NOT_IMPORTANT, new DefaultDamageCalculator(randomizer), Range.closed(50,60));
+        Creature defender = new Creature("c2", 50,80,1000, NOT_IMPORTANT, new DefaultDamageCalculator(randomizer), Range.closed(100,110));
 
         attacker.attack(defender);
-
-        assertEquals(900, defender.getCurrentHp());
-        assertEquals(925,attacker.getCurrentHp());
+        assertEquals(890,defender.getCurrentHp());
+        assertEquals(922,attacker.getCurrentHp());
     }
 }
