@@ -21,21 +21,6 @@ public class Creature implements PropertyChangeListener {
         currentHp = stats.getMaxHP();
     }
 
-    public Creature() {
-        this("DefName", 2, 1, 2, 10,1);
-    }
-
-    Creature(String name, int attack, int armor, int maxHP, int moveRange, int aDamage) {
-        this(name, attack, armor, maxHP, moveRange, new DefaultDamageCalculator(), Range.closed(aDamage,aDamage));
-    }
-    Creature(String name, int attack, int armor, int maxHP, int moveRange, DamageCalculator aDamageCalculator, Range<Integer> aDamage) {
-        stats = new CreatureStatistic(name, attack, armor, maxHP, moveRange, aDamage);
-        currentHp = stats.getMaxHP();
-        currentMovePoints = stats.getMoveRange();
-        attacksInTurn = 1;
-        damageCalculator = aDamageCalculator;
-    }
-
     void attack(Creature defender) {
         if (this == defender) throw new IllegalArgumentException();
         if (isAlive()) {
@@ -48,8 +33,6 @@ public class Creature implements PropertyChangeListener {
             }
         }
     }
-
-
 
     boolean isAlive() {
         return currentHp > 0;
@@ -111,7 +94,7 @@ public class Creature implements PropertyChangeListener {
         currentMovePoints = aCurrentMovePoints;
     }
 
-    public class Builder {
+    public static class Builder {
         private String name;
         private Integer attack;
         private Integer armor;
@@ -169,6 +152,7 @@ public class Creature implements PropertyChangeListener {
             Creature result = new Creature(stats);
             if(damageCalculator == null)
                 damageCalculator = new DefaultDamageCalculator();
+            result.damageCalculator = this.damageCalculator;
             return result;
         }
     }

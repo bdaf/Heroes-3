@@ -27,8 +27,24 @@ public class AttackCreatureTest {
 
     @Test
     void defenderShouldHaveLost2HPWhenAttackerHas3AttackAndDefenderHas1Armor(){
-        Creature attacker = new Creature("c1",3,NOT_IMPORTANT,10, NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT_RANGE);
-        Creature defender = new Creature("c2", NOT_IMPORTANT,1,10,NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT_RANGE);
+        Creature attacker = new Creature.Builder()
+                .name("c1")
+                .attack(3)
+                .armor(NOT_IMPORTANT)
+                .maxHp(10)
+                .moveRange(NOT_IMPORTANT)
+                .damageCalculator(new DamageCalculator())
+                .damage(NOT_IMPORTANT_RANGE)
+                .build();
+        Creature defender = new Creature.Builder()
+                .name("c2")
+                .attack(NOT_IMPORTANT)
+                .armor(1)
+                .maxHp(10)
+                .moveRange(NOT_IMPORTANT)
+                .damageCalculator(new DamageCalculator())
+                .damage(NOT_IMPORTANT_RANGE)
+                .build();
 
         attacker.attack(defender);
 
