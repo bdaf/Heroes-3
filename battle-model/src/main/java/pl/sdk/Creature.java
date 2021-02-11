@@ -4,8 +4,6 @@ import com.google.common.collect.Range;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Creature implements PropertyChangeListener {
 
@@ -16,10 +14,16 @@ public class Creature implements PropertyChangeListener {
     private boolean counterAttackInThisTurn;
     private int attacksInTurn;
 
-    public Creature(CreatureStatistic stats){
+    public Creature(){
+        this(new CreatureStatistic());
+        damageCalculator = new DefaultDamageCalculator();
+    }
+    private Creature(CreatureStatistic stats){
         this.stats = stats;
         currentHp = stats.getMaxHP();
     }
+
+
 
     void attack(Creature defender) {
         if (this == defender) throw new IllegalArgumentException();
@@ -132,27 +136,26 @@ public class Creature implements PropertyChangeListener {
             return this;
         }
 
-        Creature build(){
-            Set<String> EmptyFields = new HashSet<String>();
+        public Creature build(){
             if(name == null)
-                EmptyFields.add("name");
+                name = "name";
             if(attack == null)
-                EmptyFields.add("attack");
+                attack = 10;
             if(armor == null)
-                EmptyFields.add("armor");
+                armor = 10;
             if(maxHp == null)
-                EmptyFields.add("maxHp");
+                maxHp = 100;
             if(moveRange == null)
-                EmptyFields.add("moveRange");
+                moveRange = 10;
             if(damage == null)
-                EmptyFields.add("damage");
-            if(!EmptyFields.isEmpty())
-                throw new IllegalArgumentException("U need this fields to be filled: "+ EmptyFields.toString()+" ");
-            CreatureStatistic stats = new CreatureStatistic(name, attack, armor, maxHp, moveRange, damage);
-            Creature result = new Creature(stats);
+                damage = Range.closed(6,14);
             if(damageCalculator == null)
                 damageCalculator = new DefaultDamageCalculator();
+            CreatureStatistic stats = new CreatureStatistic(name, attack, armor, maxHp, moveRange, damage);
+            Creature result = new Creature(stats);
             result.damageCalculator = this.damageCalculator;
+            result.currentMovePoints = stats.getMoveRange();
+            result.attacksInTurn = 1;
             return result;
         }
     }

@@ -15,7 +15,7 @@ public class BoardMovingTest {
     @BeforeEach
     void init(){
         board = new Board();
-        creature = new Creature();
+        creature = new Creature.Builder().build();
         board.add(new Point(0,0), creature);
     }
 
@@ -43,23 +43,22 @@ public class BoardMovingTest {
     @Test
     void shouldThrowExceptionWhenCreatureIsTryingToGoToNotEmptyField(){
 
-        Creature creature2 = new Creature();
+        Creature creature2 = new Creature.Builder().build();
         board.add(new Point(2,3), creature2);
 
         assertThrows(IllegalArgumentException.class, () ->board.move(new Point(0,0), new Point(2,3)));
         Creature creatureFromBoard = board.get(2,3);
 
         assertEquals(creature2, creatureFromBoard);
-
     }
 
     @Test
     void shouldThrowExceptionWhenCreatureIsTryingToBeAddedToNotEmptyField(){
 
-        Creature creature2 = new Creature();
+        Creature creature2 = new Creature.Builder().build();
         board.add(new Point(2,3), creature2);
 
-        assertThrows(IllegalArgumentException.class, () -> board.add(new Point(2,3),new Creature()));
+        assertThrows(IllegalArgumentException.class, () -> board.add(new Point(2,3),new Creature.Builder().build()));
         Creature creatureFromBoard = board.get(2,3);
 
         assertEquals(creature2, creatureFromBoard);
@@ -79,7 +78,9 @@ public class BoardMovingTest {
 
     @Test
     void shouldBeAbleToGoToFieldWhenHisMoveIsAttemptingForThis(){
-        Creature creature1 = new Creature("DefName", 1, 1, 1, 1, new DamageCalculator(), NOT_IMPORTANT_RANGE);
+        Creature creature1 = new Creature.Builder()
+                .moveRange(1)
+                .build();;
         board.add(new Point(5,5), creature1);
         assertTrue(board.canMove(creature1,5,6));
         assertTrue(board.canMove(creature1,6,5));
@@ -89,7 +90,9 @@ public class BoardMovingTest {
 
     @Test
     void shouldNotBeAbleToGoToFieldWhenHisMoveIsNotAttemptingForThis(){
-        Creature creature1 = new Creature("DefName", 1, 1, 1, 1, new DamageCalculator(), NOT_IMPORTANT_RANGE);
+        Creature creature1 = new Creature.Builder()
+                .moveRange(1)
+                .build();
         board.add(new Point(5,5), creature1);
 
         assertFalse(board.canMove(creature1,6,6));
@@ -98,7 +101,7 @@ public class BoardMovingTest {
 
     @Test
     void cannotGoWhenFieldIsTaken(){
-        Creature creature1 = new Creature("DefName", 1, 1, 1, 10, new DamageCalculator(), NOT_IMPORTANT_RANGE);
+        Creature creature1 = new Creature.Builder().build();;
         board.add(new Point(5,5),creature1);
 
         assertFalse(board.canMove(creature1,0,0));
@@ -107,7 +110,9 @@ public class BoardMovingTest {
 
     @Test
     void shouldBeAbleToGoToFieldWhenHisMoveIsAttemptingForThisInParts(){
-        Creature creature1 = new Creature("DefName", 1, 1, 1, 2, new DamageCalculator(), NOT_IMPORTANT_RANGE);
+        Creature creature1 = new Creature.Builder()
+                .moveRange(2)
+                .build();
         board.add(new Point(5,5), creature1);
         assertTrue(board.canMove(creature1,5,6));
         board.move(creature1, new Point(5,6));

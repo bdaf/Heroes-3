@@ -28,26 +28,16 @@ public class AttackCreatureTest {
     @Test
     void defenderShouldHaveLost2HPWhenAttackerHas3AttackAndDefenderHas1Armor(){
         Creature attacker = new Creature.Builder()
-                .name("c1")
                 .attack(3)
-                .armor(NOT_IMPORTANT)
                 .maxHp(10)
-                .moveRange(NOT_IMPORTANT)
                 .damageCalculator(new DamageCalculator())
-                .damage(NOT_IMPORTANT_RANGE)
                 .build();
         Creature defender = new Creature.Builder()
-                .name("c2")
-                .attack(NOT_IMPORTANT)
                 .armor(1)
                 .maxHp(10)
-                .moveRange(NOT_IMPORTANT)
                 .damageCalculator(new DamageCalculator())
-                .damage(NOT_IMPORTANT_RANGE)
                 .build();
-
         attacker.attack(defender);
-
         assertEquals(8,defender.getCurrentHp());
     }
 
@@ -55,8 +45,16 @@ public class AttackCreatureTest {
 
     @Test
     void defenderShouldNotSelfHealWhenHasMoreArmorThatAttackerHasAttack(){
-        Creature attacker = new Creature("c1",10,NOT_IMPORTANT,100, NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT_RANGE);
-        Creature defender = new Creature("c2", NOT_IMPORTANT,20,100,NOT_IMPORTANT, new DamageCalculator(), NOT_IMPORTANT_RANGE);
+        Creature attacker = new Creature.Builder()
+                .attack(10)
+                .maxHp(100)
+                .damageCalculator(new DamageCalculator())
+                .build();
+        Creature defender = new Creature.Builder()
+                .armor(20)
+                .maxHp(100)
+                .damageCalculator(new DamageCalculator())
+                .build();
 
         attacker.attack(defender);
 
@@ -69,19 +67,42 @@ public class AttackCreatureTest {
 
     @Test
     void defenderShouldHaveLostMaximum_400PercentAndAttackerShouldHaveMinimum_30Percent(){
-        Creature attacker = new Creature("c1",100,100,1000, NOT_IMPORTANT, new DefaultDamageCalculator(randomizer), Range.closed(95,100));
-        Creature defender = new Creature("c2", 1,1,1000, NOT_IMPORTANT, new DefaultDamageCalculator(randomizer), Range.closed(95,100));
+        Creature attacker = new Creature.Builder()
+                .attack(100)
+                .armor(100)
+                .maxHp(1000)
+                .damage(Range.closed(95,100))
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
+                .build();
+        Creature defender = new Creature.Builder()
+                .attack(1)
+                .armor(1)
+                .maxHp(1000)
+                .damage(Range.closed(95,100))
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
+                .build();
 
         attacker.attack(defender);
-
         assertEquals(600, defender.getCurrentHp());
         assertEquals(970,attacker.getCurrentHp());
     }
 
     @Test
-    void defenderShouldHaveLost200PercenOfAttackersAttackAndAttackerShouldHaveLost75PecentOfDefendersAttack(){
-        Creature attacker = new Creature("c1",100,60,1000, NOT_IMPORTANT, new DefaultDamageCalculator(randomizer), Range.closed(50,60));
-        Creature defender = new Creature("c2", 50,80,1000, NOT_IMPORTANT, new DefaultDamageCalculator(randomizer), Range.closed(100,110));
+    void defenderShouldHaveLost200PercentOfAttackersAttackAndAttackerShouldHaveLost75PercentOfDefendersAttack(){
+        Creature attacker = new Creature.Builder()
+                .attack(100)
+                .armor(60)
+                .maxHp(1000)
+                .damage(Range.closed(50,60))
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
+                .build();
+        Creature defender = new Creature.Builder()
+                .attack(50)
+                .armor(80)
+                .maxHp(1000)
+                .damage(Range.closed(100,110))
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
+                .build();
 
         attacker.attack(defender);
         assertEquals(890,defender.getCurrentHp());

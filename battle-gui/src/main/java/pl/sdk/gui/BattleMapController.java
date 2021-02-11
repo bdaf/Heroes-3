@@ -27,13 +27,13 @@ public class BattleMapController implements PropertyChangeListener {
 
     public BattleMapController(){
         List<Creature> listOfCreatures1 = new ArrayList<Creature>();
-        listOfCreatures1.add(new Creature());
-        listOfCreatures1.add(new Creature());
-        listOfCreatures1.add(new Creature());
+        listOfCreatures1.add(new Creature.Builder().build());
+        listOfCreatures1.add(new Creature.Builder().build());
+        listOfCreatures1.add(new Creature.Builder().build());
         List<Creature> listOfCreatures2 = new ArrayList<Creature>();
-        listOfCreatures2.add(new Creature());
-        listOfCreatures2.add(new Creature());
-        listOfCreatures2.add(new Creature());
+        listOfCreatures2.add(new Creature.Builder().build());
+        listOfCreatures2.add(new Creature.Builder().build());
+        listOfCreatures2.add(new Creature.Builder().build());
 
         gameEngine = new GameEngine(listOfCreatures1,listOfCreatures2);
 

@@ -12,7 +12,9 @@ public class CreatureStatistic {
     final private int moveRange;
     final private Range<Integer> damage;
 
-
+    public CreatureStatistic(){
+        this("name", 10, 10, 100, 10, Range.closed(8,12));
+    }
 
 
     public CreatureStatistic(String name, int attack, int armor, int maxHP, int moveRange, Range<Integer> damage) {

@@ -14,8 +14,8 @@ public class EndOfTurnTest {
 
     @Test
     void shouldResetCounterAttackFlagAfterEndOfTurn(){
-        Creature attacker = new Creature();
-        Creature defender = new Creature();
+        Creature attacker = new Creature.Builder().build();
+        Creature defender = new Creature.Builder().build();
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
 
         assertEquals(true, defender.canCounterAttack());
@@ -29,8 +29,8 @@ public class EndOfTurnTest {
 
     @Test
     void shouldResetAttackFlagAfterEndOfTurn(){
-        Creature attacker = new Creature();
-        Creature defender = new Creature();
+        Creature attacker = new Creature.Builder().build();
+        Creature defender = new Creature.Builder().build();
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         assertEquals(true, defender.canCounterAttack());
         assertEquals(1, attacker.getAttacksInTurn());
@@ -45,7 +45,7 @@ public class EndOfTurnTest {
     @Test
     void shouldResetAttackFlagAfterEndOfTurnBySpy(){
         Creature attacker = spy(Creature.class);
-        Creature defender = new Creature();
+        Creature defender = new Creature.Builder().build();
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         engine.pass();
         engine.pass();

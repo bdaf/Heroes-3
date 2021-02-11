@@ -16,9 +16,9 @@ public class CreatureTurnQueueTest {
 
     @BeforeEach
     void init(){
-    a = new Creature();
-    c = new Creature();
-    b = new Creature();
+    a = new Creature.Builder().build();
+    c = new Creature.Builder().build();
+    b = new Creature.Builder().build();
     creatureList = new ArrayList<>();
 
     creatureList.add(a);
