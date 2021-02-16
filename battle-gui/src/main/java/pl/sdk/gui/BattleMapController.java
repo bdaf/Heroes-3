@@ -34,10 +34,9 @@ public class BattleMapController implements PropertyChangeListener {
         listOfCreatures2.add(new Creature.Builder().build());
         listOfCreatures2.add(new Creature.Builder().build());
         listOfCreatures2.add(new Creature.Builder().build());
+        listOfCreatures2.add(new Creature.Builder().build());
 
         gameEngine = new GameEngine(listOfCreatures1,listOfCreatures2);
-
-
     }
 
 
