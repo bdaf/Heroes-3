@@ -1,20 +1,37 @@
 package pl.sdk.gui;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 class MapTile extends StackPane {
     private Rectangle rec;
     public MapTile(){
-        rec = new Rectangle(40,40, Color.WHITE);
+        rec = new Rectangle(60,60, Color.WHITE);
         rec.setStroke(Color.BLACK);
         getChildren().add(rec);
     }
 
-    public void addNameOfCreature(String text) {
-        getChildren().add(new Label(text));
+    public void addCreature(String stringOfCurrentHp, String nameOfCreature) {
+        VBox vbox = new VBox();
+        vbox.setAlignment(Pos.CENTER);
+        ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/creatures/" + nameOfCreature + ".png")));
+        image.setFitHeight(61);
+        image.setFitWidth(61);
+        vbox.getChildren().add(image);
+        getChildren().add(vbox);
+        Text text = new Text(stringOfCurrentHp);
+        vbox = new VBox();
+        vbox.getChildren().add(text);
+        vbox.setAlignment(Pos.BOTTOM_CENTER);
+        getChildren().add(vbox);
+
     }
 
     public void setBackgroundColor(Color color) {

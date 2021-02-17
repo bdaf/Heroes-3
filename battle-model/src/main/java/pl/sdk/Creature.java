@@ -98,6 +98,14 @@ public class Creature implements PropertyChangeListener {
         currentMovePoints = aCurrentMovePoints;
     }
 
+    public String getStringOfCurrentHp() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getCurrentHp());
+        sb.append("/");
+        sb.append(getStats().getMaxHP());
+        return sb.toString();
+    }
+
     public static class Builder {
         private String name;
         private Integer attack;
@@ -107,31 +115,31 @@ public class Creature implements PropertyChangeListener {
         private Range<Integer> damage;
         private DamageCalculator damageCalculator;
 
-        Builder name(String aName){
+        public Builder name(String aName){
             this.name = aName;
             return this;
         }
-        Builder attack(Integer aAttack){
+        public Builder attack(Integer aAttack){
             this.attack = aAttack;
             return this;
         }
-        Builder armor(Integer aArmor){
+        public Builder armor(Integer aArmor){
             this.armor = aArmor;
             return this;
         }
-        Builder maxHp(Integer aMaxHp){
+        public Builder maxHp(Integer aMaxHp){
             this.maxHp = aMaxHp;
             return this;
         }
-        Builder moveRange(Integer aMoveRange){
+        public Builder moveRange(Integer aMoveRange){
             this.moveRange = aMoveRange;
             return this;
         }
-        Builder damage(Range<Integer> aDamage){
+        public Builder damage(Range<Integer> aDamage){
             this.damage = aDamage;
             return this;
         }
-        Builder damageCalculator(DamageCalculator aDamage){
+        public Builder damageCalculator(DamageCalculator aDamage){
             this.damageCalculator = aDamage;
             return this;
         }
