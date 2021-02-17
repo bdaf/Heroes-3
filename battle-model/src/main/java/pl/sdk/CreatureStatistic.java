@@ -39,7 +39,7 @@ public class CreatureStatistic {
         return armor;
     }
 
-    public int getMaxHP() {
+    public int getMaxHp() {
         return maxHP;
     }
 

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -23,6 +22,7 @@ public class AttackCreatureTest {
         randomizer = new Random();
         randomizer = mock(Random.class);
         when(randomizer.nextInt(anyInt())).thenReturn(5);
+        Creature defenderl = new Creature.Builder().build();
     }
 
     @Test
