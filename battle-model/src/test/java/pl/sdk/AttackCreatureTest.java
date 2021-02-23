@@ -25,19 +25,20 @@ public class AttackCreatureTest {
     }
 
     @Test
-    void defenderShouldHaveLost2HPWhenAttackerHas3AttackAndDefenderHas1Armor(){
+    void defenderShouldHaveLost11HPWhenAttackerHas2AttackMoreThanDefendersArmorAndItIs10PercentMoreToDealThanAttackersDamage(){
         Creature attacker = new Creature.Builder()
                 .attack(3)
-                .maxHp(10)
-                .damageCalculator(new DefaultDamageCalculator())
+                .maxHp(100)
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
+                .damage(Range.closed(5,15))
                 .build();
         Creature defender = new Creature.Builder()
                 .armor(1)
-                .maxHp(10)
+                .maxHp(100)
                 .damageCalculator(new DefaultDamageCalculator())
                 .build();
         attacker.attack(defender);
-        assertEquals(8,defender.getCurrentHp());
+        assertEquals(89,defender.getCurrentHp());
     }
 
 
@@ -68,7 +69,7 @@ public class AttackCreatureTest {
     }
 
     @Test
-    void defenderShouldHaveLost200PercentOfAttackersAttackAndAttackerShouldHaveLost75PercentOfDefendersAttack(){
+    void defenderShouldHaveLost200PercentOfAttackersDamageAndAttackerShouldHaveLost75PercentOfDefendersDamage(){
         Creature attacker = new Creature.Builder()
                 .attack(100)
                 .armor(60)

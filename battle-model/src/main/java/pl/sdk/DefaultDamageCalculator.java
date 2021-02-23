@@ -2,14 +2,14 @@ package pl.sdk;
 
 import java.util.Random;
 
-public class DefaultDamageCalculator extends DamageCalculator {
-    public static final double _30 = 27.9999999;
+public class DefaultDamageCalculator implements CalculateDamageStrategy {
+    public static final double _28 = 27.9999999;
     Random rand;
 
     DefaultDamageCalculator() { this(new Random()); }
     DefaultDamageCalculator(Random aRand) { rand = aRand; }
 
-    int count(Creature aAttacker, Creature aDefender) {
+    public int count(Creature aAttacker, Creature aDefender) {
         int upper = aAttacker.getStats().getDamage().upperEndpoint();
         int lower = aAttacker.getStats().getDamage().lowerEndpoint();
         int randedDamage = rand.nextInt(upper-lower +1) + lower;
@@ -21,8 +21,8 @@ public class DefaultDamageCalculator extends DamageCalculator {
             damageToDeal = (randedDamage * (1 + attackPoints * 0.05));
         } else {
             double defencePoints = aDefender.getStats().getArmor() - aAttacker.getStats().getAttack();
-            if (defencePoints > _30) // min 30% DMG
-                defencePoints = _30; // tak dziwnie napisane bo jak daje równo 28 to źle liczy
+            if (defencePoints > _28) // min 30% DMG
+                defencePoints = _28; // tak dziwnie napisane bo jak daje równo 28 to źle liczy
             damageToDeal = (randedDamage * (1 - (defencePoints * 0.025)));
 
         }

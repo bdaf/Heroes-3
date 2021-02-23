@@ -13,7 +13,7 @@ public class HealSelfOfDmgCalculator extends DefaultDamageCalculator {
     }
 
     @Override
-    int count(Creature aAttacker, Creature aDefender) {
+    public int count(Creature aAttacker, Creature aDefender) {
         int result = super.count(aAttacker, aDefender);
         aAttacker.setCurrentHP((int) (aAttacker.getCurrentHp()+result*healFactor));
         if(aAttacker.getCurrentHp() > aAttacker.getMaxHp())

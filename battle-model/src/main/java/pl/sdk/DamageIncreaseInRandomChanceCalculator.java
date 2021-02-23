@@ -6,7 +6,9 @@ public class DamageIncreaseInRandomChanceCalculator extends DefaultDamageCalcula
     private final double ChanceToIncrease;
     private final double IncreaseFactor;
 
-    DamageIncreaseInRandomChanceCalculator(double aChanceToIncrease, double aIncreaseFactor) { this(aChanceToIncrease,aIncreaseFactor,new Random()); }
+    DamageIncreaseInRandomChanceCalculator(double aChanceToIncrease, double aIncreaseFactor) {
+        this(aChanceToIncrease, aIncreaseFactor, new Random());
+    }
 
     DamageIncreaseInRandomChanceCalculator(double aChanceToIncrease, double aIncreaseFactor, Random aRand) {
         super(aRand);
@@ -15,11 +17,10 @@ public class DamageIncreaseInRandomChanceCalculator extends DefaultDamageCalcula
     }
 
     @Override
-    int count(Creature aAttacker, Creature aDefender) {
-        double number = rand.nextDouble();
+    public int count(Creature aAttacker, Creature aDefender) {
         int multiply = 1;
-        if(number<=0.2)
-            multiply = 2;
-        return super.count(aAttacker, aDefender)*multiply;
+        if (rand.nextDouble() <= ChanceToIncrease)
+            multiply *= IncreaseFactor;
+        return super.count(aAttacker, aDefender) * multiply;
     }
 }

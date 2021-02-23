@@ -8,7 +8,7 @@ import java.beans.PropertyChangeListener;
 public class Creature implements PropertyChangeListener {
 
     private CreatureStatistic stats;
-    private DamageCalculator damageCalculator;
+    private CalculateDamageStrategy damageCalculator;
     private int currentHp;
     private double currentMovePoints;
     private boolean counterAttackInThisTurn;
@@ -57,7 +57,7 @@ public class Creature implements PropertyChangeListener {
         }
         else if(amount < 1 && currentHp>0)// kiedy zostaną usunięte same amounty
             currentHp -= getMaxHp();
-        else if(currentHp<=0 && amount <= 1) // kiedy nie ma Hp aamount jest 1 to musimy zmienić na 0
+        else if(currentHp<=0 && amount <= 1) // kiedy nie ma Hp amount jest 1 to musimy zmienić na 0
             amount=0;
     }
 
@@ -136,7 +136,7 @@ public class Creature implements PropertyChangeListener {
         private Integer maxHp;
         private Integer moveRange;
         private Range<Integer> damage;
-        private DamageCalculator damageCalculator;
+        private CalculateDamageStrategy damageCalculator;
         private Integer amount;
 
         public Builder amount(Integer aAmount){
@@ -167,7 +167,7 @@ public class Creature implements PropertyChangeListener {
             this.damage = aDamage;
             return this;
         }
-        public Builder damageCalculator(DamageCalculator aDamage){
+        public Builder damageCalculator(CalculateDamageStrategy aDamage){
             this.damageCalculator = aDamage;
             return this;
         }

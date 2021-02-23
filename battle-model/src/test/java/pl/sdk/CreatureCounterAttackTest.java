@@ -1,26 +1,44 @@
 package pl.sdk;
 
+import com.google.common.collect.Range;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static pl.sdk.AttackCreatureTest.NOT_IMPORTANT_RANGE;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CreatureCounterAttackTest {
+    public static final int THE_SAME_FOR_BOTH = 10;
+    private Random randomizer;
 
+    @BeforeEach
+    void init(){
+        randomizer = new Random();
+        randomizer = mock(Random.class);
+        when(randomizer.nextInt(anyInt())).thenReturn(0);
+    }
     @Test
     void defenderShouldCounterAttack(){
         Creature attacker = new Creature.Builder()
-                .armor(2)
+                .attack(THE_SAME_FOR_BOTH)
+                .armor(THE_SAME_FOR_BOTH)
                 .maxHp(100)
-                .damageCalculator(new DamageCalculator())
+                .damage(Range.closed(80,100))
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .build();
         Creature defender = new Creature.Builder()
-                .attack(5)
-                .damageCalculator(new DamageCalculator())
+                .attack(THE_SAME_FOR_BOTH)
+                .armor(THE_SAME_FOR_BOTH)
+                .maxHp(100)
+                .damage(Range.closed(3,100))
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .build();
 
         attacker.attack(defender);
@@ -31,14 +49,17 @@ public class CreatureCounterAttackTest {
     @Test
     void defenderShouldNotCounterAttackWhenHeSupposedToBeDead(){
         Creature attacker = new Creature.Builder()
-                .attack(100)
+                .attack(THE_SAME_FOR_BOTH)
+                .armor(THE_SAME_FOR_BOTH)
                 .maxHp(100)
-                .damageCalculator(new DamageCalculator())
+                .damageCalculator(new DefaultDamageCalculator())
+                .damage(Range.closed(80,100))
                 .build();
         Creature defender = new Creature.Builder()
-                .armor(20)
+                .attack(THE_SAME_FOR_BOTH)
+                .armor(THE_SAME_FOR_BOTH)
                 .maxHp(80)
-                .damageCalculator(new DamageCalculator())
+                .damageCalculator(new DefaultDamageCalculator())
                 .build();
 
         attacker.attack(defender);
@@ -48,15 +69,18 @@ public class CreatureCounterAttackTest {
     @Test
     void defenderShouldCounterAttackOnlyOnes(){
         Creature attacker = new Creature.Builder()
-                .attack(5)
-                .armor(1)
+                .attack(THE_SAME_FOR_BOTH)
+                .armor(THE_SAME_FOR_BOTH)
                 .maxHp(100)
-                .damageCalculator(new DamageCalculator())
+                .damage(Range.closed(1,3))
+                .damageCalculator(new DefaultDamageCalculator())
                 .build();
         Creature defender = new Creature.Builder()
-                .attack(10)
+                .attack(THE_SAME_FOR_BOTH)
+                .armor(THE_SAME_FOR_BOTH)
                 .maxHp(80)
-                .damageCalculator(new DamageCalculator())
+                .damage(Range.closed(9,11))
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .build();
 
         attacker.attack(defender);
@@ -85,7 +109,7 @@ public class CreatureCounterAttackTest {
         Creature attacker = new Creature.Builder()
                 .attack(5)
                 .maxHp(100)
-                .damageCalculator(new DamageCalculator())
+                .damageCalculator(new DefaultDamageCalculator())
                 .build();
         creaturesLeft.add(attacker);
         GameEngine game = new GameEngine(creaturesLeft,creaturesRight);

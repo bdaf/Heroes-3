@@ -41,7 +41,7 @@ public class HealSelfCalculatorTest {
     }
     @Test
     void shouldHeal50WhenHeDeal100Dmg(){
-        DamageCalculator calc = new HealSelfOfDmgCalculator(0.5, rand);
+        CalculateDamageStrategy calc = new HealSelfOfDmgCalculator(0.5, rand);
 
         attacker.setCurrentHP(40);
         int result = calc.count(attacker, defender);
@@ -52,7 +52,7 @@ public class HealSelfCalculatorTest {
 
     @Test
     void shouldHeal30AndHaveMaxHpWhenHeDeal100DmgButHasCurrently70Hp(){
-        DamageCalculator calc = new HealSelfOfDmgCalculator(0.5, rand);
+        CalculateDamageStrategy calc = new HealSelfOfDmgCalculator(0.5, rand);
 
         attacker.setCurrentHP(70);
         int result = calc.count(attacker, defender);
