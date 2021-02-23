@@ -22,7 +22,6 @@ public class AttackCreatureTest {
         randomizer = new Random();
         randomizer = mock(Random.class);
         when(randomizer.nextInt(anyInt())).thenReturn(5);
-        Creature defenderl = new Creature.Builder().build();
     }
 
     @Test
@@ -30,12 +29,12 @@ public class AttackCreatureTest {
         Creature attacker = new Creature.Builder()
                 .attack(3)
                 .maxHp(10)
-                .damageCalculator(new DamageCalculator())
+                .damageCalculator(new DefaultDamageCalculator())
                 .build();
         Creature defender = new Creature.Builder()
                 .armor(1)
                 .maxHp(10)
-                .damageCalculator(new DamageCalculator())
+                .damageCalculator(new DefaultDamageCalculator())
                 .build();
         attacker.attack(defender);
         assertEquals(8,defender.getCurrentHp());
@@ -43,30 +42,11 @@ public class AttackCreatureTest {
 
 
 
-    @Test
-    void defenderShouldNotSelfHealWhenHasMoreArmorThatAttackerHasAttack(){
-        Creature attacker = new Creature.Builder()
-                .attack(10)
-                .maxHp(100)
-                .damageCalculator(new DamageCalculator())
-                .build();
-        Creature defender = new Creature.Builder()
-                .armor(20)
-                .maxHp(100)
-                .damageCalculator(new DamageCalculator())
-                .build();
-
-        attacker.attack(defender);
-
-        assertEquals(100,defender.getCurrentHp());
-    }
-
-
     //////////////////////////// AFTER NEW DMG CALCULATOR //////////////////////////////
 
 
     @Test
-    void defenderShouldHaveLostMaximum_400PercentAndAttackerShouldHaveMinimum_30Percent(){
+    void defenderShouldHaveLostMaximum_400PercentOfAttackersDamageAndAttackerShouldHaveLostMinimum_30PercentOfDefendersDamage(){
         Creature attacker = new Creature.Builder()
                 .attack(100)
                 .armor(100)

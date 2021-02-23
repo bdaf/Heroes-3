@@ -13,9 +13,6 @@ public class Creature implements PropertyChangeListener {
     private double currentMovePoints;
     private boolean counterAttackInThisTurn;
     private int attacksInTurn;
-
-
-
     private int amount;
 
     public Creature(){
@@ -26,7 +23,7 @@ public class Creature implements PropertyChangeListener {
         this.stats = stats;
         currentHp = stats.getMaxHp();
     }
-    private int getMaxHp(){
+     int getMaxHp(){
         return stats.getMaxHp();
     }
 
@@ -35,10 +32,10 @@ public class Creature implements PropertyChangeListener {
         if (this == defender) throw new IllegalArgumentException();
         if (isAlive()) {
             int damageToDeal = damageCalculator.count(this, defender);
-            defender.ApplyDamage(damageToDeal*amount);
+            defender.ApplyDamage(damageToDeal);
             if (!defender.counterAttackInThisTurn && defender.isAlive()) {
                 int damageToDealInCounterAttack = defender.damageCalculator.count(defender, this);
-                ApplyDamage(damageToDealInCounterAttack*defender.amount);
+                ApplyDamage(damageToDealInCounterAttack);
                 defender.counterAttackInThisTurn = true;
             }
         }

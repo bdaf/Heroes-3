@@ -3,6 +3,7 @@ package pl.sdk;
 import java.util.Random;
 
 public class DefaultDamageCalculator extends DamageCalculator {
+    public static final double _30 = 27.9999999;
     Random rand;
 
     DefaultDamageCalculator() { this(new Random()); }
@@ -20,11 +21,11 @@ public class DefaultDamageCalculator extends DamageCalculator {
             damageToDeal = (randedDamage * (1 + attackPoints * 0.05));
         } else {
             double defencePoints = aDefender.getStats().getArmor() - aAttacker.getStats().getAttack();
-            if (defencePoints > 27.9999999) // min 30% DMG
-                defencePoints = 27.9999999; // tak dziwnie napisane bo jak daje równo 28 to źle liczy
+            if (defencePoints > _30) // min 30% DMG
+                defencePoints = _30; // tak dziwnie napisane bo jak daje równo 28 to źle liczy
             damageToDeal = (randedDamage * (1 - (defencePoints * 0.025)));
 
         }
-        return (int) damageToDeal;
+        return (int) damageToDeal*aAttacker.getAmount();
     }
 }
