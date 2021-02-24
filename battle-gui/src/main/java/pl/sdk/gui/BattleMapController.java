@@ -6,9 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import pl.sdk.Creature;
-import pl.sdk.GameEngine;
-import pl.sdk.Point;
+import pl.sdk.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -28,7 +26,7 @@ public class BattleMapController implements PropertyChangeListener {
     public BattleMapController(){
         List<Creature> notUpgradedCreatures = new ArrayList<Creature>();
         Creature c;
-        c = new Creature.Builder()
+        c = new BlockingCounterAttackCreature.Builder()
                 .name("Skeleton")
                 .maxHp(6)
                 .attack(5)
@@ -64,7 +62,7 @@ public class BattleMapController implements PropertyChangeListener {
                 .armor(9)
                 .build();
         notUpgradedCreatures.add(c);
-        c = new Creature.Builder()
+        c = new ShootingCreature.Builder()
                 .name("Lich")
                 .maxHp(30)
                 .attack(13)
@@ -129,7 +127,7 @@ public class BattleMapController implements PropertyChangeListener {
                 .armor(10)
                 .build();
         upgradedCreatures.add(c);
-        c = new Creature.Builder()
+        c = new ShootingCreature.Builder()
                 .name("PowerLich")
                 .maxHp(40)
                 .attack(13)

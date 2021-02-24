@@ -89,4 +89,26 @@ public class AttackCreatureTest {
         assertEquals(890,defender.getCurrentHp());
         assertEquals(922,attacker.getCurrentHp());
     }
+
+    @Test
+    void defenderShouldNotCounterAttack(){
+        Creature attacker = new Creature.Builder()
+                .attack(100)
+                .armor(60)
+                .maxHp(1000)
+                .damage(Range.closed(50,60))
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
+                .build();
+        Creature defender = new Creature.Builder()
+                .attack(50)
+                .armor(80)
+                .maxHp(1000)
+                .damage(Range.closed(100,110))
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
+                .build();
+
+        attacker.attack(defender);
+        assertEquals(890,defender.getCurrentHp());
+        assertEquals(922,attacker.getCurrentHp());
+    }
 }

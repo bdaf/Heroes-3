@@ -33,14 +33,16 @@ public class Creature implements PropertyChangeListener {
         if (isAlive()) {
             int damageToDeal = damageCalculator.count(this, defender);
             defender.applyDamage(damageToDeal);
-
             performAfterAttack(damageToDeal);
+            counterAttack(defender);
+        }
+    }
 
-            if (!defender.counterAttackInThisTurn && defender.isAlive()) {
-                int damageToDealInCounterAttack = defender.damageCalculator.count(defender, this);
-                applyDamage(damageToDealInCounterAttack);
-                defender.counterAttackInThisTurn = true;
-            }
+    protected void counterAttack(Creature defender) {
+        if (!defender.counterAttackInThisTurn && defender.isAlive()) {
+            int damageToDealInCounterAttack = defender.damageCalculator.count(defender, this);
+            applyDamage(damageToDealInCounterAttack);
+            defender.counterAttackInThisTurn = true;
         }
     }
 
@@ -156,6 +158,10 @@ public class Creature implements PropertyChangeListener {
         sb.append(getStats().getMaxHp());
         sb.append("  "+amount);
         return sb.toString();
+    }
+
+    protected double getAttackRange() {
+        return 1.5;
     }
 
     public static class Builder {

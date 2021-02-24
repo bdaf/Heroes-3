@@ -88,7 +88,7 @@ import java.util.Map;
          Point currentPosition = get(aCreature);
          Creature potentiallyDefender = get(aX,aY);
          double distance = currentPosition.distance(new Point(aX,aY));
-         return distance <= 1.5 && isTitleTaken(new Point(aX,aY)) && potentiallyDefender.isAlive();
+         return distance <= aCreature.getAttackRange() && isTitleTaken(new Point(aX,aY)) && potentiallyDefender.isAlive();
 
      }
  }
