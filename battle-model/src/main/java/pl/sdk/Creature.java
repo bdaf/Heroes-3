@@ -19,11 +19,11 @@ public class Creature implements PropertyChangeListener {
         this(new CreatureStatistic());
         damageCalculator = new DefaultDamageCalculator();
     }
-    private Creature(CreatureStatistic stats){
+    protected Creature(CreatureStatistic stats){
         this.stats = stats;
         currentHp = stats.getMaxHp();
     }
-     int getMaxHp(){
+    int getMaxHp(){
         return stats.getMaxHp();
     }
 
@@ -32,33 +32,62 @@ public class Creature implements PropertyChangeListener {
         if (this == defender) throw new IllegalArgumentException();
         if (isAlive()) {
             int damageToDeal = damageCalculator.count(this, defender);
-            defender.ApplyDamage(damageToDeal);
+            defender.applyDamage(damageToDeal);
+
+            performAfterAttack(damageToDeal);
+
             if (!defender.counterAttackInThisTurn && defender.isAlive()) {
                 int damageToDealInCounterAttack = defender.damageCalculator.count(defender, this);
-                ApplyDamage(damageToDealInCounterAttack);
+                applyDamage(damageToDealInCounterAttack);
                 defender.counterAttackInThisTurn = true;
             }
         }
     }
 
-    private void ApplyDamage(int aDamageToApply) {
-        int amountToDelete = aDamageToApply/getMaxHp();
-        aDamageToApply = aDamageToApply%getMaxHp();
-        amount-=amountToDelete;
-        if(amount<0){ // pokaz ile zadal po przekroczeniu skali, na minusie :D
-            currentHp = currentHp-(getMaxHp()*((amount*-1)+1)+ aDamageToApply);
+    protected void performAfterAttack(int aDamageToChange) {}
+
+    void applyDamage(int aDamageToApply) {
+        int hpOfWholeStack = currentHp + (amount-1)*getMaxHp();
+        hpOfWholeStack-=aDamageToApply;
+        if(hpOfWholeStack<=0){
             amount = 0;
+            currentHp = 0;
         }
-        else
-            currentHp-=aDamageToApply;
-        if(currentHp<=0 && amount > 1){// kiedy aDamageToApply > currentHP
-            currentHp+=getMaxHp();
-            amount--;
+        else if(aDamageToApply<0) {// when aDamageToApply is the minus value
+            currentHp-=aDamageToApply ;
+            if(currentHp>getMaxHp())
+                currentHp=getMaxHp();
         }
-        else if(amount < 1 && currentHp>0)// kiedy zostaną usunięte same amounty
-            currentHp -= getMaxHp();
-        else if(currentHp<=0 && amount <= 1) // kiedy nie ma Hp amount jest 1 to musimy zmienić na 0
-            amount=0;
+        else{
+            if(hpOfWholeStack%getMaxHp() == 0){
+                amount = hpOfWholeStack/getMaxHp();
+                currentHp = getMaxHp();
+            }
+            else{
+                amount = hpOfWholeStack / getMaxHp() + 1;
+                currentHp = hpOfWholeStack % getMaxHp();
+            }
+        }
+
+
+
+//        int amountToDelete = aDamageToApply/getMaxHp();
+//        aDamageToApply = aDamageToApply%getMaxHp();
+//        amount-=amountToDelete;
+//        if(amount<0){ // pokaz ile zadal po przekroczeniu skali, na minusie :D
+//            currentHp = currentHp-(getMaxHp()*((amount*-1)+1)+ aDamageToApply);
+//            amount = 0;
+//        }
+//        else
+//            currentHp-=aDamageToApply;
+//        if(currentHp<=0 && amount > 1){// kiedy aDamageToApply > currentHP
+//            currentHp+=getMaxHp();
+//            amount--;
+//        }
+//        if(amount < 1 && currentHp>0)// kiedy zostaną usunięte same amounty
+//            currentHp -= getMaxHp();
+//        if(currentHp<=0 && amount <= 1) // kiedy nie ma Hp amount jest 1 to musimy zmienić na 0
+//            amount=0;
     }
 
     boolean isAlive() {
@@ -171,7 +200,6 @@ public class Creature implements PropertyChangeListener {
             this.damageCalculator = aDamage;
             return this;
         }
-
         public Creature build(){
             if(name == null)
                 name = "name";
@@ -190,12 +218,16 @@ public class Creature implements PropertyChangeListener {
             if(amount == null)
                 amount = 1;
             CreatureStatistic stats = new CreatureStatistic(name, attack, armor, maxHp, moveRange, damage);
-            Creature result = new Creature(stats);
+            Creature result = createInstance(stats);
             result.damageCalculator = this.damageCalculator;
             result.currentMovePoints = stats.getMoveRange();
             result.attacksInTurn = 1;
             result.amount = this.amount;
             return result;
+        }
+
+        protected Creature createInstance(CreatureStatistic aStats) {
+            return new Creature(aStats);
         }
     }
 }

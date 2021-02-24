@@ -123,7 +123,7 @@ public class StackOfCreaturesTest {
         assertEquals(0, defender.getCurrentHp());
     }
     @Test
-    void defenderShouldHaveStackEquals0AndHpEqualsMinus40WhenDamageIsGraterThanAmountsAndDefenderHasLessCurrentHp(){
+    void defenderShouldHaveStackEquals0AndHpEquals0WhenDamageIsGraterThanAmountsAndDefenderHasLessCurrentHp(){
         Creature attacker = new Creature.Builder()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -139,11 +139,11 @@ public class StackOfCreaturesTest {
         attacker2.attack(defender);
         attacker.attack(defender);
         assertEquals(0, defender.getAmount());
-        assertEquals(-40, defender.getCurrentHp());
+        assertEquals(0, defender.getCurrentHp());
     }
 
     @Test
-    void defenderShouldHaveStackEquals0AndHpEqualsMinus140WhenDamageIsGraterThanAmountsAndDefenderHasLessCurrentHp(){
+    void defenderShouldHaveStackEquals0AndHpEquals0WhenDamageIsGraterThanAmountsAndDefenderHasLessCurrentHpV2(){
         Creature attacker = new Creature.Builder()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -159,11 +159,11 @@ public class StackOfCreaturesTest {
         attacker2.attack(defender);
         attacker.attack(defender);
         assertEquals(0, defender.getAmount());
-        assertEquals(-140, defender.getCurrentHp());
+        assertEquals(0, defender.getCurrentHp());
     }
 
     @Test
-    void defenderShouldHaveStackEquals0AndHpEqualsMinus1WhenDamageIsGraterThanAmounts(){
+    void defenderShouldHaveStackEquals0AndHpEquals0WhenDamageIsGraterThanAmounts(){
         Creature attacker = new Creature.Builder()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
@@ -172,11 +172,11 @@ public class StackOfCreaturesTest {
                 .build();
         attacker.attack(defender);
         assertEquals(0, defender.getAmount());
-        assertEquals(-1, defender.getCurrentHp());
+        assertEquals(0, defender.getCurrentHp());
     }
 
     @Test
-    void defenderShouldHaveStackEquals0WhenAttackerIsMuchGreaterAndAttacksHim(){
+    void defenderShouldHaveStackEquals0WhenAttackerIsMuchGreaterAndAttacksHimAndHpEquals0Too(){
         Creature attacker = new Creature.Builder()
                 .maxHp(INF)
                 .attack(NOT_IMPORTANT)
@@ -192,7 +192,7 @@ public class StackOfCreaturesTest {
                 .build();
         attacker.attack(defender);
         assertEquals(0, defender.getAmount());
-        assertEquals(-250, defender.getCurrentHp());
+        assertEquals(0, defender.getCurrentHp());
     }
 
 

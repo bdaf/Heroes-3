@@ -2,7 +2,7 @@ package pl.sdk;
 
 import java.util.Random;
 
-public class DamageIncreaseInRandomChanceCalculator extends DefaultDamageCalculator {
+public class DamageIncreaseInRandomChanceCalculator extends AbstractDamageCalculator {
     private final double ChanceToIncrease;
     private final double IncreaseFactor;
 
@@ -17,10 +17,9 @@ public class DamageIncreaseInRandomChanceCalculator extends DefaultDamageCalcula
     }
 
     @Override
-    public int count(Creature aAttacker, Creature aDefender) {
-        int multiply = 1;
-        if (rand.nextDouble() <= ChanceToIncrease)
-            multiply *= IncreaseFactor;
-        return super.count(aAttacker, aDefender) * multiply;
+    protected double changeDamageAfter(double aDamageToChange) {
+        if(rand.nextDouble()<=ChanceToIncrease)
+            aDamageToChange*=IncreaseFactor;
+        return aDamageToChange;
     }
 }
