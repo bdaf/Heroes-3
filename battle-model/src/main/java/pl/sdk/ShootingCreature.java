@@ -5,7 +5,9 @@ public class ShootingCreature extends Creature {
     public ShootingCreature(CreatureStatistic aStats) {
         super(aStats);
     }
-
+    public ShootingCreature() {
+        super();
+    }
     @Override
     protected double getAttackRange() {
         return Double.MAX_VALUE;

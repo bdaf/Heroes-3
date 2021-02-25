@@ -15,7 +15,7 @@ public class Creature implements PropertyChangeListener {
     private int attacksInTurn;
     private int amount;
 
-    public Creature(){
+    protected Creature(){
         this(new CreatureStatistic());
         damageCalculator = new DefaultDamageCalculator();
     }
