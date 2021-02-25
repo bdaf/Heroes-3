@@ -31,16 +31,20 @@ public class Creature implements PropertyChangeListener {
     void attack(Creature defender) {
         if (this == defender) throw new IllegalArgumentException();
         if (isAlive()) {
-            int damageToDeal = damageCalculator.count(this, defender);
+            int damageToDeal = countDamage(this, defender);
             defender.applyDamage(damageToDeal);
             performAfterAttack(damageToDeal);
             counterAttack(defender);
         }
     }
 
+    int countDamage(Creature aAttacker, Creature defender) {
+        return damageCalculator.count(aAttacker, defender);
+    }
+
     protected void counterAttack(Creature defender) {
         if (!defender.counterAttackInThisTurn && defender.isAlive()) {
-            int damageToDealInCounterAttack = defender.damageCalculator.count(defender, this);
+            int damageToDealInCounterAttack = defender.countDamage(defender, this);
             applyDamage(damageToDealInCounterAttack);
             defender.counterAttackInThisTurn = true;
         }
@@ -162,6 +166,10 @@ public class Creature implements PropertyChangeListener {
 
     protected double getAttackRange() {
         return 1.5;
+    }
+
+    protected void setCurrentHPToMaxHp() {
+        currentHp = getMaxHp();
     }
 
     public static class Builder {

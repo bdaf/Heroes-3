@@ -44,9 +44,9 @@ public class BoardAttackingTest {
 
     @Test
     void shouldBeAbleToAttackWheneverDefenderIsButDefenderCanNotCounterAttack(){
-        Creature creature1 = new ShootingCreature.Builder()
+        Creature creature1 = new ShootingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
                 .maxHp(100)
-                .build();
+                .build()));
         board.add(new Point(10,10),creature1);
         boolean result = board.canAttack(creature1, 0, 0);
         assertTrue(result);
@@ -56,9 +56,9 @@ public class BoardAttackingTest {
 
     @Test
     void defenderCanNotCounterAttack(){
-        Creature creature1 = new BlockingCounterAttackCreature.Builder()
+        Creature creature1 = new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
                 .maxHp(100)
-                .build();
+                .build());
         board.add(new Point(1,0),creature1);
         boolean result = board.canAttack(creature1, 0, 0);
         assertTrue(result);

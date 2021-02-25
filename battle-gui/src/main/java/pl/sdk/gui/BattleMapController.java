@@ -26,7 +26,7 @@ public class BattleMapController implements PropertyChangeListener {
     public BattleMapController(){
         List<Creature> notUpgradedCreatures = new ArrayList<Creature>();
         Creature c;
-        c = new BlockingCounterAttackCreature.Builder()
+        c = new BlockingCounterAttackCreatureDecorator.Builder()
                 .name("Skeleton")
                 .maxHp(6)
                 .attack(5)
@@ -62,7 +62,7 @@ public class BattleMapController implements PropertyChangeListener {
                 .armor(9)
                 .build();
         notUpgradedCreatures.add(c);
-        c = new ShootingCreature.Builder()
+        c = new ShootingCreatureDecorator.Builder()
                 .name("Lich")
                 .maxHp(30)
                 .attack(13)
@@ -127,7 +127,7 @@ public class BattleMapController implements PropertyChangeListener {
                 .armor(10)
                 .build();
         upgradedCreatures.add(c);
-        c = new ShootingCreature.Builder()
+        c = new ShootingCreatureDecorator.Builder()
                 .name("PowerLich")
                 .maxHp(40)
                 .attack(13)

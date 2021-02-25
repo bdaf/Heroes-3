@@ -22,15 +22,14 @@ public class HealSelfCalculatorTest {
     void init(){
         rand = mock(Random.class);
         when(rand.nextInt(anyInt())).thenReturn(0);
-        attacker = new CreatureWithSelfHealing.Builder()
-                .selfHealingPercentage(0.5)
+        attacker = new SelfHealingCreatureDecorator(new Creature.Builder()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
                 .maxHp(100)
                 .damage(Range.closed(10,12))
                 .damageCalculator(new DefaultDamageCalculator(rand))
                 .amount(10)
-                .build();
+                .build(),0.5);
         defender = new Creature.Builder()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
@@ -50,15 +49,14 @@ public class HealSelfCalculatorTest {
 
     @Test
     void shouldHeal160AndItShouldBeJustMaxHpAndAmountShouldNotChangeWhenHeDeal360Dmg(){
-        attacker = new CreatureWithSelfHealing.Builder()
-                .selfHealingPercentage(0.5)
+        attacker = new SelfHealingCreatureDecorator(new Creature.Builder()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
                 .maxHp(100)
                 .damage(Range.closed(32,33))
                 .damageCalculator(new DefaultDamageCalculator(rand))
                 .amount(10)
-                .build();
+                .build(),0.5);
 
         attacker.setCurrentHP(40);
         attacker.attack(defender);
