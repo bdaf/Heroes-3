@@ -11,6 +11,8 @@ public class CreatureTurnQueue {
     private final Queue<Creature> creatureQuene;
     private Creature activeCreature;
     private Set<GameEngine> observers;
+    private double movePointsOfActiveCreature;
+    private int attacksOfActiveCreature;
 
     public CreatureTurnQueue(Collection<Creature> aCreatures) {
         creatures = aCreatures;
@@ -51,7 +53,28 @@ public class CreatureTurnQueue {
     }
 
     void next() {
-        if(creatureQuene.isEmpty()) initQueue();
-            else activeCreature = creatureQuene.poll();
+        if(creatureQuene.isEmpty())
+            initQueue();
+        else {
+            activeCreature = creatureQuene.poll();
+            movePointsOfActiveCreature = activeCreature.getMoveRange();
+            attacksOfActiveCreature = activeCreature.getMaxAttacksInTurn();
+        }
+    }
+
+    double getMovePointsOfActiveCreature() {
+        return movePointsOfActiveCreature;
+    }
+
+    void setMovePointsOfActiveCreature(double aMovePointsOfActiveCreature) {
+        movePointsOfActiveCreature = aMovePointsOfActiveCreature;
+    }
+
+    int getAttacksOfActiveCreature() {
+        return attacksOfActiveCreature;
+    }
+
+    void setAttacksOfActiveCreature(int aAttacksOfActiveCreature) {
+        attacksOfActiveCreature = aAttacksOfActiveCreature;
     }
 }

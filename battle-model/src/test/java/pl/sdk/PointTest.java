@@ -32,7 +32,6 @@ public class PointTest {
         Point p1 = new Point(3,4);
         Point p2 = new Point(0,0);
         assertEquals(5, p1.distance(p2));
-
     }
 
 }

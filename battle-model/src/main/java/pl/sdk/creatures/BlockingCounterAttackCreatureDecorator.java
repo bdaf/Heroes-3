@@ -2,11 +2,11 @@ package pl.sdk.creatures;
 
 import java.beans.PropertyChangeEvent;
 
-public class BlockingCounterAttackCreatureDecorator extends Creature {
+ class BlockingCounterAttackCreatureDecorator extends Creature {
 
     protected final Creature decorated;
 
-    public BlockingCounterAttackCreatureDecorator(Creature aDecorated) {
+    BlockingCounterAttackCreatureDecorator(Creature aDecorated) {
         decorated = aDecorated;
     }
 
@@ -31,7 +31,7 @@ public class BlockingCounterAttackCreatureDecorator extends Creature {
     }
 
     @Override
-    void attack(Creature defender) {
+    public void attack(Creature defender) {
         if (decorated == defender) throw new IllegalArgumentException();
         if (decorated.isAlive()) {
             int damageToDeal = countDamage(decorated, defender);
@@ -56,23 +56,18 @@ public class BlockingCounterAttackCreatureDecorator extends Creature {
     }
 
     @Override
-    boolean isAlive() {
+    public boolean isAlive() {
         return decorated.isAlive();
     }
 
     @Override
-    int getCurrentHp() {
+    public int getCurrentHp() {
         return decorated.getCurrentHp();
     }
 
     @Override
     void setCurrentHP(int currentHP) {
         decorated.setCurrentHP(currentHP);
-    }
-
-    @Override
-    double getCurrentMovePoints() {
-        return decorated.getCurrentMovePoints();
     }
 
     @Override
@@ -91,22 +86,12 @@ public class BlockingCounterAttackCreatureDecorator extends Creature {
     }
 
     @Override
-    int getAttacksInTurn() {
-        return decorated.getAttacksInTurn();
-    }
-
-    @Override
-    void setAttacksInTurn(int aAttacksInTurn) {
-        decorated.setAttacksInTurn(aAttacksInTurn);
-    }
-
-    @Override
-    boolean canCounterAttack() {
+    public boolean canCounterAttack() {
         return decorated.canCounterAttack();
     }
 
     @Override
-    int getAmount() {
+    public int getAmount() {
         return decorated.getAmount();
     }
 
@@ -121,17 +106,12 @@ public class BlockingCounterAttackCreatureDecorator extends Creature {
     }
 
     @Override
-    void setCurrentMovePoints(double aCurrentMovePoints) {
-        decorated.setCurrentMovePoints(aCurrentMovePoints);
-    }
-
-    @Override
     public String getStringOfCurrentHp() {
         return decorated.getStringOfCurrentHp();
     }
 
     @Override
-    protected double getAttackRange() {
+    public double getAttackRange() {
         return decorated.getAttackRange();
     }
 }

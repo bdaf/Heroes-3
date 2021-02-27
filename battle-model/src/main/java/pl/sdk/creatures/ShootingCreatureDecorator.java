@@ -2,15 +2,30 @@ package pl.sdk.creatures;
 
 import java.beans.PropertyChangeEvent;
 
-public class ShootingCreatureDecorator extends Creature {
+ class ShootingCreatureDecorator extends Creature {
 
     private final Creature decorated;
 
-    public ShootingCreatureDecorator(Creature aDecorated) {
+     ShootingCreatureDecorator(Creature aDecorated) {
         decorated = aDecorated;
     }
 
-    @Override
+     @Override
+     public double getMoveRange() {
+         return decorated.getMoveRange();
+     }
+
+     @Override
+     public int getMaxAttacksInTurn() {
+         return decorated.getMaxAttacksInTurn();
+     }
+
+     @Override
+     void setAttacksInTurn(int aAttacksInTurn) {
+         decorated.setAttacksInTurn(aAttacksInTurn);
+     }
+
+     @Override
     void setAmount(int aAmount) {
         decorated.setAmount(aAmount);
     }
@@ -21,7 +36,7 @@ public class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
-    void attack(Creature defender) {
+    public void attack(Creature defender) {
         if (decorated == defender) throw new IllegalArgumentException();
         if (decorated.isAlive()) {
             int damageToDeal = countDamage(decorated, defender);
@@ -51,23 +66,18 @@ public class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
-    boolean isAlive() {
+    public boolean isAlive() {
         return decorated.isAlive();
     }
 
     @Override
-    int getCurrentHp() {
+    public int getCurrentHp() {
         return decorated.getCurrentHp();
     }
 
     @Override
     void setCurrentHP(int currentHP) {
         decorated.setCurrentHP(currentHP);
-    }
-
-    @Override
-    double getCurrentMovePoints() {
-        return decorated.getCurrentMovePoints();
     }
 
     @Override
@@ -86,17 +96,7 @@ public class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
-    int getAttacksInTurn() {
-        return decorated.getAttacksInTurn();
-    }
-
-    @Override
-    void setAttacksInTurn(int aAttacksInTurn) {
-        decorated.setAttacksInTurn(aAttacksInTurn);
-    }
-
-    @Override
-    boolean canCounterAttack() {
+    public boolean canCounterAttack() {
         return decorated.canCounterAttack();
     }
 
@@ -106,7 +106,7 @@ public class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
-    int getAmount() {
+    public int getAmount() {
         return decorated.getAmount();
     }
 
@@ -121,17 +121,12 @@ public class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
-    void setCurrentMovePoints(double aCurrentMovePoints) {
-        decorated.setCurrentMovePoints(aCurrentMovePoints);
-    }
-
-    @Override
     public String getStringOfCurrentHp() {
         return decorated.getStringOfCurrentHp();
     }
 
     @Override
-    protected double getAttackRange() {
+    public double getAttackRange() {
         return Double.MAX_VALUE;
     }
 }

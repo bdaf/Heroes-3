@@ -1,8 +1,9 @@
-package pl.sdk;
+package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.GameEngine;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.DefaultDamageCalculator;
 

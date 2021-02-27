@@ -2,14 +2,14 @@ package pl.sdk.creatures;
 
 import java.util.Random;
 
-public abstract class AbstractDamageCalculator implements CalculateDamageStrategy {
+ abstract class AbstractDamageCalculator implements CalculateDamageStrategy {
     public static final double _28 = 27.9999999;
     Random rand;
 
     AbstractDamageCalculator() { this(new Random()); }
     AbstractDamageCalculator(Random aRand) { rand = aRand; }
 
-    public int count(Creature aAttacker, Creature aDefender) {
+    public int calculateDamage(Creature aAttacker, Creature aDefender) {
         int upper = aAttacker.getStats().getDamage().upperEndpoint();
         int lower = aAttacker.getStats().getDamage().lowerEndpoint();
         int randedDamage = rand.nextInt(upper-lower +1) + lower;

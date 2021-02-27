@@ -1,6 +1,7 @@
-package pl.sdk;
+package pl.sdk.creatures;
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.GameEngine;
 import pl.sdk.creatures.BlockingCounterAttackCreatureDecorator;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.ShootingCreatureDecorator;
@@ -8,12 +9,13 @@ import pl.sdk.creatures.ShootingCreatureDecorator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static pl.sdk.Board.WIDTH;
+import static pl.sdk.GameEngine.BOARD_WIDTH;
 
 public class BlockingCreatureAndShootingCreatureAttackTest {
 
     public static final int BIGGER_THAN_DEFENDERS = 10;
     public static final int FEWER_THAN_DEFENDERS = 2;
+
 
 
 
@@ -28,7 +30,8 @@ public class BlockingCreatureAndShootingCreatureAttackTest {
                 .moveRange(FEWER_THAN_DEFENDERS)
                 .build();
         GameEngine gameEngine = new GameEngine(List.of(attacker), List.of(defender));
-        assertTrue(gameEngine.canAttack(WIDTH-1,0));
+        boolean result = gameEngine.canAttack(BOARD_WIDTH-1,0);
+        assertTrue(result);
         gameEngine.pass();
         assertFalse(gameEngine.canAttack(0,0));
     }

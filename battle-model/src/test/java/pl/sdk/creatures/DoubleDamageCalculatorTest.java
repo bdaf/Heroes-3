@@ -1,11 +1,11 @@
-package pl.sdk;
+package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.CalculateDamageStrategy;
 import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.DamageIncreaseInRandomChanceCalculator;
+import pl.sdk.creatures.CalculateDamageIncreaseInRandomChance;
 
 import java.util.Random;
 
@@ -38,9 +38,9 @@ public class DoubleDamageCalculatorTest {
     @Test
     void shouldDealDoubleDmgWhenRandomIsPositive(){
         when(rand.nextDouble()).thenReturn(0.19);
-        CalculateDamageStrategy calc = new DamageIncreaseInRandomChanceCalculator(0.2,2, rand);
+        CalculateDamageStrategy calc = new CalculateDamageIncreaseInRandomChance(0.2,2, rand);
 
-        int result = calc.count(attacker, defender);
+        int result = calc.calculateDamage(attacker, defender);
 
         assertEquals(200,result);
         when(rand.nextDouble()).thenReturn(0.2);
@@ -50,9 +50,9 @@ public class DoubleDamageCalculatorTest {
     @Test
     void shouldDealNormalDmgWhenRandomIsNegative(){
         when(rand.nextDouble()).thenReturn(0.21);
-        CalculateDamageStrategy calc = new DamageIncreaseInRandomChanceCalculator(0.2,2, rand);
+        CalculateDamageStrategy calc = new CalculateDamageIncreaseInRandomChance(0.2,2, rand);
 
-        int result = calc.count(attacker, defender);
+        int result = calc.calculateDamage(attacker, defender);
 
         assertEquals(100,result);
     }

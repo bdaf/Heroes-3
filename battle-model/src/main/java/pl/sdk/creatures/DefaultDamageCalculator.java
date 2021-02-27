@@ -2,12 +2,12 @@ package pl.sdk.creatures;
 
 import java.util.Random;
 
-public class DefaultDamageCalculator extends AbstractDamageCalculator {
+ class DefaultDamageCalculator extends AbstractDamageCalculator {
 
-    public DefaultDamageCalculator() {
+     DefaultDamageCalculator() {
         this(new Random());
     }
-    public DefaultDamageCalculator(Random aRandomizer) {
+     DefaultDamageCalculator(Random aRandomizer) {
         super(aRandomizer);
     }
 }

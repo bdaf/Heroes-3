@@ -1,4 +1,4 @@
-package pl.sdk;
+package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;

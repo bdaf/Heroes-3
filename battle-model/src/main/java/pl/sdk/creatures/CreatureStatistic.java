@@ -3,7 +3,7 @@ package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 
-public class CreatureStatistic {
+ class CreatureStatistic {
 
     final private String name;
     final private int attack;
@@ -27,23 +27,23 @@ public class CreatureStatistic {
     }
 
 
-    public String getName() {
+     String getName() {
         return name;
     }
 
-    public int getAttack() {
+     int getAttack() {
         return attack;
     }
 
-    public int getArmor() {
+     int getArmor() {
         return armor;
     }
 
-    public int getMaxHp() {
+     int getMaxHp() {
         return maxHP;
     }
 
-    public int getMoveRange() {
+     int getMoveRange() {
         return moveRange;
     }
     Range<Integer> getDamage() { return damage; }

@@ -5,9 +5,11 @@ import pl.sdk.creatures.Creature;
 import java.util.HashMap;
 import java.util.Map;
 
- class Board {
-    public static int WIDTH = 20;
-    public static int HEIGHT = 15;
+import static pl.sdk.GameEngine.BOARD_HEIGHT;
+import static pl.sdk.GameEngine.BOARD_WIDTH;
+
+class Board {
+
 
     private Map<Point, Creature> map;
 
@@ -22,7 +24,7 @@ import java.util.Map;
     }
 
     private void throwExceptionWhenOutsideTheMap(Point targetPoint) {
-        if (targetPoint.getX() < 0 || targetPoint.getX() > WIDTH || targetPoint.getY() < 0 || targetPoint.getY() > HEIGHT) {
+        if (targetPoint.getX() < 0 || targetPoint.getX() > BOARD_WIDTH || targetPoint.getY() < 0 || targetPoint.getY() > BOARD_HEIGHT) {
             throw new IllegalArgumentException("You are trying to go outside the map!");
         }
     }
@@ -36,25 +38,23 @@ import java.util.Map;
         return map.keySet().stream().filter(p -> map.get(p).equals(aCreature)).findAny().get();
     }
 
-    void move(Creature aCreature, Point targetPoint){
+    double moveAndReturnDistance(Creature aCreature, Point targetPoint){
         //throwExceptionWhenThereIsNoChampionToAct(aCreature, "There is no champion to move!");
-        move(get(aCreature),targetPoint);
-
-
+        return moveAndReturnDistance(get(aCreature),targetPoint);
     }
 
-    void move(Point sourcePoint, Point targetPoint) {
+    double moveAndReturnDistance(Point sourcePoint, Point targetPoint) {
         throwExceptionWhenOutsideTheMap(targetPoint);
         throwExceptionWhenThereIsNoChampionToAct(sourcePoint, "Creature isn't on board!");
         throwExceptionWhenTitleIsTaken(targetPoint);
         Creature creature = map.get(sourcePoint);
 
         double distance = sourcePoint.distance(targetPoint);
-        creature.setCurrentMovePoints(creature.getCurrentMovePoints() - distance);
 
         map.remove(sourcePoint);
         map.put(targetPoint, creature);
 
+        return distance;
     }
 
      private void throwExceptionWhenTitleIsTaken(Point aPoint) {
@@ -77,12 +77,15 @@ import java.util.Map;
         }
     }
 
+     double countDistance(Creature aCreature, int aX, int aY){
+         throwExceptionWhenOutsideTheMap(new Point(aX,aY));
+         throwExceptionWhenThereIsNoChampionToAct(aCreature, "Creature isn't on board!");
+         Point currentPosition = get(aCreature);
+         return currentPosition.distance(new Point(aX,aY));
+     }
+
      boolean canMove(Creature aCreature, int aX, int aY) {
-        throwExceptionWhenOutsideTheMap(new Point(aX,aY));
-        throwExceptionWhenThereIsNoChampionToAct(aCreature, "Creature isn't on board!");
-        Point currentPosition = get(aCreature);
-        double distance = currentPosition.distance(new Point(aX,aY));
-        return distance <= aCreature.getCurrentMovePoints() && !isTitleTaken(new Point(aX,aY));
+        return !isTitleTaken(new Point(aX,aY));
      }
 
      boolean canAttack(Creature aCreature, int aX, int aY) {
