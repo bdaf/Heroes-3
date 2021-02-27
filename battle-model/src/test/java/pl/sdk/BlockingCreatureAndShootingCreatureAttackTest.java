@@ -1,7 +1,9 @@
 package pl.sdk;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.BlockingCounterAttackCreatureDecorator;
+import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.ShootingCreatureDecorator;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package pl.sdk;
+package pl.sdk.creatures;
 
 import java.util.Random;
 

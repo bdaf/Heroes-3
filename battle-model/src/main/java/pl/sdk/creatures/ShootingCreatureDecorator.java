@@ -1,13 +1,18 @@
-package pl.sdk;
+package pl.sdk.creatures;
 
 import java.beans.PropertyChangeEvent;
 
-public class RegenerationOnEndOfTurnCreatureDecorator extends Creature{
+public class ShootingCreatureDecorator extends Creature {
 
     private final Creature decorated;
 
-    RegenerationOnEndOfTurnCreatureDecorator(Creature aDecorated) {
+    public ShootingCreatureDecorator(Creature aDecorated) {
         decorated = aDecorated;
+    }
+
+    @Override
+    void setAmount(int aAmount) {
+        decorated.setAmount(aAmount);
     }
 
     @Override
@@ -17,7 +22,12 @@ public class RegenerationOnEndOfTurnCreatureDecorator extends Creature{
 
     @Override
     void attack(Creature defender) {
-        decorated.attack(defender);
+        if (decorated == defender) throw new IllegalArgumentException();
+        if (decorated.isAlive()) {
+            int damageToDeal = countDamage(decorated, defender);
+            defender.applyDamage(damageToDeal);
+            performAfterAttack(damageToDeal);
+        }
     }
 
     @Override
@@ -91,25 +101,18 @@ public class RegenerationOnEndOfTurnCreatureDecorator extends Creature{
     }
 
     @Override
+    protected void setCurrentHPToMaxHp() {
+        decorated.setCurrentHPToMaxHp();
+    }
+
+    @Override
     int getAmount() {
         return decorated.getAmount();
     }
 
     @Override
-    void setAmount(int aAmount) {
-        decorated.setAmount(aAmount);
-    }
-
-    @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         decorated.propertyChange(aPropertyChangeEvent);
-        if(decorated.getAmount()>0)
-            setCurrentHPToMaxHp();
-    }
-
-    @Override
-    protected void setCurrentHPToMaxHp() {
-        decorated.setCurrentHPToMaxHp();
     }
 
     @Override
@@ -129,6 +132,6 @@ public class RegenerationOnEndOfTurnCreatureDecorator extends Creature{
 
     @Override
     protected double getAttackRange() {
-        return decorated.getAttackRange();
+        return Double.MAX_VALUE;
     }
 }

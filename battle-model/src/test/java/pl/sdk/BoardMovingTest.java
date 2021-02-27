@@ -2,9 +2,9 @@ package pl.sdk;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.Creature;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static pl.sdk.AttackCreatureTest.NOT_IMPORTANT_RANGE;
 
 public class BoardMovingTest {
 

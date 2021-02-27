@@ -3,6 +3,9 @@ package pl.sdk;
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.RegenerationOnEndOfTurnCreatureDecorator;
+import pl.sdk.creatures.ShootingCreatureDecorator;
 
 import java.util.List;
 

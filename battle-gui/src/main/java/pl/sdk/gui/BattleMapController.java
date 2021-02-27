@@ -1,12 +1,13 @@
 package pl.sdk.gui;
 
-import com.google.common.collect.Range;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import pl.sdk.*;
+import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.NecropolisFactory;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

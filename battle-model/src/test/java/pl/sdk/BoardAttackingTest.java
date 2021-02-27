@@ -2,6 +2,9 @@ package pl.sdk;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.BlockingCounterAttackCreatureDecorator;
+import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.ShootingCreatureDecorator;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;

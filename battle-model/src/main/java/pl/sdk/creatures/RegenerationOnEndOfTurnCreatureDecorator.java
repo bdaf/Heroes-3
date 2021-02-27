@@ -1,46 +1,23 @@
-package pl.sdk;
+package pl.sdk.creatures;
 
 import java.beans.PropertyChangeEvent;
 
-public class SelfHealingCreatureDecorator extends Creature {
-    private Creature decorated;
-    protected double selfHealingPercentage;
+public class RegenerationOnEndOfTurnCreatureDecorator extends Creature{
 
-    public SelfHealingCreatureDecorator(Creature aDecorated) {
+    private final Creature decorated;
+
+    RegenerationOnEndOfTurnCreatureDecorator(Creature aDecorated) {
         decorated = aDecorated;
     }
-    public SelfHealingCreatureDecorator(Creature aDecorated, double aSelfHealingPercentage) {
-        this(aDecorated);
-        selfHealingPercentage = aSelfHealingPercentage;
-    }
-    @Override
-    protected void performAfterAttack(int aDamageToChange) {
-        decorated.applyDamage((int)(-aDamageToChange * selfHealingPercentage));
-    }
+
     @Override
     int getMaxHp() {
         return decorated.getMaxHp();
     }
 
     @Override
-    void setAmount(int aAmount) {
-        decorated.setAmount(aAmount);
-    }
-
-    @Override
     void attack(Creature defender) {
-        if (decorated == defender) throw new IllegalArgumentException();
-        if (decorated.isAlive()) {
-            int damageToDeal = countDamage(decorated, defender);
-            defender.applyDamage(damageToDeal);
-            performAfterAttack(damageToDeal);
-            counterAttack(defender);
-        }
-    }
-
-    @Override
-    protected void setCurrentHPToMaxHp() {
-        decorated.setCurrentHPToMaxHp();
+        decorated.attack(defender);
     }
 
     @Override
@@ -51,6 +28,11 @@ public class SelfHealingCreatureDecorator extends Creature {
     @Override
     protected void counterAttack(Creature defender) {
         decorated.counterAttack(defender);
+    }
+
+    @Override
+    protected void performAfterAttack(int aDamageToChange) {
+        decorated.performAfterAttack(aDamageToChange);
     }
 
     @Override
@@ -114,8 +96,20 @@ public class SelfHealingCreatureDecorator extends Creature {
     }
 
     @Override
+    void setAmount(int aAmount) {
+        decorated.setAmount(aAmount);
+    }
+
+    @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         decorated.propertyChange(aPropertyChangeEvent);
+        if(decorated.getAmount()>0)
+            setCurrentHPToMaxHp();
+    }
+
+    @Override
+    protected void setCurrentHPToMaxHp() {
+        decorated.setCurrentHPToMaxHp();
     }
 
     @Override

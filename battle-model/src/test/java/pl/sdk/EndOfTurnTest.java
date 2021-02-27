@@ -1,6 +1,7 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.Creature;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;

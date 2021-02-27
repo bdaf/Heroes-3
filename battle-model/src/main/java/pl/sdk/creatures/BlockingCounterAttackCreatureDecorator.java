@@ -1,23 +1,33 @@
-package pl.sdk;
+package pl.sdk.creatures;
 
 import java.beans.PropertyChangeEvent;
 
-public class ShootingCreatureDecorator extends Creature {
+public class BlockingCounterAttackCreatureDecorator extends Creature {
 
-    private final Creature decorated;
+    protected final Creature decorated;
 
-    public ShootingCreatureDecorator(Creature aDecorated) {
+    public BlockingCounterAttackCreatureDecorator(Creature aDecorated) {
         decorated = aDecorated;
-    }
-
-    @Override
-    void setAmount(int aAmount) {
-        decorated.setAmount(aAmount);
     }
 
     @Override
     int getMaxHp() {
         return decorated.getMaxHp();
+    }
+
+    @Override
+    protected void setCurrentHPToMaxHp() {
+        decorated.setCurrentHPToMaxHp();
+    }
+
+    @Override
+    int countDamage(Creature aAttacker, Creature defender) {
+        return decorated.countDamage(aAttacker, defender);
+    }
+
+    @Override
+    void setAmount(int aAmount) {
+        decorated.setAmount(aAmount);
     }
 
     @Override
@@ -27,17 +37,12 @@ public class ShootingCreatureDecorator extends Creature {
             int damageToDeal = countDamage(decorated, defender);
             defender.applyDamage(damageToDeal);
             performAfterAttack(damageToDeal);
+            counterAttack(defender);
         }
     }
 
     @Override
-    int countDamage(Creature aAttacker, Creature defender) {
-        return decorated.countDamage(aAttacker, defender);
-    }
-
-    @Override
     protected void counterAttack(Creature defender) {
-        decorated.counterAttack(defender);
     }
 
     @Override
@@ -101,11 +106,6 @@ public class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
-    protected void setCurrentHPToMaxHp() {
-        decorated.setCurrentHPToMaxHp();
-    }
-
-    @Override
     int getAmount() {
         return decorated.getAmount();
     }
@@ -132,6 +132,6 @@ public class ShootingCreatureDecorator extends Creature {
 
     @Override
     protected double getAttackRange() {
-        return Double.MAX_VALUE;
+        return decorated.getAttackRange();
     }
 }

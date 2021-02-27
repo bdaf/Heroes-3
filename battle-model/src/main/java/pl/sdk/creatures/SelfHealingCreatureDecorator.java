@@ -1,28 +1,25 @@
-package pl.sdk;
+package pl.sdk.creatures;
 
 import java.beans.PropertyChangeEvent;
 
-public class BlockingCounterAttackCreatureDecorator extends Creature {
+public class SelfHealingCreatureDecorator extends Creature {
+    private Creature decorated;
+    protected double selfHealingPercentage;
 
-    protected final Creature decorated;
-
-    public BlockingCounterAttackCreatureDecorator(Creature aDecorated) {
+    public SelfHealingCreatureDecorator(Creature aDecorated) {
         decorated = aDecorated;
     }
-
+    public SelfHealingCreatureDecorator(Creature aDecorated, double aSelfHealingPercentage) {
+        this(aDecorated);
+        selfHealingPercentage = aSelfHealingPercentage;
+    }
+    @Override
+    protected void performAfterAttack(int aDamageToChange) {
+        decorated.applyDamage((int)(-aDamageToChange * selfHealingPercentage));
+    }
     @Override
     int getMaxHp() {
         return decorated.getMaxHp();
-    }
-
-    @Override
-    protected void setCurrentHPToMaxHp() {
-        decorated.setCurrentHPToMaxHp();
-    }
-
-    @Override
-    int countDamage(Creature aAttacker, Creature defender) {
-        return decorated.countDamage(aAttacker, defender);
     }
 
     @Override
@@ -42,12 +39,18 @@ public class BlockingCounterAttackCreatureDecorator extends Creature {
     }
 
     @Override
-    protected void counterAttack(Creature defender) {
+    protected void setCurrentHPToMaxHp() {
+        decorated.setCurrentHPToMaxHp();
     }
 
     @Override
-    protected void performAfterAttack(int aDamageToChange) {
-        decorated.performAfterAttack(aDamageToChange);
+    int countDamage(Creature aAttacker, Creature defender) {
+        return decorated.countDamage(aAttacker, defender);
+    }
+
+    @Override
+    protected void counterAttack(Creature defender) {
+        decorated.counterAttack(defender);
     }
 
     @Override

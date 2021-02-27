@@ -1,5 +1,7 @@
 package pl.sdk;
 
+import pl.sdk.creatures.Creature;
+
 import java.util.HashMap;
 import java.util.Map;
 

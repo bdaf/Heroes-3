@@ -3,6 +3,10 @@ package pl.sdk;
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.creatures.BlockingCounterAttackCreatureDecorator;
+import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.DefaultDamageCalculator;
+import pl.sdk.creatures.SelfHealingCreatureDecorator;
 
 import java.util.Random;
 

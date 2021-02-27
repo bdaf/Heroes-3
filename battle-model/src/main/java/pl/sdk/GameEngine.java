@@ -1,5 +1,7 @@
 package pl.sdk;
 
+import pl.sdk.creatures.Creature;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

@@ -1,4 +1,4 @@
-package pl.sdk;
+package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 
@@ -17,10 +17,9 @@ public class NecropolisFactory {
     public static final String LICH = "Lich";
     public static final String BLACK_KNIGHT = "BlackKnight";
     public static final String BONE_DRAGON = "BoneDragon";
-    private int maximumAmountOfVampireLords = 15;
+    public static final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
 
     public Creature Create(boolean aIsUpgraded, int aTier){
-        String msg = new String("Incorrect number of Tier: "+aTier+"\nShould be from 1 to 7");
         if(aIsUpgraded){
             switch(aTier){
                 case 1: return new Creature.Builder()
@@ -58,7 +57,7 @@ public class NecropolisFactory {
                         .moveRange(9)
                         .damage(Range.closed(5,8))
                         .armor(10)
-                        .amount(maximumAmountOfVampireLords)//15
+                        .amount(15)
                         .build()),0.5);
                 case 5: return new ShootingCreatureDecorator(new Creature.Builder()
                         .name(POWER_LICH)
@@ -88,7 +87,7 @@ public class NecropolisFactory {
                         .armor(17)
                         .amount(10)
                         .build();
-                default: throw new IllegalArgumentException(msg);
+                default: throw new IllegalArgumentException(ERROR_MSG);
             }
         }
         else{
@@ -156,7 +155,7 @@ public class NecropolisFactory {
                         .armor(15)
                         .amount(12)
                         .build();
-                default: throw new IllegalArgumentException(msg);
+                default: throw new IllegalArgumentException(ERROR_MSG);
             }
         }
     }
