@@ -11,13 +11,23 @@ public class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
+    void setAmount(int aAmount) {
+        decorated.setAmount(aAmount);
+    }
+
+    @Override
     int getMaxHp() {
         return decorated.getMaxHp();
     }
 
     @Override
     void attack(Creature defender) {
-        decorated.attack(defender);
+        if (decorated == defender) throw new IllegalArgumentException();
+        if (decorated.isAlive()) {
+            int damageToDeal = countDamage(decorated, defender);
+            defender.applyDamage(damageToDeal);
+            performAfterAttack(damageToDeal);
+        }
     }
 
     @Override
@@ -88,6 +98,11 @@ public class ShootingCreatureDecorator extends Creature {
     @Override
     boolean canCounterAttack() {
         return decorated.canCounterAttack();
+    }
+
+    @Override
+    protected void setCurrentHPToMaxHp() {
+        decorated.setCurrentHPToMaxHp();
     }
 
     @Override

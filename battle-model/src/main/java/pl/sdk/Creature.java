@@ -13,6 +13,7 @@ public class Creature implements PropertyChangeListener {
     private double currentMovePoints;
     private boolean counterAttackInThisTurn;
     private int attacksInTurn;
+    private int maxAmount;
     private int amount;
 
     protected Creature(){
@@ -59,20 +60,19 @@ public class Creature implements PropertyChangeListener {
             amount = 0;
             currentHp = 0;
         }
-        else if(aDamageToApply<0) {// when aDamageToApply is the minus value
-            currentHp-=aDamageToApply ;
-            if(currentHp>getMaxHp())
-                currentHp=getMaxHp();
-        }
         else{
             if(hpOfWholeStack%getMaxHp() == 0){
                 amount = hpOfWholeStack/getMaxHp();
-                currentHp = getMaxHp();
+                setCurrentHPToMaxHp();
             }
             else{
                 amount = hpOfWholeStack / getMaxHp() + 1;
                 currentHp = hpOfWholeStack % getMaxHp();
             }
+        }
+        if(amount>maxAmount){
+            amount = maxAmount;
+            setCurrentHPToMaxHp();
         }
 
 
@@ -172,6 +172,10 @@ public class Creature implements PropertyChangeListener {
         currentHp = getMaxHp();
     }
 
+    void setAmount(int aAmount) {
+        amount = aAmount;
+    }
+
     public static class Builder {
         private String name;
         private Integer attack;
@@ -181,6 +185,7 @@ public class Creature implements PropertyChangeListener {
         private Range<Integer> damage;
         private CalculateDamageStrategy damageCalculator;
         private Integer amount;
+        private int maxAmount;
 
         public Builder amount(Integer aAmount){
             this.amount = aAmount;
@@ -237,6 +242,7 @@ public class Creature implements PropertyChangeListener {
             result.currentMovePoints = stats.getMoveRange();
             result.attacksInTurn = 1;
             result.amount = this.amount;
+            result.maxAmount = this.amount;
             return result;
         }
 

@@ -23,6 +23,11 @@ public class SelfHealingCreatureDecorator extends Creature {
     }
 
     @Override
+    void setAmount(int aAmount) {
+        decorated.setAmount(aAmount);
+    }
+
+    @Override
     void attack(Creature defender) {
         if (decorated == defender) throw new IllegalArgumentException();
         if (decorated.isAlive()) {
@@ -31,6 +36,11 @@ public class SelfHealingCreatureDecorator extends Creature {
             performAfterAttack(damageToDeal);
             counterAttack(defender);
         }
+    }
+
+    @Override
+    protected void setCurrentHPToMaxHp() {
+        decorated.setCurrentHPToMaxHp();
     }
 
     @Override

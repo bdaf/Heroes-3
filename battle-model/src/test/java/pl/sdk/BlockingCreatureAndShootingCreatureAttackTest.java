@@ -43,7 +43,7 @@ public class BlockingCreatureAndShootingCreatureAttackTest {
                 .maxHp(1000)
                 .moveRange(FEWER_THAN_DEFENDERS)
                 .build();
-        attacker = new ShootingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(attacker));
+        attacker = new ShootingCreatureDecorator(attacker);
         attacker.attack(defender);
         assertEquals(1000,attacker.getCurrentHp());
         assertEquals(1,attacker.getAmount());

@@ -16,18 +16,33 @@ public class BlockingCounterAttackCreatureDecorator extends Creature {
     }
 
     @Override
+    protected void setCurrentHPToMaxHp() {
+        decorated.setCurrentHPToMaxHp();
+    }
+
+    @Override
+    int countDamage(Creature aAttacker, Creature defender) {
+        return decorated.countDamage(aAttacker, defender);
+    }
+
+    @Override
+    void setAmount(int aAmount) {
+        decorated.setAmount(aAmount);
+    }
+
+    @Override
     void attack(Creature defender) {
         if (decorated == defender) throw new IllegalArgumentException();
         if (decorated.isAlive()) {
             int damageToDeal = countDamage(decorated, defender);
             defender.applyDamage(damageToDeal);
             performAfterAttack(damageToDeal);
+            counterAttack(defender);
         }
     }
 
     @Override
     protected void counterAttack(Creature defender) {
-        decorated.counterAttack(defender);
     }
 
     @Override

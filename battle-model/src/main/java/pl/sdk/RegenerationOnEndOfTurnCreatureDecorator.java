@@ -96,8 +96,19 @@ public class RegenerationOnEndOfTurnCreatureDecorator extends Creature{
     }
 
     @Override
+    void setAmount(int aAmount) {
+        decorated.setAmount(aAmount);
+    }
+
+    @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         decorated.propertyChange(aPropertyChangeEvent);
+        if(decorated.getAmount()>0)
+            setCurrentHPToMaxHp();
+    }
+
+    @Override
+    protected void setCurrentHPToMaxHp() {
         decorated.setCurrentHPToMaxHp();
     }
 
