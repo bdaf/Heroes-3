@@ -2,30 +2,14 @@ package pl.sdk.creatures;
 
 import java.beans.PropertyChangeEvent;
 
- class RegenerationOnEndOfTurnCreatureDecorator extends Creature{
-
+public class SplashDamageCreature extends Creature {
     private final Creature decorated;
 
-    RegenerationOnEndOfTurnCreatureDecorator(Creature aDecorated) {
+    public SplashDamageCreature(Creature aDecorated) {
         decorated = aDecorated;
     }
 
-     @Override
-     public double getMoveRange() {
-         return decorated.getMoveRange();
-     }
-
-     @Override
-     public int getMaxAttacksInTurn() {
-         return decorated.getMaxAttacksInTurn();
-     }
-
-     @Override
-     void setAttacksInTurn(int aAttacksInTurn) {
-         decorated.setAttacksInTurn(aAttacksInTurn);
-     }
-
-     @Override
+    @Override
     int getMaxHp() {
         return decorated.getMaxHp();
     }
@@ -41,21 +25,16 @@ import java.beans.PropertyChangeEvent;
     }
 
     @Override
-    protected void counterAttack(Creature defender) {
+    void counterAttack(Creature defender) {
         decorated.counterAttack(defender);
     }
 
     @Override
-    protected void performAfterAttack(int aDamageToChange) {
+    void performAfterAttack(int aDamageToChange) {
         decorated.performAfterAttack(aDamageToChange);
     }
 
-     @Override
-     public boolean[][] getSplashDamage() {
-         return decorated.getSplashDamage();
-     }
-
-     @Override
+    @Override
     public void applyDamage(int aDamageToApply) {
         decorated.applyDamage(aDamageToApply);
     }
@@ -71,18 +50,8 @@ import java.beans.PropertyChangeEvent;
     }
 
     @Override
-    void setCurrentHP(int currentHP) {
-        decorated.setCurrentHP(currentHP);
-    }
-
-    @Override
-    CreatureStatistic getStats() {
-        return decorated.getStats();
-    }
-
-    @Override
-    void setStats(CreatureStatistic stats) {
-        decorated.setStats(stats);
+    public double getMoveRange() {
+        return decorated.getMoveRange();
     }
 
     @Override
@@ -101,20 +70,23 @@ import java.beans.PropertyChangeEvent;
     }
 
     @Override
-    void setAmount(int aAmount) {
-        decorated.setAmount(aAmount);
+    CreatureStatistic getStats() {
+        return decorated.getStats();
+    }
+
+    @Override
+    void setCurrentHP(int currentHP) {
+        decorated.setCurrentHP(currentHP);
+    }
+
+    @Override
+    void setStats(CreatureStatistic stats) {
+        decorated.setStats(stats);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         decorated.propertyChange(aPropertyChangeEvent);
-        if(decorated.getAmount()>0)
-            setCurrentHPToMaxHp();
-    }
-
-    @Override
-    protected void setCurrentHPToMaxHp() {
-        decorated.setCurrentHPToMaxHp();
     }
 
     @Override
@@ -130,5 +102,39 @@ import java.beans.PropertyChangeEvent;
     @Override
     public double getAttackRange() {
         return decorated.getAttackRange();
+    }
+
+    @Override
+    void setCurrentHPToMaxHp() {
+        decorated.setCurrentHPToMaxHp();
+    }
+
+    @Override
+    void setAmount(int aAmount) {
+        decorated.setAmount(aAmount);
+    }
+
+    @Override
+    public int getMaxAttacksInTurn() {
+        return decorated.getMaxAttacksInTurn();
+    }
+
+    @Override
+    void setAttacksInTurn(int aAttacksInTurn) {
+        decorated.setAttacksInTurn(aAttacksInTurn);
+    }
+
+    @Override
+    public boolean[][] getSplashDamage() {
+
+        boolean[][] result = new boolean[3][3];
+
+        result[1][1] = true;
+        result[0][1] = true;
+        result[1][0] = true;
+        result[2][1] = true;
+        result[1][2] = true;
+
+        return result;
     }
 }

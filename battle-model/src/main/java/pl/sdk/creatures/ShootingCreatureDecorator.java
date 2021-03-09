@@ -61,11 +61,17 @@ import java.beans.PropertyChangeEvent;
     }
 
     @Override
-    void applyDamage(int aDamageToApply) {
+    public void applyDamage(int aDamageToApply) {
         decorated.applyDamage(aDamageToApply);
     }
 
-    @Override
+     @Override
+     public boolean[][] getSplashDamage() {
+
+         return decorated.getSplashDamage();
+     }
+
+     @Override
     public boolean isAlive() {
         return decorated.isAlive();
     }

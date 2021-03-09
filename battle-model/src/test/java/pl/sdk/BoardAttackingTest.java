@@ -3,11 +3,12 @@ package pl.sdk;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.NecropolisFactory;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static pl.sdk.creatures.NecropolisFactory.CreateDefaultForTests;
+import static pl.sdk.creatures.NecropolisFactory.CreateCreatureDefaultForTests;
 
 public class BoardAttackingTest {
     private Board board;
@@ -16,14 +17,14 @@ public class BoardAttackingTest {
     @BeforeEach
     void init(){
         board = new Board();
-        creature = CreateDefaultForTests();
+        creature = NecropolisFactory.CreateCreatureDefaultForTests();
         board.add(new Point(0,0), creature);
     }
 
 
     @Test
     void shouldBeAbleToAttackWhenHisNearToEnemyOn1Unit(){
-        Creature creature1 = CreateDefaultForTests();
+        Creature creature1 = NecropolisFactory.CreateCreatureDefaultForTests();
         board.add(new Point(1,0), creature1);
 
         assertTrue(board.canAttack(creature1,0,0));
@@ -31,7 +32,7 @@ public class BoardAttackingTest {
 
     @Test
     void shouldBeAbleToAttackWhenHisNearToEnemyOnAbove1_5Unit(){
-        Creature creature1 = CreateDefaultForTests();
+        Creature creature1 = NecropolisFactory.CreateCreatureDefaultForTests();
         board.add(new Point(1,2), creature1);
 
         assertFalse(board.canAttack(creature1,0,0));
@@ -39,7 +40,7 @@ public class BoardAttackingTest {
 
     @Test
     void cannotAttackWhenFieldIsEmpty(){
-        Creature creature1 = CreateDefaultForTests();
+        Creature creature1 = NecropolisFactory.CreateCreatureDefaultForTests();
         board.add(new Point(1,0),creature1);
 
       assertFalse(board.canAttack(creature1, 1, 1));

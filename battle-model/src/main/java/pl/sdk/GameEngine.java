@@ -21,7 +21,11 @@ public class GameEngine {
     private PropertyChangeSupport observerSupport;
 
     public GameEngine(List<Creature> creaturesOnLeftSide, List<Creature> creaturesOnRightSide) {
-        this.board = new Board();
+        this(creaturesOnLeftSide,creaturesOnRightSide,new Board());
+    }
+
+     GameEngine(List<Creature> creaturesOnLeftSide, List<Creature> creaturesOnRightSide, Board aBoard){
+        board = aBoard;
         putCreaturesToBoard(creaturesOnLeftSide, creaturesOnRightSide);
         List<Creature> creaturesOnBothSides = new ArrayList<>();
         creaturesOnBothSides.addAll(creaturesOnLeftSide);
@@ -31,7 +35,6 @@ public class GameEngine {
         observerSupport = new PropertyChangeSupport(this);
         queue.addObserver(this);
         creaturesOnBothSides.forEach(c -> addObserver(UPDATE_AFTER_EVERY_TURN,c));
-
     }
 
     public void addObserver(String aEventType, PropertyChangeListener aObs){
@@ -72,12 +75,26 @@ public class GameEngine {
 
     }
 
-    public void attack(int x, int y){
-        queue.getActiveCreature().attack(board.get(x,y));
+    public void attack(int aX, int aY){
+        boolean damageToSplash[][] = getActiveCreature().getSplashDamage();
+
+        for (int x = 0; x < damageToSplash.length; x++) {
+            for (int y = 0; y < damageToSplash.length; y++) {
+                if(damageToSplash[x][y] && !ifGoesBehindBoard(aX+x-1,aY+y-1))
+                    if(board.get(aX+x-1, aY+y-1)!=null)
+                        getActiveCreature().attack(board.get(aX+x-1, aY+y-1));
+            }
+        }
         queue.setAttacksOfActiveCreature(queue.getAttacksOfActiveCreature()-1);
         if(queue.getAttacksOfActiveCreature() <= 0)
             queue.setMovePointsOfActiveCreature(0);
         notifyObserver(new PropertyChangeEvent(this, CURRENT_CREATURE_ATTACKED, null, null));
+    }
+
+    private boolean ifGoesBehindBoard(int aX, int aY) {
+        if(aX < 0 || aY < 0 || aX > BOARD_WIDTH-1 || aY > BOARD_HEIGHT-1)
+            return true;
+        return false;
     }
 
     public void attack(Point aPoint) {

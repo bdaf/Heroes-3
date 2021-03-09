@@ -52,7 +52,7 @@ public class Creature implements PropertyChangeListener {
 
      void performAfterAttack(int aDamageToChange) {}
 
-    void applyDamage(int aDamageToApply) {
+    public void applyDamage(int aDamageToApply) {
         int hpOfWholeStack = currentHp + (amount-1)*getMaxHp();
         hpOfWholeStack-=aDamageToApply;
         if(hpOfWholeStack<=0){
@@ -151,6 +151,12 @@ public class Creature implements PropertyChangeListener {
 
     void setAttacksInTurn(int aAttacksInTurn) {
         attacksInTurn = aAttacksInTurn;
+    }
+
+    public boolean[][] getSplashDamage() {
+        boolean[][] result = new boolean[3][3];
+        result[1][1] = true;
+        return result;
     }
 
 

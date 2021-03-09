@@ -3,12 +3,13 @@ package pl.sdk;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.NecropolisFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static pl.sdk.creatures.NecropolisFactory.CreateDefaultForTests;
+import static pl.sdk.creatures.NecropolisFactory.CreateCreatureDefaultForTests;
 
 public class CreatureTurnQueueTest {
 
@@ -18,9 +19,9 @@ public class CreatureTurnQueueTest {
 
     @BeforeEach
     void init(){
-    a = CreateDefaultForTests();
-    c = CreateDefaultForTests();
-    b = CreateDefaultForTests();
+    a = NecropolisFactory.CreateCreatureDefaultForTests();
+    c = NecropolisFactory.CreateCreatureDefaultForTests();
+    b = NecropolisFactory.CreateCreatureDefaultForTests();
     creatureList = new ArrayList<>();
 
     creatureList.add(a);

@@ -2,6 +2,7 @@ package pl.sdk;
 
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.NecropolisFactory;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
@@ -10,14 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static pl.sdk.creatures.NecropolisFactory.CreateDefaultForTests;
+import static pl.sdk.creatures.NecropolisFactory.CreateCreatureDefaultForTests;
 
 public class EndOfTurnTest {
 
     @Test
     void shouldResetCounterAttackFlagAfterEndOfTurn(){
-        Creature attacker = CreateDefaultForTests();
-        Creature defender = CreateDefaultForTests();
+        Creature attacker = NecropolisFactory.CreateCreatureDefaultForTests();
+        Creature defender = NecropolisFactory.CreateCreatureDefaultForTests();
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
 
         assertEquals(true, defender.canCounterAttack());
@@ -31,12 +32,13 @@ public class EndOfTurnTest {
 
     @Test
     void shouldResetAttackFlagAfterEndOfTurn(){
-        Creature attacker = CreateDefaultForTests(5);
-        Creature defender = CreateDefaultForTests(1);
+        Creature attacker = CreateCreatureDefaultForTests(5);
+        Creature defender = CreateCreatureDefaultForTests(1);
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         assertEquals(true, defender.canCounterAttack());
         assertEquals(1, engine.getAttacksInTurn());
-        engine.attack(19,0);
+        //if(engine.canAttack(19,0))
+            engine.attack(19,0);
         assertEquals(0, engine.getAttacksInTurn());
         assertEquals(false, defender.canCounterAttack());
         engine.pass();
@@ -47,7 +49,7 @@ public class EndOfTurnTest {
     @Test
     void shouldResetAttackFlagAfterEndOfTurnBySpy(){
         Creature attacker = spy(Creature.class);
-        Creature defender = CreateDefaultForTests();
+        Creature defender = NecropolisFactory.CreateCreatureDefaultForTests();
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         engine.pass();
         engine.pass();

@@ -19,10 +19,10 @@ public class NecropolisFactory {
     public static final String BONE_DRAGON = "BoneDragon";
     public static final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
 
-    public static Creature CreateDefaultForTests(){
+    public static Creature CreateCreatureDefaultForTests(){
         return new Creature.Builder().build();
     }
-    public static Creature CreateDefaultForTests(int aMoveRange){
+    public static Creature CreateCreatureDefaultForTests(int aMoveRange){
         return new Creature.Builder()
                 .moveRange(aMoveRange)
                 .build();
@@ -76,7 +76,7 @@ public class NecropolisFactory {
                         .armor(10)
                         .amount(15)
                         .build()),0.5);
-                case 5: return new ShootingCreatureDecorator(new Creature.Builder()
+                case 5: return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
                         .name(POWER_LICH)
                         .maxHp(40)
                         .attack(13)
@@ -84,7 +84,7 @@ public class NecropolisFactory {
                         .damage(Range.closed(11,15))
                         .armor(10)
                         .amount(15)
-                        .build());
+                        .build()));
                 case 6: return new Creature.Builder()
                         .name(DREAD_KNIGHT)
                         .maxHp(120)

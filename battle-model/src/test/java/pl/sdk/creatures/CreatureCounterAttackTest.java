@@ -7,6 +7,7 @@ import pl.sdk.GameEngine;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.DefaultDamageCalculator;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -107,15 +108,12 @@ public class CreatureCounterAttackTest {
 
     @Test
     void shouldThrowExceptionWhenAttackerAttackHimself(){
-        List<Creature> creaturesLeft = new LinkedList<Creature>();
-        List<Creature> creaturesRight = new LinkedList<Creature>();
         Creature attacker = new Creature.Builder()
                 .attack(5)
                 .maxHp(100)
                 .damageCalculator(new DefaultDamageCalculator())
                 .build();
-        creaturesLeft.add(attacker);
-        GameEngine game = new GameEngine(creaturesLeft,creaturesRight);
+        GameEngine game = new GameEngine(List.of(attacker), Collections.emptyList());
         assertThrows(IllegalArgumentException.class, () -> game.attack(0,0));
     }
 }
