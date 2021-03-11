@@ -15,7 +15,7 @@ public class BoardTest {
     @BeforeEach
     void init() {
         board = new Board();
-        creature = CreateCreatureDefaultForTests();
+        creature = CreateDefaultCreatureForTests();
     }
 
     @Test
@@ -29,7 +29,7 @@ public class BoardTest {
     @Test
     void shouldBeNotOverWrittenWhenyouTryToPutCreatureOnFieldWhenFieldIsTaken() {
         board.add(new Point(0, 0), creature);
-        Creature creature2 = CreateCreatureDefaultForTests();
+        Creature creature2 = CreateDefaultCreatureForTests();
         ;
 
         assertThrows(IllegalArgumentException.class, () -> board.add(new Point(0, 0), creature2));
@@ -40,8 +40,8 @@ public class BoardTest {
 
     @Test
     void shouldReturnCorrectLocationForGetWithArgumentCreature() {
-        Creature creature1 = CreateCreatureDefaultForTests();
-        Creature creature2 = CreateCreatureDefaultForTests();
+        Creature creature1 = CreateDefaultCreatureForTests();
+        Creature creature2 = CreateDefaultCreatureForTests();
         board.add(new Point(2, 1), creature1);
         board.add(new Point(1, 1), creature);
         board.add(new Point(1, 3), creature2);

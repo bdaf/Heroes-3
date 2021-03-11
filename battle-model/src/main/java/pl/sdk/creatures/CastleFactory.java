@@ -20,8 +20,6 @@ public class CastleFactory extends Factory{
     public static final String ANGEL = "Angel";
     public static final String MARKSMAN = "Marksman";
 
-
-
     @Override
     public Creature Create(boolean aIsUpgraded, int aTier){
         if(aIsUpgraded){
@@ -35,7 +33,7 @@ public class CastleFactory extends Factory{
                         .armor(5)
                         .amount(20)
                         .build();
-                case 2: return new DoubleAttackDecorator(new ShootingCreatureDecorator(new Creature.Builder()
+                case 2: return new ShootingCreatureDecorator(new Creature.Builder()
                         .name(MARKSMAN)
                         .maxHp(10)
                         .attack(6)
@@ -43,8 +41,9 @@ public class CastleFactory extends Factory{
                         .damage(Range.closed(2,3))
                         .armor(3)
                         .amount(20)
-                        .build()));
-                case 3: return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
+                        .attacksInTurn(2)
+                        .build());
+                case 3: return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.Builder()
                         .name(ROYAL_GRIFFIN)
                         .maxHp(25)
                         .attack(9)
@@ -52,7 +51,7 @@ public class CastleFactory extends Factory{
                         .damage(Range.closed(3,6))
                         .armor(9)
                         .amount(15)
-                        .build());
+                        .build(),2);
                 case 4:
                     return new SelfHealingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
                             .name(CRUSADER)
@@ -106,7 +105,7 @@ public class CastleFactory extends Factory{
                         .armor(6)
                         .amount(50)
                         .build();
-                case 2: return new Creature.Builder()
+                case 2: return new ShootingCreatureDecorator(new Creature.Builder()
                         .name(ARCHER)
                         .maxHp(10)
                         .attack(6)
@@ -114,8 +113,8 @@ public class CastleFactory extends Factory{
                         .damage(Range.closed(2,3))
                         .armor(3)
                         .amount(40)
-                        .build();
-                case 3: return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
+                        .build());
+                case 3: return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.Builder()
                         .name(GRIFFIN)
                         .maxHp(25)
                         .attack(8)
@@ -123,7 +122,7 @@ public class CastleFactory extends Factory{
                         .damage(Range.closed(3,6))
                         .armor(8)
                         .amount(20)
-                        .build());
+                        .build(),Integer.MAX_VALUE);
                 case 4: return new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
                         .name(SWORDSMAN)
                         .maxHp(35)

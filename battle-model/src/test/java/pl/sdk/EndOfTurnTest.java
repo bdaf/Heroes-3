@@ -11,14 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static pl.sdk.creatures.NecropolisFactory.CreateCreatureDefaultForTests;
+import static pl.sdk.creatures.NecropolisFactory.CreateDefaultCreatureForTests;
 
 public class EndOfTurnTest {
 
     @Test
     void shouldResetCounterAttackFlagAfterEndOfTurn(){
-        Creature attacker = NecropolisFactory.CreateCreatureDefaultForTests();
-        Creature defender = NecropolisFactory.CreateCreatureDefaultForTests();
+        Creature attacker = NecropolisFactory.CreateDefaultCreatureForTests();
+        Creature defender = NecropolisFactory.CreateDefaultCreatureForTests();
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
 
         assertEquals(true, defender.canCounterAttack());
@@ -32,8 +32,8 @@ public class EndOfTurnTest {
 
     @Test
     void shouldResetAttackFlagAfterEndOfTurn(){
-        Creature attacker = CreateCreatureDefaultForTests(5);
-        Creature defender = CreateCreatureDefaultForTests(1);
+        Creature attacker = CreateDefaultCreatureForTests(5);
+        Creature defender = CreateDefaultCreatureForTests(1);
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         assertEquals(true, defender.canCounterAttack());
         assertEquals(1, engine.getAttacksInTurn());
@@ -49,7 +49,7 @@ public class EndOfTurnTest {
     @Test
     void shouldResetAttackFlagAfterEndOfTurnBySpy(){
         Creature attacker = spy(Creature.class);
-        Creature defender = NecropolisFactory.CreateCreatureDefaultForTests();
+        Creature defender = NecropolisFactory.CreateDefaultCreatureForTests();
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         engine.pass();
         engine.pass();

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static pl.sdk.creatures.NecropolisFactory.CreateCreatureDefaultForTests;
+import static pl.sdk.creatures.NecropolisFactory.CreateDefaultCreatureForTests;
 
 public class CreatureTurnQueueTest {
 
@@ -19,9 +19,9 @@ public class CreatureTurnQueueTest {
 
     @BeforeEach
     void init(){
-    a = NecropolisFactory.CreateCreatureDefaultForTests();
-    c = NecropolisFactory.CreateCreatureDefaultForTests();
-    b = NecropolisFactory.CreateCreatureDefaultForTests();
+    a = NecropolisFactory.CreateDefaultCreatureForTests();
+    c = NecropolisFactory.CreateDefaultCreatureForTests();
+    b = NecropolisFactory.CreateDefaultCreatureForTests();
     creatureList = new ArrayList<>();
 
     creatureList.add(a);

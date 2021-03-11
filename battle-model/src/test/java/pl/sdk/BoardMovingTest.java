@@ -8,7 +8,7 @@ import pl.sdk.creatures.NecropolisFactory;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static pl.sdk.creatures.NecropolisFactory.CreateCreatureDefaultForTests;
+import static pl.sdk.creatures.NecropolisFactory.CreateDefaultCreatureForTests;
 
 public class BoardMovingTest {
 
@@ -19,7 +19,7 @@ public class BoardMovingTest {
     @BeforeEach
     void init(){
         board = new Board();
-        creature = NecropolisFactory.CreateCreatureDefaultForTests();
+        creature = NecropolisFactory.CreateDefaultCreatureForTests();
         board.add(new Point(0,0), creature);
     }
 
@@ -47,7 +47,7 @@ public class BoardMovingTest {
     @Test
     void shouldThrowExceptionWhenCreatureIsTryingToGoToNotEmptyField(){
 
-        Creature creature2 = NecropolisFactory.CreateCreatureDefaultForTests();
+        Creature creature2 = NecropolisFactory.CreateDefaultCreatureForTests();
         board.add(new Point(2,3), creature2);
 
         assertThrows(IllegalArgumentException.class, () ->board.moveAndReturnDistance(new Point(0,0), new Point(2,3)));
@@ -59,10 +59,10 @@ public class BoardMovingTest {
     @Test
     void shouldThrowExceptionWhenCreatureIsTryingToBeAddedToNotEmptyField(){
 
-        Creature creature2 = NecropolisFactory.CreateCreatureDefaultForTests();
+        Creature creature2 = NecropolisFactory.CreateDefaultCreatureForTests();
         board.add(new Point(2,3), creature2);
 
-        assertThrows(IllegalArgumentException.class, () -> board.add(new Point(2,3), NecropolisFactory.CreateCreatureDefaultForTests()));
+        assertThrows(IllegalArgumentException.class, () -> board.add(new Point(2,3), NecropolisFactory.CreateDefaultCreatureForTests()));
         Creature creatureFromBoard = board.get(2,3);
 
         assertEquals(creature2, creatureFromBoard);
@@ -82,7 +82,7 @@ public class BoardMovingTest {
 
     @Test
     void shouldBeAbleToGoToFieldWhenHisMoveIsAttemptingForThis(){
-        Creature creature1 = CreateCreatureDefaultForTests(1);
+        Creature creature1 = CreateDefaultCreatureForTests(1);
 
         board.add(new Point(5,5), creature1);
         assertTrue(board.canMove(creature1,5,6));
@@ -93,7 +93,7 @@ public class BoardMovingTest {
 
     @Test
     void shouldNotBeAbleToGoToFieldWhenHisMoveIsNotAttemptingForThis(){
-        Creature creature1 = CreateCreatureDefaultForTests(1);
+        Creature creature1 = CreateDefaultCreatureForTests(1);
 
         GameEngine engine = new GameEngine(List.of(creature1),List.of(creature));
         //creature1 is set on (0,0)
@@ -104,7 +104,7 @@ public class BoardMovingTest {
 
     @Test
     void cannotGoWhenFieldIsTaken(){
-        Creature creature1 = NecropolisFactory.CreateCreatureDefaultForTests();
+        Creature creature1 = NecropolisFactory.CreateDefaultCreatureForTests();
         board.add(new Point(5,5),creature1);
 
         assertFalse(board.canMove(creature1,0,0));
@@ -113,7 +113,7 @@ public class BoardMovingTest {
 
     @Test
     void shouldBeAbleToGoToFieldWhenHisMoveIsAttemptingForThisInParts(){
-        Creature creature1 = CreateCreatureDefaultForTests(1);
+        Creature creature1 = CreateDefaultCreatureForTests(1);
         GameEngine engine = new GameEngine(List.of(creature1),List.of(creature));
 
         //creature1 is set on (0,0)

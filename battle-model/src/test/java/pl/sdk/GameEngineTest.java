@@ -14,8 +14,8 @@ public class GameEngineTest {
     void creatureCannotAttackHisAlly(){
         NecropolisFactory factory = new NecropolisFactory();
 
-        List<Creature> l1 = List.of(factory.Create(true,5),NecropolisFactory.CreateCreatureDefaultForTests(1));
-        List<Creature> l2 = List.of(NecropolisFactory.CreateCreatureDefaultForTests(1));
+        List<Creature> l1 = List.of(factory.Create(true,5),NecropolisFactory.CreateDefaultCreatureForTests(1));
+        List<Creature> l2 = List.of(NecropolisFactory.CreateDefaultCreatureForTests(1));
 
         GameEngine engine = new GameEngine(l1,l2);
 

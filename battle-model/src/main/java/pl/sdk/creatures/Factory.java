@@ -24,11 +24,10 @@ abstract class Factory {
         return new Creature.Builder().moveRange(aMoveRange).build();
     }
 
-    public static Creature CreateDoubleAttackCreatureDefaultForTests(){
-        return CreateDoubleAttackCreatureDefaultForTests(1);
+    public static Creature CreateCounterAttackSeveralTimesInTurnCreature(int counterAttacks) {
+        return CreateCounterAttackSeveralTimesInTurnCreature(counterAttacks,1);
     }
-    public static Creature CreateDoubleAttackCreatureDefaultForTests(int aMoveRange){
-        return new DoubleAttackDecorator(new Creature.Builder().moveRange(aMoveRange).build());
+    public static Creature CreateCounterAttackSeveralTimesInTurnCreature(int counterAttacks, int aMoveRange) {
+        return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.Builder().moveRange(aMoveRange).build(),counterAttacks);
     }
-
 }

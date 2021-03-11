@@ -2,11 +2,30 @@ package pl.sdk.creatures;
 
 import java.beans.PropertyChangeEvent;
 
-public class DoubleAttackDecorator extends Creature{
-    private Creature decorated;
+public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
 
-    DoubleAttackDecorator(Creature aDecorated) {
+    private Creature decorated;
+    private final int maxCounterAttacksInTurn;
+    private int counterAttacksInTurn;
+
+    CounterAttackingSeveralTimesInTurnDecorator(Creature aDecorated, int aCounterAttacksInTurn) {
         decorated = aDecorated;
+        maxCounterAttacksInTurn = counterAttacksInTurn = aCounterAttacksInTurn;
+    }
+
+    @Override
+    boolean wasCounterAttackInThisTurn() {
+        if(counterAttacksInTurn>0)
+            return false;
+        return true;
+    }
+
+    @Override
+    void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
+        if(aCounterAttackInThisTurn)
+            counterAttacksInTurn--;
+        else
+            counterAttacksInTurn = maxCounterAttacksInTurn;
     }
 
     @Override
@@ -26,7 +45,6 @@ public class DoubleAttackDecorator extends Creature{
 
     @Override
     public void attack(Creature defender) {
-        decorated.attack(defender);
         decorated.attack(defender);
     }
 
@@ -72,7 +90,7 @@ public class DoubleAttackDecorator extends Creature{
 
     @Override
     public boolean canCounterAttack() {
-        return decorated.canCounterAttack();
+        return !wasCounterAttackInThisTurn();
     }
 
     @Override

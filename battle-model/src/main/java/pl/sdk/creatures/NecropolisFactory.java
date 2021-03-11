@@ -19,15 +19,6 @@ public class NecropolisFactory extends Factory{
     public static final String BONE_DRAGON = "BoneDragon";
     public static final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
 
-    public static Creature CreateCreatureDefaultForTests(){
-        return new Creature.Builder().build();
-    }
-    public static Creature CreateCreatureDefaultForTests(int aMoveRange){
-        return new Creature.Builder().moveRange(aMoveRange).build();
-    }
-
-
-
     @Override
     public Creature Create(boolean aIsUpgraded, int aTier){
         if(aIsUpgraded){

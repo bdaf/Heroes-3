@@ -1,41 +1,57 @@
 package pl.sdk.creatures;
 
+import com.google.common.collect.Range;
 import org.junit.jupiter.api.Test;
 import pl.sdk.GameEngine;
+import pl.sdk.Point;
 
 import java.util.List;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class DoubleAttackTest {
 
     @Test
     void ShootingCreatureShouldAttackTwiceAndDefenderShouldNotCounterAttack(){
-        Creature attacker = CastleFactory.CreateDoubleAttackCreatureDefaultForTests(5);
-        Creature defender = spy(Creature.class);
+        Creature attacker = new ShootingCreatureDecorator(new Creature.Builder()
+                .attacksInTurn(2)
+                .damage(Range.closed(1,1)).build());
+        Creature defender = new Creature.Builder().maxHp(100).build();
         GameEngine engine = new GameEngine(List.of(attacker),List.of(defender));
 
-        engine.canAttack(GameEngine.BOARD_WIDTH-1,0);
+        assertTrue(engine.canAttack(GameEngine.BOARD_WIDTH-1,0));
+        engine.attack(GameEngine.BOARD_WIDTH-1,0);
+        assertTrue(engine.canAttack(GameEngine.BOARD_WIDTH-1,0));
         engine.attack(GameEngine.BOARD_WIDTH-1,0);
 
+        assertEquals(98,defender.getCurrentHp());
         assertEquals(100,attacker.getCurrentHp());
-        verify(defender,never()).countDamage(any(),any());
-        verify(defender,atLeast(2)).applyDamage(anyInt());
-        verify(defender,atMost(2)).applyDamage(anyInt());
     }
 
     @Test
-    void NotShootingCreatureShouldAttackTwiceAndDefenderShouldCounterAttackOnce(){
-        Creature attacker = CastleFactory.CreateDoubleAttackCreatureDefaultForTests(5);
-        Creature defender = spy(Creature.class);
+    void NotShootingCreatureShouldAttackTwiceThroughDoubleAttackDecoratorAndDefenderShouldCounterAttackOnce(){
+        Creature attacker = new Creature.Builder()
+                .attacksInTurn(2)
+                .damage(Range.closed(1,1)).build();
+        Creature defender = new Creature.Builder()
+                .damage(Range.closed(1,1))
+                .maxHp(100)
+                .moveRange(50).build();
+        GameEngine engine = new GameEngine(List.of(defender),List.of(attacker));
 
-        attacker.attack(defender);
+        assertTrue(engine.canMove(GameEngine.BOARD_WIDTH-1,1)); // defender
+        engine.move(new Point(GameEngine.BOARD_WIDTH-1,1));
+        engine.pass();
 
-        assertEquals(100,attacker.getCurrentHp());
-        verify(defender,never()).countDamage(any(),any());
-        verify(defender,atLeast(2)).applyDamage(anyInt());
-        verify(defender,atMost(2)).applyDamage(anyInt());
+        assertTrue(engine.canAttack(GameEngine.BOARD_WIDTH-1,1));
+        engine.attack(GameEngine.BOARD_WIDTH-1,1);
+        assertTrue(engine.canAttack(GameEngine.BOARD_WIDTH-1,1));
+        engine.attack(GameEngine.BOARD_WIDTH-1,1);
+
+        assertEquals(98,defender.getCurrentHp());
+        assertEquals(99,attacker.getCurrentHp());
     }
 }
