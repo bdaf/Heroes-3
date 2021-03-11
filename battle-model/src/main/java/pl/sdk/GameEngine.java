@@ -10,6 +10,8 @@ import java.util.List;
 
 public class GameEngine {
 
+    public static final String LEFT_TEAM = "leftTeam";
+    public static final String RIGHT_TEAM = "rightTeam";
     public static int BOARD_WIDTH = 20;
     public static int BOARD_HEIGHT = 15;
     public static final String CURRENT_CREATURE_CHANGED = "CURRENT_CREATURE_CHANGED";
@@ -50,13 +52,14 @@ public class GameEngine {
     }
 
     private void putCreaturesToBoard(List<Creature> creaturesOnLeftSide, List<Creature> creaturesOnRightSide) {
-        putCreatureFromOneSideToBoard(creaturesOnLeftSide, 0);
-        putCreatureFromOneSideToBoard(creaturesOnRightSide, BOARD_WIDTH -1);
+        putCreatureFromOneSideToBoard(creaturesOnLeftSide, 0, LEFT_TEAM);
+        putCreatureFromOneSideToBoard(creaturesOnRightSide, BOARD_WIDTH -1, RIGHT_TEAM);
     }
 
-    private void putCreatureFromOneSideToBoard(List<Creature> creaturesOnRightSide, int x) {
-        for (int i = 0; i < creaturesOnRightSide.size(); i++) {
-            board.add(new Point(x, i * 2), creaturesOnRightSide.get(i));
+    private void putCreatureFromOneSideToBoard(List<Creature> creatures, int x, String aTeam) {
+        for (int i = 0; i < creatures.size(); i++) {
+            creatures.get(i).setTeam(aTeam);
+            board.add(new Point(x, i * 2), creatures.get(i));
         }
     }
 
@@ -115,7 +118,8 @@ public class GameEngine {
     }
 
     public boolean canAttack(int aX, int aY) {
-        return board.canAttack(getActiveCreature(), aX, aY) && queue.getAttacksOfActiveCreature() > 0;
+        boolean ifTheSameTeam = getActiveCreature().getTeam().equalsIgnoreCase(get(aX,aY).getTeam());
+        return board.canAttack(getActiveCreature(), aX, aY) && queue.getAttacksOfActiveCreature() > 0 && !ifTheSameTeam;
     }
 
     void makeChangesOfNewTurn() {
@@ -124,7 +128,6 @@ public class GameEngine {
 
 
      int getAttacksInTurn() {
-
         return queue.getAttacksOfActiveCreature();
     }
 }

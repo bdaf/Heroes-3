@@ -2,13 +2,21 @@ package pl.sdk.creatures;
 
 import java.beans.PropertyChangeEvent;
 
-public class SplashDamageCreature extends Creature {
-    private final Creature decorated;
-    private final boolean[][] splashDamageTable;
+public class DoubleAttackDecorator extends Creature{
+    private Creature decorated;
 
-    public SplashDamageCreature(Creature aDecorated, boolean[][] aSplashDamageTable) {
+    DoubleAttackDecorator(Creature aDecorated) {
         decorated = aDecorated;
-        this.splashDamageTable = aSplashDamageTable;
+    }
+
+    @Override
+    public String getTeam() {
+        return decorated.getTeam();
+    }
+
+    @Override
+    public void setTeam(String aTeam) {
+        decorated.setTeam(aTeam);
     }
 
     @Override
@@ -18,6 +26,7 @@ public class SplashDamageCreature extends Creature {
 
     @Override
     public void attack(Creature defender) {
+        decorated.attack(defender);
         decorated.attack(defender);
     }
 
@@ -128,6 +137,6 @@ public class SplashDamageCreature extends Creature {
 
     @Override
     public boolean[][] getSplashDamage() {
-        return splashDamageTable;
+        return decorated.getSplashDamage();
     }
 }

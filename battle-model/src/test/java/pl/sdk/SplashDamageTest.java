@@ -60,7 +60,6 @@ public class SplashDamageTest {
 
     @Test
     void UnitWithoutSplashDamageCreatureShouldNotDoSplashDmg(){
-        NecropolisFactory factory = new NecropolisFactory();
         Creature notSplashCreature = NecropolisFactory.CreateCreatureDefaultForTests();
         Creature defender = spy(Creature.class);
 

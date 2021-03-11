@@ -1,7 +1,6 @@
 package pl.sdk.gui;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -18,10 +17,10 @@ class MapTile extends StackPane {
         getChildren().add(rec);
     }
 
-    public void addCreature(String stringOfCurrentHp, String nameOfCreature) {
+    public void addCreature(String stringOfCurrentHp, String nameOfCreature, String aTeam) {
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
-        ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/creatures/" + nameOfCreature + ".png")));
+        ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/creatures/"+aTeam+"/" + nameOfCreature + ".png")));
         image.setFitHeight(61);
         image.setFitWidth(61);
         vbox.getChildren().add(image);

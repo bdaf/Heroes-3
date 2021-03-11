@@ -2,7 +2,7 @@ package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 
-public class NecropolisFactory {
+public class NecropolisFactory extends Factory{
     public static final String SKELETON_WARRIOR = "SkeletonWarrior";
     public static final String ZOMBIE = "Zombie";
     public static final String WRAITH = "Wraith";
@@ -23,19 +23,12 @@ public class NecropolisFactory {
         return new Creature.Builder().build();
     }
     public static Creature CreateCreatureDefaultForTests(int aMoveRange){
-        return new Creature.Builder()
-                .moveRange(aMoveRange)
-                .build();
+        return new Creature.Builder().moveRange(aMoveRange).build();
     }
 
-    public static Creature CreateShootingCreatureForTests(){
-        return new ShootingCreatureDecorator(new Creature.Builder().build());
-    }
 
-    public static Creature CreateBlockingCreatureForTests(){
-        return new BlockingCounterAttackCreatureDecorator(new Creature.Builder().build());
-    }
 
+    @Override
     public Creature Create(boolean aIsUpgraded, int aTier){
         if(aIsUpgraded){
             switch(aTier){
@@ -76,7 +69,8 @@ public class NecropolisFactory {
                         .armor(10)
                         .amount(15)
                         .build()),0.5);
-                case 5: return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
+                case 5:
+                    return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
                         .name(POWER_LICH)
                         .maxHp(40)
                         .attack(13)
@@ -84,7 +78,7 @@ public class NecropolisFactory {
                         .damage(Range.closed(11,15))
                         .armor(10)
                         .amount(15)
-                        .build()));
+                        .build()),getSplashForLich());
                 case 6: return new Creature.Builder()
                         .name(DREAD_KNIGHT)
                         .maxHp(120)
@@ -145,7 +139,7 @@ public class NecropolisFactory {
                         .armor(9)
                         .amount(20)
                         .build());
-                case 5: return new ShootingCreatureDecorator(new Creature.Builder()
+                case 5: return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
                         .name(LICH)
                         .maxHp(30)
                         .attack(13)
@@ -153,7 +147,7 @@ public class NecropolisFactory {
                         .damage(Range.closed(11,13))
                         .armor(10)
                         .amount(20)
-                        .build());
+                        .build()),getSplashForLich());
                 case 6: return new Creature.Builder()
                         .name(BLACK_KNIGHT)
                         .maxHp(120)
@@ -175,5 +169,15 @@ public class NecropolisFactory {
                 default: throw new IllegalArgumentException(ERROR_MSG);
             }
         }
+    }
+
+    private boolean[][] getSplashForLich() {
+        boolean[][] splashDamageTable = new boolean[3][3];
+        splashDamageTable[1][1] = true;
+        splashDamageTable[0][1] = true;
+        splashDamageTable[1][0] = true;
+        splashDamageTable[2][1] = true;
+        splashDamageTable[1][2] = true;
+        return splashDamageTable;
     }
 }

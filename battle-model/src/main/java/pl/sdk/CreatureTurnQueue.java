@@ -59,6 +59,8 @@ public class CreatureTurnQueue {
             activeCreature = creatureQuene.poll();
             movePointsOfActiveCreature = activeCreature.getMoveRange();
             attacksOfActiveCreature = activeCreature.getMaxAttacksInTurn();
+            if(!activeCreature.isAlive())
+                next();
         }
     }
 

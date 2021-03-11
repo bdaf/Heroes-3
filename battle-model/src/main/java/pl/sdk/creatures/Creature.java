@@ -14,6 +14,7 @@ public class Creature implements PropertyChangeListener {
     private int maxAmount;
     private int amount;
     private int attacksInTurn;
+    private String team;
 
     Creature(){
         this(new CreatureStatistic());
@@ -23,10 +24,18 @@ public class Creature implements PropertyChangeListener {
         this.stats = stats;
         currentHp = stats.getMaxHp();
     }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String aTeam) {
+        team = aTeam;
+    }
+
     int getMaxHp(){
         return stats.getMaxHp();
     }
-
 
     public void attack(Creature defender) {
         if (this == defender) throw new IllegalArgumentException();
@@ -226,6 +235,7 @@ public class Creature implements PropertyChangeListener {
             result.amount = this.amount;
             result.maxAmount = this.amount;
             result.attacksInTurn = 1;
+            result.setTeam("leftTeam");
             return result;
         }
 

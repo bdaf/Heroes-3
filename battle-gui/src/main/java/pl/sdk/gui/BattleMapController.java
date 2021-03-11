@@ -65,7 +65,7 @@ public class BattleMapController implements PropertyChangeListener {
 
                 Creature c = gameEngine.get(x,y);
                 if(c!=null) {
-                    mapTile.addCreature(c.getStringOfCurrentHp(), c.getName());
+                    mapTile.addCreature(c.getStringOfCurrentHp(), c.getName(), c.getTeam());
                     if(c == gameEngine.getActiveCreature())
                         mapTile.setBackgroundColor(Color.GREEN);
                     else if(gameEngine.canAttack(x,y)){
