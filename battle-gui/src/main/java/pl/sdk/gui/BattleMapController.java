@@ -6,6 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import pl.sdk.*;
+import pl.sdk.creatures.CastleFactory;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 
@@ -27,15 +28,16 @@ public class BattleMapController implements PropertyChangeListener {
     public BattleMapController(){
         List<Creature> notUpgradedCreatures = new ArrayList<Creature>();
         List<Creature> upgradedCreatures = new ArrayList<Creature>();
-        NecropolisFactory factory = new NecropolisFactory();
+        NecropolisFactory necropoliiFactory = new NecropolisFactory();
+        CastleFactory castleFactory = new CastleFactory();
 
         Creature c;
         for (int i = 0; i < 7; i++) {
-            c = factory.Create(false,i+1);
+            c = necropoliiFactory.Create(true,i+1);
             notUpgradedCreatures.add(c);
         }
         for (int i = 0; i < 7; i++) {
-            c = factory.Create(true,i+1);
+            c = castleFactory.Create(true,i+1);
             upgradedCreatures.add(c);
         }
 

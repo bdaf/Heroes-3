@@ -53,7 +53,7 @@ public class CastleFactory extends Factory{
                         .amount(15)
                         .build(),2);
                 case 4:
-                    return new SelfHealingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
+                    return new Creature.Builder()
                             .name(CRUSADER)
                             .maxHp(35)
                             .attack(12)
@@ -61,9 +61,9 @@ public class CastleFactory extends Factory{
                             .damage(Range.closed(7,10))
                             .armor(12)
                             .amount(15)
-                            .build()),0.5);
+                            .build();
                 case 5:
-                    return new Creature.Builder()
+                    return new ShootingCreatureDecorator(new Creature.Builder()
                             .name(ZEALOT)
                             .maxHp(30)
                             .attack(12)
@@ -71,7 +71,7 @@ public class CastleFactory extends Factory{
                             .damage(Range.closed(10,12))
                             .armor(10)
                             .amount(15)
-                            .build();
+                            .build());
                 case 6: return new Creature.Builder()
                         .name(CHAMPION)
                         .maxHp(100)
