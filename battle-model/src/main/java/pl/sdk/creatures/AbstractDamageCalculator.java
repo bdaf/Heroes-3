@@ -26,6 +26,10 @@ import java.util.Random;
             damageToDeal = (randedDamage * (1 - (defencePoints * 0.025)));
         }
         damageToDeal = changeDamageAfter(damageToDeal*aAttacker.getAmount());
+        int maxDamageToDeal = (aDefender.getAmount()-1)*aDefender.getMaxHp()+aDefender.getCurrentHp();
+        if(damageToDeal>maxDamageToDeal)
+            damageToDeal = maxDamageToDeal;
+
         return (int) damageToDeal;
     }
 

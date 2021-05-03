@@ -29,13 +29,7 @@ import java.beans.PropertyChangeEvent;
 
     @Override
     public void attack(Creature defender) {
-        if (decorated == defender) throw new IllegalArgumentException();
-        if (decorated.isAlive()) {
-            int damageToDeal = countDamage(decorated, defender);
-            defender.applyDamage(damageToDeal);
-            performAfterAttack(damageToDeal);
-            counterAttack(defender);
-        }
+        decorated.attack(defender);
     }
 
     @Override
@@ -53,7 +47,43 @@ import java.beans.PropertyChangeEvent;
         decorated.counterAttack(defender);
     }
 
-    @Override
+     @Override
+     boolean wasCounterAttackInThisTurn() {
+         return decorated.wasCounterAttackInThisTurn();
+     }
+
+     @Override
+     void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
+         decorated.setIfWasCounterAttackInThisTurn(aCounterAttackInThisTurn);
+     }
+
+     @Override
+     public String getTeam() {
+         return decorated.getTeam();
+     }
+
+     @Override
+     public void setTeam(String aTeam) {
+         decorated.setTeam(aTeam);
+     }
+
+     @Override
+     public void meleeAttack(Creature defender) {
+         if (decorated == defender) throw new IllegalArgumentException();
+         if (decorated.isAlive()) {
+             int damageToDeal = countDamage(decorated, defender);
+             defender.applyDamage(damageToDeal);
+             performAfterAttack(damageToDeal);
+             counterAttack(defender);
+         }
+     }
+
+     @Override
+     public boolean[][] getSplashDamage() {
+         return decorated.getSplashDamage();
+     }
+
+     @Override
     public void applyDamage(int aDamageToApply) {
         decorated.applyDamage(aDamageToApply);
     }

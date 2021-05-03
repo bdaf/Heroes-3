@@ -47,7 +47,7 @@ public class HealSelfCalculatorTest {
     @Test
     void shouldHeal50WhenHeDeal100Dmg(){
         attacker.setCurrentHP(40);
-        attacker.attack(defender);
+        attacker.meleeAttack(defender);
 
         assertEquals(90,attacker.getCurrentHp());
     }
@@ -64,7 +64,7 @@ public class HealSelfCalculatorTest {
                 .build(),0.5);
 
         attacker.setCurrentHP(40);
-        attacker.attack(defender);
+        attacker.meleeAttack(defender);
 
         assertEquals(100,attacker.getCurrentHp());
         assertEquals(10,attacker.getAmount());
@@ -73,7 +73,7 @@ public class HealSelfCalculatorTest {
     @Test
     void shouldHeal30AndHaveMaxHpWhenHeDeal100DmgButHasCurrently70Hp(){
         attacker.setCurrentHP(70);
-        attacker.attack(defender);
+        attacker.meleeAttack(defender);
 
         assertEquals(100,attacker.getCurrentHp());
         assertEquals(10,attacker.getAmount());
@@ -82,7 +82,7 @@ public class HealSelfCalculatorTest {
     @Test
     void shouldHeal30AndHaveMaxHpWhenHeDeal100DmgButHasCurrently70HpV2(){
         attacker.setCurrentHP(60);
-        attacker.attack(defender);
+        attacker.meleeAttack(defender);
 
         assertEquals(100,attacker.getCurrentHp());
         assertEquals(10,attacker.getAmount());
@@ -92,7 +92,7 @@ public class HealSelfCalculatorTest {
     void shouldRestoreWholeStack(){
         attacker.setCurrentHP(60);
         attacker.setAmount(9);
-        attacker.attack(defender);
+        attacker.meleeAttack(defender);
 
         assertEquals(5,attacker.getCurrentHp());
         assertEquals(10,attacker.getAmount());
@@ -111,7 +111,7 @@ public class HealSelfCalculatorTest {
         attacker = new SelfHealingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(attacker),0.5);
         attacker.setCurrentHP(60);
         attacker.setAmount(5);
-        attacker.attack(defender);
+        attacker.meleeAttack(defender);
 
         assertEquals(35,attacker.getCurrentHp());
         assertEquals(8,attacker.getAmount());

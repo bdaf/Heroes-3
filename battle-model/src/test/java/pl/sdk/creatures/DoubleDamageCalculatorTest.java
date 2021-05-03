@@ -31,6 +31,7 @@ public class DoubleDamageCalculatorTest {
         defender = new Creature.Builder()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
+                .maxHp(1000)
                 .build();
         rand = mock(Random.class);
         when(rand.nextInt(anyInt())).thenReturn(0);

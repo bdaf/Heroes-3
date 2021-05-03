@@ -37,7 +37,7 @@ public class BattleMapController implements PropertyChangeListener {
             notUpgradedCreatures.add(c);
         }
         for (int i = 0; i < 7; i++) {
-            c = castleFactory.Create(true,i+1);
+            c = castleFactory.Create(false,i+1);
             upgradedCreatures.add(c);
         }
 

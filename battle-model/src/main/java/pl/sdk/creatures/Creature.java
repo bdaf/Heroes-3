@@ -46,6 +46,10 @@ public class Creature implements PropertyChangeListener {
         return stats.getMaxHp();
     }
 
+    public void meleeAttack(Creature defender){
+        attack(defender);
+    }
+
     public void attack(Creature defender) {
         if (this == defender) throw new IllegalArgumentException();
         if (isAlive()) {

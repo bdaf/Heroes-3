@@ -65,7 +65,32 @@ import java.beans.PropertyChangeEvent;
         return decorated.isAlive();
     }
 
-    @Override
+     @Override
+     boolean wasCounterAttackInThisTurn() {
+         return decorated.wasCounterAttackInThisTurn();
+     }
+
+     @Override
+     void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
+         decorated.setIfWasCounterAttackInThisTurn(aCounterAttackInThisTurn);
+     }
+
+     @Override
+     public String getTeam() {
+         return decorated.getTeam();
+     }
+
+     @Override
+     public void setTeam(String aTeam) {
+         decorated.setTeam(aTeam);
+     }
+
+     @Override
+     public void meleeAttack(Creature defender) {
+         attack(defender);
+     }
+
+     @Override
     public int getCurrentHp() {
         return decorated.getCurrentHp();
     }
