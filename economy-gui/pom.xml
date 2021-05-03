@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>battle-gui</artifactId>
-
+    <artifactId>economy-gui</artifactId>
 
     <dependencies>
         <dependency>
@@ -25,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>pl.sdk</groupId>
-            <artifactId>battle-model</artifactId>
+            <artifactId>economy-model</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>

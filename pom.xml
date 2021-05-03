@@ -16,6 +16,8 @@
     <modules>
         <module>battle-model</module>
         <module>battle-gui</module>
+        <module>economy-model</module>
+        <module>economy-gui</module>
     </modules>
 
     <dependencyManagement>
