@@ -1,6 +1,6 @@
 package pl.sdk.creatures;
 
-abstract class Factory {
+public abstract class Factory {
     abstract public Creature Create(boolean aIsUpgraded, int aTier);
 
     public static Creature CreateShootingCreatureForTests(){
