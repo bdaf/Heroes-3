@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>pl.sdk</groupId>
-            <artifactId>economy-model</artifactId>
+            <artifactId>battle-model</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
