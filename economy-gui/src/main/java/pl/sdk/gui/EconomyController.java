@@ -14,7 +14,7 @@ import java.util.List;
 
 public class EconomyController {
     @FXML
-    Button passButton;
+    Button readyButton;
     @FXML
     Button escapeButton;
     @FXML

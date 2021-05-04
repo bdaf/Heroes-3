@@ -26,7 +26,7 @@
       <HBox prefHeight="18.0" prefWidth="1280.0" BorderPane.alignment="BOTTOM_CENTER">
          <children>
             <Button mnemonicParsing="false" text="Spellbook" />
-            <Button fx:id="passButton" mnemonicParsing="false" text="Pass" />
+            <Button fx:id="readyButton" mnemonicParsing="false" text="Ready!" />
             <Button fx:id="escapeButton" mnemonicParsing="false" text="Escape" HBox.hgrow="NEVER">
                <HBox.margin>
                   <Insets />
