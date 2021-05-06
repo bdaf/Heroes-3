@@ -16,7 +16,7 @@ public class SplashDamageTest {
     @Test
     void SplashDamageCreatureShouldDoSplashDmgButOthersCreatureShouldNot(){
         NecropolisFactory factory = new NecropolisFactory();
-        Creature splashCreature = factory.Create(true,5);
+        Creature splashCreature = factory.Create(true,5,1);
         Creature defender = spy(Creature.class);
         Creature splashingCreature = spy(Creature.class);
         Creature splashingCreature1 = spy(Creature.class);

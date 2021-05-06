@@ -15,6 +15,8 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javafx.application.Platform.exit;
+
 public class BattleMapController implements PropertyChangeListener {
 
     @FXML
@@ -33,21 +35,25 @@ public class BattleMapController implements PropertyChangeListener {
 
         Creature c;
         for (int i = 0; i < 7; i++) {
-            c = necropoliiFactory.Create(true,i+1);
+            c = necropoliiFactory.Create(true,i+1,1);
             notUpgradedCreatures.add(c);
         }
         for (int i = 0; i < 7; i++) {
-            c = castleFactory.Create(false,i+1);
+            c = castleFactory.Create(false,i+1,1);
             upgradedCreatures.add(c);
         }
 
 
         gameEngine = new GameEngine(notUpgradedCreatures,upgradedCreatures);
     }
+    public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight){
+        gameEngine = new GameEngine(TeamLeft,TeamRight);
+    }
 
 
     @FXML
     void initialize(){
+        escapeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> exit());
         gameEngine.addObserver(gameEngine.CURRENT_CREATURE_CHANGED , this);
         gameEngine.addObserver(gameEngine.CREATURE_MOVED , this);
         gameEngine.addObserver(gameEngine.CURRENT_CREATURE_ATTACKED , this);

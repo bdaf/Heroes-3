@@ -9,7 +9,10 @@ public class Start extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("fxml/battleMap.fxml")));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getClassLoader().getResource("fxml/battleMap.fxml"));
+        loader.setController(new BattleMapController());
+        Scene scene = new Scene(loader.load());
         stage.setTitle("FXML Welcome");
         stage.setScene(scene);
         stage.show();

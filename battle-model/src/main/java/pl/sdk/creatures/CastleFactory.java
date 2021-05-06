@@ -21,7 +21,7 @@ public class CastleFactory extends Factory {
     public static final String MARKSMAN = "Marksman";
 
     @Override
-    public Creature Create(boolean aIsUpgraded, int aTier) {
+    public Creature Create(boolean aIsUpgraded, int aTier, int amount) {
         if (aIsUpgraded) {
             switch (aTier) {
                 case 1:
@@ -32,7 +32,7 @@ public class CastleFactory extends Factory {
                             .moveRange(4)
                             .damage(Range.closed(1, 3))
                             .armor(5)
-                            .amount(20)
+                            .amount(amount)
                             .build();
                 case 2:
                     return new ShootingCreatureDecorator(new Creature.Builder()
@@ -42,7 +42,7 @@ public class CastleFactory extends Factory {
                             .moveRange(6)
                             .damage(Range.closed(2, 3))
                             .armor(3)
-                            .amount(20)
+                            .amount(amount)
                             .attacksInTurn(2)
                             .build());
                 case 3:
@@ -53,7 +53,7 @@ public class CastleFactory extends Factory {
                             .moveRange(9)
                             .damage(Range.closed(3, 6))
                             .armor(9)
-                            .amount(15)
+                            .amount(amount)
                             .build(), Integer.MAX_VALUE);
                 case 4:
                     return new Creature.Builder()
@@ -63,7 +63,7 @@ public class CastleFactory extends Factory {
                             .moveRange(6)
                             .damage(Range.closed(7, 10))
                             .armor(12)
-                            .amount(15)
+                            .amount(amount)
                             .build();
                 case 5:
                     return new ShootingCreatureDecorator(new Creature.Builder()
@@ -73,7 +73,7 @@ public class CastleFactory extends Factory {
                             .moveRange(7)
                             .damage(Range.closed(10, 12))
                             .armor(10)
-                            .amount(15)
+                            .amount(amount)
                             .build());
                 case 6:
                     return new Creature.Builder()
@@ -84,7 +84,7 @@ public class CastleFactory extends Factory {
                             .damage(Range.closed(20, 25))
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(0.2, 2))
                             .armor(16)
-                            .amount(10)
+                            .amount(amount)
                             .build();
                 case 7:
                     return new Creature.Builder()
@@ -94,7 +94,7 @@ public class CastleFactory extends Factory {
                             .moveRange(18)
                             .damage(Range.closed(50, 50))
                             .armor(20)
-                            .amount(10)
+                            .amount(amount)
                             .build();
                 default:
                     throw new IllegalArgumentException(ERROR_MSG);
@@ -109,7 +109,7 @@ public class CastleFactory extends Factory {
                             .moveRange(4)
                             .damage(Range.closed(1, 3))
                             .armor(6)
-                            .amount(50)
+                            .amount(amount)
                             .build();
                 case 2:
                     return new ShootingCreatureDecorator(new Creature.Builder()
@@ -119,7 +119,7 @@ public class CastleFactory extends Factory {
                             .moveRange(4)
                             .damage(Range.closed(2, 3))
                             .armor(3)
-                            .amount(40)
+                            .amount(amount)
                             .build());
                 case 3:
                     return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.Builder()
@@ -129,7 +129,7 @@ public class CastleFactory extends Factory {
                             .moveRange(6)
                             .damage(Range.closed(3, 6))
                             .armor(8)
-                            .amount(20)
+                            .amount(amount)
                             .build(), 2);
                 case 4:
                     return new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
@@ -139,7 +139,7 @@ public class CastleFactory extends Factory {
                             .moveRange(5)
                             .damage(Range.closed(6, 9))
                             .armor(12)
-                            .amount(20)
+                            .amount(amount)
                             .build());
                 case 5:
                     return new ShootingCreatureDecorator(new SelfHealingCreatureDecorator(new Creature.Builder()
@@ -149,7 +149,7 @@ public class CastleFactory extends Factory {
                             .moveRange(5)
                             .damage(Range.closed(10, 12))
                             .armor(7)
-                            .amount(20)
+                            .amount(amount)
                             .build(), -0.5));
                 case 6:
                     return new Creature.Builder()
@@ -159,7 +159,7 @@ public class CastleFactory extends Factory {
                             .moveRange(7)
                             .damage(Range.closed(15, 25))
                             .armor(15)
-                            .amount(12)
+                            .amount(amount)
                             .build();
                 case 7:
                     return new Creature.Builder()
@@ -169,7 +169,7 @@ public class CastleFactory extends Factory {
                             .moveRange(12)
                             .damage(Range.closed(50, 50))
                             .armor(20)
-                            .amount(12)
+                            .amount(amount)
                             .build();
                 default:
                     throw new IllegalArgumentException(ERROR_MSG);
