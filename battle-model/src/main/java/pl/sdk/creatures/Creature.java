@@ -163,7 +163,7 @@ public class Creature implements PropertyChangeListener {
         currentHp = getMaxHp();
     }
 
-    void setAmount(int aAmount) {
+    public void setAmount(int aAmount) {
         amount = aAmount;
     }
 

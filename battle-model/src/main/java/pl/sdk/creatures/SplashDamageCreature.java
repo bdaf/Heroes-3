@@ -137,7 +137,7 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    void setAmount(int aAmount) {
+    public void setAmount(int aAmount) {
         decorated.setAmount(aAmount);
     }
 

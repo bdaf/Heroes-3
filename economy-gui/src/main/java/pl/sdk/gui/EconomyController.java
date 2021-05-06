@@ -8,10 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import pl.sdk.creatures.CastleFactory;
-import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.Factory;
-import pl.sdk.creatures.NecropolisFactory;
+import pl.sdk.creatures.*;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -72,11 +69,9 @@ public class EconomyController {
 
     }
 
-    void buyOrSell(Creature aCreatureButton) {
-        if (creaturesInArmy.contains(aCreatureButton)) {
-            creaturesInArmy.remove(aCreatureButton);
-        } else if (creaturesInShop.contains(aCreatureButton)) {
-            creaturesInArmy.add(aCreatureButton);
+    void buy(Creature aCreature) {
+        if (creaturesInShop.contains(aCreature)) {
+            creaturesInArmy.add(aCreature);
         }
     }
 
@@ -85,8 +80,8 @@ public class EconomyController {
         hBoxForUserArmy.getChildren().clear();
         hBoxForArmyShop.getChildren().add(new Button("SHOP"));
         hBoxForUserArmy.getChildren().add(new Button("YOUR ARMY"));
-        creaturesInShop.forEach(x -> hBoxForArmyShop.getChildren().add(new CreatureButton(this, x)));
-        creaturesInArmy.forEach(x -> hBoxForUserArmy.getChildren().add(new CreatureButton(this, x)));
+        creaturesInShop.forEach(x -> hBoxForArmyShop.getChildren().add(new CreatureButton(this, x,false)));
+        creaturesInArmy.forEach(x -> hBoxForUserArmy.getChildren().add(new CreatureButton(this, x,true)));
     }
 
     private void addEventHandlerForReadyButton() {
@@ -104,5 +99,29 @@ public class EconomyController {
             }
             refreshGui();
         });
+    }
+
+    void sell(Creature aCreature) {
+        if (creaturesInArmy.contains(aCreature)) {
+            creaturesInArmy.remove(aCreature);
+        }
+    }
+
+    void displayChoosingAmountOfCreatures(CreatureButton aCreatureButton) {
+        Scene scene = null;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getClassLoader().getResource("fxml/choosingAmount.fxml"));
+            ChoosingAmountController controller = new ChoosingAmountController(aCreatureButton, this);
+            loader.setController(controller);
+            scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Choosing Amount");
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException aE) {
+            aE.printStackTrace();
+        }
     }
 }
