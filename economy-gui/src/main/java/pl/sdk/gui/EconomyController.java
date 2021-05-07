@@ -41,23 +41,17 @@ public class EconomyController {
         creaturesInPlayers2Army = new LinkedList<Creature>();
         creaturesInArmy = creaturesInPlayers1Army;
         creaturesInShop = new LinkedList<Creature>();
-        Factory factory = new CastleFactory();
-        for (int i = 0; i < 14; i++) {
-            if (i == 7)
-                factory = new NecropolisFactory();
-            creaturesInShop.add(factory.Create(true, (i % 7) + 1,1));
-        }
         addEventHandlerForReadyButton();
         countScene = 0;
         refreshGui();
     }
 
-    private void startGame(){
+    private void startGame() {
         Scene scene = null;
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("fxml/battleMap.fxml"));
-            loader.setController(new BattleMapController(creaturesInPlayers1Army,creaturesInPlayers2Army));
+            loader.setController(new BattleMapController(creaturesInPlayers1Army, creaturesInPlayers2Army));
             scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setTitle("FXML Welcome");
@@ -80,16 +74,21 @@ public class EconomyController {
         hBoxForUserArmy.getChildren().clear();
         hBoxForArmyShop.getChildren().add(new Button("SHOP"));
         hBoxForUserArmy.getChildren().add(new Button("YOUR ARMY"));
-        creaturesInShop.forEach(x -> hBoxForArmyShop.getChildren().add(new CreatureButton(this, x,false)));
-        creaturesInArmy.forEach(x -> hBoxForUserArmy.getChildren().add(new CreatureButton(this, x,true)));
+        Factory factory = new CastleFactory();
+        for (int i = 0; i < 14; i++) {
+            if (i == 7)
+                factory = new NecropolisFactory();
+            creaturesInShop.add(new CreatureButtonInShop(this, factory, (i%7)+1,true));
+        }
+        creaturesInShop.forEach(x -> hBoxForArmyShop.getChildren().add(new CreatureButtonInShop(this, x)));
+        creaturesInArmy.forEach(x -> hBoxForUserArmy.getChildren().add(new CreatureButtonInArmy(this, x)));
     }
 
     private void addEventHandlerForReadyButton() {
         readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-            if(countScene >=3){
+            if (countScene >= 3) {
                 startGame();
-            }
-            else if (playerLabel.getText().equalsIgnoreCase("Player 1's Choice")) {
+            } else if (playerLabel.getText().equalsIgnoreCase("Player 1's Choice")) {
                 playerLabel.setText("Player 2's Choice");
                 creaturesInArmy = creaturesInPlayers2Army;
                 countScene++;
@@ -97,7 +96,6 @@ public class EconomyController {
                 playerLabel.setText("Player 1's Choice");
                 creaturesInArmy = creaturesInPlayers1Army;
             }
-            refreshGui();
         });
     }
 
@@ -107,12 +105,12 @@ public class EconomyController {
         }
     }
 
-    void displayChoosingAmountOfCreatures(CreatureButton aCreatureButton) {
+    void displayChoosingAmountOfCreatures(CreatureButtonInShop aCreatureButtonInShop) {
         Scene scene = null;
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("fxml/choosingAmount.fxml"));
-            ChoosingAmountController controller = new ChoosingAmountController(aCreatureButton, this);
+            ChoosingAmountController controller = new ChoosingAmountController(aCreatureButtonInShop, this);
             loader.setController(controller);
             scene = new Scene(loader.load());
             Stage stage = new Stage();

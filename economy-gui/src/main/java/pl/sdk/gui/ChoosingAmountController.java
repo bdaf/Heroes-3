@@ -3,44 +3,42 @@ package pl.sdk.gui;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 
 public class ChoosingAmountController {
     private final EconomyController economyController;
-    private CreatureButton creatureButton;
-    private short amount;
+    private CreatureButtonInShop creatureButton;
+    private byte amount;
     @FXML
-    TextField amountField;
+    Slider amountSlider;
     @FXML
     Button saveButton;
     @FXML
-    Label errorLabel;
+    Label amountOfCreatureLabel;
     private Stage stage;
 
 
-    public ChoosingAmountController(CreatureButton aCreatureButton, EconomyController aEconomyController) {
-        creatureButton = aCreatureButton;
+    public ChoosingAmountController(CreatureButtonInShop aCreatureButtonInShop, EconomyController aEconomyController) {
+        creatureButton = aCreatureButtonInShop;
         economyController = aEconomyController;
     }
 
     @FXML
     void initialize(){
+        amountSlider.setMin(1);
+        amountSlider.setMax(99);
         saveButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-            if(!errorLabel.getText().equals(""))
-                errorLabel.setText("");
-            try {
-                amount = Short.parseShort(amountField.getText());
-            }catch(Exception eM){
-                amount = 1;
-                System.out.println("Not properly value. Has been set on '1'");
-                errorLabel.setText("Not properly value!");
-            }
+            amount = (byte) amountSlider.getValue();
             creatureButton.setAmount(amount);
             economyController.refreshGui();
         });
+        amountSlider.addEventHandler(MouseEvent.MOUSE_PRESSED, x ->{
+            amountOfCreatureLabel.setText(String.valueOf((byte)amountSlider.getValue()));
+        });
+
     }
 
     void setStage(Stage aStage) {
