@@ -64,9 +64,7 @@ public class EconomyController {
     }
 
     void buy(Creature aCreature) {
-        if (creaturesInShop.contains(aCreature)) {
-            creaturesInArmy.add(aCreature);
-        }
+        creaturesInArmy.add(aCreature);
     }
 
     void refreshGui() {
@@ -75,12 +73,13 @@ public class EconomyController {
         hBoxForArmyShop.getChildren().add(new Button("SHOP"));
         hBoxForUserArmy.getChildren().add(new Button("YOUR ARMY"));
         Factory factory = new CastleFactory();
+        VBox shopCreatures = new VBox();
         for (int i = 0; i < 14; i++) {
             if (i == 7)
                 factory = new NecropolisFactory();
-            creaturesInShop.add(new CreatureButtonInShop(this, factory, (i%7)+1,true));
+            shopCreatures.getChildren().add(new CreatureButtonInShop(this, factory, (i % 7) + 1, true));
         }
-        creaturesInShop.forEach(x -> hBoxForArmyShop.getChildren().add(new CreatureButtonInShop(this, x)));
+        hBoxForArmyShop.getChildren().add(shopCreatures);
         creaturesInArmy.forEach(x -> hBoxForUserArmy.getChildren().add(new CreatureButtonInArmy(this, x)));
     }
 
@@ -88,38 +87,21 @@ public class EconomyController {
         readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
             if (countScene >= 3) {
                 startGame();
-            } else if (playerLabel.getText().equalsIgnoreCase("Player 1's Choice")) {
+            } else if (creaturesInArmy == creaturesInPlayers1Army) {
                 playerLabel.setText("Player 2's Choice");
                 creaturesInArmy = creaturesInPlayers2Army;
                 countScene++;
-            } else {
+            } else if (creaturesInArmy == creaturesInPlayers2Army) {
                 playerLabel.setText("Player 1's Choice");
                 creaturesInArmy = creaturesInPlayers1Army;
             }
+            refreshGui();
         });
     }
 
     void sell(Creature aCreature) {
         if (creaturesInArmy.contains(aCreature)) {
             creaturesInArmy.remove(aCreature);
-        }
-    }
-
-    void displayChoosingAmountOfCreatures(CreatureButtonInShop aCreatureButtonInShop) {
-        Scene scene = null;
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getClassLoader().getResource("fxml/choosingAmount.fxml"));
-            ChoosingAmountController controller = new ChoosingAmountController(aCreatureButtonInShop, this);
-            loader.setController(controller);
-            scene = new Scene(loader.load());
-            Stage stage = new Stage();
-            stage.setTitle("Choosing Amount");
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException aE) {
-            aE.printStackTrace();
         }
     }
 }
