@@ -52,14 +52,23 @@ public class GameEngine {
     }
 
     private void putCreaturesToBoard(List<Creature> creaturesOnLeftSide, List<Creature> creaturesOnRightSide) {
-        putCreatureFromOneSideToBoard(creaturesOnLeftSide, 0, LEFT_TEAM);
-        putCreatureFromOneSideToBoard(creaturesOnRightSide, BOARD_WIDTH -1, RIGHT_TEAM);
+        putCreatureFromOneSideToBoard(creaturesOnLeftSide, 0, LEFT_TEAM, (byte) 1);
+        putCreatureFromOneSideToBoard(creaturesOnRightSide, BOARD_WIDTH -1, RIGHT_TEAM, (byte) -1);
     }
 
-    private void putCreatureFromOneSideToBoard(List<Creature> creatures, int x, String aTeam) {
+    private void putCreatureFromOneSideToBoard(List<Creature> creatures, int x, String aTeam, byte numberToSum) {
+        int y=0; byte ifThisIsSecondColumn=0;
         for (int i = 0; i < creatures.size(); i++) {
+            if(i==8){
+                x+= numberToSum;
+                y=0; ifThisIsSecondColumn=1;
+            }
+            else if(i==15){
+                break;
+            }
             creatures.get(i).setTeam(aTeam);
-            board.add(new Point(x, i * 2), creatures.get(i));
+            board.add(new Point(x, (y * 2)+ifThisIsSecondColumn), creatures.get(i));
+            y++;
         }
     }
 

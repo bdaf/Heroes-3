@@ -27,6 +27,8 @@ public class EconomyController {
     VBox hBoxForArmyShop;
     @FXML
     Label playerLabel;
+    @FXML
+    Label warningLabel;
 
     private List<Creature> creaturesInShop;
     private List<Creature> creaturesInArmy;
@@ -57,6 +59,7 @@ public class EconomyController {
             stage.setTitle("FXML Welcome");
             stage.setScene(scene);
             stage.show();
+            //pane.setStyle("-fx-border-color: black");
         } catch (IOException aE) {
             aE.printStackTrace();
         }
@@ -64,14 +67,16 @@ public class EconomyController {
     }
 
     void buy(Creature aCreature) {
-        creaturesInArmy.add(aCreature);
+        warningLabel.setOpacity(0);
+        if(creaturesInArmy.size()<15)
+            creaturesInArmy.add(aCreature);
+        else{
+            warningLabel.setOpacity(1);
+        }
     }
 
     void refreshGui() {
-        hBoxForArmyShop.getChildren().clear();
-        hBoxForUserArmy.getChildren().clear();
-        hBoxForArmyShop.getChildren().add(new Button("SHOP"));
-        hBoxForUserArmy.getChildren().add(new Button("YOUR ARMY"));
+        clearingArmyAndShopBoxesAndMakingTheirLabels();
         Factory factory = new CastleFactory();
         VBox shopCreatures = new VBox();
         for (int i = 0; i < 14; i++) {
@@ -103,5 +108,16 @@ public class EconomyController {
         if (creaturesInArmy.contains(aCreature)) {
             creaturesInArmy.remove(aCreature);
         }
+    }
+
+    private void clearingArmyAndShopBoxesAndMakingTheirLabels() {
+        hBoxForArmyShop.getChildren().clear();
+        hBoxForUserArmy.getChildren().clear();
+        Label label = new Label("SHOP");
+        label.setId("bigLabel");
+        hBoxForArmyShop.getChildren().add(label);
+        label = new Label("YOUR ARMY");
+        label.setId("bigLabel");
+        hBoxForUserArmy.getChildren().add(label);
     }
 }

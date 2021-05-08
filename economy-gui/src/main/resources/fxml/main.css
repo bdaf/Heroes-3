@@ -1,24 +1,41 @@
 
 .button {
     -fx-background-color:
-        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
-        linear-gradient(#020b02, #3a3a3a),
-        linear-gradient(#b9b9b9 0%, #c2c2c2 20%, #afafaf 80%, #c8c8c8 100%),
-        linear-gradient(#f5f5f5 0%, #dbdbdb 50%, #cacaca 51%, #d7d7d7 100%);
-    -fx-background-insets: 0,1,4,5;
-    -fx-background-radius: 9,8,5,4;
-    -fx-padding: 15 30 15 30;
-    -fx-margin: 0 30 0 30;
-    -fx-font-family: "Helvetica";
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #333333;
-    -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
+        linear-gradient(#f2f2f2, #d6d6d6),
+        linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),
+        linear-gradient(#dddddd 0%, #f6f6f6 50%);
+    -fx-background-radius: 8,7,6;
+    -fx-background-insets: 0,1,2;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-size: 20px;
+    -fx-padding: 13px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
 }
 .button Text {
     -fx-effect: dropshadow( one-pass-box , white , 0, 0.0 , 0 , 1 );
 }
 .label{
-    -fx-font-size: 8px;
+    -fx-font-size: 25px;
+    -fx-alignment: center;
+    -fx-padding: 10 ;
+}
+.slider{
+    -fx-padding: 20;
+}
+
+.creatureButtonInShop {
+    -fx-max-width: infinity;
+    -fx-hgrow-policy:always;
+}
+#hBoxForUserArmy, #hBoxForArmyShop{
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-pref-width: 880;
+    -fx-alignment: center;
+}
+#bigLabel{
     -fx-font-weight: bold;
+    -fx-alignment: center;
 }
