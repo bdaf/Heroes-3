@@ -24,6 +24,7 @@ public class CreatureButtonInShop extends Button {
 
     public CreatureButtonInShop(EconomyController aController, Factory aFactory, int aTier, boolean aIsUpgraded) {
         super(aFactory.Create(aIsUpgraded, aTier, 1).getName());
+        nameOfCreature = getText();
         addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
             byte amount = displayChoosingAmountAndGetCreatureAmount();
             if (amount > 0) {
