@@ -105,6 +105,7 @@ public class CreatureButtonInShop extends Button {
         windowForChoosingAmount.initOwner(this.getScene().getWindow());
         windowForChoosingAmount.initModality(Modality.APPLICATION_MODAL);
         windowForChoosingAmount.setTitle("Choosing amount of " + getName());
+        windowForChoosingAmount.setResizable(false);
         aBottom.setAlignment(Pos.CENTER);
         aCenter.setAlignment(Pos.CENTER);
         aTop.setAlignment(Pos.CENTER);
