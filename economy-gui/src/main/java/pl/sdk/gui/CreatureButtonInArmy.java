@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import pl.sdk.creatures.Creature;
+//import pl.sdk.creatures.Creature;
 
 public class CreatureButtonInArmy extends Button {
 
@@ -19,15 +19,15 @@ public class CreatureButtonInArmy extends Button {
     private String nameOfCreature;
     private boolean ifSell;
 
-    public CreatureButtonInArmy(EconomyController aController, Creature aCreature) {
-        super(aCreature.getName()+"("+aCreature.getAmount()+")");
-        nameOfCreature = getText();
-        addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-            if(displayWindowForSellingAndReturnIfSell())
-                aController.sell(aCreature);
-            aController.refreshGui();
-        });
-    }
+//    public CreatureButtonInArmy(EconomyController aController, Creature aCreature) {
+//        super(aCreature.getName()+"("+aCreature.getAmount()+")");
+//        nameOfCreature = getText();
+//        addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
+//            if(displayWindowForSellingAndReturnIfSell())
+//                aController.sell(aCreature);
+//            aController.refreshGui();
+//        });
+//    }
 
 
 
