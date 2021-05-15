@@ -3,28 +3,14 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 
 public class NecropolisFactory extends Factory{
-    public static final String SKELETON_WARRIOR = "SkeletonWarrior";
-    public static final String ZOMBIE = "Zombie";
-    public static final String WRAITH = "Wraith";
-    public static final String VAMPIRE_LORD = "VampireLord";
-    public static final String POWER_LICH = "PowerLich";
-    public static final String DREAD_KNIGHT = "DreadKnight";
-    public static final String GHOST_DRAGON = "GhostDragon";
-    public static final String SKELETON = "Skeleton";
-    public static final String WALKING_DEAD = "WalkingDead";
-    public static final String WIGHT = "Wight";
-    public static final String VAMPIRE = "Vampire";
-    public static final String LICH = "Lich";
-    public static final String BLACK_KNIGHT = "BlackKnight";
-    public static final String BONE_DRAGON = "BoneDragon";
-    public static final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
+    final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
 
     @Override
     public Creature Create(boolean aIsUpgraded, int aTier, int amount){
         if(aIsUpgraded){
             switch(aTier){
                 case 1: return new Creature.Builder()
-                        .name(SKELETON_WARRIOR)
+                        .name(CreatureStatistic.SKELETON_WARRIOR.name())
                         .maxHp(6)
                         .attack(6)
                         .moveRange(5)

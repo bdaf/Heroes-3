@@ -183,12 +183,7 @@ public class Creature implements PropertyChangeListener {
 
 
     static class Builder {
-        private String name;
-        private Integer attack;
-        private Integer armor;
-        private Integer maxHp;
-        private Integer moveRange;
-        private Range<Integer> damage;
+
         private CalculateDamageStrategy damageCalculator;
         private Integer amount;
         private Integer attacksInTurn;
@@ -202,54 +197,19 @@ public class Creature implements PropertyChangeListener {
             this.amount = aAmount;
             return this;
         }
-         Builder name(String aName){
-            this.name = aName;
-            return this;
-        }
-         Builder attack(Integer aAttack){
-            this.attack = aAttack;
-            return this;
-        }
-         Builder armor(Integer aArmor){
-            this.armor = aArmor;
-            return this;
-        }
-         Builder maxHp(Integer aMaxHp){
-            this.maxHp = aMaxHp;
-            return this;
-        }
-         Builder moveRange(Integer aMoveRange){
-            this.moveRange = aMoveRange;
-            return this;
-        }
-         Builder damage(Range<Integer> aDamage){
-            this.damage = aDamage;
-            return this;
-        }
+
          Builder damageCalculator(CalculateDamageStrategy aDamage){
             this.damageCalculator = aDamage;
             return this;
         }
          Creature build(){
-            if(name == null)
-                name = "name";
-            if(attack == null)
-                attack = 10;
-            if(armor == null)
-                armor = 10;
-            if(maxHp == null)
-                maxHp = 100;
-            if(moveRange == null)
-                moveRange = 2;
-            if(damage == null)
-                damage = Range.closed(6,14);
             if(damageCalculator == null)
                 damageCalculator = new DefaultDamageCalculator();
             if(amount == null)
                 amount = 1;
             if(attacksInTurn == null)
                 attacksInTurn = 1;
-            CreatureStatistic stats = new CreatureStatistic(name, attack, armor, maxHp, moveRange, damage);
+            CreatureStatistic stats = new CreatureStatistic.DEAFULT;
             Creature result = createInstance(stats);
             result.damageCalculator = this.damageCalculator;
             result.amount = this.amount;
