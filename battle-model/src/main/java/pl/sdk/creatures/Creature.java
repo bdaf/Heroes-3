@@ -8,7 +8,7 @@ import java.beans.PropertyChangeListener;
 public class Creature implements PropertyChangeListener {
 
     public static final String LEFT_TEAM = "leftTeam";
-    private CreatureStatisticForTests stats;
+    private CreatureStatisticlf stats;
     private CalculateDamageStrategy damageCalculator;
     private int currentHp;
     private boolean counterAttackInThisTurn;
@@ -109,7 +109,7 @@ public class Creature implements PropertyChangeListener {
     public double getMoveRange() { return stats.getMoveRange(); }
 
     public String getName() {
-        return stats.getName();
+        return stats.getTranslatedCreatureName();
     }
 
     public boolean canCounterAttack() {
@@ -118,7 +118,7 @@ public class Creature implements PropertyChangeListener {
 
     public int getAmount() { return amount; }
 
-    CreatureStatisticForTests getStats() {
+    CreatureStatisticlf getStats() {
         return stats;
     }
 
@@ -193,7 +193,6 @@ public class Creature implements PropertyChangeListener {
         private CalculateDamageStrategy damageCalculator;
         private Integer amount;
         private Integer attacksInTurn;
-        private int maxAmount;
 
         BuilderForTesting attacksInTurn(Integer aAttacksInTurn){
             this.attacksInTurn = aAttacksInTurn;
@@ -260,7 +259,7 @@ public class Creature implements PropertyChangeListener {
             return result;
         }
 
-         Creature createInstance(CreatureStatisticForTests aStats) {
+         private Creature createInstance(CreatureStatisticlf aStats) {
             return new Creature(aStats);
         }
     }
@@ -268,7 +267,8 @@ public class Creature implements PropertyChangeListener {
     static class Builder {
         private CalculateDamageStrategy damageCalculator;
         private Integer attacksInTurn;
-        private int maxAmount;
+        private Integer amount;
+        private CreatureStatisticlf stats;
 
         Builder attacksInTurn(Integer aAttacksInTurn){
             this.attacksInTurn = aAttacksInTurn;
@@ -278,10 +278,22 @@ public class Creature implements PropertyChangeListener {
             this.damageCalculator = aDamage;
             return this;
         }
+        Builder amount(Integer aAmount){
+            this.amount = aAmount;
+            return this;
+        }
+        Builder stats(CreatureStatisticlf aStats){
+            this.stats = aStats;
+            return this;
+        }
+
         Creature build(){
             if(attacksInTurn == null)
                 attacksInTurn = 1;
-            CreatureStatisticForTests stats = CreatureStatisticForTests.DEFAULT;
+            if(amount == null)
+                amount = 1;
+            if(stats == null)
+                stats = CreatureStatisticForEconomy.DEFAULT;
             Creature result = createInstance(stats);
             result.damageCalculator = this.damageCalculator;
             result.attacksInTurn = attacksInTurn;
@@ -289,7 +301,7 @@ public class Creature implements PropertyChangeListener {
             return result;
         }
 
-        Creature createInstance(CreatureStatisticForTests aStats) {
+        private Creature createInstance(CreatureStatisticlf aStats) {
             return new Creature(aStats);
         }
     }

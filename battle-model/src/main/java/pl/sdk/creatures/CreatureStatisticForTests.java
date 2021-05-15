@@ -2,23 +2,23 @@ package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 
-class CreatureStatistic {
+class CreatureStatisticForTests implements CreatureStatisticlf{
 
     final private String name;
     final private int attack;
     final private int armor;
-    final private int maxHP;
+    final private int maxHp;
     final private int moveRange;
     final private Range<Integer> damage;
 
-    public CreatureStatistic(){
+    public CreatureStatisticForTests(){
         this("name", 10, 10, 100, 10, Range.closed(8,12));
     }
 
 
-    public CreatureStatistic(String name, int attack, int armor, int maxHP, int moveRange, Range<Integer> damage) {
+    public CreatureStatisticForTests(String name, int attack, int armor, int maxHp, int moveRange, Range<Integer> damage) {
         this.name = name;
-        this.maxHP = maxHP;
+        this.maxHp = maxHp;
         this.armor = armor;
         this.attack = attack;
         this.moveRange = moveRange;
@@ -26,24 +26,33 @@ class CreatureStatistic {
     }
 
 
-    String getName() {
+    @Override
+    public String getTranslatedCreatureName() {
         return name;
     }
 
-    int getAttack() {
+    @Override
+    public int getAttack() {
         return attack;
     }
 
-    int getArmor() {
+    @Override
+    public int getArmor() {
         return armor;
     }
 
-    int getMaxHp() {
-        return maxHP;
+    @Override
+    public int getMaxHp() {
+        return maxHp;
     }
 
-    int getMoveRange() {
+    @Override
+    public int getMoveRange() {
         return moveRange;
     }
-    Range<Integer> getDamage() { return damage; }
+
+    @Override
+    public Range<Integer> getDamage() {
+        return damage;
+    }
 }
