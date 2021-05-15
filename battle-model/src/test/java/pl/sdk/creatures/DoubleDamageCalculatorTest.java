@@ -3,9 +3,6 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.sdk.creatures.CalculateDamageStrategy;
-import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.CalculateDamageIncreaseInRandomChance;
 
 import java.util.Random;
 
@@ -22,13 +19,13 @@ public class DoubleDamageCalculatorTest {
 
     @BeforeEach
     void init(){
-        attacker = new Creature.Builder()
+        attacker = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
                 .damage(Range.closed(10,12))
                 .amount(10)
                 .build();
-        defender = new Creature.Builder()
+        defender = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
                 .maxHp(1000)

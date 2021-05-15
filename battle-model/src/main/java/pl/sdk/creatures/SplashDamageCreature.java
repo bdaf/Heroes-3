@@ -97,7 +97,7 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    CreatureStatistic getStats() {
+    CreatureStatisticForTests getStats() {
         return decorated.getStats();
     }
 
@@ -107,7 +107,7 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    void setStats(CreatureStatistic stats) {
+    void setStats(CreatureStatisticForTests stats) {
         decorated.setStats(stats);
     }
 

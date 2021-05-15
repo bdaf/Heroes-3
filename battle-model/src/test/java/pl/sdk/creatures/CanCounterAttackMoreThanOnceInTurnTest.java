@@ -8,7 +8,6 @@ import pl.sdk.Point;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 import static pl.sdk.GameEngine.BOARD_WIDTH;
 
 public class CanCounterAttackMoreThanOnceInTurnTest {
@@ -16,8 +15,8 @@ public class CanCounterAttackMoreThanOnceInTurnTest {
     @Test
     void defenderShouldCounterAttackTwiceInOneTurn(){
         Creature defender = CastleFactory.CreateCounterAttackSeveralTimesInTurnCreature(2,50);
-        Creature attacker1 = new Creature.Builder().damage(Range.closed(1,1)).moveRange(2).build();
-        Creature attacker2 = new Creature.Builder().damage(Range.closed(1,1)).moveRange(1).build();
+        Creature attacker1 = new Creature.BuilderForTesting().damage(Range.closed(1,1)).moveRange(2).build();
+        Creature attacker2 = new Creature.BuilderForTesting().damage(Range.closed(1,1)).moveRange(1).build();
         GameEngine engine = new GameEngine(List.of(defender),List.of(attacker1,attacker2));
 
         engine.move(new Point(BOARD_WIDTH -1,1)); // defender
@@ -40,8 +39,8 @@ public class CanCounterAttackMoreThanOnceInTurnTest {
     @Test
     void defenderShouldCounterAttackInfinityTimesInOneTurn(){
         Creature defender = CastleFactory.CreateCounterAttackSeveralTimesInTurnCreature(Integer.MAX_VALUE,50);
-        Creature attacker1 = new Creature.Builder().damage(Range.closed(1,1)).moveRange(2).build();
-        Creature attacker2 = new Creature.Builder().damage(Range.closed(1,1)).moveRange(1).build();
+        Creature attacker1 = new Creature.BuilderForTesting().damage(Range.closed(1,1)).moveRange(2).build();
+        Creature attacker2 = new Creature.BuilderForTesting().damage(Range.closed(1,1)).moveRange(1).build();
         GameEngine engine = new GameEngine(List.of(defender),List.of(attacker1,attacker2));
 
         engine.move(new Point(BOARD_WIDTH -1,1)); // defender

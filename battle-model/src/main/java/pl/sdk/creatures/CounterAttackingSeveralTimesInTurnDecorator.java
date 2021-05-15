@@ -99,7 +99,7 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
     }
 
     @Override
-    CreatureStatistic getStats() {
+    CreatureStatisticForTests getStats() {
         return decorated.getStats();
     }
 
@@ -109,7 +109,7 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
     }
 
     @Override
-    void setStats(CreatureStatistic stats) {
+    void setStats(CreatureStatisticForTests stats) {
         decorated.setStats(stats);
     }
 

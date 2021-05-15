@@ -3,8 +3,6 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.DefaultDamageCalculator;
 
 import java.util.Random;
 
@@ -28,13 +26,13 @@ public class AttackCreatureTest {
 
     @Test
     void defenderShouldHaveLost11HPWhenAttackerHas2AttackMoreThanDefendersArmorAndItIs10PercentMoreToDealThanAttackersDamage(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(3)
                 .maxHp(100)
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .damage(Range.closed(5,15))
                 .build();
-        Creature defender = new Creature.Builder()
+        Creature defender = new Creature.BuilderForTesting()
                 .armor(1)
                 .maxHp(100)
                 .damageCalculator(new DefaultDamageCalculator())
@@ -50,14 +48,14 @@ public class AttackCreatureTest {
 
     @Test
     void defenderShouldHaveLostMaximum_400PercentOfAttackersDamageAndAttackerShouldHaveLostMinimum_30PercentOfDefendersDamage(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(100)
                 .armor(100)
                 .maxHp(1000)
                 .damage(Range.closed(95,100))
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .build();
-        Creature defender = new Creature.Builder()
+        Creature defender = new Creature.BuilderForTesting()
                 .attack(1)
                 .armor(1)
                 .maxHp(1000)
@@ -72,14 +70,14 @@ public class AttackCreatureTest {
 
     @Test
     void defenderShouldHaveLost200PercentOfAttackersDamageAndAttackerShouldHaveLost75PercentOfDefendersDamage(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(100)
                 .armor(60)
                 .maxHp(1000)
                 .damage(Range.closed(50,60))
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .build();
-        Creature defender = new Creature.Builder()
+        Creature defender = new Creature.BuilderForTesting()
                 .attack(50)
                 .armor(80)
                 .maxHp(1000)
@@ -94,14 +92,14 @@ public class AttackCreatureTest {
 
     @Test
     void defenderShouldNotCounterAttack(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(100)
                 .armor(60)
                 .maxHp(1000)
                 .damage(Range.closed(50,60))
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .build();
-        Creature defender = new Creature.Builder()
+        Creature defender = new Creature.BuilderForTesting()
                 .attack(50)
                 .armor(80)
                 .maxHp(1000)

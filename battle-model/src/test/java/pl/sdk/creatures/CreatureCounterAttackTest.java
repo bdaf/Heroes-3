@@ -4,11 +4,8 @@ import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.GameEngine;
-import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.DefaultDamageCalculator;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -30,14 +27,14 @@ public class CreatureCounterAttackTest {
     }
     @Test
     void defenderShouldCounterAttack(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH)
                 .armor(THE_SAME_FOR_BOTH)
                 .maxHp(100)
                 .damage(Range.closed(80,100))
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .build();
-        Creature defender = new Creature.Builder()
+        Creature defender = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH)
                 .armor(THE_SAME_FOR_BOTH)
                 .maxHp(100)
@@ -52,14 +49,14 @@ public class CreatureCounterAttackTest {
 
     @Test
     void defenderShouldNotCounterAttackWhenHeSupposedToBeDead(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH)
                 .armor(THE_SAME_FOR_BOTH)
                 .maxHp(100)
                 .damageCalculator(new DefaultDamageCalculator())
                 .damage(Range.closed(80,100))
                 .build();
-        Creature defender = new Creature.Builder()
+        Creature defender = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH)
                 .armor(THE_SAME_FOR_BOTH)
                 .maxHp(80)
@@ -72,14 +69,14 @@ public class CreatureCounterAttackTest {
 
     @Test
     void defenderShouldCounterAttackOnlyOnes(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH)
                 .armor(THE_SAME_FOR_BOTH)
                 .maxHp(100)
                 .damage(Range.closed(1,3))
                 .damageCalculator(new DefaultDamageCalculator())
                 .build();
-        Creature defender = new Creature.Builder()
+        Creature defender = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH)
                 .armor(THE_SAME_FOR_BOTH)
                 .maxHp(80)
@@ -95,8 +92,8 @@ public class CreatureCounterAttackTest {
 
     @Test
     void defenderShouldCounterAttackOnesInTourNotOnesInGame(){
-        Creature attacker = new Creature.Builder().build();
-        Creature defender = new Creature.Builder().build();
+        Creature attacker = new Creature.BuilderForTesting().build();
+        Creature defender = new Creature.BuilderForTesting().build();
         GameEngine game = new GameEngine(List.of(attacker),List.of(defender));
         assertEquals(true,defender.canCounterAttack());
         attacker.attack(defender);
@@ -108,7 +105,7 @@ public class CreatureCounterAttackTest {
 
     @Test
     void shouldThrowExceptionWhenAttackerAttackHimself(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(5)
                 .maxHp(100)
                 .damageCalculator(new DefaultDamageCalculator())

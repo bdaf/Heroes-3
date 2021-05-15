@@ -25,7 +25,7 @@ public class CastleFactory extends Factory {
         if (aIsUpgraded) {
             switch (aTier) {
                 case 1:
-                    return new Creature.Builder()
+                    return new Creature.BuilderForTesting()
                             .name(HALBERDIER)
                             .maxHp(10)
                             .attack(4)
@@ -35,7 +35,7 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build();
                 case 2:
-                    return new ShootingCreatureDecorator(new Creature.Builder()
+                    return new ShootingCreatureDecorator(new Creature.BuilderForTesting()
                             .name(MARKSMAN)
                             .maxHp(10)
                             .attack(6)
@@ -46,7 +46,7 @@ public class CastleFactory extends Factory {
                             .attacksInTurn(2)
                             .build());
                 case 3:
-                    return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.Builder()
+                    return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.BuilderForTesting()
                             .name(ROYAL_GRIFFIN)
                             .maxHp(25)
                             .attack(9)
@@ -56,7 +56,7 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build(), Integer.MAX_VALUE);
                 case 4:
-                    return new Creature.Builder()
+                    return new Creature.BuilderForTesting()
                             .name(CRUSADER)
                             .maxHp(35)
                             .attack(12)
@@ -66,7 +66,7 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build();
                 case 5:
-                    return new ShootingCreatureDecorator(new Creature.Builder()
+                    return new ShootingCreatureDecorator(new Creature.BuilderForTesting()
                             .name(ZEALOT)
                             .maxHp(30)
                             .attack(12)
@@ -76,7 +76,7 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build());
                 case 6:
-                    return new Creature.Builder()
+                    return new Creature.BuilderForTesting()
                             .name(CHAMPION)
                             .maxHp(100)
                             .attack(16)
@@ -87,7 +87,7 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build();
                 case 7:
-                    return new Creature.Builder()
+                    return new Creature.BuilderForTesting()
                             .name(ARCHANGEL)
                             .maxHp(250)
                             .attack(30)
@@ -102,7 +102,7 @@ public class CastleFactory extends Factory {
         } else {
             switch (aTier) {
                 case 1:
-                    return new Creature.Builder()
+                    return new Creature.BuilderForTesting()
                             .name(PICKMAN)
                             .maxHp(10)
                             .attack(4)
@@ -112,7 +112,7 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build();
                 case 2:
-                    return new ShootingCreatureDecorator(new Creature.Builder()
+                    return new ShootingCreatureDecorator(new Creature.BuilderForTesting()
                             .name(ARCHER)
                             .maxHp(10)
                             .attack(6)
@@ -122,7 +122,7 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build());
                 case 3:
-                    return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.Builder()
+                    return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.BuilderForTesting()
                             .name(GRIFFIN)
                             .maxHp(25)
                             .attack(8)
@@ -132,7 +132,7 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build(), 2);
                 case 4:
-                    return new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
+                    return new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
                             .name(SWORDSMAN)
                             .maxHp(35)
                             .attack(10)
@@ -142,7 +142,7 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build());
                 case 5:
-                    return new ShootingCreatureDecorator(new SelfHealingCreatureDecorator(new Creature.Builder()
+                    return new ShootingCreatureDecorator(new SelfHealingCreatureDecorator(new Creature.BuilderForTesting()
                             .name(MONK)
                             .maxHp(30)
                             .attack(12)
@@ -152,7 +152,7 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build(), -0.5));
                 case 6:
-                    return new Creature.Builder()
+                    return new Creature.BuilderForTesting()
                             .name(CAVALIER)
                             .maxHp(100)
                             .attack(15)
@@ -162,7 +162,7 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build();
                 case 7:
-                    return new Creature.Builder()
+                    return new Creature.BuilderForTesting()
                             .name(ANGEL)
                             .maxHp(200)
                             .attack(20)

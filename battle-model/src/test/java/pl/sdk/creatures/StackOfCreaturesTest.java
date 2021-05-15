@@ -3,7 +3,6 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.sdk.creatures.Creature;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,7 +15,7 @@ public class StackOfCreaturesTest {
 
     @BeforeEach
     void init(){
-        defender = new Creature.Builder()
+        defender = new Creature.BuilderForTesting()
                 .armor(NOT_IMPORTANT)
                 .attack(NOT_IMPORTANT)
                 .amount(10)
@@ -26,7 +25,7 @@ public class StackOfCreaturesTest {
 
     @Test
     void defenderShouldHaveStackEquals9WhenWeKillOneOfThem(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
@@ -39,7 +38,7 @@ public class StackOfCreaturesTest {
 
     @Test
     void defenderShouldHaveStackEquals8WhenWeKillTwoOfThem(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
@@ -52,7 +51,7 @@ public class StackOfCreaturesTest {
 
     @Test
     void defenderShouldHaveStackEquals10WhenWeDoNotKillAnyOfThem(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
@@ -65,7 +64,7 @@ public class StackOfCreaturesTest {
 
     @Test
     void defenderShouldHaveStackEquals9WhenWeAlmostKillTwoOfThem(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
@@ -79,7 +78,7 @@ public class StackOfCreaturesTest {
 
     @Test
     void defenderShouldHaveStackEquals8WhenWeAttackTwiceWitchDamageLittleLowerThanDefendersHp(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
@@ -92,7 +91,7 @@ public class StackOfCreaturesTest {
     }
     @Test
     void defenderShouldHaveHpEquals0WhenDamageIsEqualsStack(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
@@ -104,7 +103,7 @@ public class StackOfCreaturesTest {
     }
     @Test
     void defenderShouldHaveStackEquals0AndHpEquals0WhenDamageEqualsAmounts(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
@@ -113,7 +112,7 @@ public class StackOfCreaturesTest {
         attacker.attack(defender);
         assertEquals(1, defender.getAmount());
         assertEquals(50, defender.getCurrentHp());
-        attacker = new Creature.Builder()
+        attacker = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
@@ -125,13 +124,13 @@ public class StackOfCreaturesTest {
     }
     @Test
     void defenderShouldHaveStackEquals0AndHpEquals0WhenDamageIsGraterThanAmountsAndDefenderHasLessCurrentHp(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
                 .damage(Range.closed(1000,1000))
                 .build();
-        Creature attacker2 = new Creature.Builder()
+        Creature attacker2 = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
@@ -145,13 +144,13 @@ public class StackOfCreaturesTest {
 
     @Test
     void defenderShouldHaveStackEquals0AndHpEquals0WhenDamageIsGraterThanAmountsAndDefenderHasLessCurrentHpV2(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
                 .damage(Range.closed(1100,1100))
                 .build();
-        Creature attacker2 = new Creature.Builder()
+        Creature attacker2 = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
@@ -165,7 +164,7 @@ public class StackOfCreaturesTest {
 
     @Test
     void defenderShouldHaveStackEquals0AndHpEquals0WhenDamageIsGraterThanAmounts(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .maxHp(INF)
@@ -178,14 +177,14 @@ public class StackOfCreaturesTest {
 
     @Test
     void defenderShouldHaveStackEquals0WhenAttackerIsMuchGreaterAndAttacksHimAndHpEquals0Too(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .maxHp(INF)
                 .attack(NOT_IMPORTANT)
                 .moveRange(14)
                 .damage(Range.closed(350,350))
                 .armor(17)
                 .build();
-        defender = new Creature.Builder()
+        defender = new Creature.BuilderForTesting()
                 .armor(NOT_IMPORTANT)
                 .attack(NOT_IMPORTANT)
                 .amount(1)

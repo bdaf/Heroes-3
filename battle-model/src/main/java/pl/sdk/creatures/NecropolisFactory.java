@@ -9,8 +9,8 @@ public class NecropolisFactory extends Factory{
     public Creature Create(boolean aIsUpgraded, int aTier, int amount){
         if(aIsUpgraded){
             switch(aTier){
-                case 1: return new Creature.Builder()
-                        .name(CreatureStatistic.SKELETON_WARRIOR.name())
+                case 1: return new Creature.BuilderForTesting()
+                        .name(CreatureStatisticForTests.SKELETON_WARRIOR.name())
                         .maxHp(6)
                         .attack(6)
                         .moveRange(5)
@@ -18,7 +18,7 @@ public class NecropolisFactory extends Factory{
                         .armor(6)
                         .amount(amount)
                         .build();
-                case 2: return new Creature.Builder()
+                case 2: return new Creature.BuilderForTesting()
                         .name(ZOMBIE)
                         .maxHp(20)
                         .attack(5)
@@ -27,7 +27,7 @@ public class NecropolisFactory extends Factory{
                         .armor(5)
                         .amount(amount)
                         .build();
-                case 3: return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
+                case 3: return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.BuilderForTesting()
                         .name(WRAITH)
                         .maxHp(18)
                         .attack(7)
@@ -37,7 +37,7 @@ public class NecropolisFactory extends Factory{
                         .amount(amount)
                         .build());
                 case 4:
-                    return new SelfHealingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
+                    return new SelfHealingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
                         .name(VAMPIRE_LORD)
                         .maxHp(40)
                         .attack(10)
@@ -47,7 +47,7 @@ public class NecropolisFactory extends Factory{
                         .amount(amount)
                         .build()),0.5);
                 case 5:
-                    return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
+                    return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.BuilderForTesting()
                         .name(POWER_LICH)
                         .maxHp(40)
                         .attack(13)
@@ -56,7 +56,7 @@ public class NecropolisFactory extends Factory{
                         .armor(10)
                         .amount(amount)
                         .build()),getSplashForLich());
-                case 6: return new Creature.Builder()
+                case 6: return new Creature.BuilderForTesting()
                         .name(DREAD_KNIGHT)
                         .maxHp(120)
                         .attack(16)
@@ -66,7 +66,7 @@ public class NecropolisFactory extends Factory{
                         .armor(16)
                         .amount(amount)
                         .build();
-                case 7: return new Creature.Builder()
+                case 7: return new Creature.BuilderForTesting()
                         .name(GHOST_DRAGON)
                         .maxHp(200)
                         .attack(19)
@@ -80,7 +80,7 @@ public class NecropolisFactory extends Factory{
         }
         else{
             switch(aTier){
-                case 1: return new Creature.Builder()
+                case 1: return new Creature.BuilderForTesting()
                         .name(SKELETON)
                         .maxHp(6)
                         .attack(5)
@@ -89,7 +89,7 @@ public class NecropolisFactory extends Factory{
                         .armor(6)
                         .amount(amount)
                         .build();
-                case 2: return new Creature.Builder()
+                case 2: return new Creature.BuilderForTesting()
                         .name(WALKING_DEAD)
                         .maxHp(15)
                         .attack(5)
@@ -98,7 +98,7 @@ public class NecropolisFactory extends Factory{
                         .armor(5)
                         .amount(amount)
                         .build();
-                case 3: return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
+                case 3: return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.BuilderForTesting()
                         .name(WIGHT)
                         .maxHp(18)
                         .attack(7)
@@ -107,7 +107,7 @@ public class NecropolisFactory extends Factory{
                         .armor(7)
                         .amount(amount)
                         .build());
-                case 4: return new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
+                case 4: return new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
                         .name(VAMPIRE)
                         .maxHp(30)
                         .attack(10)
@@ -116,7 +116,7 @@ public class NecropolisFactory extends Factory{
                         .armor(9)
                         .amount(amount)
                         .build());
-                case 5: return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
+                case 5: return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.BuilderForTesting()
                         .name(LICH)
                         .maxHp(30)
                         .attack(13)
@@ -125,7 +125,7 @@ public class NecropolisFactory extends Factory{
                         .armor(10)
                         .amount(amount)
                         .build()),getSplashForLich());
-                case 6: return new Creature.Builder()
+                case 6: return new Creature.BuilderForTesting()
                         .name(BLACK_KNIGHT)
                         .maxHp(120)
                         .attack(16)
@@ -134,7 +134,7 @@ public class NecropolisFactory extends Factory{
                         .armor(16)
                         .amount(amount)
                         .build();
-                case 7: return new Creature.Builder()
+                case 7: return new Creature.BuilderForTesting()
                         .name(BONE_DRAGON)
                         .maxHp(150)
                         .attack(17)

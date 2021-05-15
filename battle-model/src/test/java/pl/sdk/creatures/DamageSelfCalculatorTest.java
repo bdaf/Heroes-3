@@ -15,14 +15,14 @@ public class DamageSelfCalculatorTest {
 
     @Test
     void attackerShouldLose50PercentOfDamageHeDeals(){
-        Creature attacker = new ShootingCreatureDecorator(new SelfHealingCreatureDecorator(new Creature.Builder()
+        Creature attacker = new ShootingCreatureDecorator(new SelfHealingCreatureDecorator(new Creature.BuilderForTesting()
                 .attack(THE_SAME_ATTACK_AND_ARMOR)
                 .armor(THE_SAME_ATTACK_AND_ARMOR)
                 .moveRange(54)
                 .damage(Range.closed(6,6))
                 .maxHp(100)
                 .build(),-0.5));
-        Creature defender = new Creature.Builder()
+        Creature defender = new Creature.BuilderForTesting()
                 .attack(THE_SAME_ATTACK_AND_ARMOR)
                 .armor(THE_SAME_ATTACK_AND_ARMOR)
                 .moveRange(55)

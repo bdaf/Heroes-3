@@ -3,10 +3,6 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.sdk.creatures.BlockingCounterAttackCreatureDecorator;
-import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.DefaultDamageCalculator;
-import pl.sdk.creatures.SelfHealingCreatureDecorator;
 
 import java.util.Random;
 
@@ -26,7 +22,7 @@ public class HealSelfCalculatorTest {
     void init(){
         rand = mock(Random.class);
         when(rand.nextInt(anyInt())).thenReturn(0);
-        attacker = new Creature.Builder()
+        attacker = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
                 .maxHp(100)
@@ -35,7 +31,7 @@ public class HealSelfCalculatorTest {
                 .amount(10)
                 .build();
         attacker = new SelfHealingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(attacker),0.5);
-        defender = new Creature.Builder()
+        defender = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
                 .maxHp(INF)
@@ -54,7 +50,7 @@ public class HealSelfCalculatorTest {
 
     @Test
     void shouldHeal160AndItShouldBeJustMaxHpAndAmountShouldNotChangeWhenHeDeal360Dmg(){
-        attacker = new SelfHealingCreatureDecorator(new Creature.Builder()
+        attacker = new SelfHealingCreatureDecorator(new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
                 .maxHp(100)
@@ -100,7 +96,7 @@ public class HealSelfCalculatorTest {
 
     @Test
     void shouldRestoreWholeStackButNoMore(){
-        attacker = new Creature.Builder()
+        attacker = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
                 .maxHp(100)

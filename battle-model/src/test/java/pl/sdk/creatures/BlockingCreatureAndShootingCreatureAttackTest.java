@@ -18,11 +18,11 @@ public class BlockingCreatureAndShootingCreatureAttackTest {
 
     @Test
     void ShootingCreatureCanAttackEvenWithLargeDistance(){
-        Creature attacker = new ShootingCreatureDecorator(new Creature.Builder()
+        Creature attacker = new ShootingCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(BIGGER_THAN_DEFENDERS)
                 .build());
-        Creature defender = new Creature.Builder()
+        Creature defender = new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(FEWER_THAN_DEFENDERS)
                 .build();
@@ -36,12 +36,12 @@ public class BlockingCreatureAndShootingCreatureAttackTest {
 
     @Test
     void NormalCreatureCanNotCounterAttackToShootingCreature(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(BIGGER_THAN_DEFENDERS)
                 .amount(1)
                 .build();
-        Creature defender = new Creature.Builder()
+        Creature defender = new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(FEWER_THAN_DEFENDERS)
                 .build();
@@ -54,12 +54,12 @@ public class BlockingCreatureAndShootingCreatureAttackTest {
 
     @Test
     void NormalCreatureCanNotCounterAttackToBlockingCounterAttackCreature(){
-        Creature attacker = new Creature.Builder()
+        Creature attacker = new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(BIGGER_THAN_DEFENDERS)
                 .amount(1)
                 .build();
-        Creature defender = new Creature.Builder()
+        Creature defender = new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(FEWER_THAN_DEFENDERS)
                 .build();

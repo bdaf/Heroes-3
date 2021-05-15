@@ -101,12 +101,12 @@ import java.beans.PropertyChangeEvent;
     }
 
     @Override
-    CreatureStatistic getStats() {
+    CreatureStatisticForTests getStats() {
         return decorated.getStats();
     }
 
     @Override
-    void setStats(CreatureStatistic stats) {
+    void setStats(CreatureStatisticForTests stats) {
         decorated.setStats(stats);
     }
 

@@ -24,12 +24,12 @@ public class RegenerationOnEndOfTurnTest {
 
     @Test
     void ShootingCreatureCanAttackEvenWithLargeDistance(){
-        Creature attacker = new ShootingCreatureDecorator(new Creature.Builder()
+        Creature attacker = new ShootingCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(BIGGER_THAN_DEFENDERS)
                 .damage(Range.closed(1,1))
                 .build());
-        Creature defender = new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
+        Creature defender = new RegenerationOnEndOfTurnCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(FEWER_THAN_DEFENDERS)
                 .build());
