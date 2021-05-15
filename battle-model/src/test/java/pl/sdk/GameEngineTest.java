@@ -19,7 +19,8 @@ public class GameEngineTest {
 
         GameEngine engine = new GameEngine(l1,l2);
 
-        assertTrue(engine.canAttack(GameEngine.BOARD_WIDTH-1,0));
+        boolean yes = engine.canAttack(GameEngine.BOARD_WIDTH-1,0);
+        assertTrue(yes);
         assertFalse(engine.canAttack(0,0));
         assertFalse(engine.canAttack(0,2));
     }

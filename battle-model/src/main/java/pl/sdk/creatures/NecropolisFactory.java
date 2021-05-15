@@ -1,7 +1,5 @@
 package pl.sdk.creatures;
 
-import com.google.common.collect.Range;
-
 public class NecropolisFactory extends Factory {
     final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
 
@@ -13,43 +11,43 @@ public class NecropolisFactory extends Factory {
                     return new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.SKELETON_WARRIOR)
+                            .statistic(CreatureStatistic.SKELETON_WARRIOR)
                             .build();
                 case 2:
                     return new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.ZOMBIE)
+                            .statistic(CreatureStatistic.ZOMBIE)
                             .build();
                 case 3:
                     return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.WRAITH)
+                            .statistic(CreatureStatistic.WRAITH)
                             .build());
                 case 4:
                     return new SelfHealingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.VAMPIRE_LORD)
+                            .statistic(CreatureStatistic.VAMPIRE_LORD)
                             .build()), 0.5);
                 case 5:
                     return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.POWER_LICH)
+                            .statistic(CreatureStatistic.POWER_LICH)
                             .build()), getSplashForLich());
                 case 6:
                     return new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.DREAD_KNIGHT)
+                            .statistic(CreatureStatistic.DREAD_KNIGHT)
                             .build();
                 case 7:
                     return new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.GHOST_DRAGON)
+                            .statistic(CreatureStatistic.GHOST_DRAGON)
                             .build();
                 default:
                     throw new IllegalArgumentException(ERROR_MSG);
@@ -60,43 +58,43 @@ public class NecropolisFactory extends Factory {
                     return new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.SKELETON)
+                            .statistic(CreatureStatistic.SKELETON)
                             .build();
                 case 2:
                     return new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.WALKING_DEAD)
+                            .statistic(CreatureStatistic.WALKING_DEAD)
                             .build();
                 case 3:
                     return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.WIGHT)
+                            .statistic(CreatureStatistic.WIGHT)
                             .build());
                 case 4:
                     return new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.VAMPIRE)
+                            .statistic(CreatureStatistic.VAMPIRE)
                             .build());
                 case 5:
                     return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.LICH)
+                            .statistic(CreatureStatistic.LICH)
                             .build()), getSplashForLich());
                 case 6:
                     return new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.BLACK_KNIGHT)
+                            .statistic(CreatureStatistic.BLACK_KNIGHT)
                             .build();
                 case 7:
                     return new Creature.Builder()
                             .attacksInTurn(1)
                             .amount(amount)
-                            .stats(CreatureStatisticForEconomy.BONE_DRAGON)
+                            .statistic(CreatureStatistic.BONE_DRAGON)
                             .build();
                 default:
                     throw new IllegalArgumentException(ERROR_MSG);

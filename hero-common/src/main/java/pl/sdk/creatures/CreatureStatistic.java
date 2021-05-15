@@ -3,7 +3,7 @@ package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
 
-enum CreatureStatisticForEconomy implements CreatureStatisticlf {
+enum CreatureStatistic implements CreatureStatisticlf {
 
     DEFAULT("Default",5,5,100,5,Range.closed(5,5),1,"Default description",false),
 
@@ -34,7 +34,7 @@ enum CreatureStatisticForEconomy implements CreatureStatisticlf {
     private boolean isUpgraded;
 
 
-    CreatureStatisticForEconomy(String name, int attack, int armor, int maxHP, int moveRange, Range<Integer> damage, int aTier, String aDescription, boolean aIsUpgraded) {
+    CreatureStatistic(String name, int attack, int armor, int maxHP, int moveRange, Range<Integer> damage, int aTier, String aDescription, boolean aIsUpgraded) {
         this.name = name;
         this.maxHP = maxHP;
         this.armor = armor;
@@ -56,27 +56,27 @@ enum CreatureStatisticForEconomy implements CreatureStatisticlf {
 
     @Override
     public int getAttack() {
-        return 0;
+        return attack;
     }
 
     @Override
     public int getArmor() {
-        return 0;
+        return armor;
     }
 
     @Override
     public int getMaxHp() {
-        return 0;
+        return maxHP;
     }
 
     @Override
     public int getMoveRange() {
-        return 0;
+        return moveRange;
     }
 
     @Override
     public Range<Integer> getDamage() {
-        return null;
+        return damage;
     }
 
     @Override

@@ -55,4 +55,14 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
     public Range<Integer> getDamage() {
         return damage;
     }
+
+    @Override
+    public int getTier() {
+        return 1;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Creature fot tests";
+    }
 }

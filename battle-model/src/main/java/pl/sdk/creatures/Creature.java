@@ -255,7 +255,7 @@ public class Creature implements PropertyChangeListener {
             result.amount = this.amount;
             result.maxAmount = this.amount;
             result.attacksInTurn = attacksInTurn;
-            result.setTeam("leftTeam");
+            result.setTeam(LEFT_TEAM);
             return result;
         }
 
@@ -268,7 +268,7 @@ public class Creature implements PropertyChangeListener {
         private CalculateDamageStrategy damageCalculator;
         private Integer attacksInTurn;
         private Integer amount;
-        private CreatureStatisticlf stats;
+        private CreatureStatisticlf statistic;
 
         Builder attacksInTurn(Integer aAttacksInTurn){
             this.attacksInTurn = aAttacksInTurn;
@@ -282,20 +282,24 @@ public class Creature implements PropertyChangeListener {
             this.amount = aAmount;
             return this;
         }
-        Builder stats(CreatureStatisticlf aStats){
-            this.stats = aStats;
+        Builder statistic(CreatureStatisticlf aStats){
+            this.statistic = aStats;
             return this;
         }
 
         Creature build(){
-            if(attacksInTurn == null)
-                attacksInTurn = 1;
+            if(damageCalculator == null)
+                damageCalculator = new DefaultDamageCalculator();
             if(amount == null)
                 amount = 1;
-            if(stats == null)
-                stats = CreatureStatisticForEconomy.DEFAULT;
-            Creature result = createInstance(stats);
+            if(attacksInTurn == null)
+                attacksInTurn = 1;
+            if(statistic == null)
+                statistic = CreatureStatistic.DEFAULT;
+            Creature result = createInstance(statistic);
             result.damageCalculator = this.damageCalculator;
+            result.amount = this.amount;
+            result.maxAmount = this.amount;
             result.attacksInTurn = attacksInTurn;
             result.setTeam(LEFT_TEAM);
             return result;
