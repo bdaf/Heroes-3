@@ -5,95 +5,47 @@ import com.google.common.collect.Range;
 public class CastleFactory extends Factory {
 
     public static final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
-    public static final String HALBERDIER = "Halberdier";
-    public static final String ROYAL_GRIFFIN = "RoyalGriffin";
-    public static final String CRUSADER = "Crusader";
-    public static final String ZEALOT = "Zealot";
-    public static final String CHAMPION = "Champion";
-    public static final String ARCHANGEL = "Archangel";
-    public static final String PICKMAN = "Pickman";
-    public static final String ARCHER = "Archer";
-    public static final String GRIFFIN = "Griffin";
-    public static final String SWORDSMAN = "Swordsman";
-    public static final String MONK = "Monk";
-    public static final String CAVALIER = "Cavalier";
-    public static final String ANGEL = "Angel";
-    public static final String MARKSMAN = "Marksman";
 
     @Override
     public Creature Create(boolean aIsUpgraded, int aTier, int amount) {
         if (aIsUpgraded) {
             switch (aTier) {
                 case 1:
-                    return new Creature.BuilderForTesting()
-                            .name(HALBERDIER)
-                            .maxHp(10)
-                            .attack(4)
-                            .moveRange(4)
-                            .damage(Range.closed(1, 3))
-                            .armor(5)
+                    return new Creature.Builder()
                             .amount(amount)
+                            .statistic(CreatureStatistic.HALBERDIER)
                             .build();
                 case 2:
-                    return new ShootingCreatureDecorator(new Creature.BuilderForTesting()
-                            .name(MARKSMAN)
-                            .maxHp(10)
-                            .attack(6)
-                            .moveRange(6)
-                            .damage(Range.closed(2, 3))
-                            .armor(3)
-                            .amount(amount)
+                    return new ShootingCreatureDecorator(new Creature.Builder()
                             .attacksInTurn(2)
+                            .amount(amount)
+                            .statistic(CreatureStatistic.MARKSMAN)
                             .build());
                 case 3:
-                    return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.BuilderForTesting()
-                            .name(ROYAL_GRIFFIN)
-                            .maxHp(25)
-                            .attack(9)
-                            .moveRange(9)
-                            .damage(Range.closed(3, 6))
-                            .armor(9)
+                    return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.Builder()
                             .amount(amount)
+                            .statistic(CreatureStatistic.ROYAL_GRIFFIN)
                             .build(), Integer.MAX_VALUE);
                 case 4:
-                    return new Creature.BuilderForTesting()
-                            .name(CRUSADER)
-                            .maxHp(35)
-                            .attack(12)
-                            .moveRange(6)
-                            .damage(Range.closed(7, 10))
-                            .armor(12)
+                    return new Creature.Builder()
                             .amount(amount)
+                            .statistic(CreatureStatistic.CRUSADER)
                             .build();
                 case 5:
-                    return new ShootingCreatureDecorator(new Creature.BuilderForTesting()
-                            .name(ZEALOT)
-                            .maxHp(30)
-                            .attack(12)
-                            .moveRange(7)
-                            .damage(Range.closed(10, 12))
-                            .armor(10)
+                    return new ShootingCreatureDecorator(new Creature.Builder()
                             .amount(amount)
+                            .statistic(CreatureStatistic.ZEALOT)
                             .build());
                 case 6:
-                    return new Creature.BuilderForTesting()
-                            .name(CHAMPION)
-                            .maxHp(100)
-                            .attack(16)
-                            .moveRange(9)
-                            .damage(Range.closed(20, 25))
+                    return new Creature.Builder()
+                            .amount(amount)
+                            .statistic(CreatureStatistic.ZEALOT)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(0.2, 2))
-                            .armor(16)
                             .amount(amount)
                             .build();
                 case 7:
-                    return new Creature.BuilderForTesting()
-                            .name(ARCHANGEL)
-                            .maxHp(250)
-                            .attack(30)
-                            .moveRange(18)
-                            .damage(Range.closed(50, 50))
-                            .armor(20)
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.ARCHANGEL)
                             .amount(amount)
                             .build();
                 default:
@@ -102,73 +54,38 @@ public class CastleFactory extends Factory {
         } else {
             switch (aTier) {
                 case 1:
-                    return new Creature.BuilderForTesting()
-                            .name(PICKMAN)
-                            .maxHp(10)
-                            .attack(4)
-                            .moveRange(4)
-                            .damage(Range.closed(1, 3))
-                            .armor(6)
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.PICKMAN)
                             .amount(amount)
                             .build();
                 case 2:
-                    return new ShootingCreatureDecorator(new Creature.BuilderForTesting()
-                            .name(ARCHER)
-                            .maxHp(10)
-                            .attack(6)
-                            .moveRange(4)
-                            .damage(Range.closed(2, 3))
-                            .armor(3)
+                    return new ShootingCreatureDecorator(new Creature.Builder()
+                            .statistic(CreatureStatistic.ARCHER)
                             .amount(amount)
                             .build());
                 case 3:
-                    return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.BuilderForTesting()
-                            .name(GRIFFIN)
-                            .maxHp(25)
-                            .attack(8)
-                            .moveRange(6)
-                            .damage(Range.closed(3, 6))
-                            .armor(8)
+                    return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.Builder()
+                            .statistic(CreatureStatistic.GRIFFIN)
                             .amount(amount)
                             .build(), 2);
                 case 4:
-                    return new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
-                            .name(SWORDSMAN)
-                            .maxHp(35)
-                            .attack(10)
-                            .moveRange(5)
-                            .damage(Range.closed(6, 9))
-                            .armor(12)
+                    return new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
+                            .statistic(CreatureStatistic.SWORDSMAN)
                             .amount(amount)
                             .build());
                 case 5:
-                    return new ShootingCreatureDecorator(new SelfHealingCreatureDecorator(new Creature.BuilderForTesting()
-                            .name(MONK)
-                            .maxHp(30)
-                            .attack(12)
-                            .moveRange(5)
-                            .damage(Range.closed(10, 12))
-                            .armor(7)
+                    return new ShootingCreatureDecorator(new SelfHealingCreatureDecorator(new Creature.Builder()
+                            .statistic(CreatureStatistic.MONK)
                             .amount(amount)
                             .build(), -0.5));
                 case 6:
-                    return new Creature.BuilderForTesting()
-                            .name(CAVALIER)
-                            .maxHp(100)
-                            .attack(15)
-                            .moveRange(7)
-                            .damage(Range.closed(15, 25))
-                            .armor(15)
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.CAVALIER)
                             .amount(amount)
                             .build();
                 case 7:
-                    return new Creature.BuilderForTesting()
-                            .name(ANGEL)
-                            .maxHp(200)
-                            .attack(20)
-                            .moveRange(12)
-                            .damage(Range.closed(50, 50))
-                            .armor(20)
+                    return new Creature.Builder()
+                            .statistic(CreatureStatistic.ANGEL)
                             .amount(amount)
                             .build();
                 default:

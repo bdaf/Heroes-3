@@ -9,43 +9,36 @@ public class NecropolisFactory extends Factory {
             switch (aTier) {
                 case 1:
                     return new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.SKELETON_WARRIOR)
                             .build();
                 case 2:
                     return new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.ZOMBIE)
                             .build();
                 case 3:
                     return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.WRAITH)
                             .build());
                 case 4:
                     return new SelfHealingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.VAMPIRE_LORD)
                             .build()), 0.5);
                 case 5:
                     return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.POWER_LICH)
                             .build()), getSplashForLich());
                 case 6:
                     return new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.DREAD_KNIGHT)
                             .build();
                 case 7:
                     return new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.GHOST_DRAGON)
                             .build();
@@ -56,43 +49,36 @@ public class NecropolisFactory extends Factory {
             switch (aTier) {
                 case 1:
                     return new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.SKELETON)
                             .build();
                 case 2:
                     return new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.WALKING_DEAD)
                             .build();
                 case 3:
                     return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.WIGHT)
                             .build());
                 case 4:
                     return new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.VAMPIRE)
                             .build());
                 case 5:
                     return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.LICH)
                             .build()), getSplashForLich());
                 case 6:
                     return new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.BLACK_KNIGHT)
                             .build();
                 case 7:
                     return new Creature.Builder()
-                            .attacksInTurn(1)
                             .amount(amount)
                             .statistic(CreatureStatistic.BONE_DRAGON)
                             .build();

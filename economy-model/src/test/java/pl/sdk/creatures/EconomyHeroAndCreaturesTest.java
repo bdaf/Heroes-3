@@ -1,7 +1,6 @@
-package creatures;
+package pl.sdk.creatures;
 
 import org.junit.jupiter.api.Test;
-import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.hero.EconomyHero;
 
 import java.util.LinkedList;
