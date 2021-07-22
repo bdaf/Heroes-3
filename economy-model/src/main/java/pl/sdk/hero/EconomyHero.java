@@ -2,36 +2,47 @@ package pl.sdk.hero;
 
 import pl.sdk.creatures.EconomyCreature;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class EconomyHero {
 
-    public enum Fraction{
-        NECROPOLIS,CASTLE
+
+    public enum Fraction {
+        NECROPOLIS, CASTLE
     }
 
     private final Fraction fraction;
     private final List<EconomyCreature> heroArmy;
     private int gold;
 
-    public EconomyHero(Fraction aFraction, List<EconomyCreature> aHeroArmy, int aGold) {
+    public EconomyHero(Fraction aFraction, int aGold) {
         fraction = aFraction;
-        heroArmy = aHeroArmy;
+        heroArmy = new LinkedList<EconomyCreature>();
         gold = aGold;
     }
 
-    public void subtractGold(int aGold){
-        if(gold<0)
+    void subtractGold(int aGold) {
+        if ((gold - aGold) < 0)
             throw new IllegalStateException("Hero doesn't have enough money!");
-        gold-=aGold;
+        gold -= aGold;
     }
 
-    public void addGold(int aGold){
-        gold+=aGold;
+    void addGold(int aGold) {
+        gold += aGold;
     }
-    public void addCreature(EconomyCreature aCreature){
-        if(heroArmy.size()>6)
-            throw new IllegalStateException("Army can't include more type of creature!");
+
+    void addCreature(EconomyCreature aCreature) {
+        if (heroArmy.size() >= 7)
+            throw new IllegalStateException("Army can't include more stacks of creatures!");
         heroArmy.add(aCreature);
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    List<EconomyCreature> getHeroArmy() {
+        return heroArmy;
     }
 }
