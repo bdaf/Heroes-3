@@ -5,6 +5,7 @@ import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.hero.CreatureShop;
 import pl.sdk.hero.EconomyHero;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class EconomyEngine {
@@ -31,7 +32,7 @@ public class EconomyEngine {
         observerSupport.firePropertyChange(HERO_BOUGHT_CREATURE,null, null);
     }
 
-    void pass() {
+    public void pass() {
         if(activeHero == leftHero){
             activeHero = rightHero;
             observerSupport.firePropertyChange(ACTIVE_HERO_CHANGED,leftHero, activeHero);
@@ -49,5 +50,12 @@ public class EconomyEngine {
 
     public EconomyHero getActiveHero() {
         return activeHero;
+    }
+
+    public void addObserver(String aChangedProperty, PropertyChangeListener aObserver) {
+        observerSupport.addPropertyChangeListener(aChangedProperty,aObserver);
+    }
+    public void removeObserver(String aPropertyName, PropertyChangeListener aObserver){
+        observerSupport.removePropertyChangeListener(aPropertyName,aObserver);
     }
 }

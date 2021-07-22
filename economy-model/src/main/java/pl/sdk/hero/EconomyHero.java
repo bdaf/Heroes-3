@@ -42,7 +42,7 @@ public class EconomyHero {
         return gold;
     }
 
-    List<EconomyCreature> getHeroArmy() {
-        return heroArmy;
+    public List<EconomyCreature> getHeroArmy() {
+        return List.copyOf(heroArmy);
     }
 }

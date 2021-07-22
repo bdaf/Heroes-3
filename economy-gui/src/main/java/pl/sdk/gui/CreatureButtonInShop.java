@@ -3,7 +3,6 @@ package pl.sdk.gui;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
@@ -13,8 +12,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-//import pl.sdk.creatures.Creature;
-//import pl.sdk.creatures.Factory;
+import pl.sdk.creatures.EconomyCreature;
+import pl.sdk.creatures.EconomyFactory;
 
 
 public class CreatureButtonInShop extends Button {
@@ -22,19 +21,19 @@ public class CreatureButtonInShop extends Button {
     private Stage windowForChoosingAmount;
     private String nameOfCreature;
 
-//    public CreatureButtonInShop(EconomyController aController, Factory aFactory, int aTier, boolean aIsUpgraded) {
-//        super(aFactory.Create(aIsUpgraded, aTier, 1).getName());
-//        nameOfCreature = getText();
-//        addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-//            byte amount = displayChoosingAmountAndGetCreatureAmount();
-//            if (amount > 0) {
-//                Creature creature = aFactory.Create(aIsUpgraded, aTier, amount);
-//                nameOfCreature = creature.getName();
-//                aController.buy(creature);
-//            }
-//            aController.refreshGui();
-//        });
-//    }
+    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded) {
+        super(aFactory.Create(aIsUpgraded, aTier, 1).getName());
+        nameOfCreature = getText();
+        addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
+            byte amount = displayChoosingAmountAndGetCreatureAmount();
+            if (amount > 0) {
+                EconomyCreature creature = aFactory.Create(aIsUpgraded, aTier, amount);
+                nameOfCreature = creature.getName();
+                aController.buy(creature);
+            }
+            aController.refreshGui();
+        });
+    }
 
     private byte displayChoosingAmountAndGetCreatureAmount() {
         HBox top = new HBox();
