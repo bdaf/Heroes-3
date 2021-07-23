@@ -28,8 +28,8 @@ public class EconomyHero {
         gold -= aGold;
     }
 
-    void addGold(int aGold) {
-        gold += aGold;
+    public void addGold(int aAmount) {
+        gold += aAmount;
     }
 
     void addCreature(EconomyCreature aCreature) {

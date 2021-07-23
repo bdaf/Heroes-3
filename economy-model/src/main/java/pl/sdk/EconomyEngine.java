@@ -39,9 +39,15 @@ public class EconomyEngine {
         } else {
             activeHero = leftHero;
             observerSupport.firePropertyChange(ACTIVE_HERO_CHANGED,rightHero, activeHero);
-            roundNumber+=1;
-            observerSupport.firePropertyChange(NEXT_ROUND_STARTED,roundNumber-1, roundNumber);
+            endTurn();
         }
+    }
+
+    private void endTurn() {
+        roundNumber+=1;
+        observerSupport.firePropertyChange(NEXT_ROUND_STARTED,roundNumber-1, roundNumber);
+        leftHero.addGold(2000*roundNumber);
+        rightHero.addGold(2000*roundNumber);
     }
 
     public int getRoundNumber() {
