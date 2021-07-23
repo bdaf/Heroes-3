@@ -25,7 +25,7 @@ public class CreatureButtonInShop extends Button {
         super(aFactory.Create(aIsUpgraded, aTier, 1).getName());
         nameOfCreature = getText();
         addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-            byte amount = displayChoosingAmountAndGetCreatureAmount();
+            byte amount = displayChoosingAmountAndGetCreatureAmount(aFactory.Create(aIsUpgraded, aTier, 1));
             if (amount > 0) {
                 EconomyCreature creature = aFactory.Create(aIsUpgraded, aTier, amount);
                 nameOfCreature = creature.getName();
@@ -35,31 +35,34 @@ public class CreatureButtonInShop extends Button {
         });
     }
 
-    private byte displayChoosingAmountAndGetCreatureAmount() {
+    private byte displayChoosingAmountAndGetCreatureAmount(EconomyCreature aCreate) {
         HBox top = new HBox();
         VBox center = new VBox();
         HBox bottom = new HBox();
         prepareWindowForChoosingAmount(bottom, center, top);
         Slider slider = createSlider();
         prepareSaveAndCloseButton(bottom, slider);
-        prepareTop(top, slider);
+        prepareTop(top, slider, aCreate);
         center.getChildren().add(slider);
         windowForChoosingAmount.showAndWait();
 
         return (byte) slider.getValue();
     }
 
-    private void prepareTop(HBox aTop, Slider aSlider) {
+    private void prepareTop(HBox aTop, Slider aSlider, EconomyCreature aCreate) {
         //TODO Costing And Adding Gold
-        VBox vbox = new VBox();
+        VBox vbox = new VBox(5);
         Label sliderValueLabel = new Label("0");
+        Label purchaseCostValueLabel = new Label("0");
         aSlider.valueProperty().addListener((slider, aOld, aNew) -> sliderValueLabel.setText(String.valueOf(aNew.byteValue())));
+        aSlider.valueProperty().addListener((slider, aOld, aNew) -> purchaseCostValueLabel.setText(String.valueOf(aNew.byteValue()*aCreate.getGoldCost())));
         HBox hBox = new HBox();
-        Label label = new Label("Amount: ");
+        Label label = new Label("Amount:");
         hBox.getChildren().add(label);
         hBox.getChildren().add(sliderValueLabel);
         hBox.setAlignment(Pos.CENTER);
-        vbox.getChildren().add(new Label("Single Cost: " + "0" + " Purchase Cost: " + "0"));
+        HBox hBoxForCosts = new HBox(0,new Label("Single Cost:  " + aCreate.getGoldCost() + "  Purchase Cost:"),purchaseCostValueLabel);
+        vbox.getChildren().add(hBoxForCosts);
         vbox.getChildren().add(hBox);
         aTop.getChildren().add(vbox);
     }

@@ -10,9 +10,18 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1010.0" prefWidth="1760.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <HBox alignment="TOP_CENTER" prefHeight="8.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="8.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="playerLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Player 1's Choice" />
+            <HBox alignment="CENTER" prefHeight="8.0" prefWidth="880.0">
+               <children>
+                  <Label fx:id="playerLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Player 1's Choice" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="8.0" prefWidth="880.0">
+               <children>
+                  <Label fx:id="goldLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Gold: " />
+               </children>
+            </HBox>
          </children>
       </HBox>
    </top>
@@ -25,7 +34,7 @@
                <HBox.margin>
                   <Insets />
                </HBox.margin></Button>
-            <Label fx:id="warningLabel" text="Maximum amount of creatures you can have is 15!" textAlignment="CENTER" textFill="RED" opacity="0" />
+            <Label fx:id="warningLabel" opacity="0" text="Maximum amount of creatures you can have is 15!" textAlignment="CENTER" textFill="RED" />
          </children>
          <padding>
             <Insets right="20.0" />

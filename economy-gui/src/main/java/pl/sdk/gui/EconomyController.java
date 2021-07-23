@@ -37,6 +37,8 @@ public class EconomyController implements PropertyChangeListener {
     @FXML
     Label playerLabel;
     @FXML
+    Label goldLabel;
+    @FXML
     Label warningLabel;
 
     private List<EconomyCreature> creaturesInShop;
@@ -44,10 +46,7 @@ public class EconomyController implements PropertyChangeListener {
 
     EconomyController(EconomyHero aLeftHero, EconomyHero aRightHero){
         engine = new EconomyEngine(aLeftHero,aRightHero);
-
     }
-
-
 
     @FXML
     void initialize() {
@@ -98,17 +97,31 @@ public class EconomyController implements PropertyChangeListener {
         }
         hBoxForArmyShop.getChildren().add(shopCreatures);
         engine.getActiveHero().getHeroArmy().forEach(x -> hBoxForUserArmy.getChildren().add(new CreatureButtonInArmy(this, x)));
+        goldLabel.setText("Gold: "+engine.getActiveHero().getGold());
     }
 
     private void addEventHandlerForReadyButton() {
         readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
             if (engine.getRoundNumber() >= 3) {
                 startGame();
-            } else {
-                engine.pass();
+                return;
+            }
+            engine.pass();
+            changePlayerName();
+            if (engine.getRoundNumber() >= 3) {
+                startGame();
+                return;
             }
             refreshGui();
         });
+    }
+
+    private void changePlayerName() {
+        if(playerLabel.getText().equals("Player 1's Choice")){
+            playerLabel.setText("Player 2's Choice");
+        } else {
+            playerLabel.setText("Player 1's Choice");
+        }
     }
 
     void sell(EconomyCreature aCreature) {
