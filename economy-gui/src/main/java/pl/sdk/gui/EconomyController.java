@@ -18,7 +18,6 @@ import pl.sdk.hero.EconomyHero;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.List;
 
 import static javafx.application.Platform.exit;
 import static pl.sdk.EconomyEngine.*;
@@ -56,20 +55,8 @@ public class EconomyController implements PropertyChangeListener {
     }
 
     private void startGame() {
-        Scene scene = null;
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getClassLoader().getResource("fxml/battleMap.fxml"));
-            //loader.setController(new BattleMapController(creaturesInPlayers1Army, creaturesInPlayers2Army));
-            scene = new Scene(loader.load());
-            Stage stage = new Stage();
-            stage.setTitle("FXML Welcome");
-            stage.setScene(scene);
-            stage.show();
-            //pane.setStyle("-fx-border-color: black");
-        } catch (IOException aE) {
-            aE.printStackTrace();
-        }
+
+        EcoBattleConverter.start(engine.getLeftHero(), engine.getRightHero());
 
     }
 

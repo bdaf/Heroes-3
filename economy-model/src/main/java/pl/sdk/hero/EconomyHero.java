@@ -56,7 +56,7 @@ public class EconomyHero {
         return List.copyOf(heroArmy);
     }
 
-    Fraction getFraction() {
+    public Fraction getFraction() {
         return fraction;
     }
 
