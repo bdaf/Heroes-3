@@ -13,6 +13,7 @@ public class EconomyEngine {
     public static final String HERO_BOUGHT_CREATURE = "HERO_BOUGHT_CREATURE";
     public static final String ACTIVE_HERO_CHANGED = "ACTIVE_HERO_CHANGED";
     public static final String NEXT_ROUND_STARTED = "NEXT_ROUND_STARTED";
+    public static final String HERO_SOLD_CREATURE = "HERO_SOLD_CREATURE";
 
     private final CreatureShop creatureShop = new CreatureShop();
     private final EconomyHero leftHero;
@@ -29,9 +30,14 @@ public class EconomyEngine {
         observerSupport = new PropertyChangeSupport(this);
     }
 
-    public void buy(EconomyCreature aCreate) {
-        creatureShop.buy(activeHero,aCreate);
+    public void buy(EconomyCreature aCreature) {
+        creatureShop.buy(activeHero,aCreature);
         observerSupport.firePropertyChange(HERO_BOUGHT_CREATURE,null, null);
+    }
+    public boolean sell(EconomyCreature aCreature){
+        boolean result = creatureShop.sell(activeHero, aCreature);
+        if(result) observerSupport.firePropertyChange(HERO_SOLD_CREATURE,null, null);
+        return result;
     }
 
     public void pass() {

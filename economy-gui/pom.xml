@@ -26,13 +26,11 @@
             <groupId>pl.sdk</groupId>
             <artifactId>economy-model</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>pl.sdk</groupId>
             <artifactId>eco-battle-converter</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

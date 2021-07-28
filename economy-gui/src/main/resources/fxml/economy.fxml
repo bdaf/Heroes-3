@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1010.0" prefWidth="1760.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1010.0" prefWidth="1760.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox alignment="CENTER" prefHeight="8.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
@@ -34,7 +31,7 @@
                <HBox.margin>
                   <Insets />
                </HBox.margin></Button>
-            <Label fx:id="warningLabel" opacity="0" text="Maximum amount of creatures you can have is 15!" textAlignment="CENTER" textFill="RED" />
+            <Label fx:id="warningLabel" opacity="0" text="Maximum amount of creatures you can have is 7!" textAlignment="CENTER" textFill="RED" />
          </children>
          <padding>
             <Insets right="20.0" />

@@ -36,6 +36,17 @@ public class EconomyHero {
             throw new IllegalStateException("Army can't include more stacks of creatures!");
         heroArmy.add(aCreature);
     }
+    boolean removeCreature(EconomyCreature aCreature){
+        if(heroArmy.isEmpty())
+            throw new IllegalStateException("Army is empty! You cannot delete nothing from there!");
+        for (int i = 0; i < heroArmy.size(); i++) {
+            if(heroArmy.get(i).equals(aCreature)){
+                heroArmy.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
 
     public int getGold() {
         return gold;
@@ -59,4 +70,11 @@ public class EconomyHero {
                 fraction == that.fraction;
     }
 
+    @Override
+    public String toString() {
+        return "EconomyHero{" +
+                "fraction=" + fraction +
+                ", gold=" + gold +
+                '}';
+    }
 }

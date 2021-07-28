@@ -20,7 +20,7 @@ public class CreatureButtonInArmy extends Button {
     private boolean ifSell;
 
     public CreatureButtonInArmy(EconomyController aController, EconomyCreature aCreature) {
-        super(aCreature.getName()+"("+aCreature.getAmount()+")");
+        super(aCreature.getName()+" ("+aCreature.getAmount()+")");
         nameOfCreature = getText();
         addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
             if(displayWindowForSellingAndReturnIfSell())
@@ -28,8 +28,6 @@ public class CreatureButtonInArmy extends Button {
             aController.refreshGui();
         });
     }
-
-
 
     private boolean displayWindowForSellingAndReturnIfSell() {
         HBox top = new HBox();

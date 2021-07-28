@@ -17,9 +17,7 @@ import pl.sdk.hero.EconomyHero;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 import static javafx.application.Platform.exit;
@@ -77,7 +75,7 @@ public class EconomyController implements PropertyChangeListener {
 
     void buy(EconomyCreature aCreature) {
         warningLabel.setOpacity(0);
-        if(engine.getActiveHero().getHeroArmy().size()<15)
+        if(engine.getActiveHero().getHeroArmy().size()<7)
             engine.buy(aCreature);
         else{
             warningLabel.setOpacity(1);
@@ -113,11 +111,7 @@ public class EconomyController implements PropertyChangeListener {
     }
 
     private void changePlayerName() {
-        if(playerLabel.getText().equals("Player 1's Choice")){
-            playerLabel.setText("Player 2's Choice");
-        } else {
-            playerLabel.setText("Player 1's Choice");
-        }
+        playerLabel.setText(engine.getActiveHero().toString());
     }
 
     void sell(EconomyCreature aCreature) {

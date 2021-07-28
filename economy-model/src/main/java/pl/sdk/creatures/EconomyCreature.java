@@ -1,5 +1,7 @@
 package pl.sdk.creatures;
 
+import java.util.Objects;
+
 public class EconomyCreature {
     private final CreatureStatistic stats;
     private final int amount;
@@ -26,4 +28,23 @@ public class EconomyCreature {
     public boolean isUpgraded() {
         return stats.isUpgraded();
     }
+
+    @Override
+    public String toString() {
+        return "EconomyCreature{" +
+                "name=" + getName() +
+                ", amount=" + amount +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object aO) {
+        if (this == aO) return true;
+        if (aO == null || getClass() != aO.getClass()) return false;
+        EconomyCreature that = (EconomyCreature) aO;
+        return amount == that.amount &&
+                goldCost == that.goldCost &&
+                stats == that.stats;
+    }
+
 }

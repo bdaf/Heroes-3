@@ -4,13 +4,21 @@ import pl.sdk.creatures.EconomyCreature;
 
 public class CreatureShop {
 
-    public void buy(EconomyHero aEconomyHero, EconomyCreature aCreate) {
-        aEconomyHero.subtractGold(aCreate.getAmount() * aCreate.getGoldCost());
+    public void buy(EconomyHero aEconomyHero, EconomyCreature aCreature) {
+        aEconomyHero.subtractGold(aCreature.getAmount() * aCreature.getGoldCost());
         try {
-            aEconomyHero.addCreature(aCreate);
+            aEconomyHero.addCreature(aCreature);
         } catch (IllegalStateException e) {
-            aEconomyHero.addGold(aCreate.getAmount() * aCreate.getGoldCost());
+            aEconomyHero.addGold(aCreature.getAmount() * aCreature.getGoldCost());
             throw new IllegalStateException("Army can't include more stacks of creatures!");
         }
+    }
+
+    public boolean sell(EconomyHero aEconomyHero, EconomyCreature aCreature) {
+        if(aEconomyHero.removeCreature(aCreature)){
+            aEconomyHero.addGold(aCreature.getAmount() * aCreature.getGoldCost());
+            return true;
+        }
+        return false;
     }
 }
