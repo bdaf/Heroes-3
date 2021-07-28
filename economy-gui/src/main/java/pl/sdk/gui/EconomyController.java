@@ -41,16 +41,16 @@ public class EconomyController implements PropertyChangeListener {
 
     private EconomyEngine engine;
 
-    EconomyController(EconomyHero aLeftHero, EconomyHero aRightHero){
-        engine = new EconomyEngine(aLeftHero,aRightHero);
+    EconomyController(EconomyHero aLeftHero, EconomyHero aRightHero) {
+        engine = new EconomyEngine(aLeftHero, aRightHero);
     }
 
     @FXML
     void initialize() {
         escapeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> exit());
-        engine.addObserver(HERO_BOUGHT_CREATURE,this);
-        engine.addObserver(ACTIVE_HERO_CHANGED,this);
-        engine.addObserver(NEXT_ROUND_STARTED,this);
+        engine.addObserver(HERO_BOUGHT_CREATURE, this);
+        engine.addObserver(ACTIVE_HERO_CHANGED, this);
+        engine.addObserver(NEXT_ROUND_STARTED, this);
         addEventHandlerForReadyButton();
         refreshGui();
     }
@@ -75,9 +75,9 @@ public class EconomyController implements PropertyChangeListener {
 
     void buy(EconomyCreature aCreature) {
         warningLabel.setOpacity(0);
-        if(engine.getActiveHero().getHeroArmy().size()<7)
+        if (engine.getActiveHero().getHeroArmy().size() < 7)
             engine.buy(aCreature);
-        else{
+        else {
             warningLabel.setOpacity(1);
         }
     }
@@ -93,13 +93,13 @@ public class EconomyController implements PropertyChangeListener {
         }
         hBoxForArmyShop.getChildren().add(shopCreatures);
         engine.getActiveHero().getHeroArmy().forEach(x -> hBoxForUserArmy.getChildren().add(new CreatureButtonInArmy(this, x)));
-        goldLabel.setText("Round: "+engine.getRoundNumber()+" Gold: "+engine.getActiveHero().getGold());
+        goldLabel.setText("Round: " + engine.getRoundNumber() + " Gold: " + engine.getActiveHero().getGold());
     }
 
     private void addEventHandlerForReadyButton() {
         readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
             int roundNumber = engine.getRoundNumber();
-            if(engine.getActiveHero().equals(engine.getRightHero())) roundNumber++;
+            if (engine.getActiveHero().equals(engine.getRightHero())) roundNumber++;
             if (roundNumber > 4) {
                 startGame();
                 return;
@@ -111,14 +111,14 @@ public class EconomyController implements PropertyChangeListener {
     }
 
     private void changePlayerName() {
-        playerLabel.setText(engine.getActiveHero().toString());
+        if (playerLabel.getText().contains("Player 1's Choice"))
+            playerLabel.setText("Player 2's Choice - " + engine.getActiveHero().toString());
+        else
+            playerLabel.setText("Player 1's Choice - " + engine.getActiveHero().toString());
     }
 
     void sell(EconomyCreature aCreature) {
-        List<EconomyCreature> creaturesInArmy = engine.getActiveHero().getHeroArmy();
-        if (creaturesInArmy.contains(aCreature)) {
-            creaturesInArmy.remove(aCreature);
-        }
+        engine.sell(aCreature);
     }
 
     private void clearingArmyAndShopBoxesAndMakingTheirLabels() {

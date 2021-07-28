@@ -35,8 +35,12 @@ public class SellingCreatureTest {
         engine.buy(factory.Create(false,2,2));
         engine.buy(factory.Create(false,2,3));
 
+        assertEquals(40,engine.getActiveHero().getGold());
+
         assertTrue(engine.sell(factory.Create(false,2,2)));
         assertTrue(!engine.sell(factory.Create(false,2,2)));
+
+        assertEquals(240,engine.getActiveHero().getGold());
         assertEquals(5,engine.getActiveHero().getHeroArmy().size());
     }
 }

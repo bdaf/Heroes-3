@@ -37,7 +37,8 @@ public class EconomyEngine {
     public boolean sell(EconomyCreature aCreature){
         boolean result = creatureShop.sell(activeHero, aCreature);
         if(result) observerSupport.firePropertyChange(HERO_SOLD_CREATURE,null, null);
-        return result;
+        else throw new IllegalStateException("The creature cannot be removed for some reason!");
+        return true;
     }
 
     public void pass() {
