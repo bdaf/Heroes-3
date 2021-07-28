@@ -22,4 +22,8 @@ public class EconomyCreature {
     public String getName() {
         return stats.getTranslatedCreatureName();
     }
+
+    public boolean isUpgraded() {
+        return stats.isUpgraded();
+    }
 }

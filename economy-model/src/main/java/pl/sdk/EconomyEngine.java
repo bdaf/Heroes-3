@@ -1,7 +1,7 @@
 package pl.sdk;
 
-import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyCreature;
+import pl.sdk.hero.CopyHeroMaker;
 import pl.sdk.hero.CreatureShop;
 import pl.sdk.hero.EconomyHero;
 
@@ -9,9 +9,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class EconomyEngine {
+
     public static final String HERO_BOUGHT_CREATURE = "HERO_BOUGHT_CREATURE";
     public static final String ACTIVE_HERO_CHANGED = "ACTIVE_HERO_CHANGED";
     public static final String NEXT_ROUND_STARTED = "NEXT_ROUND_STARTED";
+
     private final CreatureShop creatureShop = new CreatureShop();
     private final EconomyHero leftHero;
     private final EconomyHero rightHero;
@@ -55,13 +57,19 @@ public class EconomyEngine {
     }
 
     public EconomyHero getActiveHero() {
-        return activeHero;
+        return CopyHeroMaker.copyOf(activeHero);
     }
 
     public void addObserver(String aChangedProperty, PropertyChangeListener aObserver) {
         observerSupport.addPropertyChangeListener(aChangedProperty,aObserver);
     }
+
     public void removeObserver(String aPropertyName, PropertyChangeListener aObserver){
         observerSupport.removePropertyChangeListener(aPropertyName,aObserver);
+    }
+    public EconomyHero getLeftHero() { return CopyHeroMaker.copyOf(leftHero); }
+
+    public EconomyHero getRightHero() {
+        return CopyHeroMaker.copyOf(rightHero);
     }
 }

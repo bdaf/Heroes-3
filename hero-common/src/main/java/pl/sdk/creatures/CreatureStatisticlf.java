@@ -19,4 +19,6 @@ public interface CreatureStatisticlf {
     int getTier();
 
     String getDescription();
+
+    boolean isUpgraded();
 }

@@ -7,13 +7,12 @@ import java.util.List;
 
 public class EconomyHero {
 
-
     public enum Fraction {
-        NECROPOLIS, CASTLE
+        NECROPOLIS, CASTLE;
     }
 
-    private final Fraction fraction;
     private final List<EconomyCreature> heroArmy;
+    private final Fraction fraction;
     private int gold;
 
     public EconomyHero(Fraction aFraction, int aGold) {
@@ -45,4 +44,19 @@ public class EconomyHero {
     public List<EconomyCreature> getHeroArmy() {
         return List.copyOf(heroArmy);
     }
+
+    Fraction getFraction() {
+        return fraction;
+    }
+
+    @Override
+    public boolean equals(Object aO) {
+        if (this == aO) return true;
+        if (aO == null || getClass() != aO.getClass()) return false;
+        EconomyHero that = (EconomyHero) aO;
+        return gold == that.gold &&
+                heroArmy.equals(that.heroArmy) &&
+                fraction == that.fraction;
+    }
+
 }

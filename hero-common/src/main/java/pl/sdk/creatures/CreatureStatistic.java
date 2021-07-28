@@ -104,4 +104,9 @@ enum CreatureStatistic implements CreatureStatisticlf {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public boolean isUpgraded() {
+        return isUpgraded;
+    }
 }

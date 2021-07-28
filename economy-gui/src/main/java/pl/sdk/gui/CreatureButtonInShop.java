@@ -50,7 +50,6 @@ public class CreatureButtonInShop extends Button {
     }
 
     private void prepareTop(HBox aTop, Slider aSlider, EconomyCreature aCreate) {
-        //TODO Costing And Adding Gold
         VBox vbox = new VBox(5);
         Label sliderValueLabel = new Label("0");
         Label purchaseCostValueLabel = new Label("0");

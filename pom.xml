@@ -19,6 +19,7 @@
         <module>battle-gui</module>
         <module>economy-model</module>
         <module>economy-gui</module>
+        <module>eco-battle-converter</module>
     </modules>
 
     <dependencyManagement>

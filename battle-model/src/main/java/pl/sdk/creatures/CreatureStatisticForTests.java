@@ -65,4 +65,9 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
     public String getDescription() {
         return "Creature fot tests";
     }
+
+    @Override
+    public boolean isUpgraded() {
+        return false;
+    }
 }

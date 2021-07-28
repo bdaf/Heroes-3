@@ -30,7 +30,7 @@
         </dependency>
         <dependency>
             <groupId>pl.sdk</groupId>
-            <artifactId>battle-gui</artifactId>
+            <artifactId>eco-battle-converter</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
