@@ -30,7 +30,7 @@ enum CreatureStatistic implements CreatureStatisticlf {
     CHAMPION("Champion",16,16,100,9,Range.closed(20,25),6,"That's up to 45% extra damage possible! Champions also have better aiming skills.",true),
     ARCHANGEL("Archangel",30,20,250,18,Range.closed(50,50),7,"Best attack, defence and speed in a whole game! Resurrection is a very convenient abbility. Those fast wings take up a whole extra hex! :] Possibly the best creature in the game.",true),
     PICKMAN("Pickman",4,6,10,4,Range.closed(1,3),1,"Toughest lvl1 unit, but a bit slow.",false),
-    ARCHER("Archangel",6,3,10,4,Range.closed(2,3),2,"Archer's upgrade is literally 2 times better. Upgrade them quickly.",false),
+    ARCHER("Archer",6,3,10,4,Range.closed(2,3),2,"Archer's upgrade is literally 2 times better. Upgrade them quickly.",false),
     GRIFFIN("Griffin",8,8,25,6,Range.closed(3,6),3,"High in population, griffins become castle's main unit for the midgame.",false),
     SWORDSMAN("Swordsman",10,12,35,5,Range.closed(6,9),4,"High in population, griffins become castle's main unit for the midgame.",false),
     MONK("Monk",12,7,30,5,Range.closed(10,12),5,"Good shooter, nice damage.",false),

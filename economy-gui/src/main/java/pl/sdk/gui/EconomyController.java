@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pl.sdk.EconomyEngine;
+import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.EconomyCastleFactory;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;

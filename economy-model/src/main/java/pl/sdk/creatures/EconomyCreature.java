@@ -29,6 +29,8 @@ public class EconomyCreature {
         return stats.isUpgraded();
     }
 
+    public int getTier() { return stats.getTier(); }
+
     @Override
     public String toString() {
         return "EconomyCreature{" +
@@ -46,5 +48,4 @@ public class EconomyCreature {
                 goldCost == that.goldCost &&
                 stats == that.stats;
     }
-
 }

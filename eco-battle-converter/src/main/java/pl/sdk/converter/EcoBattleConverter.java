@@ -1,9 +1,10 @@
-package pl.sdk.gui;
+package pl.sdk.converter;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.sdk.creatures.*;
+import pl.sdk.gui.BattleMapController;
 import pl.sdk.hero.EconomyHero;
 
 import java.io.IOException;
@@ -11,13 +12,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class EcoBattleConverter {
-    static void start(EconomyHero aLeftHero, EconomyHero aRightHero){
+    public static void start(EconomyHero aLeftHero, EconomyHero aRightHero) {
         Scene scene = null;
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(EcoBattleConverter.class.getClassLoader().getResource("fxml/battleMap.fxml"));
-            List<Creature> leftArmy = convert(aLeftHero.getHeroArmy(),aLeftHero.getFraction());
-            List<Creature> rightArmy = convert(aRightHero.getHeroArmy(), aRightHero.getFraction());
+            List<Creature> leftArmy = convert(aLeftHero);
+            List<Creature> rightArmy = convert(aRightHero);
             loader.setController(new BattleMapController(leftArmy, rightArmy));
             scene = new Scene(loader.load());
             Stage stage = new Stage();
@@ -30,16 +31,17 @@ public class EcoBattleConverter {
         }
     }
 
-    static List<Creature> convert(List<EconomyCreature> aHeroArmy, EconomyHero.Fraction aFraction) {
+    public static List<Creature> convert(EconomyHero aEcoHero) {
         Factory factory;
-        if(aFraction == EconomyHero.Fraction.NECROPOLIS)
+        if (aEcoHero.getFraction() == EconomyHero.Fraction.NECROPOLIS)
             factory = new NecropolisFactory();
-        else if(aFraction == EconomyHero.Fraction.CASTLE)
+        else if (aEcoHero.getFraction() == EconomyHero.Fraction.CASTLE)
             factory = new CastleFactory();
         else
-            throw new NullPointerException("Factory used to convert economy creatures in creatures is null!");
-        List<Creature> result = new LinkedList<Creature>();
-        //aHeroArmy.forEach(c -> result.add(factory.Create(c.isUpgraded(),c,c.getAmount())));
-        return null;
+            throw new NullPointerException("Factory which is used to convert economy creatures to creatures is null!");
+        List<Creature> ret = new LinkedList<Creature>();
+        aEcoHero.getHeroArmy().forEach(c -> ret.add(factory.Create(c.isUpgraded(),c.getTier(),c.getAmount())));
+        return ret;
     }
 }
+
