@@ -22,7 +22,7 @@ import java.util.Random;
         } else {
             double defencePoints = aDefender.getStats().getArmor() - aAttacker.getStats().getAttack();
             if (defencePoints > _28) // min 30% of DMG
-                defencePoints = _28; // it is written like this  because when I put this '28' it doesn't work
+                defencePoints = _28; // it is typed like this because when I put this '28' it doesn't work
             damageToDeal = (randedDamage * (1 - (defencePoints * 0.025)));
         }
         damageToDeal = changeDamageAfter(damageToDeal*aAttacker.getAmount());

@@ -32,6 +32,13 @@ public class EcoBattleConverter {
     }
 
     public static List<Creature> convert(EconomyHero aEcoHero) {
+        Factory factory = getProperFactoryForFraction(aEcoHero);
+        List<Creature> ret = new LinkedList<Creature>();
+        aEcoHero.getHeroArmy().forEach(c -> ret.add(factory.Create(c.isUpgraded(),c.getTier(),c.getAmount())));
+        return ret;
+    }
+
+    public static Factory getProperFactoryForFraction(EconomyHero aEcoHero) {
         Factory factory;
         if (aEcoHero.getFraction() == EconomyHero.Fraction.NECROPOLIS)
             factory = new NecropolisFactory();
@@ -39,9 +46,18 @@ public class EcoBattleConverter {
             factory = new CastleFactory();
         else
             throw new NullPointerException("Factory which is used to convert economy creatures to creatures is null!");
-        List<Creature> ret = new LinkedList<Creature>();
-        aEcoHero.getHeroArmy().forEach(c -> ret.add(factory.Create(c.isUpgraded(),c.getTier(),c.getAmount())));
-        return ret;
+        return factory;
+    }
+
+    public static EconomyFactory getProperEconomyFactoryForFraction(EconomyHero aEcoHero) {
+        EconomyFactory factory;
+        if (aEcoHero.getFraction() == EconomyHero.Fraction.NECROPOLIS)
+            factory = new EconomyNecropolisFactory();
+        else if (aEcoHero.getFraction() == EconomyHero.Fraction.CASTLE)
+            factory = new EconomyCastleFactory();
+        else
+            throw new NullPointerException("Economy factory which is used to convert economy creatures to creatures is null!");
+        return factory;
     }
 }
 

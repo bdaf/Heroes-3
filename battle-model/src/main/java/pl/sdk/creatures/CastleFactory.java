@@ -1,7 +1,5 @@
 package pl.sdk.creatures;
 
-import com.google.common.collect.Range;
-
 public class CastleFactory extends Factory {
 
     public static final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
@@ -39,7 +37,7 @@ public class CastleFactory extends Factory {
                 case 6:
                     return new Creature.Builder()
                             .amount(amount)
-                            .statistic(CreatureStatistic.ZEALOT)
+                            .statistic(CreatureStatistic.CHAMPION)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(0.2, 2))
                             .amount(amount)
                             .build();

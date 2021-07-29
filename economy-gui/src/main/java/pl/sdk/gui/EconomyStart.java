@@ -12,7 +12,7 @@ public class EconomyStart extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource("fxml/economy.fxml"));
-        loader.setController(new EconomyController(new EconomyHero(EconomyHero.Fraction.CASTLE,3000),new EconomyHero(EconomyHero.Fraction.CASTLE,3000)));
+        loader.setController(new EconomyController(new EconomyHero(EconomyHero.Fraction.NECROPOLIS,3000),new EconomyHero(EconomyHero.Fraction.CASTLE,3000)));
         Scene scene = new Scene(loader.load());
         stage.setTitle("FXML Welcome");
         stage.setScene(scene);
