@@ -21,11 +21,12 @@ public class BattleMapController implements PropertyChangeListener {
 
     @FXML
     private GridPane gridMap;
-    private GameEngine gameEngine;
     @FXML
     private Button passButton;
     @FXML
     private Button escapeButton;
+
+    private GameEngine gameEngine;
 
     public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight) {
         gameEngine = new GameEngine(TeamLeft, TeamRight);
@@ -38,6 +39,8 @@ public class BattleMapController implements PropertyChangeListener {
         gameEngine.addObserver(gameEngine.CREATURE_MOVED, this);
         gameEngine.addObserver(gameEngine.CURRENT_CREATURE_ATTACKED, this);
         passButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.pass());
+
+
         refreshGui();
     }
 

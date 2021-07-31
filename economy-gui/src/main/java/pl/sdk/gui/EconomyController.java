@@ -1,17 +1,21 @@
 package pl.sdk.gui;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pl.sdk.EconomyEngine;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
 import pl.sdk.hero.EconomyHero;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import static javafx.application.Platform.exit;
 import static pl.sdk.EconomyEngine.*;
 
@@ -21,9 +25,9 @@ public class EconomyController implements PropertyChangeListener {
     @FXML
     Button escapeButton;
     @FXML
-    VBox hBoxForUserArmy;
+    VBox vBoxForUserArmy;
     @FXML
-    VBox hBoxForArmyShop;
+    VBox vBoxForArmyShop;
     @FXML
     Label playerLabel;
     @FXML
@@ -51,7 +55,7 @@ public class EconomyController implements PropertyChangeListener {
 
     private void startGame() {
         warningNeedToBuyLabel.setOpacity(0);
-        if(engine.getLeftHero().getHeroArmy().isEmpty() || engine.getRightHero().getHeroArmy().isEmpty())
+        if (engine.getLeftHero().getHeroArmy().isEmpty() || engine.getRightHero().getHeroArmy().isEmpty())
             warningNeedToBuyLabel.setOpacity(1);
         else EcoBattleConverter.start(engine.getLeftHero(), engine.getRightHero());
 
@@ -67,18 +71,30 @@ public class EconomyController implements PropertyChangeListener {
     void refreshGui() {
         clearingArmyAndShopBoxesAndMakingTheirLabels();
         EconomyFactory factory = EcoBattleConverter.getProperEconomyFactoryForFraction(engine.getActiveHero());
-        VBox shopCreatures = new VBox();
+        VBox vBoxShopCreaturesUpgraded = new VBox();
+        vBoxShopCreaturesUpgraded.setAlignment(Pos.CENTER);
+        VBox vBoxShopCreaturesNotUpgraded = new VBox();
+        vBoxShopCreaturesNotUpgraded.setAlignment(Pos.CENTER);
+        HBox hBoxShopContainer = new HBox();
+        hBoxShopContainer.getChildren().addAll(vBoxShopCreaturesNotUpgraded, vBoxShopCreaturesUpgraded);
+        hBoxShopContainer.setAlignment(Pos.CENTER);
+        hBoxShopContainer.setPrefHeight(840);
+        vBoxForArmyShop.getChildren().add(hBoxShopContainer);
         boolean isUpgraded;
+        VBox tmpVBox;
         for (int i = 0; i < 14; i++) {
-            if (i%2==1) isUpgraded = true;
-            else isUpgraded = false;
-            shopCreatures.getChildren().add(new CreatureButtonInShop(this, factory, i/2+1, isUpgraded));
+            if (i % 2 == 1) {
+                isUpgraded = true;
+                tmpVBox = vBoxShopCreaturesNotUpgraded;
+            } else {
+                isUpgraded = false;
+                tmpVBox = vBoxShopCreaturesUpgraded;
+            }
+            tmpVBox.getChildren().add(new CreatureButtonInShop(this, factory, i / 2 + 1, isUpgraded, engine.getActiveHero()));
         }
-        hBoxForArmyShop.getChildren().add(shopCreatures);
-        engine.getActiveHero().getHeroArmy().forEach(x -> hBoxForUserArmy.getChildren().add(new CreatureButtonInArmy(this, x)));
+        engine.getActiveHero().getHeroArmy().forEach(x -> vBoxForUserArmy.getChildren().add(new CreatureButtonInArmy(this, x)));
         goldLabel.setText("Round: " + engine.getRoundNumber() + " Gold: " + engine.getActiveHero().getGold());
     }
-
 
 
     private void addEventHandlerForReadyButtonAndSetPlayerLabel() {
@@ -108,14 +124,14 @@ public class EconomyController implements PropertyChangeListener {
     }
 
     private void clearingArmyAndShopBoxesAndMakingTheirLabels() {
-        hBoxForArmyShop.getChildren().clear();
-        hBoxForUserArmy.getChildren().clear();
+        vBoxForArmyShop.getChildren().clear();
+        vBoxForUserArmy.getChildren().clear();
         Label label = new Label("SHOP");
         label.setId("bigLabel");
-        hBoxForArmyShop.getChildren().add(label);
+        vBoxForArmyShop.getChildren().add(label);
         label = new Label("YOUR ARMY");
         label.setId("bigLabel");
-        hBoxForUserArmy.getChildren().add(label);
+        vBoxForUserArmy.getChildren().add(label);
     }
 
     @Override

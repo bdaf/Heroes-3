@@ -14,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
+import pl.sdk.hero.EconomyHero;
 
 
 public class CreatureButtonInShop extends Button {
@@ -21,11 +22,11 @@ public class CreatureButtonInShop extends Button {
     private Stage windowForChoosingAmount;
     private String nameOfCreature;
 
-    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded) {
+    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero) {
         super(aFactory.Create(aIsUpgraded, aTier, 1).getName());
         nameOfCreature = getText();
         addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-            byte amount = displayChoosingAmountAndGetCreatureAmount(aFactory.Create(aIsUpgraded, aTier, 1));
+            byte amount = displayChoosingAmountAndGetCreatureAmount(aFactory.Create(aIsUpgraded, aTier, 1),aHero);
             if (amount > 0) {
                 EconomyCreature creature = aFactory.Create(aIsUpgraded, aTier, amount);
                 nameOfCreature = creature.getName();
@@ -35,12 +36,12 @@ public class CreatureButtonInShop extends Button {
         });
     }
 
-    private byte displayChoosingAmountAndGetCreatureAmount(EconomyCreature aCreate) {
+    private byte displayChoosingAmountAndGetCreatureAmount(EconomyCreature aCreate, EconomyHero aHero) {
         HBox top = new HBox();
         VBox center = new VBox();
         HBox bottom = new HBox();
         prepareWindowForChoosingAmount(bottom, center, top);
-        Slider slider = createSlider();
+        Slider slider = createSlider(aCreate,aHero);
         prepareSaveAndCloseButton(bottom, slider);
         prepareTop(top, slider, aCreate);
         center.getChildren().add(slider);
@@ -85,10 +86,10 @@ public class CreatureButtonInShop extends Button {
         aBottom.getChildren().add(cancelButton);
     }
 
-    private Slider createSlider() {
+    private Slider createSlider(EconomyCreature aCreate, EconomyHero aHero) {
         Slider slider = new Slider();
         slider.setMin(0);
-        slider.setMax(99);
+        slider.setMax(aHero.getGold()/aCreate.getGoldCost());
         slider.setValue(0);
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);

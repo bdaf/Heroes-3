@@ -29,7 +29,7 @@
     -fx-max-width: infinity;
     -fx-hgrow-policy:always;
 }
-#hBoxForUserArmy, #hBoxForArmyShop{
+#vBoxForUserArmy, #vBoxForArmyShop{
     -fx-border-color: black;
     -fx-border-width: 1;
     -fx-pref-width: 880;

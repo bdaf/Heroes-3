@@ -48,8 +48,8 @@
    </bottom>
    <center>
       <HBox>
-         <VBox fx:id="hBoxForUserArmy" />
-         <VBox fx:id="hBoxForArmyShop" />
+         <VBox fx:id="vBoxForUserArmy" />
+         <VBox fx:id="vBoxForArmyShop" />
       </HBox>
    </center>
    <stylesheets>
