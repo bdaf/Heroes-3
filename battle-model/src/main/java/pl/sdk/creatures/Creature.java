@@ -7,7 +7,6 @@ import java.beans.PropertyChangeListener;
 
 public class Creature implements PropertyChangeListener {
 
-    public static final String LEFT_TEAM = "leftTeam";
     private CreatureStatisticlf stats;
     private CalculateDamageStrategy damageCalculator;
     private int currentHp;
@@ -15,7 +14,22 @@ public class Creature implements PropertyChangeListener {
     private int maxAmount;
     private int amount;
     private int attacksInTurn;
-    private String team;
+    private Team team;
+
+    public enum Team{
+        LEFT_TEAM("leftTeam"),
+        RIGHT_TEAM("rightTeam");
+
+        private final String path;
+
+        Team(String aPath) {
+            path = aPath;
+        }
+
+        public String getPath() {
+            return path;
+        }
+    }
 
     Creature(){
         this(new CreatureStatisticForTests());
@@ -35,11 +49,11 @@ public class Creature implements PropertyChangeListener {
         counterAttackInThisTurn = aCounterAttackInThisTurn;
     }
 
-    public String getTeam() {
+    public Team getTeam() {
         return team;
     }
 
-    public void setTeam(String aTeam) {
+    public void setTeam(Team aTeam) {
         team = aTeam;
     }
 
@@ -255,7 +269,7 @@ public class Creature implements PropertyChangeListener {
             result.amount = this.amount;
             result.maxAmount = this.amount;
             result.attacksInTurn = attacksInTurn;
-            result.setTeam(LEFT_TEAM);
+            result.setTeam(Team.LEFT_TEAM);
             return result;
         }
 
@@ -301,7 +315,7 @@ public class Creature implements PropertyChangeListener {
             result.amount = this.amount;
             result.maxAmount = this.amount;
             result.attacksInTurn = attacksInTurn;
-            result.setTeam(LEFT_TEAM);
+            result.setTeam(Team.LEFT_TEAM);
             return result;
         }
 

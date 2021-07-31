@@ -27,12 +27,12 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    public String getTeam() {
+    public Team getTeam() {
         return decorated.getTeam();
     }
 
     @Override
-    public void setTeam(String aTeam) {
+    public void setTeam(Team aTeam) {
         decorated.setTeam(aTeam);
     }
 

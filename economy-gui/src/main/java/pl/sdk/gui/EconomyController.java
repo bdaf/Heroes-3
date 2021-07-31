@@ -61,9 +61,7 @@ public class EconomyController implements PropertyChangeListener {
         warningLabel.setOpacity(0);
         if (engine.getActiveHero().getHeroArmy().size() < 7)
             engine.buy(aCreature);
-        else {
-            warningLabel.setOpacity(1);
-        }
+        else warningLabel.setOpacity(1);
     }
 
     void refreshGui() {

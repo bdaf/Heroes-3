@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import pl.sdk.creatures.Creature;
 
 class MapTile extends StackPane {
     private Rectangle rec;
@@ -17,10 +18,10 @@ class MapTile extends StackPane {
         getChildren().add(rec);
     }
 
-    public void addCreature(String stringOfCurrentHp, String nameOfCreature, String aTeam) {
+    public void addCreature(String stringOfCurrentHp, String nameOfCreature, Creature.Team aTeam) {
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
-        ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/creatures/"+aTeam+"/" + nameOfCreature + ".png")));
+        ImageView image = new ImageView(new Image(getClass().getResourceAsStream("/graphics/creatures/"+aTeam.getPath()+"/" + nameOfCreature + ".png")));
         image.setFitHeight(61);
         image.setFitWidth(61);
         vbox.getChildren().add(image);
