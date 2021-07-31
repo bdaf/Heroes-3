@@ -8,6 +8,10 @@ import pl.sdk.hero.EconomyHero;
 
 public class EconomyStart extends Application {
 
+    public static void main(String[] aArgs) {
+        launch();
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
