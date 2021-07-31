@@ -10,8 +10,6 @@ import java.util.List;
 
 public class GameEngine {
 
-    public static final String LEFT_TEAM = "leftTeam";
-    public static final String RIGHT_TEAM = "rightTeam";
     public static int BOARD_WIDTH = 20;
     public static int BOARD_HEIGHT = 15;
     public static final String CURRENT_CREATURE_CHANGED = "CURRENT_CREATURE_CHANGED";
@@ -78,10 +76,17 @@ public class GameEngine {
 
     }
 
+    public int getPossibleAttacksOfActiveCreature(){
+        return queue.getAttacksOfActiveCreature();
+    }
+    public double getLeftMovePointsOfActiveCreature(){
+        return queue.getMovePointsOfActiveCreature();
+    }
+
     public void attack(int aX, int aY){
         attackOnSplashedPoints(aX, aY);
         queue.setAttacksOfActiveCreature(queue.getAttacksOfActiveCreature()-1);
-        if(queue.getAttacksOfActiveCreature() <= 0)
+        if(getPossibleAttacksOfActiveCreature() <= 0)
             queue.setMovePointsOfActiveCreature(0);
         notifyObserver(new PropertyChangeEvent(this, CURRENT_CREATURE_ATTACKED, null, null));
     }

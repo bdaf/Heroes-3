@@ -27,41 +27,17 @@ public class BattleMapController implements PropertyChangeListener {
     @FXML
     private Button escapeButton;
 
-    public BattleMapController(){
-        List<Creature> notUpgradedCreatures = new ArrayList<Creature>();
-        List<Creature> upgradedCreatures = new ArrayList<Creature>();
-        NecropolisFactory necropoliiFactory = new NecropolisFactory();
-        CastleFactory castleFactory = new CastleFactory();
-
-        Creature c;
-        for (int i = 0; i < 7; i++) {
-            c = necropoliiFactory.Create(true,i+1,1);
-            notUpgradedCreatures.add(c);
-        }
-        for (int i = 0; i < 7; i++) {
-            c = castleFactory.Create(false,i+1,1);
-            upgradedCreatures.add(c);
-        }
-
-
-        gameEngine = new GameEngine(notUpgradedCreatures,upgradedCreatures);
+    public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight) {
+        gameEngine = new GameEngine(TeamLeft, TeamRight);
     }
-    public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight){
-        gameEngine = new GameEngine(TeamLeft,TeamRight);
-    }
-
 
     @FXML
-    void initialize(){
+    void initialize() {
         escapeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> exit());
-        gameEngine.addObserver(gameEngine.CURRENT_CREATURE_CHANGED , this);
-        gameEngine.addObserver(gameEngine.CREATURE_MOVED , this);
-        gameEngine.addObserver(gameEngine.CURRENT_CREATURE_ATTACKED , this);
-        passButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) ->{
-            gameEngine.pass();
-        });
-
-
+        gameEngine.addObserver(gameEngine.CURRENT_CREATURE_CHANGED, this);
+        gameEngine.addObserver(gameEngine.CREATURE_MOVED, this);
+        gameEngine.addObserver(gameEngine.CURRENT_CREATURE_ATTACKED, this);
+        passButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.pass());
         refreshGui();
     }
 
@@ -69,30 +45,62 @@ public class BattleMapController implements PropertyChangeListener {
         for (int x = 0; x < 20; x++) {
             for (int y = 0; y < 15; y++) {
                 MapTile mapTile = new MapTile();
-                gridMap.add(mapTile,x,y);
-
-                Creature c = gameEngine.get(x,y);
-                if(c!=null) {
-                    mapTile.addCreature(c.getStringOfCurrentHp(), c.getName(), c.getTeam());
-                    if(c == gameEngine.getActiveCreature())
-                        mapTile.setBackgroundColor(Color.GREEN);
-                    else if(gameEngine.canAttack(x,y)){
-                        final int FX = x;
-                        final int FY = y;
-                        mapTile.setBackgroundColor((Color.RED));
-                        mapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.attack(new Point(FX,FY)));
-                    }
-                }
-                else if(gameEngine.canMove(x,y)){
-                    final int FX = x;
-                    final int FY = y;
-                    mapTile.setBackgroundColor((Color.GRAY));
-                    mapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.move(new Point(FX,FY)));
-                }
+                gridMap.add(mapTile, x, y);
+                Creature creatureOnMapTitle = gameEngine.get(x, y);
+                if (creatureOnMapTitle != null) {
+                    mapTile.addCreature(creatureOnMapTitle.getStringOfCurrentHp(), creatureOnMapTitle.getName(), creatureOnMapTitle.getTeam());
+                    if (!creatureOnMapTitle.isAlive())
+                        flagCreatureNotAlive(mapTile);
+                    else if (creatureOnMapTitle == gameEngine.getActiveCreature())
+                        flagActiveCreature(x, y, mapTile);
+                    else if (gameEngine.canAttack(x, y))
+                        setBackgroundRedAndSetClickOnAttack(x, y, mapTile);
+                    else if (creatureOnMapTitle.getTeam() == Creature.Team.LEFT_TEAM)
+                        mapTile.setBackgroundColor(Color.BLUEVIOLET);
+                    else if (creatureOnMapTitle.getTeam() == Creature.Team.RIGHT_TEAM)
+                        mapTile.setBackgroundColor(Color.AQUA);
+                } else if (gameEngine.canMove(x, y))
+                    setBackgroundGrayAndSetClickOnMove(x, y, mapTile);
             }
         }
     }
 
+    private void flagActiveCreature(int aX, int aY, MapTile aMapTile) {
+        aMapTile.setBackgroundColor(Color.GREEN);
+        if (isAfterAction(aX, aY)) aMapTile.setBackgroundColor(Color.GRAY);
+    }
+
+    private void flagCreatureNotAlive(MapTile aMapTile) {
+        aMapTile.setRotateToCreatureImage(90);
+        aMapTile.setBackgroundColor(Color.BLACK);
+    }
+
+    private void setBackgroundGrayAndSetClickOnMove(int aX, int aY, MapTile aMapTile) {
+        final int FX = aX;
+        final int FY = aY;
+        aMapTile.setBackgroundColor((Color.GRAY));
+        aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.move(new Point(FX, FY)));
+    }
+
+    private void setBackgroundRedAndSetClickOnAttack(int aX, int aY, MapTile aMapTile) {
+        final int FX = aX;
+        final int FY = aY;
+        aMapTile.setBackgroundColor((Color.RED));
+        aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.attack(new Point(FX, FY)));
+    }
+
+    private boolean isAfterAction(int aX, int aY) {
+        return gameEngine.getPossibleAttacksOfActiveCreature() <= 0
+                || (gameEngine.getLeftMovePointsOfActiveCreature() < 1
+                && !gameEngine.canAttack(aX - 1, aY)
+                && !gameEngine.canAttack(aX - 1, aY + 1)
+                && !gameEngine.canAttack(aX, aY + 1)
+                && !gameEngine.canAttack(aX + 1, aY + 1)
+                && !gameEngine.canAttack(aX + 1, aY)
+                && !gameEngine.canAttack(aX + 1, aY - 1)
+                && !gameEngine.canAttack(aX, aY - 1)
+                && !gameEngine.canAttack(aX - 1, aY - 1));
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
