@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -61,6 +62,7 @@ public class CreatureButtonInArmy extends Button {
 
     private void preparingWindow(HBox aBottom, HBox aTop) {
         windowForSellingCreature = new Stage();
+        windowForSellingCreature.getIcons().add(new Image("jpg/icon.jpg"));
         BorderPane pane = new BorderPane();
         Scene scene = new Scene(pane, 300, 200);
         scene.getStylesheets().add("fxml/main.css");

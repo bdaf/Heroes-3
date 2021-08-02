@@ -49,7 +49,7 @@
    <center>
       <HBox>
          <VBox fx:id="vBoxForUserArmy" />
-         <VBox fx:id="vBoxForArmyShop" />
+         <VBox fx:id="vBoxForArmyShop" alignment="TOP_CENTER" spacing="180.0" />
       </HBox>
    </center>
    <stylesheets>

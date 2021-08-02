@@ -71,15 +71,18 @@ public class EconomyController implements PropertyChangeListener {
     void refreshGui() {
         clearingArmyAndShopBoxesAndMakingTheirLabels();
         EconomyFactory factory = EcoBattleConverter.getProperEconomyFactoryForFraction(engine.getActiveHero());
+
         VBox vBoxShopCreaturesUpgraded = new VBox();
-        vBoxShopCreaturesUpgraded.setAlignment(Pos.CENTER);
         VBox vBoxShopCreaturesNotUpgraded = new VBox();
+        vBoxShopCreaturesUpgraded.setAlignment(Pos.CENTER);
         vBoxShopCreaturesNotUpgraded.setAlignment(Pos.CENTER);
+
         HBox hBoxShopContainer = new HBox();
-        hBoxShopContainer.getChildren().addAll(vBoxShopCreaturesNotUpgraded, vBoxShopCreaturesUpgraded);
+        hBoxShopContainer.getChildren().addAll(vBoxShopCreaturesUpgraded, vBoxShopCreaturesNotUpgraded);
         hBoxShopContainer.setAlignment(Pos.CENTER);
-        hBoxShopContainer.setPrefHeight(840);
+
         vBoxForArmyShop.getChildren().add(hBoxShopContainer);
+
         boolean isUpgraded;
         VBox tmpVBox;
         for (int i = 0; i < 14; i++) {
@@ -126,9 +129,11 @@ public class EconomyController implements PropertyChangeListener {
     private void clearingArmyAndShopBoxesAndMakingTheirLabels() {
         vBoxForArmyShop.getChildren().clear();
         vBoxForUserArmy.getChildren().clear();
+
         Label label = new Label("SHOP");
         label.setId("bigLabel");
         vBoxForArmyShop.getChildren().add(label);
+
         label = new Label("YOUR ARMY");
         label.setId("bigLabel");
         vBoxForUserArmy.getChildren().add(label);

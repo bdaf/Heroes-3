@@ -33,7 +33,7 @@
     -fx-border-color: black;
     -fx-border-width: 1;
     -fx-pref-width: 880;
-    -fx-alignment: center;
+    -fx-alignment: top-center;
 }
 #bigLabel{
     -fx-font-weight: bold;

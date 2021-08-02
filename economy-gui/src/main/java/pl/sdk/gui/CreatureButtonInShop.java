@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -12,6 +14,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
 import pl.sdk.hero.EconomyHero;
@@ -24,6 +27,7 @@ public class CreatureButtonInShop extends Button {
 
     public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero) {
         super(aFactory.Create(aIsUpgraded, aTier, 1).getName());
+        setAppearance();
         nameOfCreature = getText();
         addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
             byte amount = displayChoosingAmountAndGetCreatureAmount(aFactory.Create(aIsUpgraded, aTier, 1),aHero);
@@ -34,6 +38,12 @@ public class CreatureButtonInShop extends Button {
             }
             aController.refreshGui();
         });
+    }
+
+    private void setAppearance() {
+        VBox vBox = new VBox();
+        getChildren().add(vBox);
+        vBox.getChildren().add(GraphicsOfCreaturesMaker.getGraphicsOf("Angel"));
     }
 
     private byte displayChoosingAmountAndGetCreatureAmount(EconomyCreature aCreate, EconomyHero aHero) {
@@ -101,6 +111,7 @@ public class CreatureButtonInShop extends Button {
 
     private void prepareWindowForChoosingAmount(HBox aBottom, VBox aCenter, HBox aTop) {
         windowForChoosingAmount = new Stage();
+        windowForChoosingAmount.getIcons().add(new Image("jpg/icon.jpg"));
         BorderPane pane = new BorderPane();
         Scene scene = new Scene(pane, 500, 300);
         scene.getStylesheets().add("fxml/main.css");
