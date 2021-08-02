@@ -1,6 +1,7 @@
 package pl.sdk.gui;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,9 +13,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.CreatureStatistic;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
 import pl.sdk.hero.EconomyHero;
@@ -27,10 +30,10 @@ public class CreatureButtonInShop extends Button {
 
     public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero) {
         super(aFactory.Create(aIsUpgraded, aTier, 1).getName());
-        setAppearance();
         nameOfCreature = getText();
+        setAppearance(aFactory.Create(aIsUpgraded, aTier, 1));
         addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-            byte amount = displayChoosingAmountAndGetCreatureAmount(aFactory.Create(aIsUpgraded, aTier, 1),aHero);
+            int amount = displayChoosingAmountAndGetCreatureAmount(aFactory.Create(aIsUpgraded, aTier, 1),aHero);
             if (amount > 0) {
                 EconomyCreature creature = aFactory.Create(aIsUpgraded, aTier, amount);
                 nameOfCreature = creature.getName();
@@ -40,13 +43,24 @@ public class CreatureButtonInShop extends Button {
         });
     }
 
-    private void setAppearance() {
-        VBox vBox = new VBox();
-        getChildren().add(vBox);
-        vBox.getChildren().add(GraphicsOfCreaturesMaker.getGraphicsOf("Angel"));
+    private void setAppearance(EconomyCreature aEconomyCreature) {
+        setTextAlignment(TextAlignment.CENTER);
+        setId("buttonsInShop");
+        setStyle("-fx-font-size: 18px;");
+        setText(nameOfCreature
+                +"\nHealth: "+aEconomyCreature.getStats().getMaxHp()
+                +" | Attack: "+aEconomyCreature.getStats().getAttack()
+                +" | Damage: "+aEconomyCreature.getStats().getDamage().lowerEndpoint()+" - "+aEconomyCreature.getStats().getDamage().upperEndpoint()
+                +" |\nCost: "+aEconomyCreature.getGoldCost()
+                +" | Defense: "+aEconomyCreature.getStats().getArmor()
+                +" | Movement: "+aEconomyCreature.getStats().getMoveRange());
+        ImageView image = GraphicsOfCreaturesMaker.getGraphicsOf(nameOfCreature, Creature.Team.RIGHT_TEAM);
+        setPrefHeight(200);
+        setPrefWidth(500);
+        setGraphic(image);
     }
 
-    private byte displayChoosingAmountAndGetCreatureAmount(EconomyCreature aCreate, EconomyHero aHero) {
+    private int displayChoosingAmountAndGetCreatureAmount(EconomyCreature aCreate, EconomyHero aHero) {
         HBox top = new HBox();
         VBox center = new VBox();
         HBox bottom = new HBox();
@@ -57,15 +71,15 @@ public class CreatureButtonInShop extends Button {
         center.getChildren().add(slider);
         windowForChoosingAmount.showAndWait();
 
-        return (byte) slider.getValue();
+        return (int) slider.getValue();
     }
 
     private void prepareTop(HBox aTop, Slider aSlider, EconomyCreature aCreate) {
         VBox vbox = new VBox(5);
         Label sliderValueLabel = new Label("0");
         Label purchaseCostValueLabel = new Label("0");
-        aSlider.valueProperty().addListener((slider, aOld, aNew) -> sliderValueLabel.setText(String.valueOf(aNew.byteValue())));
-        aSlider.valueProperty().addListener((slider, aOld, aNew) -> purchaseCostValueLabel.setText(String.valueOf(aNew.byteValue()*aCreate.getGoldCost())));
+        aSlider.valueProperty().addListener((slider, aOld, aNew) -> sliderValueLabel.setText(String.valueOf(aNew.intValue())));
+        aSlider.valueProperty().addListener((slider, aOld, aNew) -> purchaseCostValueLabel.setText(String.valueOf(aNew.intValue()*aCreate.getGoldCost())));
         HBox hBox = new HBox();
         Label label = new Label("Amount:");
         hBox.getChildren().add(label);

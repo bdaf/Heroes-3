@@ -97,9 +97,11 @@ public class GameEngine {
         else{ boolean damageToSplash[][] = getActiveCreature().getSplashDamage();
             for (int x = 0; x < damageToSplash.length; x++) {
                 for (int y = 0; y < damageToSplash.length; y++) {
-                    if(damageToSplash[x][y] && !ifGoesBehindBoard(aX+x-1,aY+y-1))
-                        if(board.get(aX+x-1, aY+y-1)!=null)
+                    if(damageToSplash[x][y] && !ifGoesBehindBoard(aX+x-1,aY+y-1)){
+                        Creature potentialCreatureToAttack = board.get(aX+x-1, aY+y-1);
+                        if(potentialCreatureToAttack!=null && potentialCreatureToAttack.getTeam()!=getActiveCreature().getTeam())
                             getActiveCreature().attack(board.get(aX + x - 1, aY + y - 1));
+                    }
                 }
             }
         }

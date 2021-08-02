@@ -5,12 +5,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyCreature;
 
 public class CreatureButtonInArmy extends Button {
@@ -23,11 +25,18 @@ public class CreatureButtonInArmy extends Button {
     public CreatureButtonInArmy(EconomyController aController, EconomyCreature aCreature) {
         super(aCreature.getName()+" ("+aCreature.getAmount()+")");
         nameOfCreature = getText();
+        setAppearance(aCreature.getName());
         addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
             if(displayWindowForSellingAndReturnIfSell())
                 aController.sell(aCreature);
             aController.refreshGui();
         });
+    }
+
+    private void setAppearance(String aNameOfCreature) {
+        ImageView image = GraphicsOfCreaturesMaker.getGraphicsOf(aNameOfCreature, Creature.Team.LEFT_TEAM,95,100);
+        setGraphic(image);
+        setPrefWidth(300);
     }
 
     private boolean displayWindowForSellingAndReturnIfSell() {

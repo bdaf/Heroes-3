@@ -24,7 +24,7 @@ class MapTile extends StackPane {
     void addCreature(String stringOfCurrentHp, String nameOfCreature, Creature.Team aTeam) {
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
-        image = GraphicsOfCreaturesMaker.getGraphicsOf(nameOfCreature);
+        image = GraphicsOfCreaturesMaker.getGraphicsOf(nameOfCreature,aTeam,61,61);
         vbox.getChildren().add(image);
         getChildren().add(vbox);
         Text text = new Text(stringOfCurrentHp);

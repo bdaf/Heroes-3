@@ -88,13 +88,17 @@ public class NecropolisFactory extends Factory {
         }
     }
 
-    private boolean[][] getSplashForLich() {
+     boolean[][] getSplashForLich() {
         boolean[][] splashDamageTable = new boolean[3][3];
         splashDamageTable[1][1] = true;
         splashDamageTable[0][1] = true;
-        splashDamageTable[1][0] = true;
-        splashDamageTable[2][1] = true;
+        splashDamageTable[0][2] = true;
         splashDamageTable[1][2] = true;
+        splashDamageTable[2][2] = true;
+        splashDamageTable[2][1] = true;
+        splashDamageTable[2][0] = true;
+        splashDamageTable[1][0] = true;
+        splashDamageTable[0][0] = true;
         return splashDamageTable;
     }
 }

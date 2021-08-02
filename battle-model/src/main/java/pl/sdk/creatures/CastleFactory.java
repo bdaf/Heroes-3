@@ -26,6 +26,7 @@ public class CastleFactory extends Factory {
                             .build(), Integer.MAX_VALUE);
                 case 4:
                     return new Creature.Builder()
+                            .attacksInTurn(2)
                             .amount(amount)
                             .statistic(CreatureStatistic.CRUSADER)
                             .build();
@@ -67,10 +68,10 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build(), 2);
                 case 4:
-                    return new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
+                    return new Creature.Builder()
                             .statistic(CreatureStatistic.SWORDSMAN)
                             .amount(amount)
-                            .build());
+                            .build();
                 case 5:
                     return new ShootingCreatureDecorator(new SelfHealingCreatureDecorator(new Creature.Builder()
                             .statistic(CreatureStatistic.MONK)
