@@ -1,6 +1,7 @@
 package pl.sdk.creatures;
 
 public abstract class Factory {
+    public static final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
     abstract public Creature Create(boolean aIsUpgraded, int aTier, int amount);
 
     public static Creature CreateShootingCreatureForTests(){

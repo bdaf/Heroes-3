@@ -36,7 +36,8 @@ public class CreatureButtonInArmy extends Button {
     private void setAppearance(String aNameOfCreature) {
         ImageView image = GraphicsOfCreaturesMaker.getGraphicsOf(aNameOfCreature, Creature.Team.LEFT_TEAM,95,100);
         setGraphic(image);
-        setPrefWidth(300);
+        setPrefWidth(320);
+        setAlignment(Pos.CENTER_LEFT);
     }
 
     private boolean displayWindowForSellingAndReturnIfSell() {

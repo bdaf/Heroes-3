@@ -59,5 +59,6 @@ public class EcoBattleConverter {
             throw new NullPointerException("Economy factory which is used to convert economy creatures to creatures is null!");
         return factory;
     }
+
 }
 

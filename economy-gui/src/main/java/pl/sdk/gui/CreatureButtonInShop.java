@@ -1,7 +1,6 @@
 package pl.sdk.gui;
 
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,37 +16,46 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.CreatureStatistic;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
 import pl.sdk.hero.EconomyHero;
 
 
+
 public class CreatureButtonInShop extends Button {
 
+
+    private final int amountOfCreaturesInStack;
     private Stage windowForChoosingAmount;
     private String nameOfCreature;
+    private boolean buying;
 
-    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero) {
+    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, AmountOfCreaturesInStacksToBuyRandomize aRandomize) {
         super(aFactory.Create(aIsUpgraded, aTier, 1).getName());
         nameOfCreature = getText();
+        amountOfCreaturesInStack = aRandomize.getAmountOfTier(aTier,aHero.getFraction(),aIsUpgraded);
         setAppearance(aFactory.Create(aIsUpgraded, aTier, 1));
         addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
             int amount = displayChoosingAmountAndGetCreatureAmount(aFactory.Create(aIsUpgraded, aTier, 1),aHero);
-            if (amount > 0) {
+            if (amount > 0 && buying) {
                 EconomyCreature creature = aFactory.Create(aIsUpgraded, aTier, amount);
-                nameOfCreature = creature.getName();
+                if(aHero.getHeroArmy().size() < 7){
+                    aRandomize.setAmountOfTier(aTier,aHero.getFraction(),aRandomize.getAmountOfTier(aTier,aHero.getFraction(),aIsUpgraded)-amount,aIsUpgraded);
+                }
                 aController.buy(creature);
             }
             aController.refreshGui();
         });
+
     }
+
+
 
     private void setAppearance(EconomyCreature aEconomyCreature) {
         setTextAlignment(TextAlignment.CENTER);
-        setId("buttonsInShop");
+        //setId("buttonsInShop");
         setStyle("-fx-font-size: 18px;");
-        setText(nameOfCreature
+        setText(nameOfCreature + " - "+amountOfCreaturesInStack+" amount"
                 +"\nHealth: "+aEconomyCreature.getStats().getMaxHp()
                 +" | Attack: "+aEconomyCreature.getStats().getAttack()
                 +" | Damage: "+aEconomyCreature.getStats().getDamage().lowerEndpoint()+" - "+aEconomyCreature.getStats().getDamage().upperEndpoint()
@@ -100,11 +108,11 @@ public class CreatureButtonInShop extends Button {
         cancelButton.setAlignment(Pos.CENTER);
         HBox.setHgrow(saveButton, Priority.ALWAYS);
         HBox.setHgrow(cancelButton, Priority.ALWAYS);
-        saveButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> windowForChoosingAmount.close());
-        cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-            aSlider.setValue(0);
-            windowForChoosingAmount.close();
+        saveButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x ->{
+         buying = true;
+         windowForChoosingAmount.close();
         });
+        cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> windowForChoosingAmount.close());
         aBottom.setAlignment(Pos.CENTER);
         aBottom.getChildren().add(saveButton);
         aBottom.getChildren().add(cancelButton);
@@ -113,7 +121,7 @@ public class CreatureButtonInShop extends Button {
     private Slider createSlider(EconomyCreature aCreate, EconomyHero aHero) {
         Slider slider = new Slider();
         slider.setMin(0);
-        slider.setMax(aHero.getGold()/aCreate.getGoldCost());
+        slider.setMax(Integer.min(aHero.getGold()/aCreate.getGoldCost(),amountOfCreaturesInStack));
         slider.setValue(0);
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);

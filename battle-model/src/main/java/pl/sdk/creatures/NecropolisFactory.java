@@ -1,7 +1,6 @@
 package pl.sdk.creatures;
 
 public class NecropolisFactory extends Factory {
-    final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
 
     @Override
     public Creature Create(boolean aIsUpgraded, int aTier, int amount) {
