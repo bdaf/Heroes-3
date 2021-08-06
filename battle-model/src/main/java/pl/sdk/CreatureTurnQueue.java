@@ -6,18 +6,18 @@ import java.util.*;
 
 public class CreatureTurnQueue {
 
-    private final Collection<Creature> creatures;
-    private final Collection<Creature> creaturesToDelete;
-    private final Queue<Creature> creatureQuene;
+    private final List<Creature> aliveCreatures;
+    private final List<Creature> creaturesToDelete;
+    private final Queue<Creature> creatureQueue;
     private Creature activeCreature;
     private Set<GameEngine> observers;
     private double movePointsOfActiveCreature;
     private int attacksOfActiveCreature;
 
-    public CreatureTurnQueue(Collection<Creature> aCreatures) {
-        creatures = aCreatures;
+    public CreatureTurnQueue(List<Creature> aAliveCreatures) {
+        aliveCreatures = aAliveCreatures;
         creaturesToDelete = new LinkedList<>();
-        creatureQuene = new LinkedList<>();
+        creatureQueue = new LinkedList<>();
         observers = new HashSet<GameEngine>();
         initQueue();
 
@@ -25,17 +25,17 @@ public class CreatureTurnQueue {
 
     private void initQueue() {
         removingDeadCreatures();
-        creatureQuene.addAll(this.creatures);
+        creatureQueue.addAll(this.aliveCreatures);
         notifyObservers();
         next();
     }
 
     private void removingDeadCreatures() {
-        for (Creature c : creatures)
+        for (Creature c : aliveCreatures)
             if(!c.isAlive())
                 creaturesToDelete.add(c);
         for (Creature c : creaturesToDelete)
-            creatures.remove(c);
+            aliveCreatures.remove(c);
         creaturesToDelete.clear();
     }
 
@@ -53,10 +53,10 @@ public class CreatureTurnQueue {
     }
 
     void next() {
-        if(creatureQuene.isEmpty())
+        if(creatureQueue.isEmpty())
             initQueue();
         else {
-            activeCreature = creatureQuene.poll();
+            activeCreature = creatureQueue.poll();
             movePointsOfActiveCreature = activeCreature.getMoveRange();
             attacksOfActiveCreature = activeCreature.getMaxAttacksInTurn();
             if(!activeCreature.isAlive())
@@ -78,5 +78,16 @@ public class CreatureTurnQueue {
 
     void setAttacksOfActiveCreature(int aAttacksOfActiveCreature) {
         attacksOfActiveCreature = aAttacksOfActiveCreature;
+    }
+
+    boolean ifSomeTeamWon() {
+        removingDeadCreatures();
+        if(!aliveCreatures.isEmpty()){
+            Creature.Team team = aliveCreatures.get(0).getTeam();
+            for (int i = 0; i < aliveCreatures.size(); i++) {
+                if(aliveCreatures.get(i).getTeam() != team) return false;
+            }
+        }
+        return true;
     }
 }

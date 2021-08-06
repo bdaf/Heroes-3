@@ -35,7 +35,17 @@ import java.beans.PropertyChangeEvent;
         decorated.attack(defender);
     }
 
-    @Override
+     @Override
+     public int getShoots() {
+         return decorated.getShoots();
+     }
+
+     @Override
+     public void setShoots(int aShoots) {
+         decorated.setShoots(aShoots);
+     }
+
+     @Override
     int countDamage(Creature aAttacker, Creature defender) {
         return decorated.countDamage(aAttacker, defender);
     }

@@ -116,7 +116,17 @@ import java.beans.PropertyChangeEvent;
         return decorated.getStats();
     }
 
-    @Override
+     @Override
+     public int getShoots() {
+         return decorated.getShoots();
+     }
+
+     @Override
+     public void setShoots(int aShoots) {
+         decorated.setShoots(aShoots);
+     }
+
+     @Override
     void setStats(CreatureStatisticForTests stats) {
         decorated.setStats(stats);
     }

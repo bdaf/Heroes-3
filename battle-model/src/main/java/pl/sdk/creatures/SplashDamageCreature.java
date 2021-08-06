@@ -72,6 +72,16 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
+    public int getShoots() {
+        return decorated.getShoots();
+    }
+
+    @Override
+    public void setShoots(int aShoots) {
+        decorated.setShoots(aShoots);
+    }
+
+    @Override
     public int getCurrentHp() {
         return decorated.getCurrentHp();
     }

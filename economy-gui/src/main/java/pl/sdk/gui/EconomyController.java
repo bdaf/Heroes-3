@@ -81,7 +81,7 @@ public class EconomyController implements PropertyChangeListener {
         vBoxShopCreaturesNotUpgraded.setAlignment(Pos.CENTER);
 
         HBox hBoxShopContainer = new HBox();
-        hBoxShopContainer.getChildren().addAll(vBoxShopCreaturesUpgraded, vBoxShopCreaturesNotUpgraded);
+        hBoxShopContainer.getChildren().addAll(vBoxShopCreaturesNotUpgraded, vBoxShopCreaturesUpgraded);
         hBoxShopContainer.setAlignment(Pos.CENTER);
 
         vBoxForArmyShop.getChildren().add(hBoxShopContainer);

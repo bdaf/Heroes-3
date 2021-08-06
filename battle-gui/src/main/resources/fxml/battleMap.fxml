@@ -7,40 +7,55 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1010.0" prefWidth="1760.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <HBox prefHeight="8.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="8.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="player1" style="-fx-font-size: 18px;" text="Player 1" />
+            <Label fx:id="player1" style="-fx-font-size: 18px;" text="Necropolis Left Player" />
             <Label style="-fx-font-size: 18px;" text="VS">
                <padding>
-                  <Insets bottom="15.0" left="20.0" right="20.0" />
+                  <Insets left="20.0" right="20.0" />
                </padding></Label>
-            <Label fx:id="player2" style="-fx-font-size: 18px;" text="Player 2" />
+            <Label fx:id="player2" style="-fx-font-size: 18px;" text="Castle Right Player" />
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="10.0" top="5.0" />
+         </padding>
       </HBox>
    </top>
    <bottom>
-      <HBox prefHeight="18.0" prefWidth="1280.0" BorderPane.alignment="BOTTOM_CENTER">
+      <HBox alignment="CENTER" prefHeight="18.0" prefWidth="1760.0" BorderPane.alignment="BOTTOM_CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Spellbook" />
-            <Button fx:id="passButton" mnemonicParsing="false" text="Pass" />
-            <Button fx:id="escapeButton" mnemonicParsing="false" text="Escape" HBox.hgrow="NEVER">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin></Button>
+            <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="880.0">
+               <children>
+                  <Button fx:id="passButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" text="Pass" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="887.0">
+               <children>
+                  <Button fx:id="escapeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" text="Escape" />
+               </children>
+            </VBox>
          </children>
-         <padding>
-            <Insets right="20.0" />
-         </padding>
       </HBox>
    </bottom>
    <center>
-      <GridPane fx:id="gridMap" BorderPane.alignment="CENTER">
+      <GridPane fx:id="gridMap" alignment="CENTER" BorderPane.alignment="CENTER">
       </GridPane>
    </center>
    <stylesheets>
       <URL value="@main.css" />
    </stylesheets>
+   <left>
+      <Pane fx:id="leftPainForHero" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane fx:id="rightPainForHero" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>

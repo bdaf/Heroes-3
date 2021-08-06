@@ -7,6 +7,7 @@ import pl.sdk.creatures.NecropolisFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static pl.sdk.creatures.NecropolisFactory.CreateDefaultCreatureForTests;
@@ -15,7 +16,7 @@ public class CreatureTurnQueueTest {
 
     Creature a,b,c;
     CreatureTurnQueue creatureTurnQueue;
-    Collection<Creature> creatureList;
+    List<Creature> creatureList;
 
     @BeforeEach
     void init(){
@@ -30,7 +31,7 @@ public class CreatureTurnQueueTest {
     }
 
     @Test
-    void shouldCreatureABeInQueneAndAfterThatCreatureBThenC(){
+    void shouldCreatureABeInQueueAndAfterThatCreatureBThenC(){
 
         creatureTurnQueue = new CreatureTurnQueue(creatureList);
 

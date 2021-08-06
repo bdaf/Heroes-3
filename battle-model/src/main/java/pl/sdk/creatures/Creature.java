@@ -1,6 +1,7 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import javafx.beans.property.DoubleProperty;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -14,6 +15,7 @@ public class Creature implements PropertyChangeListener {
     private int maxAmount;
     private int amount;
     private int attacksInTurn;
+    private int shoots;
     private Team team;
 
     public enum Team{
@@ -39,6 +41,7 @@ public class Creature implements PropertyChangeListener {
      Creature(CreatureStatisticlf stats){
         this.stats = stats;
         currentHp = stats.getMaxHp();
+        shoots = stats.getShoots();
     }
 
     boolean wasCounterAttackInThisTurn() {
@@ -160,9 +163,9 @@ public class Creature implements PropertyChangeListener {
         return sb.toString();
     }
 
-
     public String getStringOfCurrentHp() {
         StringBuilder sb = new StringBuilder();
+        if(shoots > 0) sb.append("        S:"+getShoots()+"\n");
         sb.append(getCurrentHp());
         sb.append("/");
         sb.append(getStats().getMaxHp());
@@ -171,9 +174,13 @@ public class Creature implements PropertyChangeListener {
     }
 
     public double getAttackRange() {
+        if(getShoots()>0) return Double.MAX_VALUE;
         return 1.5;
     }
-
+    public int getShoots() { return shoots; }
+    public void setShoots(int aShoots){
+        this.shoots = aShoots;
+    }
     void setCurrentHPToMaxHp() {
         currentHp = getMaxHp();
     }
@@ -196,7 +203,6 @@ public class Creature implements PropertyChangeListener {
         return result;
     }
 
-
     static class BuilderForTesting {
         private String name;
         private Integer attack;
@@ -206,10 +212,15 @@ public class Creature implements PropertyChangeListener {
         private Range<Integer> damage;
         private CalculateDamageStrategy damageCalculator;
         private Integer amount;
+        private Integer shoots;
         private Integer attacksInTurn;
 
         BuilderForTesting attacksInTurn(Integer aAttacksInTurn){
             this.attacksInTurn = aAttacksInTurn;
+            return this;
+        }
+        BuilderForTesting shoots(Integer aShoots){
+            this.shoots = aShoots;
             return this;
         }
         BuilderForTesting amount(Integer aAmount){
@@ -245,25 +256,17 @@ public class Creature implements PropertyChangeListener {
             return this;
         }
          Creature build(){
-            if(name == null)
-                name = "name";
-            if(attack == null)
-                attack = 10;
-            if(armor == null)
-                armor = 10;
-            if(maxHp == null)
-                maxHp = 100;
-            if(moveRange == null)
-                moveRange = 2;
-            if(damage == null)
-                damage = Range.closed(6,14);
-            if(damageCalculator == null)
-                damageCalculator = new DefaultDamageCalculator();
-            if(amount == null)
-                amount = 1;
-            if(attacksInTurn == null)
-                attacksInTurn = 1;
-            CreatureStatisticForTests stats = new CreatureStatisticForTests(name, attack, armor, maxHp, moveRange, damage);
+            if(name == null) name = "name";
+            if(attack == null) attack = 10;
+            if(armor == null) armor = 10;
+            if(maxHp == null) maxHp = 100;
+            if(moveRange == null) moveRange = 2;
+            if(damage == null) damage = Range.closed(6,14);
+            if(damageCalculator == null) damageCalculator = new DefaultDamageCalculator();
+            if(amount == null) amount = 1;
+            if(shoots == null) shoots = 0;
+            if(attacksInTurn == null) attacksInTurn = 1;
+            CreatureStatisticForTests stats = new CreatureStatisticForTests(name, attack, armor, maxHp, moveRange, damage,shoots);
             Creature result = createInstance(stats);
             result.damageCalculator = this.damageCalculator;
             result.amount = this.amount;

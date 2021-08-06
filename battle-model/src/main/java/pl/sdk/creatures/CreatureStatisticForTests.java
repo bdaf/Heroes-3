@@ -10,19 +10,21 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
     final private int maxHp;
     final private int moveRange;
     final private Range<Integer> damage;
+    private final int shoots;
 
     public CreatureStatisticForTests(){
-        this("name", 10, 10, 100, 10, Range.closed(8,12));
+        this("name", 10, 10, 100, 10, Range.closed(8,12), 0);
     }
 
 
-    public CreatureStatisticForTests(String name, int attack, int armor, int maxHp, int moveRange, Range<Integer> damage) {
+    public CreatureStatisticForTests(String name, int attack, int armor, int maxHp, int moveRange, Range<Integer> damage, int aShoots) {
         this.name = name;
         this.maxHp = maxHp;
         this.armor = armor;
         this.attack = attack;
         this.moveRange = moveRange;
         this.damage = damage;
+        this.shoots = aShoots;
     }
 
 
@@ -63,11 +65,16 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
 
     @Override
     public String getDescription() {
-        return "Creature fot tests";
+        return "Creature for tests";
     }
 
     @Override
     public boolean isUpgraded() {
         return false;
+    }
+
+    @Override
+    public int getShoots() {
+        return 0;
     }
 }

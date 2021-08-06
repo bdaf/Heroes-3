@@ -22,3 +22,22 @@
     -fx-font-size: 8px;
     -fx-font-weight: bold;
 }
+#gridMap{
+    /* -fx-background-image: url("/graphics/background/blueGround.png");*/
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 25, 0.5, 0, 0);
+}
+#leftPainForHero{
+    -fx-background-image: url("/graphics/heros/necropolisHero.png");
+    -fx-background-repeat: stretch;
+    /*-fx-background-size: 900 506;*/
+    -fx-background-position: center center;
+
+}
+#rightPainForHero{
+    -fx-background-image: url("/graphics/heros/castleHero.png");
+    -fx-background-repeat: stretch;
+    /*-fx-background-size: 900 506;*/
+    -fx-background-position: center center;
+
+}

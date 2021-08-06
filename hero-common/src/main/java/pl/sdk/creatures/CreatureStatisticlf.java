@@ -21,4 +21,6 @@ public interface CreatureStatisticlf {
     String getDescription();
 
     boolean isUpgraded();
+
+    int getShoots();
 }

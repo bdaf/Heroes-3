@@ -93,7 +93,17 @@ import java.beans.PropertyChangeEvent;
         return decorated.isAlive();
     }
 
-    @Override
+     @Override
+     public int getShoots() {
+         return decorated.getShoots();
+     }
+
+     @Override
+     public void setShoots(int aShoots) {
+         decorated.setShoots(aShoots);
+     }
+
+     @Override
     public int getCurrentHp() {
         return decorated.getCurrentHp();
     }

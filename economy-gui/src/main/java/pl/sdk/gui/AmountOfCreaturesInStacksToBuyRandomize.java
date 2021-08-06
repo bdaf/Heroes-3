@@ -1,6 +1,5 @@
 package pl.sdk.gui;
 
-import pl.sdk.creatures.Factory;
 import pl.sdk.hero.EconomyHero;
 
 import java.util.Random;
@@ -16,10 +15,12 @@ public class AmountOfCreaturesInStacksToBuyRandomize {
         necropolis = new int[14];
         castle = new int[14];
         setDefaultValueForFractions();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 14; i++) {
             Float number = (new Random().nextFloat() * 3 + 2) / 5;
-            necropolis[i] = (int) (Math.ceil(number * necropolis[i]));
-            castle[i] = (int) (Math.ceil(number * castle[i]));
+            if(necropolis[i]==1) necropolis[i] = new Random().nextInt(2);
+            else necropolis[i] = (int) (Math.ceil(number * necropolis[i]));
+            if(castle[i]==1) castle[i] = new Random().nextInt(2);
+            else castle[i] = (int) (Math.ceil(number * castle[i]));
         }
     }
 
