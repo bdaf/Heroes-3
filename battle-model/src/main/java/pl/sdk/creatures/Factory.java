@@ -8,7 +8,11 @@ public abstract class Factory {
         return CreateShootingCreatureForTests(1);
     }
     public static Creature CreateShootingCreatureForTests(int aMoveRange){
-        return new ShootingCreatureDecorator(new Creature.BuilderForTesting().moveRange(aMoveRange).build());
+        Creature c = new Creature.BuilderForTesting()
+                .moveRange(aMoveRange)
+                .shoots(12)
+                .build();
+        return new ShootingCreatureDecorator(c);
     }
 
     public static Creature CreateBlockingCreatureForTests(){

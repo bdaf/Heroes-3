@@ -5,10 +5,8 @@ import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static pl.sdk.creatures.NecropolisFactory.CreateDefaultCreatureForTests;
 
 public class BoardAttackingTest {
     private Board board;

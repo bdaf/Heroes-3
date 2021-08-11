@@ -1,7 +1,6 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.GameEngine;
 
@@ -13,14 +12,7 @@ import static pl.sdk.GameEngine.BOARD_WIDTH;
 import static pl.sdk.creatures.BlockingCreatureAndShootingCreatureAttackTest.BIGGER_THAN_DEFENDERS;
 import static pl.sdk.creatures.BlockingCreatureAndShootingCreatureAttackTest.FEWER_THAN_DEFENDERS;
 
-
-
 public class RegenerationOnEndOfTurnTest {
-
-    @BeforeEach
-    void init(){
-
-    }
 
     @Test
     void ShootingCreatureCanAttackEvenWithLargeDistance(){
@@ -28,6 +20,7 @@ public class RegenerationOnEndOfTurnTest {
                 .maxHp(1000)
                 .moveRange(BIGGER_THAN_DEFENDERS)
                 .damage(Range.closed(1,1))
+                .shoots(12)
                 .build());
         Creature defender = new RegenerationOnEndOfTurnCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(1000)

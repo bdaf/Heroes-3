@@ -6,6 +6,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class GameEngine {
@@ -30,6 +31,7 @@ public class GameEngine {
         List<Creature> creaturesOnBothSides = new ArrayList<>();
         creaturesOnBothSides.addAll(creaturesOnLeftSide);
         creaturesOnBothSides.addAll(creaturesOnRightSide);
+        creaturesOnBothSides.sort(Comparator.comparingDouble(Creature::getMoveRange).reversed());
         queue = new CreatureTurnQueue(creaturesOnBothSides);
 
         observerSupport = new PropertyChangeSupport(this);

@@ -10,12 +10,11 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
     final private int maxHp;
     final private int moveRange;
     final private Range<Integer> damage;
-    private final int shoots;
+    final private int shoots;
 
     public CreatureStatisticForTests(){
         this("name", 10, 10, 100, 10, Range.closed(8,12), 0);
     }
-
 
     public CreatureStatisticForTests(String name, int attack, int armor, int maxHp, int moveRange, Range<Integer> damage, int aShoots) {
         this.name = name;
@@ -26,7 +25,6 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
         this.damage = damage;
         this.shoots = aShoots;
     }
-
 
     @Override
     public String getTranslatedCreatureName() {
@@ -44,9 +42,7 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
     }
 
     @Override
-    public int getMaxHp() {
-        return maxHp;
-    }
+    public int getMaxHp() { return maxHp; }
 
     @Override
     public int getMoveRange() {
@@ -74,7 +70,5 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
     }
 
     @Override
-    public int getShoots() {
-        return 0;
-    }
+    public int getShoots() { return shoots; }
 }

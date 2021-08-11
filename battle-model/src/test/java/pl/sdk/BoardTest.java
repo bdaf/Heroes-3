@@ -60,7 +60,8 @@ public class BoardTest {
         board.add(new Point(10, 10), attacker);
         board.add(new Point(0, 0), creature);
 
-        assertTrue(board.canAttack(attacker, 0, 0));
+        boolean bool = board.canAttack(attacker, 0, 0);
+        assertTrue(bool);
         attacker.attack(creature);
         assertEquals(100, attacker.getCurrentHp());
     }

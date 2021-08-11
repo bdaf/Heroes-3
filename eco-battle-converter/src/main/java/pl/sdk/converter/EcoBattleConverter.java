@@ -25,7 +25,6 @@ public class EcoBattleConverter {
             stage.setTitle("FXML Welcome");
             stage.setScene(scene);
             stage.show();
-            //pane.setStyle("-fx-border-color: black");
         } catch (IOException aE) {
             aE.printStackTrace();
         }

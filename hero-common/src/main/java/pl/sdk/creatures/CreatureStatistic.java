@@ -12,7 +12,7 @@ public enum CreatureStatistic implements CreatureStatisticlf {
     WRAITH("Wraith",7,7,18,7,Range.closed(3,5),3,"Will get to those shooters even faster and will really annoy spellcasting heroes by slowly draining their mana!", true),
     VAMPIRE_LORD("VampireLord",10,10,40,8,Range.closed(5,8),4,"Special: no enemy retaliation ; resurrects members of their own stack by restoring health equal to the amount of damage they do to living enemies.", true),
     POWER_LICH("PowerLich",13,10,40,7,Range.closed(11,15),5,"Special: death cloud range attack - damages living creatures on adjacent hexes to target.", true,24),
-    DREAD_KNIGHT("DreadKnight",16,16,120,7,Range.closed(15,30),6,"Special: 20% chance to curse enemy ; 20% chance to do double damage.", true),
+    DREAD_KNIGHT("DreadKnight",18,18,120,9,Range.closed(15,30),6,"Special: 20% chance to curse enemy ; 20% chance to do double damage.", true),
     GHOST_DRAGON("GhostDragon",19,17,200,14,Range.closed(25,50),7,"I think it's the best lvl6 unit in the game! Double damage ability puts Dread Knights above Naga Queens.", true),
     SKELETON("Skeleton",5,6,6,4,Range.closed(1,3),1,"Average lvl1 foot soldier, but always in huge numbers thanks to necromancy skill and skeleton transformer.", false),
     WALKING_DEAD("WalkingDead",5,5,15,3,Range.closed(2,3),2,"Basically its the same skeleton with more hit points. I prefer buying 2 skeletons instead.", false),

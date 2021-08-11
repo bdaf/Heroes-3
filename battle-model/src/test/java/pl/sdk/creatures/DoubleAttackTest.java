@@ -17,7 +17,9 @@ public class DoubleAttackTest {
     void ShootingCreatureShouldAttackTwiceAndDefenderShouldNotCounterAttack(){
         Creature attacker = new ShootingCreatureDecorator(new Creature.BuilderForTesting()
                 .attacksInTurn(2)
-                .damage(Range.closed(1,1)).build());
+                .damage(Range.closed(1,1))
+                .shoots(12)
+                .build());
         Creature defender = new Creature.BuilderForTesting().maxHp(100).build();
         GameEngine engine = new GameEngine(List.of(attacker),List.of(defender));
 

@@ -18,6 +18,7 @@ public class AttackWithSplashDamageTest {
         Creature splashDamageCreature = new SplashDamageCreature(new Creature.BuilderForTesting()
                 .attack(Integer.MAX_VALUE)
                 .damage(Range.closed(Integer.MAX_VALUE,Integer.MAX_VALUE))
+                .moveRange(Integer.MAX_VALUE)
                 .build(),factory.getSplashForLich());
 
         splashDamageCreature.setTeam(Creature.Team.LEFT_TEAM);
@@ -25,7 +26,7 @@ public class AttackWithSplashDamageTest {
         creaturesOnLeft.add(splashDamageCreature);
         for (int i = 0; i < 3; i++) {
             Creature arrayCreature = new Creature.BuilderForTesting()
-                    .moveRange(Integer.MAX_VALUE)
+                    .moveRange(Integer.MAX_VALUE-1)
                     .maxHp(1)
                     .build();
             arrayCreature.setTeam(Creature.Team.LEFT_TEAM);
@@ -34,7 +35,7 @@ public class AttackWithSplashDamageTest {
         List<Creature> creaturesOnRight = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             Creature creature = new Creature.BuilderForTesting()
-                    .moveRange(Integer.MAX_VALUE)
+                    .moveRange(Integer.MAX_VALUE-2)
                     .maxHp(1)
                     .build();
             creature.setTeam(Creature.Team.RIGHT_TEAM);
@@ -59,12 +60,7 @@ public class AttackWithSplashDamageTest {
         assertEquals(splashDamageCreature, engine.getActiveCreature());
         engine.attack(5,5);
 
-        creaturesOnRight.forEach(c ->{
-                assertFalse(c.isAlive());
-        });
-
-        creaturesOnLeft.forEach(c ->{
-            assertTrue(c.isAlive());
-        });
+        creaturesOnRight.forEach(c -> assertFalse(c.isAlive()));
+        creaturesOnLeft.forEach(c -> assertTrue(c.isAlive()));
     }
 }

@@ -21,14 +21,14 @@ public class BlockingCreatureAndShootingCreatureAttackTest {
         Creature attacker = new ShootingCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(BIGGER_THAN_DEFENDERS)
+                .shoots(12)
                 .build());
         Creature defender = new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(FEWER_THAN_DEFENDERS)
                 .build();
         GameEngine gameEngine = new GameEngine(List.of(attacker), List.of(defender));
-        boolean result = gameEngine.canAttack(BOARD_WIDTH-1,0);
-        assertTrue(result);
+        assertTrue(gameEngine.canAttack(BOARD_WIDTH-1,0));
         gameEngine.pass();
         assertFalse(gameEngine.canAttack(0,0));
     }

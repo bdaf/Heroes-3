@@ -163,11 +163,17 @@ import java.beans.PropertyChangeEvent;
 
     @Override
     public String getStringOfCurrentHp() {
-        return decorated.getStringOfCurrentHp();
+        StringBuilder sb = new StringBuilder();
+        sb.append("S:\n"+getShoots()+"\n");
+        sb.append(getCurrentHp());
+        sb.append("/");
+        sb.append(getStats().getMaxHp());
+        sb.append("  "+getAmount());
+        return sb.toString();
     }
 
     @Override
     public double getAttackRange() {
-        return Double.MAX_VALUE;
+        return decorated.getAttackRange();
     }
 }

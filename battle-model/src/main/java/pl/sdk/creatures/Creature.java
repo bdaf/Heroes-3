@@ -1,7 +1,6 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
-import javafx.beans.property.DoubleProperty;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -165,11 +164,10 @@ public class Creature implements PropertyChangeListener {
 
     public String getStringOfCurrentHp() {
         StringBuilder sb = new StringBuilder();
-        if(shoots > 0) sb.append("        S:"+getShoots()+"\n");
         sb.append(getCurrentHp());
         sb.append("/");
         sb.append(getStats().getMaxHp());
-        sb.append("  "+amount);
+        sb.append("  "+getAmount());
         return sb.toString();
     }
 
