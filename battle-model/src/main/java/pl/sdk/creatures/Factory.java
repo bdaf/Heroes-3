@@ -14,7 +14,7 @@ public abstract class Factory {
     public static Creature CreateShootingCreatureForTests(int aMoveRange, int aAttack){
         Creature c = new Creature.BuilderForTesting()
                 .moveRange(aMoveRange)
-                .shoots(12)
+                .shots(12)
                 .attack(aAttack)
                 .build();
         return new ShootingCreatureDecorator(c);

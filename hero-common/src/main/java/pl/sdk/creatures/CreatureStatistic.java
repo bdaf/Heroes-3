@@ -118,7 +118,7 @@ public enum CreatureStatistic implements CreatureStatisticlf {
     }
 
     @Override
-    public int getShoots() {
+    public int getShots() {
         return shoots;
     }
 }

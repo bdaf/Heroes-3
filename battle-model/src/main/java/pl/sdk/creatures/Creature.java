@@ -14,7 +14,7 @@ public class Creature implements PropertyChangeListener {
     private int maxAmount;
     private int amount;
     private int attacksInTurn;
-    private int shoots;
+    private int shots;
     private Team team;
 
     public enum Team{
@@ -40,7 +40,7 @@ public class Creature implements PropertyChangeListener {
      Creature(CreatureStatisticlf stats){
         this.stats = stats;
         currentHp = stats.getMaxHp();
-        shoots = stats.getShoots();
+        shots = stats.getShots();
     }
 
     boolean wasCounterAttackInThisTurn() {
@@ -175,9 +175,9 @@ public class Creature implements PropertyChangeListener {
         if(getShots()>0) return Double.MAX_VALUE;
         return 1.5;
     }
-    public int getShots() { return shoots; }
-    void setShots(int aShoots){
-        this.shoots = aShoots;
+    public int getShots() { return shots; }
+    void setShots(int aShots){
+        this.shots = aShots;
     }
     void setCurrentHPToMaxHp() {
         currentHp = getMaxHp();
@@ -210,15 +210,15 @@ public class Creature implements PropertyChangeListener {
         private Range<Integer> damage;
         private CalculateDamageStrategy damageCalculator;
         private Integer amount;
-        private Integer shoots;
+        private Integer shots;
         private Integer attacksInTurn;
 
         BuilderForTesting attacksInTurn(Integer aAttacksInTurn){
             this.attacksInTurn = aAttacksInTurn;
             return this;
         }
-        BuilderForTesting shoots(Integer aShoots){
-            this.shoots = aShoots;
+        BuilderForTesting shots(Integer aShots){
+            this.shots = aShots;
             return this;
         }
         BuilderForTesting amount(Integer aAmount){
@@ -262,9 +262,9 @@ public class Creature implements PropertyChangeListener {
             if(damage == null) damage = Range.closed(6,14);
             if(damageCalculator == null) damageCalculator = new DefaultDamageCalculator();
             if(amount == null) amount = 1;
-            if(shoots == null) shoots = 0;
+            if(shots == null) shots = 0;
             if(attacksInTurn == null) attacksInTurn = 1;
-            CreatureStatisticForTests stats = new CreatureStatisticForTests(name, attack, armor, maxHp, moveRange, damage,shoots);
+            CreatureStatisticForTests stats = new CreatureStatisticForTests(name, attack, armor, maxHp, moveRange, damage, shots);
             Creature result = createInstance(stats);
             result.damageCalculator = this.damageCalculator;
             result.amount = this.amount;

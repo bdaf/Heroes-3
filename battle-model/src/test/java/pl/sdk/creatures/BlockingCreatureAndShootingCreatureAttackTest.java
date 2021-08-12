@@ -21,7 +21,7 @@ public class BlockingCreatureAndShootingCreatureAttackTest {
         Creature attacker = new ShootingCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(BIGGER_THAN_DEFENDERS)
-                .shoots(12)
+                .shots(12)
                 .build());
         Creature defender = new Creature.BuilderForTesting()
                 .maxHp(1000)

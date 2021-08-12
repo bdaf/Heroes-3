@@ -70,5 +70,5 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
     }
 
     @Override
-    public int getShoots() { return shoots; }
+    public int getShots() { return shoots; }
 }

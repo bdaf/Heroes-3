@@ -22,6 +22,6 @@ public interface CreatureStatisticlf {
 
     boolean isUpgraded();
 
-    int getShoots();
+    int getShots();
 
 }

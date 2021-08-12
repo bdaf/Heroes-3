@@ -20,7 +20,7 @@ public class RegenerationOnEndOfTurnTest {
                 .maxHp(1000)
                 .moveRange(BIGGER_THAN_DEFENDERS)
                 .damage(Range.closed(1,1))
-                .shoots(12)
+                .shots(12)
                 .build());
         Creature defender = new RegenerationOnEndOfTurnCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(1000)
