@@ -32,7 +32,7 @@ public class Creature implements PropertyChangeListener {
         }
     }
 
-    Creature(){
+    protected Creature(){
         this(new CreatureStatisticForTests());
         maxAmount = amount = 1; attacksInTurn = 1;
         damageCalculator = new DefaultDamageCalculator();
@@ -172,11 +172,11 @@ public class Creature implements PropertyChangeListener {
     }
 
     public double getAttackRange() {
-        if(getShoots()>0) return Double.MAX_VALUE;
+        if(getShots()>0) return Double.MAX_VALUE;
         return 1.5;
     }
-    public int getShoots() { return shoots; }
-    public void setShoots(int aShoots){
+    public int getShots() { return shoots; }
+    void setShots(int aShoots){
         this.shoots = aShoots;
     }
     void setCurrentHPToMaxHp() {

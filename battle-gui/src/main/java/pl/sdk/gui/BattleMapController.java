@@ -105,7 +105,7 @@ public class BattleMapController implements PropertyChangeListener {
     private boolean isAfterAction(int aX, int aY, Creature aCreature) {
         return gameEngine.getPossibleAttacksOfActiveCreature() <= 0
                 || (gameEngine.getLeftMovePointsOfActiveCreature() < 1
-                && aCreature.getShoots() < 1
+                && aCreature.getShots() < 1
                 && !gameEngine.canAttack(aX - 1, aY)
                 && !gameEngine.canAttack(aX - 1, aY + 1)
                 && !gameEngine.canAttack(aX, aY + 1)

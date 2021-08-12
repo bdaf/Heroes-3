@@ -117,13 +117,13 @@ import java.beans.PropertyChangeEvent;
     }
 
      @Override
-     public int getShoots() {
-         return decorated.getShoots();
+     public int getShots() {
+         return decorated.getShots();
      }
 
      @Override
-     public void setShoots(int aShoots) {
-         decorated.setShoots(aShoots);
+     public void setShots(int aShoots) {
+         decorated.setShots(aShoots);
      }
 
      @Override
@@ -164,7 +164,7 @@ import java.beans.PropertyChangeEvent;
     @Override
     public String getStringOfCurrentHp() {
         StringBuilder sb = new StringBuilder();
-        sb.append("S:\n"+getShoots()+"\n");
+        sb.append("S:\n"+ getShots()+"\n");
         sb.append(getCurrentHp());
         sb.append("/");
         sb.append(getStats().getMaxHp());

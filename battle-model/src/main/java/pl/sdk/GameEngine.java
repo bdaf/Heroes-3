@@ -108,7 +108,7 @@ public class GameEngine {
                     }
                 }
             }
-            getActiveCreature().setShoots(getActiveCreature().getShoots()-1); //TODO setShoots() make not public
+            DecreaserShotsOfCreature.decrease(getActiveCreature(),1);
         }
     }
 

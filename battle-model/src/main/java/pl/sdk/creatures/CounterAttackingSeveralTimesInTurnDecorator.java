@@ -144,13 +144,13 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
     }
 
     @Override
-    public int getShoots() {
-        return decorated.getShoots();
+    public int getShots() {
+        return decorated.getShots();
     }
 
     @Override
-    public void setShoots(int aShoots) {
-        decorated.setShoots(aShoots);
+    public void setShots(int aShoots) {
+        decorated.setShots(aShoots);
     }
 
     @Override
