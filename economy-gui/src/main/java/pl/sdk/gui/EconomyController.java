@@ -61,7 +61,7 @@ public class EconomyController implements PropertyChangeListener {
         warningNeedToBuyLabel.setOpacity(0);
         if (economyEngine.getLeftHero().getHeroArmy().isEmpty() || economyEngine.getRightHero().getHeroArmy().isEmpty())
             warningNeedToBuyLabel.setOpacity(1);
-        else EcoBattleConverter.start(economyEngine.getLeftHero(), economyEngine.getRightHero());
+        else EcoBattleConverter.start(economyEngine.getLeftHero(), economyEngine.getRightHero(), readyButton.getScene().getWindow());
 
     }
 
@@ -126,10 +126,8 @@ public class EconomyController implements PropertyChangeListener {
     }
 
     private void changePlayerName() {
-        if (playerLabel.getText().contains("Left"))
-            playerLabel.setText("Right Player's Choice - " + economyEngine.getActiveHero().toString());
-        else
-            playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().toString());
+        if (playerLabel.getText().contains("Left")) playerLabel.setText("Right Player's Choice - " + economyEngine.getActiveHero().toString());
+        else playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().toString());
     }
 
     boolean sell(EconomyCreature aCreature) {

@@ -2,7 +2,9 @@ package pl.sdk.converter;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import pl.sdk.creatures.*;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.hero.EconomyHero;
@@ -14,7 +16,7 @@ import java.util.List;
 import static pl.sdk.converter.ProperFractionConverter.getProperFactoryForFractionOf;
 
 public class EcoBattleConverter {
-    public static void start(EconomyHero aLeftHero, EconomyHero aRightHero) {
+    public static void start(EconomyHero aLeftHero, EconomyHero aRightHero, Window aWindow) {
         Scene scene = null;
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -24,6 +26,8 @@ public class EcoBattleConverter {
             loader.setController(new BattleMapController(leftArmy, rightArmy));
             scene = new Scene(loader.load());
             Stage stage = new Stage();
+            stage.initOwner(aWindow);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("FXML Welcome");
             stage.setScene(scene);
             stage.show();

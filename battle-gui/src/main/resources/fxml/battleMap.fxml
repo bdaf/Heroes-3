@@ -30,14 +30,14 @@
       </HBox>
    </top>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="18.0" prefWidth="1760.0" BorderPane.alignment="BOTTOM_CENTER">
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="880.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="50.0" HBox.hgrow="ALWAYS">
                <children>
                   <Button fx:id="passButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" text="Pass" />
                </children>
             </VBox>
-            <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="887.0">
+            <VBox alignment="CENTER_RIGHT">
                <children>
                   <Button fx:id="escapeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" text="Escape" />
                </children>
