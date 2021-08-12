@@ -4,14 +4,15 @@ import pl.sdk.hero.EconomyHero;
 
 import java.util.Random;
 
-public class AmountOfCreaturesInStacksToBuyRandomize {
+import static pl.sdk.creatures.Factory.ERROR_MSG;
+
+public class RandomizeAmountOfCreaturesInShop {
 
     public static final String INCORRECT_HERO_FRACTION = "Incorrect hero fraction!";
-    private static final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 14";
     private final int necropolis[];
     private final int castle[];
 
-    AmountOfCreaturesInStacksToBuyRandomize() {
+    RandomizeAmountOfCreaturesInShop() {
         necropolis = new int[14];
         castle = new int[14];
         setDefaultValueForFractions();
@@ -25,6 +26,8 @@ public class AmountOfCreaturesInStacksToBuyRandomize {
     }
 
     private void setDefaultValueForFractions() {
+        //Castle
+        // Not upgraded
         castle[0] = 14;
         castle[1] = 9;
         castle[2] = 7;
@@ -41,6 +44,8 @@ public class AmountOfCreaturesInStacksToBuyRandomize {
         castle[12] = 2;
         castle[13] = 1;
 
+        //Necropolis
+        // Not upgraded
         necropolis[0] = 12;
         necropolis[1] = 8;
         necropolis[2] = 7;

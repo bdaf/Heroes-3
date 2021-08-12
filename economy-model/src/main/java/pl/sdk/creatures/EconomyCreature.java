@@ -3,8 +3,8 @@ package pl.sdk.creatures;
 public class EconomyCreature {
     private final CreatureStatistic stats;
 
-    private final int amount;
     private final int goldCost;
+    private final int amount;
 
     EconomyCreature(CreatureStatistic aStats, int aAmount, int aGoldCost) {
         stats = aStats;
@@ -47,8 +47,8 @@ public class EconomyCreature {
         if (this == aO) return true;
         if (aO == null || getClass() != aO.getClass()) return false;
         EconomyCreature that = (EconomyCreature) aO;
-        return amount == that.amount &&
-                goldCost == that.goldCost &&
+        return goldCost == that.goldCost &&
                 stats == that.stats;
     }
+
 }

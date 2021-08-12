@@ -20,48 +20,54 @@ import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
 import pl.sdk.hero.EconomyHero;
 
-
-
 public class CreatureButtonInShop extends Button {
 
 
-    private final int amountOfCreaturesInStack;
+    private int amountOfCreaturesInStack;
     private Stage windowForChoosingAmount;
     private String nameOfCreature;
-    private boolean buying;
+    protected boolean trading;
 
-    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, AmountOfCreaturesInStacksToBuyRandomize aRandomize) {
+    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize, int aAmount) {
         super(aFactory.Create(aIsUpgraded, aTier, 1).getName());
         nameOfCreature = getText();
-        amountOfCreaturesInStack = aRandomize.getAmountOfTier(aTier,aHero.getFraction(),aIsUpgraded);
-        setAppearance(aFactory.Create(aIsUpgraded, aTier, 1));
+        getAmountForStack(aTier, aIsUpgraded, aHero, aRandomize);
+        setAppearance(aFactory.Create(aIsUpgraded, aTier, aAmount));
         addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-            int amount = displayChoosingAmountAndGetCreatureAmount(aFactory.Create(aIsUpgraded, aTier, 1),aHero);
-            if (amount > 0 && buying) {
-                EconomyCreature creature = aFactory.Create(aIsUpgraded, aTier, amount);
-                if(aHero.getHeroArmy().size() < 7){
-                    aRandomize.setAmountOfTier(aTier,aHero.getFraction(),aRandomize.getAmountOfTier(aTier,aHero.getFraction(),aIsUpgraded)-amount,aIsUpgraded);
-                }
-                aController.buy(creature);
-            }
+            EconomyCreature eCreature = aFactory.Create(aIsUpgraded, aTier, aAmount);
+            int amount = displayChoosingAmountAndGetCreatureAmount(eCreature, aHero);
+            tradeCreatureAndSetRandomize(aController, aFactory, aTier, aIsUpgraded, aHero, aRandomize, amount);
             aController.refreshGui();
         });
+    }
 
+    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize) {
+        this(aController, aFactory, aTier, aIsUpgraded, aHero, aRandomize, 1);
+    }
+
+    protected void getAmountForStack(int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize) {
+        amountOfCreaturesInStack =  aRandomize.getAmountOfTier(aTier, aHero.getFraction(), aIsUpgraded);
+    }
+
+    protected void tradeCreatureAndSetRandomize(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize, int aAmount) {
+        if (aAmount > 0 && trading) {
+            EconomyCreature creature = aFactory.Create(aIsUpgraded, aTier, aAmount);
+            if (aController.buy(creature))
+                aRandomize.setAmountOfTier(aTier, aHero.getFraction(), aRandomize.getAmountOfTier(aTier, aHero.getFraction(), aIsUpgraded) - aAmount, aIsUpgraded);
+        }
     }
 
 
-
-    private void setAppearance(EconomyCreature aEconomyCreature) {
+    protected void setAppearance(EconomyCreature aEconomyCreature) {
         setTextAlignment(TextAlignment.CENTER);
-        //setId("buttonsInShop");
         setStyle("-fx-font-size: 18px;");
-        setText(nameOfCreature + " - "+amountOfCreaturesInStack+" amount"
-                +"\nHealth: "+aEconomyCreature.getStats().getMaxHp()
-                +" | Attack: "+aEconomyCreature.getStats().getAttack()
-                +" | Damage: "+aEconomyCreature.getStats().getDamage().lowerEndpoint()+" - "+aEconomyCreature.getStats().getDamage().upperEndpoint()
-                +" |\nCost: "+aEconomyCreature.getGoldCost()
-                +" | Defense: "+aEconomyCreature.getStats().getArmor()
-                +" | Movement: "+aEconomyCreature.getStats().getMoveRange());
+        setText(nameOfCreature + " - " + amountOfCreaturesInStack + " amount"
+                + "\nHealth: " + aEconomyCreature.getStats().getMaxHp()
+                + " | Attack: " + aEconomyCreature.getStats().getAttack()
+                + " | Damage: " + aEconomyCreature.getStats().getDamage().lowerEndpoint() + " - " + aEconomyCreature.getStats().getDamage().upperEndpoint()
+                + " |\nCost: " + aEconomyCreature.getGoldCost()
+                + " | Defense: " + aEconomyCreature.getStats().getArmor()
+                + " | Movement: " + aEconomyCreature.getStats().getMoveRange());
         ImageView image = GraphicsOfCreaturesMaker.getGraphicsOf(nameOfCreature, Creature.Team.RIGHT_TEAM);
         setPrefHeight(200);
         setPrefWidth(500);
@@ -73,7 +79,7 @@ public class CreatureButtonInShop extends Button {
         VBox center = new VBox();
         HBox bottom = new HBox();
         prepareWindowForChoosingAmount(bottom, center, top);
-        Slider slider = createSlider(aCreate,aHero);
+        Slider slider = createSlider(aCreate, aHero);
         prepareSaveAndCloseButton(bottom, slider);
         prepareTop(top, slider, aCreate);
         center.getChildren().add(slider);
@@ -87,13 +93,13 @@ public class CreatureButtonInShop extends Button {
         Label sliderValueLabel = new Label("0");
         Label purchaseCostValueLabel = new Label("0");
         aSlider.valueProperty().addListener((slider, aOld, aNew) -> sliderValueLabel.setText(String.valueOf(aNew.intValue())));
-        aSlider.valueProperty().addListener((slider, aOld, aNew) -> purchaseCostValueLabel.setText(String.valueOf(aNew.intValue()*aCreate.getGoldCost())));
+        aSlider.valueProperty().addListener((slider, aOld, aNew) -> purchaseCostValueLabel.setText(String.valueOf(aNew.intValue() * aCreate.getGoldCost())));
         HBox hBox = new HBox();
         Label label = new Label("Amount:");
         hBox.getChildren().add(label);
         hBox.getChildren().add(sliderValueLabel);
         hBox.setAlignment(Pos.CENTER);
-        HBox hBoxForCosts = new HBox(0,new Label("Single Cost:  " + aCreate.getGoldCost() + "  Purchase Cost:"),purchaseCostValueLabel);
+        HBox hBoxForCosts = new HBox(0, new Label("Single Cost:  " + aCreate.getGoldCost() + "  Purchase Cost:"), purchaseCostValueLabel);
         vbox.getChildren().add(hBoxForCosts);
         vbox.getChildren().add(hBox);
         aTop.getChildren().add(vbox);
@@ -108,9 +114,9 @@ public class CreatureButtonInShop extends Button {
         cancelButton.setAlignment(Pos.CENTER);
         HBox.setHgrow(saveButton, Priority.ALWAYS);
         HBox.setHgrow(cancelButton, Priority.ALWAYS);
-        saveButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x ->{
-         buying = true;
-         windowForChoosingAmount.close();
+        saveButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
+            trading = true;
+            windowForChoosingAmount.close();
         });
         cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> windowForChoosingAmount.close());
         aBottom.setAlignment(Pos.CENTER);
@@ -118,15 +124,15 @@ public class CreatureButtonInShop extends Button {
         aBottom.getChildren().add(cancelButton);
     }
 
-    private Slider createSlider(EconomyCreature aCreate, EconomyHero aHero) {
+    protected Slider createSlider(EconomyCreature aCreate, EconomyHero aHero) {
         Slider slider = new Slider();
         slider.setMin(0);
-        slider.setMax(Integer.min(aHero.getGold()/aCreate.getGoldCost(),amountOfCreaturesInStack));
+        slider.setMax(Integer.min(aHero.getGold() / aCreate.getGoldCost(), amountOfCreaturesInStack));
         slider.setValue(0);
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);
         slider.setMajorTickUnit(10);
-        slider.setMinorTickCount(5);
+        slider.setMinorTickCount(9);
         slider.setBlockIncrement(10);
         return slider;
     }
@@ -140,8 +146,8 @@ public class CreatureButtonInShop extends Button {
         windowForChoosingAmount.setScene(scene);
         windowForChoosingAmount.initOwner(this.getScene().getWindow());
         windowForChoosingAmount.initModality(Modality.APPLICATION_MODAL);
-        windowForChoosingAmount.setTitle("Choosing amount of " + getName());
         windowForChoosingAmount.setResizable(false);
+        setTitle(windowForChoosingAmount);
         aBottom.setAlignment(Pos.CENTER);
         aCenter.setAlignment(Pos.CENTER);
         aTop.setAlignment(Pos.CENTER);
@@ -150,7 +156,12 @@ public class CreatureButtonInShop extends Button {
         pane.setTop(aTop);
     }
 
-    private String getName() {
+    protected void setTitle(Stage aWindowForChoosingAmount) {
+        aWindowForChoosingAmount.setTitle("Buying amount of " + getName());
+    }
+
+
+    protected String getName() {
         return nameOfCreature;
     }
 }

@@ -19,6 +19,7 @@ import java.beans.PropertyChangeListener;
 
 import static javafx.application.Platform.exit;
 import static pl.sdk.EconomyEngine.*;
+import static pl.sdk.converter.ProperFractionConverter.getProperEconomyFactoryForFractionOf;
 
 public class EconomyController implements PropertyChangeListener {
     @FXML
@@ -39,7 +40,7 @@ public class EconomyController implements PropertyChangeListener {
     Label warningNeedToBuyLabel;
 
     private EconomyEngine economyEngine;
-    private AmountOfCreaturesInStacksToBuyRandomize randomize;
+    private RandomizeAmountOfCreaturesInShop randomize;
 
     EconomyController(EconomyHero aLeftHero, EconomyHero aRightHero) {
         economyEngine = new EconomyEngine(aLeftHero, aRightHero);
@@ -47,7 +48,7 @@ public class EconomyController implements PropertyChangeListener {
 
     @FXML
     void initialize() {
-        randomize = new AmountOfCreaturesInStacksToBuyRandomize();
+        randomize = new RandomizeAmountOfCreaturesInShop();
         escapeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> exit());
         economyEngine.addObserver(HERO_BOUGHT_CREATURE, this);
         economyEngine.addObserver(ACTIVE_HERO_CHANGED, this);
@@ -64,16 +65,21 @@ public class EconomyController implements PropertyChangeListener {
 
     }
 
-    void buy(EconomyCreature aCreature) {
+    boolean buy(EconomyCreature aCreature) {
+        boolean ret = true;
         warningLabel.setOpacity(0);
-        if (economyEngine.getActiveHero().getHeroArmy().size() < 7)
+        try {
             economyEngine.buy(aCreature);
-        else warningLabel.setOpacity(1);
+        }catch (IllegalStateException e){
+            warningLabel.setOpacity(1);
+            ret = false;
+        }
+        return ret;
     }
 
     void refreshGui() {
         clearingArmyAndShopBoxesAndMakingTheirLabels();
-        EconomyFactory factory = EcoBattleConverter.getProperEconomyFactoryForFraction(economyEngine.getActiveHero());
+        EconomyFactory factory = getProperEconomyFactoryForFractionOf(economyEngine.getActiveHero());
 
         VBox vBoxShopCreaturesUpgraded = new VBox();
         VBox vBoxShopCreaturesNotUpgraded = new VBox();
@@ -86,23 +92,25 @@ public class EconomyController implements PropertyChangeListener {
 
         vBoxForArmyShop.getChildren().add(hBoxShopContainer);
 
-        addingCreatureButtonsInShopToBox(vBoxShopCreaturesNotUpgraded,factory,false);
-        addingCreatureButtonsInShopToBox(vBoxShopCreaturesUpgraded,factory,true);
+        addingCreatureButtonsInShopToBox(vBoxShopCreaturesNotUpgraded, factory, false);
+        addingCreatureButtonsInShopToBox(vBoxShopCreaturesUpgraded, factory, true);
 
-        economyEngine.getActiveHero().getHeroArmy().forEach(x -> vBoxForUserArmy.getChildren().add(new CreatureButtonInArmy(this, x)));
+        economyEngine.getActiveHero().getHeroArmy().forEach(c -> vBoxForUserArmy.getChildren().add(new CreatureButtonInHerosArmy(
+                this, factory, c.getTier(), c.isUpgraded(), economyEngine.getActiveHero(), randomize,c.getAmount())));
+
         goldLabel.setText("Round: " + economyEngine.getRoundNumber() + " Gold: " + economyEngine.getActiveHero().getGold());
     }
 
     private void addingCreatureButtonsInShopToBox(Pane aBox, EconomyFactory aFactory, boolean aIsUpgraded) {
         for (int i = 0; i < 7; i++) {
-            aBox.getChildren().add(new CreatureButtonInShop(this, aFactory, i +1 , aIsUpgraded, economyEngine.getActiveHero(),
-            randomize));
+            aBox.getChildren().add(new CreatureButtonInShop(this, aFactory, i + 1, aIsUpgraded, economyEngine.getActiveHero(),
+                    randomize));
         }
     }
 
 
     private void addEventHandlerForReadyButtonAndSetPlayerLabel() {
-        playerLabel.setText("Player 1's Choice - " + economyEngine.getActiveHero().toString());
+        playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().toString());
         readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
             int roundNumber = economyEngine.getRoundNumber();
             if (economyEngine.getActiveHero().equals(economyEngine.getRightHero())) roundNumber++;
@@ -111,21 +119,21 @@ public class EconomyController implements PropertyChangeListener {
                 return;
             }
             economyEngine.pass();
-            randomize = new AmountOfCreaturesInStacksToBuyRandomize();
+            randomize = new RandomizeAmountOfCreaturesInShop();
             changePlayerName();
             refreshGui();
         });
     }
 
     private void changePlayerName() {
-        if (playerLabel.getText().contains("Player 1's Choice"))
-            playerLabel.setText("Player 2's Choice - " + economyEngine.getActiveHero().toString());
+        if (playerLabel.getText().contains("Left"))
+            playerLabel.setText("Right Player's Choice - " + economyEngine.getActiveHero().toString());
         else
-            playerLabel.setText("Player 1's Choice - " + economyEngine.getActiveHero().toString());
+            playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().toString());
     }
 
-    void sell(EconomyCreature aCreature) {
-        economyEngine.sell(aCreature);
+    boolean sell(EconomyCreature aCreature) {
+       return economyEngine.sell(aCreature);
     }
 
     private void clearingArmyAndShopBoxesAndMakingTheirLabels() {

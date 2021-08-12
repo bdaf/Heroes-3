@@ -11,7 +11,7 @@ public class EconomyHero {
         NECROPOLIS, CASTLE;
     }
 
-    private final List<EconomyCreature> heroArmy;
+    private List<EconomyCreature> heroArmy;
     private final Fraction fraction;
     private int gold;
 
@@ -37,8 +37,7 @@ public class EconomyHero {
         heroArmy.add(aCreature);
     }
     boolean removeCreature(EconomyCreature aCreature){
-        if(heroArmy.isEmpty())
-            throw new IllegalStateException("Army is empty! You cannot delete nothing from there!");
+        if(heroArmy.isEmpty()) throw new IllegalStateException("Army is empty! You cannot delete nothing from there!");
         for (int i = 0; i < heroArmy.size(); i++) {
             if(heroArmy.get(i).equals(aCreature)){
                 heroArmy.remove(i);
@@ -46,6 +45,11 @@ public class EconomyHero {
             }
         }
         return false;
+    }
+    void replaceCreature(EconomyCreature aCreature, int aI){
+        if(heroArmy.size() < aI+1) throw new NullPointerException("There is no creature under that number in array!");
+        heroArmy.remove(aI);
+        heroArmy.add(aI,aCreature);
     }
 
     public int getGold() {

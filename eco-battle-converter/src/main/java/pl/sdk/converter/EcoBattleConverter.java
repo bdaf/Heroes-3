@@ -8,8 +8,10 @@ import pl.sdk.gui.BattleMapController;
 import pl.sdk.hero.EconomyHero;
 
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
+
+import static pl.sdk.converter.ProperFractionConverter.getProperFactoryForFractionOf;
 
 public class EcoBattleConverter {
     public static void start(EconomyHero aLeftHero, EconomyHero aRightHero) {
@@ -31,32 +33,10 @@ public class EcoBattleConverter {
     }
 
     public static List<Creature> convert(EconomyHero aEcoHero) {
-        Factory factory = getProperFactoryForFraction(aEcoHero);
-        List<Creature> ret = new LinkedList<Creature>();
+        Factory factory = getProperFactoryForFractionOf(aEcoHero);
+        List<Creature> ret = new ArrayList<>();
         aEcoHero.getHeroArmy().forEach(c -> ret.add(factory.Create(c.isUpgraded(),c.getTier(),c.getAmount())));
         return ret;
-    }
-
-    public static Factory getProperFactoryForFraction(EconomyHero aEcoHero) {
-        Factory factory;
-        if (aEcoHero.getFraction() == EconomyHero.Fraction.NECROPOLIS)
-            factory = new NecropolisFactory();
-        else if (aEcoHero.getFraction() == EconomyHero.Fraction.CASTLE)
-            factory = new CastleFactory();
-        else
-            throw new NullPointerException("Factory which is used to convert economy creatures to creatures is null!");
-        return factory;
-    }
-
-    public static EconomyFactory getProperEconomyFactoryForFraction(EconomyHero aEcoHero) {
-        EconomyFactory factory;
-        if (aEcoHero.getFraction() == EconomyHero.Fraction.NECROPOLIS)
-            factory = new EconomyNecropolisFactory();
-        else if (aEcoHero.getFraction() == EconomyHero.Fraction.CASTLE)
-            factory = new EconomyCastleFactory();
-        else
-            throw new NullPointerException("Economy factory which is used to convert economy creatures to creatures is null!");
-        return factory;
     }
 
 }
