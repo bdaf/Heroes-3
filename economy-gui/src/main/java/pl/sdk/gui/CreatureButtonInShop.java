@@ -80,7 +80,7 @@ public class CreatureButtonInShop extends Button {
         HBox bottom = new HBox();
         prepareWindowForChoosingAmount(bottom, center, top);
         Slider slider = createSlider(aCreate, aHero);
-        prepareSaveAndCloseButton(bottom, slider);
+        prepareSaveAndCloseButton(bottom);
         prepareTop(top, slider, aCreate);
         center.getChildren().add(slider);
         windowForChoosingAmount.showAndWait();
@@ -105,7 +105,7 @@ public class CreatureButtonInShop extends Button {
         aTop.getChildren().add(vbox);
     }
 
-    private void prepareSaveAndCloseButton(HBox aBottom, Slider aSlider) {
+    private void prepareSaveAndCloseButton(HBox aBottom) {
         Button saveButton = new Button("Save");
         Button cancelButton = new Button("Cancel");
         saveButton.setPrefWidth(200);
@@ -157,7 +157,7 @@ public class CreatureButtonInShop extends Button {
     }
 
     protected void setTitle(Stage aWindowForChoosingAmount) {
-        aWindowForChoosingAmount.setTitle("Buying amount of " + getName());
+        aWindowForChoosingAmount.setTitle("Buying " + getName());
     }
 
 

@@ -36,7 +36,7 @@ public class CreatureShop {
     }
 
     public boolean sell(EconomyHero aEconomyHero, EconomyCreature aCreature) {
-        boolean result = false;
+        boolean result = true;
         int amountInStack = changeNumberOfAmountInStack(aEconomyHero, aCreature, Operation.subtraction);
         if (amountInStack == -1) throw new IllegalStateException("Probably cannot find this creature in Hero's Army!");
         else if (amountInStack == 0) {

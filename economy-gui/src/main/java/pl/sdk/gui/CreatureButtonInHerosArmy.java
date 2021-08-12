@@ -39,7 +39,7 @@ public class CreatureButtonInHerosArmy extends CreatureButtonInShop {
 
     @Override
     protected void setTitle(Stage aWindowForChoosingAmount) {
-        aWindowForChoosingAmount.setTitle("Selling amount of " + getName());
+        aWindowForChoosingAmount.setTitle("Selling " + getName());
     }
 
     @Override
@@ -51,7 +51,7 @@ public class CreatureButtonInHerosArmy extends CreatureButtonInShop {
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);
         slider.setMajorTickUnit(10);
-        slider.setMinorTickCount(1);
+        slider.setMinorTickCount(9);
         slider.setBlockIncrement(10);
         return slider;
     }
