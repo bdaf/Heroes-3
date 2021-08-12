@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -13,13 +12,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.*;
-import pl.sdk.creatures.CastleFactory;
 import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.NecropolisFactory;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import static javafx.application.Platform.exit;
@@ -61,18 +57,18 @@ public class BattleMapController implements PropertyChangeListener {
                 Creature creatureOnMapTitle = gameEngine.get(x, y);
                 if (creatureOnMapTitle != null) {
                     mapTile.addCreature(creatureOnMapTitle.getStringOfCurrentHp(), creatureOnMapTitle.getName(), creatureOnMapTitle.getTeam());
-                    if (!creatureOnMapTitle.isAlive())
-                        flagCreatureNotAlive(mapTile);
-                    else if (creatureOnMapTitle == gameEngine.getActiveCreature())
+                    if (creatureOnMapTitle == gameEngine.getActiveCreature() && gameEngine.getActiveCreature().isAlive())
                         flagActiveCreature(x, y, mapTile,creatureOnMapTitle);
+                    else if (!creatureOnMapTitle.isAlive())
+                        flagDeadCreatureAndSetMoveOnClick(x,y,mapTile);
                     else if (gameEngine.canAttack(x, y))
-                        setBackgroundRedAndSetClickOnAttack(x, y, mapTile);
+                        setBackgroundRedAndSetAttackOnClick(x, y, mapTile);
                     else if (creatureOnMapTitle.getTeam() == Creature.Team.LEFT_TEAM)
                         mapTile.setBackgroundColor(Color.BLUEVIOLET);
                     else if (creatureOnMapTitle.getTeam() == Creature.Team.RIGHT_TEAM)
                         mapTile.setBackgroundColor(Color.AQUA);
                 } else if (gameEngine.canMove(x, y))
-                    setBackgroundGrayAndSetClickOnMove(x, y, mapTile);
+                    setBackgroundGrayAndSetMoveOnClick(x, y, mapTile);
             }
         }
     }
@@ -82,22 +78,27 @@ public class BattleMapController implements PropertyChangeListener {
         if (isAfterAction(aX, aY,aCreatureOnMapTitle)) aMapTile.setBackgroundColor(Color.GRAY);
     }
 
-    private void flagCreatureNotAlive(MapTile aMapTile) {
-        aMapTile.setRotateToCreatureImage(90);
+    private void flagDeadCreatureAndSetMoveOnClick(int aX, int aY, MapTile aMapTile) {
         aMapTile.setBackgroundColor(Color.BLACK);
+        aMapTile.setRotateToCreatureImage(90);
+        setMoveOnClick(aX, aY, aMapTile);
     }
 
-    private void setBackgroundGrayAndSetClickOnMove(int aX, int aY, MapTile aMapTile) {
+    private void setBackgroundGrayAndSetMoveOnClick(int aX, int aY, MapTile aMapTile) {
+        aMapTile.setBackgroundColor((Color.GRAY));
+        setMoveOnClick(aX, aY, aMapTile);
+    }
+
+    private void setMoveOnClick(int aX, int aY, MapTile aMapTile) {
         final int FX = aX;
         final int FY = aY;
-        aMapTile.setBackgroundColor((Color.GRAY));
         aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.move(new Point(FX, FY)));
     }
 
-    private void setBackgroundRedAndSetClickOnAttack(int aX, int aY, MapTile aMapTile) {
+    private void setBackgroundRedAndSetAttackOnClick(int aX, int aY, MapTile aMapTile) {
+        aMapTile.setBackgroundColor((Color.RED));
         final int FX = aX;
         final int FY = aY;
-        aMapTile.setBackgroundColor((Color.RED));
         aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.attack(new Point(FX, FY)));
     }
 

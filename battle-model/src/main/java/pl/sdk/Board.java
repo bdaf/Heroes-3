@@ -34,13 +34,13 @@ class Board {
         return map.get(new Point(x, y));
     }
 
-    Point get(Creature aCreature){
+    Point get(Creature aCreature) {
         return map.keySet().stream().filter(p -> map.get(p).equals(aCreature)).findAny().get();
     }
 
-    double moveAndReturnDistance(Creature aCreature, Point targetPoint){
+    double moveAndReturnDistance(Creature aCreature, Point targetPoint) {
         //throwExceptionWhenThereIsNoChampionToAct(aCreature, "There is no champion to move!");
-        return moveAndReturnDistance(get(aCreature),targetPoint);
+        return moveAndReturnDistance(get(aCreature), targetPoint);
     }
 
     double moveAndReturnDistance(Point sourcePoint, Point targetPoint) {
@@ -57,43 +57,46 @@ class Board {
         return distance;
     }
 
-     private void throwExceptionWhenTitleIsTaken(Point aPoint) {
-         if(isTitleTaken(aPoint))
-             throw new IllegalArgumentException("Title is taken!");
-     }
+    private void throwExceptionWhenTitleIsTaken(Point aPoint) {
+        if (isTitleTaken(aPoint))
+            if (get(aPoint.getX(), aPoint.getY()).isAlive())
+                throw new IllegalArgumentException("Title is taken!");
+    }
 
-     private boolean isTitleTaken(Point aPoint) {
-         return map.containsKey(aPoint);
-     }
+    private boolean isTitleTaken(Point aPoint) {
+        return map.containsKey(aPoint);
+    }
 
-     private void throwExceptionWhenThereIsNoChampionToAct(Creature aCreature, String msg) {
+    private void throwExceptionWhenThereIsNoChampionToAct(Creature aCreature, String msg) {
         if (!map.containsValue(aCreature)) {
             throw new IllegalArgumentException(msg);
         }
     }
+
     private void throwExceptionWhenThereIsNoChampionToAct(Point aPoint, String msg) {
-        if (!map.containsValue(get(aPoint.getX(),aPoint.getY()))) {
+        if (!map.containsValue(get(aPoint.getX(), aPoint.getY()))) {
             throw new IllegalArgumentException(msg);
         }
     }
 
-     double countDistance(Creature aCreature, int aX, int aY){
-         throwExceptionWhenOutsideTheMap(new Point(aX,aY));
-         throwExceptionWhenThereIsNoChampionToAct(aCreature, "Creature isn't on board!");
-         Point currentPosition = get(aCreature);
-         return currentPosition.distance(new Point(aX,aY));
-     }
+    double countDistance(Creature aCreature, int aX, int aY) {
+        throwExceptionWhenOutsideTheMap(new Point(aX, aY));
+        throwExceptionWhenThereIsNoChampionToAct(aCreature, "Creature isn't on board!");
+        Point currentPosition = get(aCreature);
+        return currentPosition.distance(new Point(aX, aY));
+    }
 
-     boolean canMove(Creature aCreature, int aX, int aY) {
-        return !isTitleTaken(new Point(aX,aY));
-     }
+    boolean isFieldFreeToTake(int aX, int aY) {
+        if (!isTitleTaken(new Point(aX, aY))) return true;
+        return !get(aX, aY).isAlive();
+    }
 
-     boolean canAttack(Creature aCreature, int aX, int aY) {
-         throwExceptionWhenThereIsNoChampionToAct(aCreature, "There is no champion to make attack!");
-         Point currentPosition = get(aCreature);
-         Creature potentiallyDefender = get(aX,aY);
-         double distance = currentPosition.distance(new Point(aX,aY));
-         return distance <= aCreature.getAttackRange() && isTitleTaken(new Point(aX,aY)) && potentiallyDefender.isAlive();
+    boolean canAttack(Creature aCreature, int aX, int aY) {
+        throwExceptionWhenThereIsNoChampionToAct(aCreature, "There is no champion to make attack!");
+        Point currentPosition = get(aCreature);
+        Creature potentiallyDefender = get(aX, aY);
+        double distance = currentPosition.distance(new Point(aX, aY));
+        return distance <= aCreature.getAttackRange() && isTitleTaken(new Point(aX, aY)) && potentiallyDefender.isAlive();
 
-     }
- }
+    }
+}

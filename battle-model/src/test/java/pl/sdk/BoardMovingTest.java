@@ -8,6 +8,8 @@ import pl.sdk.creatures.NecropolisFactory;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static pl.sdk.GameEngine.BOARD_WIDTH;
+import static pl.sdk.creatures.Factory.CreateShootingCreatureForTests;
 import static pl.sdk.creatures.NecropolisFactory.CreateDefaultCreatureForTests;
 
 public class BoardMovingTest {
@@ -85,10 +87,10 @@ public class BoardMovingTest {
         Creature creature1 = CreateDefaultCreatureForTests(1);
 
         board.add(new Point(5,5), creature1);
-        assertTrue(board.canMove(creature1,5,6));
-        assertTrue(board.canMove(creature1,6,5));
-        assertTrue(board.canMove(creature1,5,4));
-        assertTrue(board.canMove(creature1,4,5));
+        assertTrue(board.isFieldFreeToTake(5,6));
+        assertTrue(board.isFieldFreeToTake(6,5));
+        assertTrue(board.isFieldFreeToTake(5,4));
+        assertTrue(board.isFieldFreeToTake(4,5));
     }
 
     @Test
@@ -107,7 +109,7 @@ public class BoardMovingTest {
         Creature creature1 = NecropolisFactory.CreateDefaultCreatureForTests();
         board.add(new Point(5,5),creature1);
 
-        assertFalse(board.canMove(creature1,0,0));
+        assertFalse(board.isFieldFreeToTake(0,0));
 
     }
 
@@ -124,6 +126,25 @@ public class BoardMovingTest {
         engine.pass();
         assertTrue(engine.canMove(0,2));
         assertFalse(engine.canMove(0,3));
+
+    }
+
+    @Test
+    void shouldBeAbleToGoToFieldWhenOtherCreatureIsDead(){
+        Creature leftShootingCreature = CreateShootingCreatureForTests(Integer.MAX_VALUE,100);
+        Creature rightDeadCreature = CreateDefaultCreatureForTests(Integer.MAX_VALUE-1,1);
+        Creature rightCreature = CreateDefaultCreatureForTests(Integer.MAX_VALUE-2);
+        GameEngine engine = new GameEngine(List.of(leftShootingCreature),List.of(rightDeadCreature,rightCreature));
+
+        assertTrue(engine.canAttack(BOARD_WIDTH-1,0));
+        engine.attack(BOARD_WIDTH-1,0);
+        assertTrue(!rightDeadCreature.isAlive());
+        engine.pass();
+        assertEquals(rightCreature, engine.getActiveCreature());
+        assertTrue(engine.canMove(BOARD_WIDTH-1,0));
+        engine.move(new Point(BOARD_WIDTH-1,0));
+        engine.pass();
+        assertFalse(engine.canMove(BOARD_WIDTH-1,0));
 
     }
 }

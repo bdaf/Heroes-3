@@ -132,7 +132,7 @@ public class GameEngine {
 
     public boolean canMove(int aX, int aY) {
         double distance = board.countDistance(getActiveCreature(), aX, aY);
-        return board.canMove(getActiveCreature(), aX, aY) && distance <= queue.getMovePointsOfActiveCreature();
+        return board.isFieldFreeToTake(aX, aY) && distance <= queue.getMovePointsOfActiveCreature();
     }
 
     public boolean canAttack(int aX, int aY) {
