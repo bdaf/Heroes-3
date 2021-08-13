@@ -15,14 +15,14 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
 
     @Override
     boolean wasCounterAttackInThisTurn() {
-        if(counterAttacksInTurn>0)
+        if (counterAttacksInTurn > 0)
             return false;
         return true;
     }
 
     @Override
     void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
-        if(aCounterAttackInThisTurn)
+        if (aCounterAttackInThisTurn)
             counterAttacksInTurn--;
         else
             counterAttacksInTurn = maxCounterAttacksInTurn;
@@ -34,7 +34,7 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
     }
 
     @Override
-    public void setTeam(Team aTeam) {
+    void setTeam(Team aTeam) {
         decorated.setTeam(aTeam);
     }
 
@@ -149,12 +149,12 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
     }
 
     @Override
-    public void setShots(int aShoots) {
+    void setShots(int aShoots) {
         decorated.setShots(aShoots);
     }
 
     @Override
-    public void setAmount(int aAmount) {
+    void setAmount(int aAmount) {
         decorated.setAmount(aAmount);
     }
 

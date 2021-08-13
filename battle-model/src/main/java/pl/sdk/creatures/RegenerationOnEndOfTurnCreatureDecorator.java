@@ -2,7 +2,7 @@ package pl.sdk.creatures;
 
 import java.beans.PropertyChangeEvent;
 
- class RegenerationOnEndOfTurnCreatureDecorator extends Creature{
+class RegenerationOnEndOfTurnCreatureDecorator extends Creature {
 
     private final Creature decorated;
 
@@ -10,22 +10,22 @@ import java.beans.PropertyChangeEvent;
         decorated = aDecorated;
     }
 
-     @Override
-     public double getMoveRange() {
-         return decorated.getMoveRange();
-     }
+    @Override
+    public double getMoveRange() {
+        return decorated.getMoveRange();
+    }
 
-     @Override
-     public int getMaxAttacksInTurn() {
-         return decorated.getMaxAttacksInTurn();
-     }
+    @Override
+    public int getMaxAttacksInTurn() {
+        return decorated.getMaxAttacksInTurn();
+    }
 
-     @Override
-     void setAttacksInTurn(int aAttacksInTurn) {
-         decorated.setAttacksInTurn(aAttacksInTurn);
-     }
+    @Override
+    void setAttacksInTurn(int aAttacksInTurn) {
+        decorated.setAttacksInTurn(aAttacksInTurn);
+    }
 
-     @Override
+    @Override
     int getMaxHp() {
         return decorated.getMaxHp();
     }
@@ -35,17 +35,17 @@ import java.beans.PropertyChangeEvent;
         decorated.attack(defender);
     }
 
-     @Override
-     public int getShots() {
-         return decorated.getShots();
-     }
+    @Override
+    public int getShots() {
+        return decorated.getShots();
+    }
 
-     @Override
-     public void setShots(int aShoots) {
-         decorated.setShots(aShoots);
-     }
+    @Override
+    void setShots(int aShoots) {
+        decorated.setShots(aShoots);
+    }
 
-     @Override
+    @Override
     int countDamage(Creature aAttacker, Creature defender) {
         return decorated.countDamage(aAttacker, defender);
     }
@@ -60,37 +60,37 @@ import java.beans.PropertyChangeEvent;
         decorated.performAfterAttack(aDamageToChange);
     }
 
-     @Override
-     boolean wasCounterAttackInThisTurn() {
-         return decorated.wasCounterAttackInThisTurn();
-     }
+    @Override
+    boolean wasCounterAttackInThisTurn() {
+        return decorated.wasCounterAttackInThisTurn();
+    }
 
-     @Override
-     void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
-         decorated.setIfWasCounterAttackInThisTurn(aCounterAttackInThisTurn);
-     }
+    @Override
+    void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
+        decorated.setIfWasCounterAttackInThisTurn(aCounterAttackInThisTurn);
+    }
 
-     @Override
-     public Team getTeam() {
-         return decorated.getTeam();
-     }
+    @Override
+    public Team getTeam() {
+        return decorated.getTeam();
+    }
 
-     @Override
-     public void setTeam(Team aTeam) {
-         decorated.setTeam(aTeam);
-     }
+    @Override
+    void setTeam(Team aTeam) {
+        decorated.setTeam(aTeam);
+    }
 
-     @Override
-     public void meleeAttack(Creature defender) {
-         decorated.meleeAttack(defender);
-     }
+    @Override
+    public void meleeAttack(Creature defender) {
+        decorated.meleeAttack(defender);
+    }
 
-     @Override
-     public boolean[][] getSplashDamage() {
-         return decorated.getSplashDamage();
-     }
+    @Override
+    public boolean[][] getSplashDamage() {
+        return decorated.getSplashDamage();
+    }
 
-     @Override
+    @Override
     public void applyDamage(int aDamageToApply) {
         decorated.applyDamage(aDamageToApply);
     }
@@ -136,14 +136,14 @@ import java.beans.PropertyChangeEvent;
     }
 
     @Override
-    public void setAmount(int aAmount) {
+    void setAmount(int aAmount) {
         decorated.setAmount(aAmount);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         decorated.propertyChange(aPropertyChangeEvent);
-        if(decorated.getAmount()>0)
+        if (decorated.getAmount() > 0)
             setCurrentHPToMaxHp();
     }
 

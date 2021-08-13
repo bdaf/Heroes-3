@@ -16,18 +16,18 @@ class MapTile extends StackPane {
     private ImageView image;
 
     public MapTile(){
-        rec = new Rectangle(60,60, Color.WHITE);
+        rec = new Rectangle(60,60);
         rec.setStroke(Color.BLACK);
         getChildren().add(rec);
     }
 
-    void addCreature(String stringOfCurrentHp, String nameOfCreature, Creature.Team aTeam) {
+    void addCreature(Creature aCreature) {
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
-        image = GraphicsOfCreaturesMaker.getGraphicsOf(nameOfCreature,aTeam,61,61);
+        image = GraphicsOfCreaturesMaker.getGraphicsOf(aCreature.getName(),aCreature.getTeam(),61,61);
         vbox.getChildren().add(image);
         getChildren().add(vbox);
-        Text text = new Text(stringOfCurrentHp);
+        Text text = new Text(aCreature.getStringOfCurrentHp());
         vbox = new VBox();
         vbox.getChildren().add(text);
         vbox.setAlignment(Pos.BOTTOM_CENTER);

@@ -32,7 +32,7 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    public void setTeam(Team aTeam) {
+    void setTeam(Team aTeam) {
         decorated.setTeam(aTeam);
     }
 
@@ -77,7 +77,7 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    public void setShots(int aShoots) {
+    void setShots(int aShoots) {
         decorated.setShots(aShoots);
     }
 
@@ -147,7 +147,7 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    public void setAmount(int aAmount) {
+    void setAmount(int aAmount) {
         decorated.setAmount(aAmount);
     }
 

@@ -2,6 +2,7 @@ package pl.sdk;
 
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.DecreaserShotsOfCreature;
 import pl.sdk.creatures.Factory;
 
 import static org.junit.jupiter.api.Assertions.*;

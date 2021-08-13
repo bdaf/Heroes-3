@@ -1,6 +1,8 @@
 package pl.sdk;
 
 import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.DecreaserShotsOfCreature;
+import pl.sdk.creatures.TeamSetterForCreature;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -58,7 +60,7 @@ public class GameEngine {
 
     private void putCreatureFromOneSideToBoard(List<Creature> creatures, int x, Creature.Team aTeam) {
         for (int i = 0; i < creatures.size(); i++) {
-            creatures.get(i).setTeam(aTeam);
+            TeamSetterForCreature.setTeam(creatures.get(i), aTeam);
             board.add(new Point(x, (i * 2)), creatures.get(i));
         }
     }
