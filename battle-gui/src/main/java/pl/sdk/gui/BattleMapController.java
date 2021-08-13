@@ -40,7 +40,6 @@ public class BattleMapController implements PropertyChangeListener {
 
     @FXML
     void initialize() {
-
         gameEngine.addObserver(gameEngine.CURRENT_CREATURE_CHANGED, this);
         gameEngine.addObserver(gameEngine.CREATURE_MOVED, this);
         gameEngine.addObserver(gameEngine.CURRENT_CREATURE_ATTACKED, this);
@@ -50,6 +49,7 @@ public class BattleMapController implements PropertyChangeListener {
     }
 
     private void refreshGui() {
+        gridMap.getChildren().clear();
         for (int x = 0; x < 20; x++) {
             for (int y = 0; y < 15; y++) {
                 MapTile mapTile = new MapTile();

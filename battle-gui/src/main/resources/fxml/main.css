@@ -23,7 +23,7 @@
     -fx-font-weight: bold;
 }
 #gridMap{
-    /* -fx-background-image: url("/graphics/background/blueGround.png");*/
+    -fx-background-image: url("/graphics/background/blueGround.png");
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 25, 0.5, 0, 0);
 }

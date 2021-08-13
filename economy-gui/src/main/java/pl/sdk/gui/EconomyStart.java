@@ -7,9 +7,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import pl.sdk.hero.EconomyHero;
 
+import static pl.sdk.GameEngine.VERSION;
+
 public class EconomyStart extends Application {
 
-    private String VERSION = "1.0.0-SNAPSHOT";
 
     public static void main(String[] aArgs) {
         launch();
@@ -22,7 +23,7 @@ public class EconomyStart extends Application {
         loader.setController(new EconomyController(new EconomyHero(EconomyHero.Fraction.NECROPOLIS,3000),new EconomyHero(EconomyHero.Fraction.CASTLE,3000)));
         stage.getIcons().add(new Image("jpg/icon.jpg"));
         Scene scene = new Scene(loader.load());
-        stage.setTitle("Heroes "+VERSION);
+        stage.setTitle("Heroes "+ VERSION);
         stage.setScene(scene);
         stage.show();
     }

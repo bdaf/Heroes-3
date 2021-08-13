@@ -4,11 +4,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import pl.sdk.GameEngine;
 import pl.sdk.creatures.Creature;
 
 class MapTile extends StackPane {
@@ -16,7 +18,8 @@ class MapTile extends StackPane {
     private ImageView image;
 
     public MapTile(){
-        rec = new Rectangle(60,60);
+        rec = new Rectangle(60,60, Color.WHITE);
+        rec.setOpacity(0.5);
         rec.setStroke(Color.BLACK);
         getChildren().add(rec);
     }

@@ -53,9 +53,9 @@
       <URL value="@main.css" />
    </stylesheets>
    <left>
-      <Pane fx:id="leftPainForHero" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="leftPainForHero" prefHeight="200.0" prefWidth="250.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
-      <Pane fx:id="rightPainForHero" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="rightPainForHero" prefHeight="200.0" prefWidth="250.0" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>
