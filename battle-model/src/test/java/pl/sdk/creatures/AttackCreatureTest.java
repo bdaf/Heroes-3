@@ -19,7 +19,6 @@ public class AttackCreatureTest {
 
     @BeforeEach
     void init(){
-        randomizer = new Random();
         randomizer = mock(Random.class);
         when(randomizer.nextInt(anyInt())).thenReturn(5);
     }
@@ -47,7 +46,7 @@ public class AttackCreatureTest {
 
 
     @Test
-    void defenderShouldHaveLostMaximum_400PercentOfAttackersDamageAndAttackerShouldHaveLostMinimum_30PercentOfDefendersDamage(){
+    void defenderShouldHLostMaximum_400PercentOfAttackersDamageAndAttackerShouldLostMinimum_30PercentOfDefendersDamage(){
         Creature attacker = new Creature.BuilderForTesting()
                 .attack(100)
                 .armor(100)

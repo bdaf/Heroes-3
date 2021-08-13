@@ -82,7 +82,7 @@ public class Creature implements PropertyChangeListener {
     }
 
     void counterAttack(Creature defender) {
-        if (defender.canCounterAttack() && defender.isAlive()) {
+        if (defender.isAlive() && defender.canCounterAttack()) {
             int damageToDealInCounterAttack = defender.countDamage(defender, this);
             applyDamage(damageToDealInCounterAttack);
             defender.setIfWasCounterAttackInThisTurn(true);
