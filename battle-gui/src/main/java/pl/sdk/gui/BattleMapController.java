@@ -117,6 +117,7 @@ public class BattleMapController implements PropertyChangeListener {
     }
 
     private void makeWindowOfWinningSide() {
+        gameEngine.pass();
         HBox top = new HBox();
         HBox bottom = new HBox();
         preparingWindow(bottom,top);
@@ -129,7 +130,7 @@ public class BattleMapController implements PropertyChangeListener {
     private void prepareSellingAndCloseButtonsAndTop(HBox aBottom, HBox aTop) {
         VBox vBox = new VBox();
         vBox.getChildren().add(new Label("Congratulations!"));
-        vBox.getChildren().add(new Label("If You are the " +gameEngine.getActiveCreature().getTeam()+", you won!"));
+        vBox.getChildren().add(new Label("If You are the " + getWinner() +", you won!"));
         vBox.getChildren().add(new Label("If You are not, sorry, train better."));
         aTop.getChildren().add(vBox);
         vBox.setAlignment(Pos.CENTER);
@@ -138,6 +139,12 @@ public class BattleMapController implements PropertyChangeListener {
         closeButton.setAlignment(Pos.CENTER);
         closeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> windowForEndOfTheGame.close());
         aBottom.getChildren().add(closeButton);
+    }
+
+    private String getWinner() {
+        if(gameEngine.getActiveCreature().getTeam() == Creature.Team.RIGHT_TEAM) return "Castle";
+        else if(gameEngine.getActiveCreature().getTeam() == Creature.Team.LEFT_TEAM) return "Necropolis";
+        else return null;
     }
 
     private void preparingWindow(HBox aBottom, HBox aTop) {
