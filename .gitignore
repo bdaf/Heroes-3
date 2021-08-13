@@ -1,5 +1,5 @@
 # Compiled source #
-#############
+###################
 *.com
 *.class
 *.dll
@@ -14,7 +14,7 @@
 MANIFEST.MF
 
 # Package #
-########
+###########
 *.7z
 *.dmg
 *.gz
@@ -25,12 +25,12 @@ MANIFEST.MF
 *.zip
 
 # Logs and database #
-###############
+#####################
 *.log
 *.sqlite
 
 # OS generated files #
-##############
+######################
 .DS_Store
 .DS_Store?
 ._*
@@ -38,8 +38,9 @@ MANIFEST.MF
 .Trashes
 enthumbs.db
 Thumbs.db
+
 # Directory #
-#########
+#############
 bin/
 out/
 target/
