@@ -98,7 +98,7 @@ public class EconomyController implements PropertyChangeListener {
         economyEngine.getActiveHero().getHeroArmy().forEach(c -> vBoxForUserArmy.getChildren().add(new CreatureButtonInHerosArmy(
                 this, factory, c.getTier(), c.isUpgraded(), economyEngine.getActiveHero(), randomize,c.getAmount())));
 
-        goldLabel.setText("Round: " + economyEngine.getRoundNumber() + " Gold: " + economyEngine.getActiveHero().getGold());
+        goldLabel.setText("Round: " + economyEngine.getRoundNumber() + "/4  Gold: " + economyEngine.getActiveHero().getGold());
     }
 
     private void addingCreatureButtonsInShopToBox(Pane aBox, EconomyFactory aFactory, boolean aIsUpgraded) {
