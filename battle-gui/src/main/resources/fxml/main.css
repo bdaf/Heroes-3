@@ -24,13 +24,14 @@
 }
 #gridMap{
     -fx-background-image: url("/graphics/background/blueGround.png");
-    -fx-background-position: center center;
+    -fx-background-repeat: repeat-x;
+    -fx-background-size: auto;
+    -fx-background-position: top left;
     -fx-effect: dropshadow(three-pass-box, black, 25, 0.5, 0, 0);
 }
 #leftPainForHero{
     -fx-background-image: url("/graphics/heros/necropolisHero.png");
     -fx-background-repeat: stretch;
-    /*-fx-background-size: 900 506;*/
     -fx-background-position: center center;
 
 }
