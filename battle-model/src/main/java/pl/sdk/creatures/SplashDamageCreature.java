@@ -122,9 +122,7 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        decorated.propertyChange(aPropertyChangeEvent);
-    }
+    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) { decorated.propertyChange(aPropertyChangeEvent); }
 
     @Override
     public String toString() {
@@ -147,9 +145,7 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    void setAmount(int aAmount) {
-        decorated.setAmount(aAmount);
-    }
+    void setAmount(int aAmount) { decorated.setAmount(aAmount); }
 
     @Override
     public int getMaxAttacksInTurn() {
@@ -162,7 +158,5 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    public boolean[][] getSplashDamage() {
-        return splashDamageTable;
-    }
+    public boolean[][] getSplashDamage() { return splashDamageTable; }
 }
