@@ -6,3 +6,5 @@ Heroes III game reconstruction made during going through course of objective pro
 <h3>2. Extract it.</h3> 
 <h3>3. Execute start.bat.</h3> 
 <h3>4. Enjoy the game!</h3> 
+<h1>Caution!</h1>
+<h3>To play this game you should have resolution above 1010x1760.</h3>
