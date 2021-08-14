@@ -2,7 +2,6 @@ package pl.sdk.converter;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.creatures.*;
 import pl.sdk.gui.BattleMapController;
@@ -13,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static pl.sdk.converter.ProperFractionConverter.getProperFactoryForFractionOf;
+import static pl.sdk.gui.MusicInGame.stopCurrentMusic;
+import static pl.sdk.gui.MusicInGame.turnOnMusicForBattle;
 
 public class EcoBattleConverter {
     public static void start(EconomyHero aLeftHero, EconomyHero aRightHero, Stage aWindow) {
@@ -27,6 +28,8 @@ public class EcoBattleConverter {
             stage.setTitle("FXML Welcome");
             stage.setScene(scene);
             aWindow.close();
+            stopCurrentMusic();
+            turnOnMusicForBattle();
             stage.show();
 
         } catch (IOException aE) {
