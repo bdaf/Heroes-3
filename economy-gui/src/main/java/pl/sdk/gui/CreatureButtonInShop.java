@@ -60,8 +60,10 @@ public class CreatureButtonInShop extends Button {
 
     protected void setAppearance(EconomyCreature aEconomyCreature) {
         setTextAlignment(TextAlignment.CENTER);
+        String shots = "";
+        if(aEconomyCreature.getStats().getShots() > 0) shots = " - "+aEconomyCreature.getStats().getShots()+" shots";
         setStyle("-fx-font-size: 18px;");
-        setText(nameOfCreature + " - " + amountOfCreaturesInStack + " amount"
+        setText(nameOfCreature + " - " + amountOfCreaturesInStack + " amount"+shots
                 + "\nHealth: " + aEconomyCreature.getStats().getMaxHp()
                 + " | Attack: " + aEconomyCreature.getStats().getAttack()
                 + " | Damage: " + aEconomyCreature.getStats().getDamage().lowerEndpoint() + " - " + aEconomyCreature.getStats().getDamage().upperEndpoint()
