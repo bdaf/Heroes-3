@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import pl.sdk.EconomyEngine;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.EconomyCreature;
@@ -61,7 +62,7 @@ public class EconomyController implements PropertyChangeListener {
         warningNeedToBuyLabel.setOpacity(0);
         if (economyEngine.getLeftHero().getHeroArmy().isEmpty() || economyEngine.getRightHero().getHeroArmy().isEmpty())
             warningNeedToBuyLabel.setOpacity(1);
-        else EcoBattleConverter.start(economyEngine.getLeftHero(), economyEngine.getRightHero(), readyButton.getScene().getWindow());
+        else EcoBattleConverter.start(economyEngine.getLeftHero(), economyEngine.getRightHero(), (Stage) readyButton.getScene().getWindow());
 
     }
 

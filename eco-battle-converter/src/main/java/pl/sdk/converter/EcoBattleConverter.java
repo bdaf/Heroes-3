@@ -16,7 +16,7 @@ import java.util.List;
 import static pl.sdk.converter.ProperFractionConverter.getProperFactoryForFractionOf;
 
 public class EcoBattleConverter {
-    public static void start(EconomyHero aLeftHero, EconomyHero aRightHero, Window aWindow) {
+    public static void start(EconomyHero aLeftHero, EconomyHero aRightHero, Stage aWindow) {
         Scene scene = null;
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -26,11 +26,11 @@ public class EcoBattleConverter {
             loader.setController(new BattleMapController(leftArmy, rightArmy));
             scene = new Scene(loader.load());
             Stage stage = new Stage();
-            stage.initOwner(aWindow);
-            stage.initModality(Modality.APPLICATION_MODAL);
+            aWindow.close();
             stage.setTitle("FXML Welcome");
             stage.setScene(scene);
             stage.show();
+
         } catch (IOException aE) {
             aE.printStackTrace();
         }
