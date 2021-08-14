@@ -4,7 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import pl.sdk.creatures.*;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.hero.EconomyHero;
@@ -17,18 +16,17 @@ import static pl.sdk.converter.ProperFractionConverter.getProperFactoryForFracti
 
 public class EcoBattleConverter {
     public static void start(EconomyHero aLeftHero, EconomyHero aRightHero, Stage aWindow) {
-        Scene scene = null;
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(EcoBattleConverter.class.getClassLoader().getResource("fxml/battleMap.fxml"));
             List<Creature> leftArmy = convert(aLeftHero);
             List<Creature> rightArmy = convert(aRightHero);
             loader.setController(new BattleMapController(leftArmy, rightArmy));
-            scene = new Scene(loader.load());
+            Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
-            aWindow.close();
             stage.setTitle("FXML Welcome");
             stage.setScene(scene);
+            aWindow.close();
             stage.show();
 
         } catch (IOException aE) {
