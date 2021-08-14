@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static pl.sdk.GameEngine.VERSION;
 import static pl.sdk.converter.ProperFractionConverter.getProperFactoryForFractionOf;
 import static pl.sdk.gui.MusicInGame.stopCurrentMusic;
 import static pl.sdk.gui.MusicInGame.turnOnMusicForBattle;
@@ -25,7 +26,7 @@ public class EcoBattleConverter {
             loader.setController(new BattleMapController(leftArmy, rightArmy));
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
-            stage.setTitle("FXML Welcome");
+            stage.setTitle("Heroes "+ VERSION);
             stage.setScene(scene);
             aWindow.close();
             stopCurrentMusic();

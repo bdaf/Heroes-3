@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pl.sdk.GameEngine;
 import pl.sdk.creatures.CastleFactory;
 import pl.sdk.creatures.Factory;
 
