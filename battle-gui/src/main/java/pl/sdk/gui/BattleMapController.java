@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.*;
 import pl.sdk.creatures.Creature;
+import pl.sdk.music.MusicInGame;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -121,6 +122,8 @@ public class BattleMapController implements PropertyChangeListener {
         HBox bottom = new HBox();
         preparingWindow(bottom,top);
         prepareSellingAndCloseButtonsAndTop(bottom, top);
+        MusicInGame.MUSIC_IN_BATTLE.stop();
+        MusicInGame.MUSIC_IN_ECONOMY.play();
         windowForEndOfTheGame.showAndWait();
         exit();
 

@@ -20,6 +20,7 @@
         <module>economy-model</module>
         <module>economy-gui</module>
         <module>eco-battle-converter</module>
+        <module>audio</module>
     </modules>
 
     <dependencyManagement>

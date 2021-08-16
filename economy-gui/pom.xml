@@ -32,6 +32,12 @@
             <artifactId>eco-battle-converter</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>pl.sdk</groupId>
+            <artifactId>audio</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

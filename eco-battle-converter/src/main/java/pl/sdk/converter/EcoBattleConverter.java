@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import pl.sdk.creatures.*;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.hero.EconomyHero;
+import pl.sdk.music.MusicInGame;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,8 +14,7 @@ import java.util.List;
 
 import static pl.sdk.GameEngine.VERSION;
 import static pl.sdk.converter.ProperFractionConverter.getProperFactoryForFractionOf;
-import static pl.sdk.gui.MusicInGame.stopCurrentMusic;
-import static pl.sdk.gui.MusicInGame.turnOnMusicForBattle;
+
 
 public class EcoBattleConverter {
     public static void start(EconomyHero aLeftHero, EconomyHero aRightHero, Stage aWindow) {
@@ -29,9 +29,9 @@ public class EcoBattleConverter {
             stage.setTitle("Heroes "+ VERSION);
             stage.setScene(scene);
             aWindow.close();
-            stopCurrentMusic();
-            turnOnMusicForBattle();
             stage.show();
+            MusicInGame.MUSIC_IN_ECONOMY.pause();
+            MusicInGame.MUSIC_IN_BATTLE.play();
 
         } catch (IOException aE) {
             aE.printStackTrace();

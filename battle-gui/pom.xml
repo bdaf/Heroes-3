@@ -27,7 +27,12 @@
             <groupId>pl.sdk</groupId>
             <artifactId>battle-model</artifactId>
             <version>${project.version}</version>
-            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>pl.sdk</groupId>
+            <artifactId>audio</artifactId>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
