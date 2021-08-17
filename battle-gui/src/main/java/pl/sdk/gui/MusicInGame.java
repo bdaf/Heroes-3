@@ -1,4 +1,4 @@
-package pl.sdk.music;
+package pl.sdk.gui;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;

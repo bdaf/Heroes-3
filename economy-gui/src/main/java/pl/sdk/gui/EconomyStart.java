@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import pl.sdk.hero.EconomyHero;
-import pl.sdk.music.MusicInGame;
 
 import static pl.sdk.GameEngine.VERSION;
 

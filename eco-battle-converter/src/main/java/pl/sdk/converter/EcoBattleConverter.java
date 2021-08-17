@@ -5,8 +5,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.sdk.creatures.*;
 import pl.sdk.gui.BattleMapController;
+import pl.sdk.gui.MusicInGame;
 import pl.sdk.hero.EconomyHero;
-import pl.sdk.music.MusicInGame;
 
 import java.io.IOException;
 import java.util.ArrayList;

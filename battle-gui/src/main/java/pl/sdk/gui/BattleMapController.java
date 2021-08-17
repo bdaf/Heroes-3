@@ -13,7 +13,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.*;
 import pl.sdk.creatures.Creature;
-import pl.sdk.music.MusicInGame;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

@@ -20,7 +20,6 @@
         <module>economy-model</module>
         <module>economy-gui</module>
         <module>eco-battle-converter</module>
-        <module>audio</module>
     </modules>
 
     <dependencyManagement>
@@ -34,6 +33,11 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
+            <version>11-ea+25</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
             <version>11-ea+25</version>
         </dependency>
         <dependency>

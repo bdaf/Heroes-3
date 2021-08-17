@@ -24,6 +24,11 @@
             <version>11-ea+25</version>
         </dependency>
         <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>11-ea+25</version>
+        </dependency>
+        <dependency>
             <groupId>pl.sdk</groupId>
             <artifactId>battle-model</artifactId>
             <version>${project.version}</version>
