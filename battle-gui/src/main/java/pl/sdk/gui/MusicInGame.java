@@ -4,7 +4,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import java.io.File;
+import java.net.URL;
 
 public enum MusicInGame {
     MUSIC_IN_ECONOMY("economyMusic.mp3",0.1),
@@ -13,10 +13,8 @@ public enum MusicInGame {
     private MediaPlayer mediaPlayer;
 
     MusicInGame(String aNameOfMusic, double aVolume) {
-        Media media = new Media(new File("battle-gui/src/main/resources/audio/music/"+aNameOfMusic).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        /* I don't know why this code below doesn't work, it's more readable for me, but it points always null
-        mediaPlayer = new MediaPlayer(new Media(getClass().getResource("audio/music/"+aNameOfMusic).toString())); */
+        URL resources = getClass().getResource("/audio/music/"+aNameOfMusic);
+        mediaPlayer = new MediaPlayer(new Media(resources.toString()));
         setVolume(aVolume);
         mediaPlayer.setCycleCount(AudioClip.INDEFINITE);
     }
