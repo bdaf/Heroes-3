@@ -16,6 +16,7 @@ public class DoubleAttackTest {
     @Test
     void ShootingCreatureShouldAttackTwiceAndDefenderShouldNotCounterAttack(){
         Creature attacker = new ShootingCreatureDecorator(new Creature.BuilderForTesting()
+                .moveRange(5)
                 .attacksInTurn(2)
                 .damage(Range.closed(1,1))
                 .shots(12)

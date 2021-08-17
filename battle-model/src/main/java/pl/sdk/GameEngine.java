@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class GameEngine {
     public static final String VERSION = "1.0.0-SNAPSHOT";
@@ -24,21 +25,34 @@ public class GameEngine {
     private PropertyChangeSupport observerSupport;
 
     public GameEngine(List<Creature> creaturesOnLeftSide, List<Creature> creaturesOnRightSide) {
-        this(creaturesOnLeftSide, creaturesOnRightSide, new Board());
+        this(creaturesOnLeftSide, creaturesOnRightSide, new Board(), new Random());
     }
 
-    GameEngine(List<Creature> creaturesOnLeftSide, List<Creature> creaturesOnRightSide, Board aBoard) {
+
+    GameEngine(List<Creature> creaturesOnLeftSide, List<Creature> creaturesOnRightSide, Board aBoard, Random randomizer) {
         board = aBoard;
         putCreaturesToBoard(creaturesOnLeftSide, creaturesOnRightSide);
         List<Creature> creaturesOnBothSides = new ArrayList<>();
         creaturesOnBothSides.addAll(creaturesOnLeftSide);
         creaturesOnBothSides.addAll(creaturesOnRightSide);
-        creaturesOnBothSides.sort(Comparator.comparingDouble(Creature::getMoveRange).reversed());
+        sortBasedOnMovementSpeedAndThenRandomly(creaturesOnBothSides,randomizer);
         queue = new CreatureTurnQueue(creaturesOnBothSides);
 
         observerSupport = new PropertyChangeSupport(this);
         queue.addObserver(this);
         creaturesOnBothSides.forEach(c -> addObserver(UPDATE_AFTER_EVERY_TURN, c));
+    }
+
+    private void sortBasedOnMovementSpeedAndThenRandomly(List<Creature> aCreaturesOnBothSides, Random aRandomizer) {
+        aCreaturesOnBothSides.sort(new Comparator<Creature>() {
+            @Override
+            public int compare(Creature aC1, Creature aC2) {
+                int result = Double.compare(aC2.getMoveRange(), aC1.getMoveRange());
+                if (result != 0) return result;
+                if (aRandomizer.nextBoolean()) return 1;
+                else return -1;
+            }
+        });
     }
 
     public void addObserver(String aEventType, PropertyChangeListener aObs) {
@@ -110,7 +124,7 @@ public class GameEngine {
                     }
                 }
             }
-            DecreaserShotsOfCreature.decrease(getActiveCreature(),1);
+            DecreaserShotsOfCreature.decrease(getActiveCreature(), 1);
         }
     }
 
