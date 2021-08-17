@@ -7,6 +7,7 @@ import pl.sdk.creatures.NecropolisFactory;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static org.mockito.Mockito.*;
 
@@ -39,7 +40,7 @@ public class SplashDamageTest {
         board.add(new Point(4,6),splashingCreature6);
         board.add(new Point(6,4),splashingCreature7);
 
-        GameEngine engine = new GameEngine(List.of(splashCreature), Collections.emptyList(), board);
+        GameEngine engine = new GameEngine(List.of(splashCreature), Collections.emptyList(), board, new Random());
 
         engine.attack(5,5);
 
@@ -81,7 +82,7 @@ public class SplashDamageTest {
         board.add(new Point(5,6),notSplashingCreature5);
         board.add(new Point(6,5),notSplashingCreature6);
 
-        GameEngine engine = new GameEngine(List.of(notSplashCreature), Collections.emptyList(), board);
+        GameEngine engine = new GameEngine(List.of(notSplashCreature), Collections.emptyList(), board, new Random());
 
         engine.attack(5,5);
 
