@@ -44,14 +44,11 @@ public class GameEngine {
     }
 
     private void sortBasedOnMovementSpeedAndThenRandomly(List<Creature> aCreaturesOnBothSides, Random aRandomizer) {
-        aCreaturesOnBothSides.sort(new Comparator<Creature>() {
-            @Override
-            public int compare(Creature aC1, Creature aC2) {
-                int result = Double.compare(aC2.getMoveRange(), aC1.getMoveRange());
-                if (result != 0) return result;
-                if (aRandomizer.nextBoolean()) return 1;
-                else return -1;
-            }
+        aCreaturesOnBothSides.sort((aC1, aC2) -> {
+            int result = Double.compare(aC2.getMoveRange(), aC1.getMoveRange());
+            if (result != 0) return result;
+            if (aRandomizer.nextBoolean()) return 1;
+            else return -1;
         });
     }
 
