@@ -27,6 +27,8 @@ public class BattleMapController implements PropertyChangeListener {
     @FXML
     private Button passButton;
     @FXML
+    private Button escapeButton;
+    @FXML
     private Pane leftPainForHero;
     @FXML
     private Pane rightPainForHero;
@@ -44,6 +46,7 @@ public class BattleMapController implements PropertyChangeListener {
         gameEngine.addObserver(gameEngine.CREATURE_MOVED, this);
         gameEngine.addObserver(gameEngine.CURRENT_CREATURE_ATTACKED, this);
         passButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.pass());
+        escapeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> exit());
         refreshGui();
     }
 
