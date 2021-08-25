@@ -111,7 +111,7 @@ public class EconomyController implements PropertyChangeListener {
 
 
     private void addEventHandlerForReadyButtonAndSetPlayerLabel() {
-        playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().toString());
+        playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().getFraction());
         readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
             int roundNumber = economyEngine.getRoundNumber();
             if (economyEngine.getActiveHero().equals(economyEngine.getRightHero())) roundNumber++;
@@ -127,8 +127,8 @@ public class EconomyController implements PropertyChangeListener {
     }
 
     private void changePlayerName() {
-        if (playerLabel.getText().contains("Left")) playerLabel.setText("Right Player's Choice - " + economyEngine.getActiveHero().toString());
-        else playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().toString());
+        if (playerLabel.getText().contains("Left")) playerLabel.setText("Right Player's Choice - " + economyEngine.getActiveHero().getFraction());
+        else playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().getFraction());
     }
 
     boolean sell(EconomyCreature aCreature) {

@@ -18,18 +18,8 @@ public class Creature implements PropertyChangeListener {
     private Team team;
 
     public enum Team{
-        LEFT_TEAM("leftTeam"),
-        RIGHT_TEAM("rightTeam");
-
-        private final String path;
-
-        Team(String aPath) {
-            path = aPath;
-        }
-
-        public String getPath() {
-            return path;
-        }
+        LEFT_TEAM(),
+        RIGHT_TEAM()
     }
 
      Creature(){

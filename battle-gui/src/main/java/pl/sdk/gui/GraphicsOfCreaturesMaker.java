@@ -6,7 +6,8 @@ import pl.sdk.creatures.Creature;
 
 public class GraphicsOfCreaturesMaker {
     static public ImageView getGraphicsOf(String aName, Creature.Team aTeam, int aHeight, int aWidth) {
-        ImageView image = new ImageView(new Image(GraphicsOfCreaturesMaker.class.getResourceAsStream("/graphics/creatures/" + aTeam.getPath() + "/" + aName + ".png")));
+        ImageView image = new ImageView(new Image(GraphicsOfCreaturesMaker.class.getResourceAsStream("/graphics/creatures/" + aName + ".png")));
+        if(aTeam == Creature.Team.RIGHT_TEAM) image.setScaleX(-1);
         image.setFitHeight(aHeight);
         image.setFitWidth(aWidth);
         return image;
