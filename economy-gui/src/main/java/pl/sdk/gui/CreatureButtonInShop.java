@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
+import pl.sdk.creatures.RandomizeAmountOfCreatures;
 import pl.sdk.hero.EconomyHero;
 
 public class CreatureButtonInShop extends Button {
@@ -28,7 +29,7 @@ public class CreatureButtonInShop extends Button {
     private String nameOfCreature;
     protected boolean trading;
 
-    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize, int aAmount) {
+    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreatures aRandomize, int aAmount) {
         super(aFactory.Create(aIsUpgraded, aTier, 1).getName());
         nameOfCreature = getText();
         getAmountForStack(aTier, aIsUpgraded, aHero, aRandomize);
@@ -41,15 +42,15 @@ public class CreatureButtonInShop extends Button {
         });
     }
 
-    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize) {
+    public CreatureButtonInShop(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreatures aRandomize) {
         this(aController, aFactory, aTier, aIsUpgraded, aHero, aRandomize, 1);
     }
 
-    protected void getAmountForStack(int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize) {
+    protected void getAmountForStack(int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreatures aRandomize) {
         amountOfCreaturesInStack =  aRandomize.getAmountOfTier(aTier, aHero.getFraction(), aIsUpgraded);
     }
 
-    protected void tradeCreatureAndSetRandomize(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize, int aAmount) {
+    protected void tradeCreatureAndSetRandomize(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreatures aRandomize, int aAmount) {
         if (aAmount > 0 && trading) {
             EconomyCreature creature = aFactory.Create(aIsUpgraded, aTier, aAmount);
             if (aController.buy(creature))

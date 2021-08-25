@@ -8,15 +8,16 @@ import javafx.stage.Stage;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
+import pl.sdk.creatures.RandomizeAmountOfCreatures;
 import pl.sdk.hero.EconomyHero;
 
 public class CreatureButtonInHerosArmy extends CreatureButtonInShop {
-    public CreatureButtonInHerosArmy(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize, int aAmount) {
+    public CreatureButtonInHerosArmy(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreatures aRandomize, int aAmount) {
         super(aController, aFactory, aTier, aIsUpgraded, aHero, aRandomize,aAmount);
     }
 
     @Override
-    protected void getAmountForStack(int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize){}
+    protected void getAmountForStack(int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreatures aRandomize){}
 
     @Override
     protected void setAppearance(EconomyCreature aEconomyCreature) {
@@ -28,7 +29,7 @@ public class CreatureButtonInHerosArmy extends CreatureButtonInShop {
     }
 
     @Override
-    protected void tradeCreatureAndSetRandomize(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize, int aAmount) {
+    protected void tradeCreatureAndSetRandomize(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreatures aRandomize, int aAmount) {
         if (aAmount > 0 && trading) {
             EconomyCreature creature = aFactory.Create(aIsUpgraded, aTier, aAmount);
             if (aController.sell(creature)){

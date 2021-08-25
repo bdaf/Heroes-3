@@ -2,7 +2,9 @@ package pl.sdk.converter;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import pl.sdk.EconomyEngine;
 import pl.sdk.creatures.*;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.gui.MusicInGame;
@@ -17,18 +19,20 @@ import static pl.sdk.converter.ProperFractionConverter.getProperFactoryForFracti
 
 
 public class EcoBattleConverter {
-    public static void start(EconomyHero aLeftHero, EconomyHero aRightHero, Stage aWindow) {
+    public static void start(EconomyEngine aEconomyEngine, Stage aWindow) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(EcoBattleConverter.class.getClassLoader().getResource("fxml/battleMap.fxml"));
-            List<Creature> leftArmy = convert(aLeftHero);
-            List<Creature> rightArmy = convert(aRightHero);
+            List<Creature> leftArmy = convert(aEconomyEngine.getLeftHero());
+            List<Creature> rightArmy = convert(aEconomyEngine.getRightHero());
             loader.setController(new BattleMapController(leftArmy, rightArmy));
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
-            stage.setTitle("Heroes "+ VERSION);
+            stage.setTitle("Herociples " + VERSION);
             stage.setScene(scene);
-            aWindow.close();
+            stage.initOwner(aWindow);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            if (aEconomyEngine.isThisTheLastBattle()) aWindow.close();
             stage.show();
             MusicInGame.MUSIC_IN_ECONOMY.pause();
             MusicInGame.MUSIC_IN_BATTLE.play();
@@ -41,7 +45,7 @@ public class EcoBattleConverter {
     public static List<Creature> convert(EconomyHero aEcoHero) {
         Factory factory = getProperFactoryForFractionOf(aEcoHero);
         List<Creature> ret = new ArrayList<>();
-        aEcoHero.getHeroArmy().forEach(c -> ret.add(factory.Create(c.isUpgraded(),c.getTier(),c.getAmount())));
+        aEcoHero.getHeroArmy().forEach(c -> ret.add(factory.Create(c.isUpgraded(), c.getTier(), c.getAmount())));
         return ret;
     }
 

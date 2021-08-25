@@ -124,8 +124,9 @@ public class BattleMapController implements PropertyChangeListener {
         MusicInGame.MUSIC_IN_BATTLE.stop();
         MusicInGame.MUSIC_IN_ECONOMY.play();
         windowForEndOfTheGame.showAndWait();
-        exit();
-
+        windowForEndOfTheGame.close();
+        Stage stage = (Stage) gridMap.getScene().getWindow();
+        stage.close();
     }
 
     private void prepareSellingAndCloseButtonsAndTop(HBox aBottom, HBox aTop) {

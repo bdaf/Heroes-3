@@ -24,7 +24,7 @@ public class EconomyStart extends Application {
         loader.setController(new EconomyController(new EconomyHero(EconomyHero.Fraction.NECROPOLIS,3000),new EconomyHero(EconomyHero.Fraction.CASTLE,3000)));
         stage.getIcons().add(new Image("jpg/icon.jpg"));
         Scene scene = new Scene(loader.load());
-        stage.setTitle("Heroes "+ VERSION);
+        stage.setTitle("Herociples "+ VERSION);
         stage.setScene(scene);
         stage.show();
     }

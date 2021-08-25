@@ -1,4 +1,4 @@
-package pl.sdk.gui;
+package pl.sdk.creatures;
 
 import pl.sdk.hero.EconomyHero;
 
@@ -6,13 +6,13 @@ import java.util.Random;
 
 import static pl.sdk.creatures.Factory.ERROR_MSG;
 
-public class RandomizeAmountOfCreaturesInShop {
+public class RandomizeAmountOfCreatures {
 
     public static final String INCORRECT_HERO_FRACTION = "Incorrect hero fraction!";
     private final int necropolis[];
     private final int castle[];
 
-    RandomizeAmountOfCreaturesInShop() {
+    public RandomizeAmountOfCreatures() {
         necropolis = new int[14];
         castle = new int[14];
         setDefaultValueForFractions();

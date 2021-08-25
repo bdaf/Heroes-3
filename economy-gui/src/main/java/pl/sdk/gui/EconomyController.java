@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pl.sdk.EconomyEngine;
+import pl.sdk.GameEngine;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
@@ -23,6 +24,7 @@ import static pl.sdk.EconomyEngine.*;
 import static pl.sdk.converter.ProperFractionConverter.getProperEconomyFactoryForFractionOf;
 
 public class EconomyController implements PropertyChangeListener {
+    private EconomyEngine economyEngine;
     @FXML
     Button readyButton;
     @FXML
@@ -40,42 +42,33 @@ public class EconomyController implements PropertyChangeListener {
     @FXML
     Label warningNeedToBuyLabel;
 
-    private EconomyEngine economyEngine;
-    private RandomizeAmountOfCreaturesInShop randomize;
-
     EconomyController(EconomyHero aLeftHero, EconomyHero aRightHero) {
         economyEngine = new EconomyEngine(aLeftHero, aRightHero);
     }
 
     @FXML
     void initialize() {
-        randomize = new RandomizeAmountOfCreaturesInShop();
         escapeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> exit());
         economyEngine.addObserver(HERO_BOUGHT_CREATURE, this);
         economyEngine.addObserver(ACTIVE_HERO_CHANGED, this);
         economyEngine.addObserver(NEXT_ROUND_STARTED, this);
+        economyEngine.addObserver(END_OF_TURN, this);
         addEventHandlerForReadyButtonAndSetPlayerLabel();
         refreshGui();
     }
 
-    private void startGame() {
-        warningNeedToBuyLabel.setOpacity(0);
-        if (economyEngine.getLeftHero().getHeroArmy().isEmpty() || economyEngine.getRightHero().getHeroArmy().isEmpty())
-            warningNeedToBuyLabel.setOpacity(1);
-        else EcoBattleConverter.start(economyEngine.getLeftHero(), economyEngine.getRightHero(), (Stage) readyButton.getScene().getWindow());
-
+    private void addEventHandlerForReadyButtonAndSetPlayerLabel() {
+        playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().getFraction());
+        readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> pass());
     }
 
-    boolean buy(EconomyCreature aCreature) {
-        boolean ret = true;
-        warningLabel.setOpacity(0);
+    private void pass() {
+        warningNeedToBuyLabel.setOpacity(0);
         try {
-            economyEngine.buy(aCreature);
-        }catch (IllegalStateException e){
-            warningLabel.setOpacity(1);
-            ret = false;
+            economyEngine.pass();
+        } catch (IllegalStateException e){
+            warningNeedToBuyLabel.setOpacity(1);
         }
-        return ret;
     }
 
     void refreshGui() {
@@ -97,42 +90,32 @@ public class EconomyController implements PropertyChangeListener {
         addingCreatureButtonsInShopToBox(vBoxShopCreaturesUpgraded, factory, true);
 
         economyEngine.getActiveHero().getHeroArmy().forEach(c -> vBoxForUserArmy.getChildren().add(new CreatureButtonInHerosArmy(
-                this, factory, c.getTier(), c.isUpgraded(), economyEngine.getActiveHero(), randomize,c.getAmount())));
+                this, factory, c.getTier(), c.isUpgraded(), economyEngine.getActiveHero(), economyEngine.getRandomizer(), c.getAmount())));
 
-        goldLabel.setText("Round: " + economyEngine.getRoundNumber() + "/4  Gold: " + economyEngine.getActiveHero().getGold());
+        goldLabel.setText("Round: " + economyEngine.getRoundNumber() + "/" + AMOUNT_OF_ROUNDS + " Gold: " + economyEngine.getActiveHero().getGold());
     }
 
     private void addingCreatureButtonsInShopToBox(Pane aBox, EconomyFactory aFactory, boolean aIsUpgraded) {
         for (int i = 0; i < 7; i++) {
             aBox.getChildren().add(new CreatureButtonInShop(this, aFactory, i + 1, aIsUpgraded, economyEngine.getActiveHero(),
-                    randomize));
+                    economyEngine.getRandomizer()));
         }
     }
 
-
-    private void addEventHandlerForReadyButtonAndSetPlayerLabel() {
-        playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().getFraction());
-        readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-            int roundNumber = economyEngine.getRoundNumber();
-            if (economyEngine.getActiveHero().equals(economyEngine.getRightHero())) roundNumber++;
-            if (roundNumber > 4) {
-                startGame();
-                return;
-            }
-            economyEngine.pass();
-            randomize = new RandomizeAmountOfCreaturesInShop();
-            changePlayerName();
-            refreshGui();
-        });
-    }
-
-    private void changePlayerName() {
-        if (playerLabel.getText().contains("Left")) playerLabel.setText("Right Player's Choice - " + economyEngine.getActiveHero().getFraction());
-        else playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().getFraction());
+    boolean buy(EconomyCreature aCreature) {
+        boolean ret = true;
+        warningLabel.setOpacity(0);
+        try {
+            economyEngine.buy(aCreature);
+        } catch (IllegalStateException e) {
+            warningLabel.setOpacity(1);
+            ret = false;
+        }
+        return ret;
     }
 
     boolean sell(EconomyCreature aCreature) {
-       return economyEngine.sell(aCreature);
+        return economyEngine.sell(aCreature);
     }
 
     private void clearingArmyAndShopBoxesAndMakingTheirLabels() {
@@ -150,6 +133,18 @@ public class EconomyController implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
+        if (aPropertyChangeEvent.getPropertyName().equals(ACTIVE_HERO_CHANGED)) changePlayerName();
+        if (aPropertyChangeEvent.getPropertyName().equals(END_OF_TURN)) goToBattle();
         refreshGui();
+    }
+
+    private void changePlayerName() {
+        if (playerLabel.getText().contains("Left"))
+            playerLabel.setText("Right Player's Choice - " + economyEngine.getActiveHero().getFraction());
+        else playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().getFraction());
+    }
+
+    private void goToBattle() {
+        EcoBattleConverter.start(economyEngine, (Stage) readyButton.getScene().getWindow());
     }
 }
