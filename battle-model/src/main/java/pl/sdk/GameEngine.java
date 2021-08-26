@@ -122,6 +122,7 @@ public class GameEngine {
         if (getLeftAttacksInTurn() <= 0)
             queue.setMovePointsOfActiveCreature(0);
         notifyObserver(new PropertyChangeEvent(this, CURRENT_CREATURE_ATTACKED, null, null));
+        if (!canActiveCreatureDoAnyAction()) pass();
     }
 
     private void attackOnSplashedPoints(int aX, int aY) {

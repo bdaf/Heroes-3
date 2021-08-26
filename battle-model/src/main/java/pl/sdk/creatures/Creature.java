@@ -58,7 +58,7 @@ public class Creature implements PropertyChangeListener {
     }
 
     public void attack(Creature defender) {
-        if (this == defender) throw new IllegalArgumentException();
+        if (this == defender) throw new IllegalArgumentException("Creature cannot attack himself!");
         if (isAlive()) {
             int damageToDeal = countDamage(this, defender);
             defender.applyDamage(damageToDeal);
