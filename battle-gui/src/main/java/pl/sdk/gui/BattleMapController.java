@@ -64,6 +64,7 @@ public class BattleMapController implements PropertyChangeListener {
                 Creature creatureOnMapTitle = gameEngine.get(x, y);
                 if (creatureOnMapTitle != null) {
                     mapTile.addCreature(creatureOnMapTitle);
+                    addEventHandlerForShowingStatsOnRightClick(mapTile);
                     if (creatureOnMapTitle == gameEngine.getActiveCreature() && gameEngine.getActiveCreature().isAlive())
                         flagActiveCreature(x, y, mapTile, creatureOnMapTitle);
                     else if (!creatureOnMapTitle.isAlive())
@@ -78,6 +79,14 @@ public class BattleMapController implements PropertyChangeListener {
                     setBackgroundGrayAndSetMoveOnClick(x, y, mapTile);
             }
         }
+    }
+
+    private void addEventHandlerForShowingStatsOnRightClick(MapTile aMapTile) {
+        aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+            if(e.getButton() == MouseButton.SECONDARY){
+                
+            }
+        });
     }
 
     private void flagActiveCreature(int aX, int aY, MapTile aMapTile, Creature aCreatureOnMapTitle) {
