@@ -131,7 +131,5 @@ public abstract class CreatureEconomyButton extends Button {
 
     protected abstract void setTitle(Stage aWindowForChoosingAmount);
 
-    protected String getName() {
-        return nameOfCreature;
-    }
+    protected String getName() { return nameOfCreature; }
 }

@@ -36,10 +36,10 @@ public class EndOfTurnTest {
         Creature defender = CreateDefaultCreatureForTests(1);
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         assertEquals(true, defender.canCounterAttack());
-        assertEquals(1, engine.getAttacksInTurn());
+        assertEquals(1, engine.getLeftAttacksInTurn());
         //if(engine.canAttack(19,0))
             engine.attack(19,0);
-        assertEquals(0, engine.getAttacksInTurn());
+        assertEquals(0, engine.getLeftAttacksInTurn());
         assertEquals(false, defender.canCounterAttack());
         engine.pass();
         engine.pass();

@@ -80,7 +80,7 @@ public class CreatureTurnQueue {
         attacksOfActiveCreature = aAttacksOfActiveCreature;
     }
 
-    boolean ifSomeTeamWon() {
+    boolean ifAnyTeamWon() {
         removingDeadCreatures();
         if(!aliveCreatures.isEmpty()){
             Creature.Team team = aliveCreatures.get(0).getTeam();

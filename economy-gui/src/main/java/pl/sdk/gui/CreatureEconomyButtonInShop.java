@@ -23,7 +23,6 @@ public class CreatureEconomyButtonInShop extends CreatureEconomyButton {
             aRandomize.setAmountOfTier(aTier, aHero.getFraction(), aRandomize.getAmountOfTier(aTier, aHero.getFraction(), aIsUpgraded) - aAmount, aIsUpgraded);
     }
 
-
     protected void setAppearance(EconomyCreature aEconomyCreature) {
         setTextAlignment(TextAlignment.CENTER);
         String shots = "";
@@ -42,7 +41,6 @@ public class CreatureEconomyButtonInShop extends CreatureEconomyButton {
         setPrefWidth(500);
         setGraphic(image);
     }
-
 
     protected Slider createSlider(EconomyCreature aCreate, EconomyHero aHero) {
         Slider slider = new Slider();

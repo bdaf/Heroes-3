@@ -8,12 +8,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
 public class GameEngine {
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.1";
     public static int BOARD_WIDTH = 20;
     public static int BOARD_HEIGHT = 15;
     public static final String CURRENT_CREATURE_CHANGED = "CURRENT_CREATURE_CHANGED";
@@ -28,14 +27,13 @@ public class GameEngine {
         this(creaturesOnLeftSide, creaturesOnRightSide, new Board(), new Random());
     }
 
-
     GameEngine(List<Creature> creaturesOnLeftSide, List<Creature> creaturesOnRightSide, Board aBoard, Random randomizer) {
         board = aBoard;
         putCreaturesToBoard(creaturesOnLeftSide, creaturesOnRightSide);
         List<Creature> creaturesOnBothSides = new ArrayList<>();
         creaturesOnBothSides.addAll(creaturesOnLeftSide);
         creaturesOnBothSides.addAll(creaturesOnRightSide);
-        sortBasedOnMovementSpeedAndThenRandomly(creaturesOnBothSides,randomizer);
+        sortBasedOnMovementSpeedAndThenRandomly(creaturesOnBothSides, randomizer);
         queue = new CreatureTurnQueue(creaturesOnBothSides);
 
         observerSupport = new PropertyChangeSupport(this);
@@ -81,6 +79,29 @@ public class GameEngine {
         double distance = board.moveAndReturnDistance(queue.getActiveCreature(), targetPoint);
         queue.setMovePointsOfActiveCreature(queue.getMovePointsOfActiveCreature() - distance);
         notifyObserver(new PropertyChangeEvent(this, CREATURE_MOVED, oldPosition, targetPoint));
+        if (!canActiveCreatureDoAnyAction()) pass();
+    }
+
+    public boolean canActiveCreatureDoAnyAction() {
+        return getLeftMovePointsOfActiveCreature() >= 1 ||
+                (getLeftAttacksInTurn() > 0 && (
+                        getActiveCreature().getShots() > 0) ||
+                        canAttackSomebodyAround()
+                );
+    }
+
+    private boolean canAttackSomebodyAround() {
+        Point point = board.get(getActiveCreature());
+        int x = point.getX();
+        int y = point.getY();
+        return canAttack(x - 1, y)
+                || canAttack(x - 1, y + 1)
+                || canAttack(x, y + 1)
+                || canAttack(x + 1, y + 1)
+                || canAttack(x + 1, y)
+                || canAttack(x + 1, y - 1)
+                || canAttack(x, y - 1)
+                || canAttack(x - 1, y - 1);
     }
 
     public void pass() {
@@ -91,10 +112,6 @@ public class GameEngine {
 
     }
 
-    public int getPossibleAttacksOfActiveCreature() {
-        return queue.getAttacksOfActiveCreature();
-    }
-
     public double getLeftMovePointsOfActiveCreature() {
         return queue.getMovePointsOfActiveCreature();
     }
@@ -102,7 +119,7 @@ public class GameEngine {
     public void attack(int aX, int aY) {
         attackOnSplashedPoints(aX, aY);
         queue.setAttacksOfActiveCreature(queue.getAttacksOfActiveCreature() - 1);
-        if (getPossibleAttacksOfActiveCreature() <= 0)
+        if (getLeftAttacksInTurn() <= 0)
             queue.setMovePointsOfActiveCreature(0);
         notifyObserver(new PropertyChangeEvent(this, CURRENT_CREATURE_ATTACKED, null, null));
     }
@@ -159,11 +176,11 @@ public class GameEngine {
         notifyObserver(new PropertyChangeEvent(this, UPDATE_AFTER_EVERY_TURN, null, null));
     }
 
-    int getAttacksInTurn() {
+    int getLeftAttacksInTurn() {
         return queue.getAttacksOfActiveCreature();
     }
 
-    public boolean ifSomeTeamWon() {
-        return queue.ifSomeTeamWon();
+    public boolean ifAnyTeamWon() {
+        return queue.ifAnyTeamWon();
     }
 }

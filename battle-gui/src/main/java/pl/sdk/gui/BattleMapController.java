@@ -76,7 +76,7 @@ public class BattleMapController implements PropertyChangeListener {
     }
 
     private void flagActiveCreature(int aX, int aY, MapTile aMapTile, Creature aCreatureOnMapTitle) {
-        if (isAfterAction(aX, aY,aCreatureOnMapTitle)) aMapTile.setBackgroundColor(Color.GRAY);
+        if (!gameEngine.canActiveCreatureDoAnyAction()) aMapTile.setBackgroundColor(Color.GRAY);
         else aMapTile.setBackgroundColor(Color.GREEN);
     }
 
@@ -104,19 +104,6 @@ public class BattleMapController implements PropertyChangeListener {
         aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.attack(new Point(FX, FY)));
     }
 
-    private boolean isAfterAction(int aX, int aY, Creature aCreature) {
-        return gameEngine.getPossibleAttacksOfActiveCreature() <= 0
-                || (gameEngine.getLeftMovePointsOfActiveCreature() < 1
-                && aCreature.getShots() < 1
-                && !gameEngine.canAttack(aX - 1, aY)
-                && !gameEngine.canAttack(aX - 1, aY + 1)
-                && !gameEngine.canAttack(aX, aY + 1)
-                && !gameEngine.canAttack(aX + 1, aY + 1)
-                && !gameEngine.canAttack(aX + 1, aY)
-                && !gameEngine.canAttack(aX + 1, aY - 1)
-                && !gameEngine.canAttack(aX, aY - 1)
-                && !gameEngine.canAttack(aX - 1, aY - 1));
-    }
 
     private void makeWindowOfWinningSide() {
         gameEngine.pass();
@@ -173,7 +160,7 @@ public class BattleMapController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         refreshGui();
         if(aPropertyChangeEvent.getPropertyName().equals( gameEngine.CURRENT_CREATURE_ATTACKED)){
-            if(gameEngine.ifSomeTeamWon()){
+            if(gameEngine.ifAnyTeamWon()){
                 makeWindowOfWinningSide();
             }
         }
