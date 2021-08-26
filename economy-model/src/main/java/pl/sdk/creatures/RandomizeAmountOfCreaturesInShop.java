@@ -6,13 +6,13 @@ import java.util.Random;
 
 import static pl.sdk.creatures.Factory.ERROR_MSG;
 
-public class RandomizeAmountOfCreatures {
+public class RandomizeAmountOfCreaturesInShop {
 
     public static final String INCORRECT_HERO_FRACTION = "Incorrect hero fraction!";
     private final int necropolis[];
     private final int castle[];
 
-    public RandomizeAmountOfCreatures() {
+    public RandomizeAmountOfCreaturesInShop() {
         necropolis = new int[14];
         castle = new int[14];
         setDefaultValueForFractions();

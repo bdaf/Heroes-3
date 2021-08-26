@@ -1,7 +1,7 @@
 package pl.sdk;
 
 import pl.sdk.creatures.EconomyCreature;
-import pl.sdk.creatures.RandomizeAmountOfCreatures;
+import pl.sdk.creatures.RandomizeAmountOfCreaturesInShop;
 import pl.sdk.hero.CopyHeroMaker;
 import pl.sdk.hero.CreatureShop;
 import pl.sdk.hero.EconomyHero;
@@ -25,7 +25,7 @@ public class EconomyEngine {
     private EconomyHero activeHero;
     private int roundNumber;
     private int tourNumber;
-    private RandomizeAmountOfCreatures randomize;
+    private RandomizeAmountOfCreaturesInShop randomize;
     private PropertyChangeSupport observerSupport;
 
     public EconomyEngine(EconomyHero aLeftHero, EconomyHero aRightHero) {
@@ -34,7 +34,7 @@ public class EconomyEngine {
         activeHero = leftHero;
         roundNumber = 1;
         tourNumber = 1;
-        randomize = new RandomizeAmountOfCreatures();
+        randomize = new RandomizeAmountOfCreaturesInShop();
         observerSupport = new PropertyChangeSupport(this);
     }
 
@@ -66,7 +66,7 @@ public class EconomyEngine {
         if (roundNumber > AMOUNT_OF_ROUNDS) {
             nextTour();
         } else {
-            randomize = new RandomizeAmountOfCreatures();
+            randomize = new RandomizeAmountOfCreaturesInShop();
             leftHero.addGold(FACTOR_OF_GOLD_AMOUNT_PER_ROUND * roundNumber);
             rightHero.addGold(FACTOR_OF_GOLD_AMOUNT_PER_ROUND * roundNumber);
             observerSupport.firePropertyChange(NEXT_ROUND_STARTED, roundNumber - 1, roundNumber);
@@ -116,7 +116,7 @@ public class EconomyEngine {
         return getTourNumber() > AMOUNT_OF_TOURS;
     }
 
-    public RandomizeAmountOfCreatures getRandomizer() {
+    public RandomizeAmountOfCreaturesInShop getRandomizer() {
         return randomize;
     }
 

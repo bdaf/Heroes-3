@@ -8,16 +8,17 @@ import javafx.stage.Stage;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
-import pl.sdk.creatures.RandomizeAmountOfCreatures;
+import pl.sdk.creatures.RandomizeAmountOfCreaturesInShop;
 import pl.sdk.hero.EconomyHero;
 
-public class CreatureButtonInHerosArmy extends CreatureButtonInShop {
-    public CreatureButtonInHerosArmy(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreatures aRandomize, int aAmount) {
-        super(aController, aFactory, aTier, aIsUpgraded, aHero, aRandomize,aAmount);
+public class CreatureEconomyButtonInHerosArmy extends CreatureEconomyButton {
+
+    public CreatureEconomyButtonInHerosArmy(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize, int aAmount) {
+        super(aController, aFactory, aTier, aIsUpgraded, aHero, aRandomize, aAmount);
     }
 
     @Override
-    protected void getAmountForStack(int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreatures aRandomize){}
+    protected void setAmountForStackInShop(int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize) {}
 
     @Override
     protected void setAppearance(EconomyCreature aEconomyCreature) {
@@ -29,13 +30,9 @@ public class CreatureButtonInHerosArmy extends CreatureButtonInShop {
     }
 
     @Override
-    protected void tradeCreatureAndSetRandomize(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreatures aRandomize, int aAmount) {
-        if (aAmount > 0 && trading) {
-            EconomyCreature creature = aFactory.Create(aIsUpgraded, aTier, aAmount);
-            if (aController.sell(creature)){
-                aRandomize.setAmountOfTier(aTier, aHero.getFraction(), aRandomize.getAmountOfTier(aTier, aHero.getFraction(), aIsUpgraded) + aAmount, aIsUpgraded);
-            }
-        }
+    protected void tradeAction(EconomyController aController, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize, int aAmount, EconomyCreature aCreature) {
+        if (aController.sell(aCreature))
+            aRandomize.setAmountOfTier(aTier, aHero.getFraction(), aRandomize.getAmountOfTier(aTier, aHero.getFraction(), aIsUpgraded) + aAmount, aIsUpgraded);
     }
 
     @Override

@@ -10,7 +10,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pl.sdk.EconomyEngine;
-import pl.sdk.GameEngine;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
@@ -86,18 +85,18 @@ public class EconomyController implements PropertyChangeListener {
 
         vBoxForArmyShop.getChildren().add(hBoxShopContainer);
 
-        addingCreatureButtonsInShopToBox(vBoxShopCreaturesNotUpgraded, factory, false);
-        addingCreatureButtonsInShopToBox(vBoxShopCreaturesUpgraded, factory, true);
+        addCreatureButtonsInShopToBox(vBoxShopCreaturesNotUpgraded, factory, false);
+        addCreatureButtonsInShopToBox(vBoxShopCreaturesUpgraded, factory, true);
 
-        economyEngine.getActiveHero().getHeroArmy().forEach(c -> vBoxForUserArmy.getChildren().add(new CreatureButtonInHerosArmy(
+        economyEngine.getActiveHero().getHeroArmy().forEach(c -> vBoxForUserArmy.getChildren().add(new CreatureEconomyButtonInHerosArmy(
                 this, factory, c.getTier(), c.isUpgraded(), economyEngine.getActiveHero(), economyEngine.getRandomizer(), c.getAmount())));
 
         goldLabel.setText("Round: " + economyEngine.getRoundNumber() + "/" + AMOUNT_OF_ROUNDS + " Gold: " + economyEngine.getActiveHero().getGold());
     }
 
-    private void addingCreatureButtonsInShopToBox(Pane aBox, EconomyFactory aFactory, boolean aIsUpgraded) {
+    private void addCreatureButtonsInShopToBox(Pane aBox, EconomyFactory aFactory, boolean aIsUpgraded) {
         for (int i = 0; i < 7; i++) {
-            aBox.getChildren().add(new CreatureButtonInShop(this, aFactory, i + 1, aIsUpgraded, economyEngine.getActiveHero(),
+            aBox.getChildren().add(new CreatureEconomyButtonInShop(this, aFactory, i + 1, aIsUpgraded, economyEngine.getActiveHero(),
                     economyEngine.getRandomizer()));
         }
     }
