@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -30,13 +31,16 @@ public abstract class CreatureEconomyButton extends Button {
         nameOfCreature = getText();
         setAmountForStackInShop(aTier, aIsUpgraded, aHero, aRandomize);
         setAppearance(aFactory.Create(aIsUpgraded, aTier, aAmount));
-        addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-            EconomyCreature eCreature = aFactory.Create(aIsUpgraded, aTier, aAmount);
-            int amount = displayChoosingAmountAndGetCreatureAmount(eCreature, aHero);
-            tradeCreatureAndSetRandomize(aController, aFactory, aTier, aIsUpgraded, aHero, aRandomize, amount);
-            aController.refreshGui();
+        addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            if (e.getButton() == MouseButton.PRIMARY) {
+                EconomyCreature eCreature = aFactory.Create(aIsUpgraded, aTier, aAmount);
+                int amount = displayChoosingAmountAndGetCreatureAmount(eCreature, aHero);
+                tradeCreatureAndSetRandomize(aController, aFactory, aTier, aIsUpgraded, aHero, aRandomize, amount);
+                aController.refreshGui();
+            }
         });
     }
+
     public CreatureEconomyButton(EconomyController aController, EconomyFactory aFactory, int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize) {
         this(aController, aFactory, aTier, aIsUpgraded, aHero, aRandomize, 1);
     }
@@ -55,10 +59,12 @@ public abstract class CreatureEconomyButton extends Button {
     protected abstract Slider createSlider(EconomyCreature aCreate, EconomyHero aHero);
 
     protected void setAmountForStackInShop(int aTier, boolean aIsUpgraded, EconomyHero aHero, RandomizeAmountOfCreaturesInShop aRandomize) {
-        amountOfCreaturesInStack =  aRandomize.getAmountOfTier(aTier, aHero.getFraction(), aIsUpgraded);
+        amountOfCreaturesInStack = aRandomize.getAmountOfTier(aTier, aHero.getFraction(), aIsUpgraded);
     }
 
-    protected int getAmountOfCreaturesInStack() { return amountOfCreaturesInStack; }
+    protected int getAmountOfCreaturesInStack() {
+        return amountOfCreaturesInStack;
+    }
 
     private int displayChoosingAmountAndGetCreatureAmount(EconomyCreature aCreate, EconomyHero aHero) {
         HBox top = new HBox();
@@ -119,11 +125,15 @@ public abstract class CreatureEconomyButton extends Button {
         cancelButton.setAlignment(Pos.CENTER);
         HBox.setHgrow(saveButton, Priority.ALWAYS);
         HBox.setHgrow(cancelButton, Priority.ALWAYS);
-        saveButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> {
-            trading = true;
-            windowForChoosingAmount.close();
+        saveButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            if (e.getButton() == MouseButton.PRIMARY) {
+                trading = true;
+                windowForChoosingAmount.close();
+            }
         });
-        cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> windowForChoosingAmount.close());
+        cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            if (e.getButton() == MouseButton.PRIMARY) windowForChoosingAmount.close();
+        });
         aBottom.setAlignment(Pos.CENTER);
         aBottom.getChildren().add(saveButton);
         aBottom.getChildren().add(cancelButton);
@@ -131,5 +141,7 @@ public abstract class CreatureEconomyButton extends Button {
 
     protected abstract void setTitle(Stage aWindowForChoosingAmount);
 
-    protected String getName() { return nameOfCreature; }
+    protected String getName() {
+        return nameOfCreature;
+    }
 }

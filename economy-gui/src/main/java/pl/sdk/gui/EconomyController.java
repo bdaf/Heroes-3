@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -47,7 +48,9 @@ public class EconomyController implements PropertyChangeListener {
 
     @FXML
     void initialize() {
-        escapeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> exit());
+        escapeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            if (e.getButton() == MouseButton.PRIMARY) exit();
+        });
         economyEngine.addObserver(HERO_BOUGHT_CREATURE, this);
         economyEngine.addObserver(ACTIVE_HERO_CHANGED, this);
         economyEngine.addObserver(NEXT_ROUND_STARTED, this);
@@ -58,14 +61,16 @@ public class EconomyController implements PropertyChangeListener {
 
     private void addEventHandlerForReadyButtonAndSetPlayerLabel() {
         playerLabel.setText("Left Player's Choice - " + economyEngine.getActiveHero().getFraction());
-        readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> pass());
+        readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            if (e.getButton() == MouseButton.PRIMARY) pass();
+        });
     }
 
     private void pass() {
         warningNeedToBuyLabel.setOpacity(0);
         try {
             economyEngine.pass();
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             warningNeedToBuyLabel.setOpacity(1);
         }
     }

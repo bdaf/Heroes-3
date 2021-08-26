@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -45,8 +46,12 @@ public class BattleMapController implements PropertyChangeListener {
         gameEngine.addObserver(gameEngine.CURRENT_CREATURE_CHANGED, this);
         gameEngine.addObserver(gameEngine.CREATURE_MOVED, this);
         gameEngine.addObserver(gameEngine.CURRENT_CREATURE_ATTACKED, this);
-        passButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.pass());
-        escapeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> exit());
+        passButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+            if (e.getButton() == MouseButton.PRIMARY) gameEngine.pass();
+        });
+        escapeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+            if (e.getButton() == MouseButton.PRIMARY) exit();
+        });
         refreshGui();
     }
 
@@ -60,9 +65,9 @@ public class BattleMapController implements PropertyChangeListener {
                 if (creatureOnMapTitle != null) {
                     mapTile.addCreature(creatureOnMapTitle);
                     if (creatureOnMapTitle == gameEngine.getActiveCreature() && gameEngine.getActiveCreature().isAlive())
-                        flagActiveCreature(x, y, mapTile,creatureOnMapTitle);
+                        flagActiveCreature(x, y, mapTile, creatureOnMapTitle);
                     else if (!creatureOnMapTitle.isAlive())
-                        flagDeadCreatureAndSetMoveOnClick(x,y,mapTile);
+                        flagDeadCreatureAndSetMoveOnClick(x, y, mapTile);
                     else if (gameEngine.canAttack(x, y))
                         setBackgroundRedAndSetAttackOnClick(x, y, mapTile);
                     else if (creatureOnMapTitle.getTeam() == Creature.Team.LEFT_TEAM)
@@ -94,14 +99,18 @@ public class BattleMapController implements PropertyChangeListener {
     private void setMoveOnClick(int aX, int aY, MapTile aMapTile) {
         final int FX = aX;
         final int FY = aY;
-        aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.move(new Point(FX, FY)));
+        aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+            if (e.getButton() == MouseButton.PRIMARY) gameEngine.move(new Point(FX, FY));
+        });
     }
 
     private void setBackgroundRedAndSetAttackOnClick(int aX, int aY, MapTile aMapTile) {
         aMapTile.setBackgroundColor((Color.RED));
         final int FX = aX;
         final int FY = aY;
-        aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> gameEngine.attack(new Point(FX, FY)));
+        aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+            if (e.getButton() == MouseButton.PRIMARY) gameEngine.attack(new Point(FX, FY));
+        });
     }
 
 
@@ -109,7 +118,7 @@ public class BattleMapController implements PropertyChangeListener {
         gameEngine.pass();
         HBox top = new HBox();
         HBox bottom = new HBox();
-        preparingWindow(bottom,top);
+        preparingWindow(bottom, top);
         prepareSellingAndCloseButtonsAndTop(bottom, top);
         MusicInGame.MUSIC_IN_BATTLE.stop();
         MusicInGame.MUSIC_IN_ECONOMY.play();
@@ -122,20 +131,22 @@ public class BattleMapController implements PropertyChangeListener {
     private void prepareSellingAndCloseButtonsAndTop(HBox aBottom, HBox aTop) {
         VBox vBox = new VBox();
         vBox.getChildren().add(new Label("Congratulations!"));
-        vBox.getChildren().add(new Label("If You are the " + getWinner() +", you won!"));
+        vBox.getChildren().add(new Label("If You are the " + getWinner() + ", you won!"));
         vBox.getChildren().add(new Label("If You are not, sorry, train better."));
         aTop.getChildren().add(vBox);
         vBox.setAlignment(Pos.CENTER);
         Button closeButton = new Button("Close");
         closeButton.setPrefWidth(200);
         closeButton.setAlignment(Pos.CENTER);
-        closeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, x -> windowForEndOfTheGame.close());
+        closeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            if (e.getButton() == MouseButton.PRIMARY) windowForEndOfTheGame.close();
+        });
         aBottom.getChildren().add(closeButton);
     }
 
     private String getWinner() {
-        if(gameEngine.getActiveCreature().getTeam() == Creature.Team.RIGHT_TEAM) return "Castle";
-        else if(gameEngine.getActiveCreature().getTeam() == Creature.Team.LEFT_TEAM) return "Necropolis";
+        if (gameEngine.getActiveCreature().getTeam() == Creature.Team.RIGHT_TEAM) return "Castle";
+        else if (gameEngine.getActiveCreature().getTeam() == Creature.Team.LEFT_TEAM) return "Necropolis";
         else return null;
     }
 
@@ -159,8 +170,8 @@ public class BattleMapController implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         refreshGui();
-        if(aPropertyChangeEvent.getPropertyName().equals( gameEngine.CURRENT_CREATURE_ATTACKED)){
-            if(gameEngine.ifAnyTeamWon()){
+        if (aPropertyChangeEvent.getPropertyName().equals(gameEngine.CURRENT_CREATURE_ATTACKED)) {
+            if (gameEngine.ifAnyTeamWon()) {
                 makeWindowOfWinningSide();
             }
         }
