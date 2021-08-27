@@ -117,12 +117,11 @@ public class BoardMovingTest {
     void shouldBeAbleToGoToFieldWhenHisMoveIsAttemptingForThisInParts(){
         Creature creature1 = CreateDefaultCreatureForTests(2);
         GameEngine engine = new GameEngine(List.of(creature1),List.of(creature));
-
         //creature1 is set on (0,0)
         //creature is set on (WIDTH-1,0)
+        assertEquals(creature1, engine.getActiveCreature());
         assertTrue(engine.canMove(0,2));
         engine.move(new Point(0,2));
-        engine.pass();
         engine.pass();
         assertTrue(engine.canMove(0,4));
         assertFalse(engine.canMove(0,5));
@@ -139,11 +138,9 @@ public class BoardMovingTest {
         assertTrue(engine.canAttack(BOARD_WIDTH-1,0));
         engine.attack(BOARD_WIDTH-1,0);
         assertTrue(!rightDeadCreature.isAlive());
-        engine.pass();
         assertEquals(rightCreature, engine.getActiveCreature());
         assertTrue(engine.canMove(BOARD_WIDTH-1,0));
         engine.move(new Point(BOARD_WIDTH-1,0));
-        engine.pass();
         assertFalse(engine.canMove(BOARD_WIDTH-1,0));
 
     }

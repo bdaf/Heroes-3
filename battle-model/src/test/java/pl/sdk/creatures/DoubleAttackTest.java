@@ -35,13 +35,13 @@ public class DoubleAttackTest {
 
     @Test
     void NotShootingCreatureShouldAttackTwiceThroughDoubleAttackDecoratorAndDefenderShouldCounterAttackOnce(){
-        Creature attacker = new Creature.BuilderForTesting()
-                .attacksInTurn(2)
-                .damage(Range.closed(1,1)).build();
         Creature defender = new Creature.BuilderForTesting()
                 .damage(Range.closed(1,1))
                 .maxHp(100)
                 .moveRange(50).build();
+        Creature attacker = new Creature.BuilderForTesting()
+                .attacksInTurn(2)
+                .damage(Range.closed(1,1)).build();
         GameEngine engine = new GameEngine(List.of(defender),List.of(attacker));
 
         assertTrue(engine.canMove(GameEngine.BOARD_WIDTH-1,1)); // defender

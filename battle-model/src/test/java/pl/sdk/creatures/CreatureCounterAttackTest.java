@@ -4,6 +4,7 @@ import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.GameEngine;
+import pl.sdk.Point;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static pl.sdk.GameEngine.BOARD_WIDTH;
 
 public class CreatureCounterAttackTest {
     public static final int THE_SAME_FOR_BOTH = 10;
@@ -92,13 +94,14 @@ public class CreatureCounterAttackTest {
 
     @Test
     void defenderShouldCounterAttackOnesInTourNotOnesInGame(){
-        Creature attacker = new Creature.BuilderForTesting().build();
+        Creature attacker = new Creature.BuilderForTesting().moveRange(50).build();
         Creature defender = new Creature.BuilderForTesting().build();
         GameEngine game = new GameEngine(List.of(attacker),List.of(defender));
+        assertEquals(attacker,game.getActiveCreature());
         assertEquals(true,defender.canCounterAttack());
-        attacker.attack(defender);
+        game.move(new Point(BOARD_WIDTH-2,0));
+        game.attack(new Point(BOARD_WIDTH-1,0));
         assertEquals(false,defender.canCounterAttack());
-        game.pass();
         game.pass();
         assertEquals(true,defender.canCounterAttack());
     }

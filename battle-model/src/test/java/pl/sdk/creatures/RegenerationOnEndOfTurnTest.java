@@ -15,7 +15,7 @@ import static pl.sdk.creatures.BlockingCreatureAndShootingCreatureAttackTest.FEW
 public class RegenerationOnEndOfTurnTest {
 
     @Test
-    void ShootingCreatureCanAttackEvenWithLargeDistance(){
+    void ShootingCreatureCanAttackEvenWithLargeDistanceAndDefenderShouldRegenerateOnEndOfTurn(){
         Creature attacker = new ShootingCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(BIGGER_THAN_DEFENDERS)
@@ -30,7 +30,6 @@ public class RegenerationOnEndOfTurnTest {
         assertTrue(gameEngine.canAttack(BOARD_WIDTH-1,0));
         gameEngine.attack(BOARD_WIDTH-1,0);
         assertEquals(999,defender.getCurrentHp());
-        gameEngine.pass();
         gameEngine.pass();
         assertEquals(1000,defender.getCurrentHp());
     }

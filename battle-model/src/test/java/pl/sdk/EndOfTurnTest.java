@@ -8,9 +8,11 @@ import java.beans.PropertyChangeEvent;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static pl.sdk.GameEngine.BOARD_WIDTH;
 import static pl.sdk.creatures.NecropolisFactory.CreateDefaultCreatureForTests;
 
 public class EndOfTurnTest {
@@ -32,16 +34,18 @@ public class EndOfTurnTest {
 
     @Test
     void shouldResetAttackFlagAfterEndOfTurn(){
-        Creature attacker = CreateDefaultCreatureForTests(5);
+        Creature attacker = CreateDefaultCreatureForTests(50);
         Creature defender = CreateDefaultCreatureForTests(1);
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
-        assertEquals(true, defender.canCounterAttack());
+
+        assertEquals(true, defender.canCounterAttack()); // attacker
         assertEquals(1, engine.getLeftAttacksInTurn());
-        //if(engine.canAttack(19,0))
-            engine.attack(19,0);
-        assertEquals(0, engine.getLeftAttacksInTurn());
-        assertEquals(false, defender.canCounterAttack());
-        engine.pass();
+        engine.move(new Point(BOARD_WIDTH-2,0));
+        assertTrue(engine.canAttack(BOARD_WIDTH-1,0));
+        assertEquals(1, engine.getLeftAttacksInTurn());
+        engine.attack(BOARD_WIDTH-1,0);
+
+        assertEquals(false, defender.canCounterAttack()); // defender
         engine.pass();
         assertEquals(true, defender.canCounterAttack());
     }

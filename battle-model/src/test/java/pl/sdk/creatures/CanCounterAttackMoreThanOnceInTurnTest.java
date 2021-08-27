@@ -26,7 +26,6 @@ public class CanCounterAttackMoreThanOnceInTurnTest {
 
         assertTrue(engine.canAttack(BOARD_WIDTH -1,1)); //attacker1
         engine.attack(BOARD_WIDTH-1,1);
-        engine.pass();
 
         assertTrue(defender.canCounterAttack());
 
@@ -50,7 +49,6 @@ public class CanCounterAttackMoreThanOnceInTurnTest {
 
         assertTrue(engine.canAttack(BOARD_WIDTH -1,1)); //attacker1
         engine.attack(BOARD_WIDTH-1,1);
-        engine.pass();
 
         assertTrue(defender.canCounterAttack());
 
