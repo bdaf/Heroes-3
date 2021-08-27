@@ -12,7 +12,7 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    int getMaxHp() {
+    public int getMaxHp() {
         return decorated.getMaxHp();
     }
 
@@ -107,7 +107,7 @@ public class SplashDamageCreature extends Creature {
     }
 
     @Override
-    CreatureStatisticlf getStats() {
+    public CreatureStatisticlf getStats() {
         return decorated.getStats();
     }
 

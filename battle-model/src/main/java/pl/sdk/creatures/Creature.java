@@ -49,7 +49,7 @@ public class Creature implements PropertyChangeListener {
         team = aTeam;
     }
 
-    int getMaxHp(){
+    public int getMaxHp(){
         return stats.getMaxHp();
     }
 
@@ -124,7 +124,7 @@ public class Creature implements PropertyChangeListener {
 
     public int getAmount() { return amount; }
 
-    CreatureStatisticlf getStats() {
+    public CreatureStatisticlf getStats() {
         return stats;
     }
 

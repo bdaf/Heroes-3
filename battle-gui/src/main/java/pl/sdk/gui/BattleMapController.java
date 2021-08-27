@@ -64,7 +64,7 @@ public class BattleMapController implements PropertyChangeListener {
                 Creature creatureOnMapTitle = gameEngine.get(x, y);
                 if (creatureOnMapTitle != null) {
                     mapTile.addCreature(creatureOnMapTitle);
-                    addEventHandlerForShowingStatsOnRightClick(mapTile, creatureOnMapTitle.getName());
+                    addEventHandlerForShowingStatsOnRightClick(mapTile, creatureOnMapTitle);
                     if (creatureOnMapTitle == gameEngine.getActiveCreature() && gameEngine.getActiveCreature().isAlive())
                         flagActiveCreature(x, y, mapTile, creatureOnMapTitle);
                     else if (!creatureOnMapTitle.isAlive())
@@ -81,23 +81,10 @@ public class BattleMapController implements PropertyChangeListener {
         }
     }
 
-    private void addEventHandlerForShowingStatsOnRightClick(MapTile aMapTile, String aNameOfCreature) {
+    private void addEventHandlerForShowingStatsOnRightClick(MapTile aMapTile, Creature aCreature) {
         aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
             if(e.getButton() == MouseButton.SECONDARY){
-                HBox top = new HBox();
-                HBox bottom = new HBox();
-                Stage stats = new Stage();
-                stats.getIcons().add(new Image("jpg/icon.jpg"));
-                BorderPane pane = new BorderPane();
-                Scene scene = new Scene(pane, 450, 250);
-                scene.getStylesheets().add("fxml/main.css");
-                stats.setScene(scene);
-                stats.initOwner(gridMap.getScene().getWindow());
-                stats.initModality(Modality.APPLICATION_MODAL);
-                stats.setTitle(aNameOfCreature);
-                stats.setResizable(false);
-                prepareSellingAndCloseButtonsAndTop(bottom, top);
-                stats.showAndWait();
+                new UnitWindow(aCreature, (Stage) aMapTile.getScene().getWindow()).showAndWait();
             }
         });
     }

@@ -56,7 +56,7 @@ class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
-    int getMaxHp() {
+    public int getMaxHp() {
         return decorated.getMaxHp();
     }
 
@@ -112,7 +112,7 @@ class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
-    CreatureStatisticlf getStats() {
+    public CreatureStatisticlf getStats() {
         return decorated.getStats();
     }
 
