@@ -28,12 +28,6 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>pl.sdk</groupId>
-            <artifactId>audio</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>RELEASE</version>
