@@ -11,7 +11,7 @@ public class CopyHeroMakerTest {
 
     @Test
     void shouldCopyHeroProperly(){
-        EconomyHero hero = new EconomyHero(EconomyHero.Fraction.CASTLE,2021);
+        EconomyHero hero = new EconomyHero(Fraction.CASTLE,2021);
         EconomyFactory factory = new EconomyCastleFactory();
         hero.addCreature(factory.Create(true,1,1));
         hero.addCreature(factory.Create(true,2,2));

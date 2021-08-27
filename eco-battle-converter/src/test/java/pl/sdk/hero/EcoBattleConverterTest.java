@@ -12,7 +12,7 @@ public class EcoBattleConverterTest {
 
     @Test
     void shouldConvertProperly() {
-        EconomyHero ecoHero = new EconomyHero(EconomyHero.Fraction.CASTLE, 1000);
+        EconomyHero ecoHero = new EconomyHero(Fraction.CASTLE, 1000);
         EconomyFactory ecoFactory = new EconomyCastleFactory();
         Factory factory = new CastleFactory();
 

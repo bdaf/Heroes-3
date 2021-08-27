@@ -14,7 +14,7 @@ public class CanCounterAttackMoreThanOnceInTurnTest {
 
     @Test
     void defenderShouldCounterAttackTwiceInOneTurn(){
-        Creature defender = CastleFactory.CreateCounterAttackSeveralTimesInTurnCreature(2,50);
+        Creature defender = CastleFactory.createCounterAttackSeveralTimesInTurnCreature(2,50);
         Creature attacker1 = new Creature.BuilderForTesting().damage(Range.closed(1,1)).moveRange(2).build();
         Creature attacker2 = new Creature.BuilderForTesting().damage(Range.closed(1,1)).moveRange(1).build();
         GameEngine engine = new GameEngine(List.of(defender),List.of(attacker1,attacker2));
@@ -37,7 +37,7 @@ public class CanCounterAttackMoreThanOnceInTurnTest {
 
     @Test
     void defenderShouldCounterAttackInfinityTimesInOneTurn(){
-        Creature defender = CastleFactory.CreateCounterAttackSeveralTimesInTurnCreature(Integer.MAX_VALUE,50);
+        Creature defender = CastleFactory.createCounterAttackSeveralTimesInTurnCreature(Integer.MAX_VALUE,50);
         Creature attacker1 = new Creature.BuilderForTesting().damage(Range.closed(1,1)).moveRange(2).build();
         Creature attacker2 = new Creature.BuilderForTesting().damage(Range.closed(1,1)).moveRange(1).build();
         GameEngine engine = new GameEngine(List.of(defender),List.of(attacker1,attacker2));

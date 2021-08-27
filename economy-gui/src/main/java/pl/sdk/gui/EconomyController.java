@@ -77,7 +77,7 @@ public class EconomyController implements PropertyChangeListener {
 
     void refreshGui() {
         clearingArmyAndShopBoxesAndMakingTheirLabels();
-        EconomyFactory factory = getProperEconomyFactoryForFractionOf(economyEngine.getActiveHero());
+        EconomyFactory factory = getProperEconomyFactoryForFractionOf(economyEngine.getActiveHero().getFraction());
 
         VBox vBoxShopCreaturesUpgraded = new VBox();
         VBox vBoxShopCreaturesNotUpgraded = new VBox();

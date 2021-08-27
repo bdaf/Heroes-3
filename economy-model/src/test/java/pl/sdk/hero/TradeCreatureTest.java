@@ -6,7 +6,7 @@ import pl.sdk.EconomyEngine;
 import pl.sdk.creatures.EconomyCastleFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static pl.sdk.hero.EconomyHero.Fraction.CASTLE;
+import static pl.sdk.hero.Fraction.CASTLE;
 
 public class TradeCreatureTest {
 

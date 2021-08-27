@@ -7,9 +7,6 @@ import java.util.List;
 
 public class EconomyHero {
 
-    public enum Fraction {
-        NECROPOLIS, CASTLE;
-    }
 
     private List<EconomyCreature> heroArmy;
     private final Fraction fraction;
@@ -17,7 +14,7 @@ public class EconomyHero {
 
     public EconomyHero(Fraction aFraction, int aGold) {
         fraction = aFraction;
-        heroArmy = new LinkedList<EconomyCreature>();
+        heroArmy = new LinkedList<>();
         gold = aGold;
     }
 

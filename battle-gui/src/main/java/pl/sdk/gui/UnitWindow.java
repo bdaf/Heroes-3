@@ -43,8 +43,9 @@ public class UnitWindow {
         window.setResizable(false);
     }
 
+
     private Node getLabelOfCreatureName(Creature aCreature) {
-        Label label = new Label(aCreature.getName() + " (" + aCreature.getAmount() + ")");
+        Label label = new Label(aCreature.getName());
         label.setAlignment(Pos.CENTER);
         label.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 24));
         VBox vBox = new VBox(label);

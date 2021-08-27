@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DecreaserShotsOfCreatureTest {
     @Test
     void shouldDecreaseShotsOfCreatureAbout1(){
-        Creature creature = Factory.CreateShootingCreatureForTests();
+        Creature creature = Factory.createShootingCreatureForTests();
         assertEquals(12,creature.getShots());
         DecreaserShotsOfCreature.decrease(creature,1);
         assertEquals(11,creature.getShots());

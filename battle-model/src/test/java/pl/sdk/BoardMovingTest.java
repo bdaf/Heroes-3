@@ -9,8 +9,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static pl.sdk.GameEngine.BOARD_WIDTH;
-import static pl.sdk.creatures.Factory.CreateShootingCreatureForTests;
-import static pl.sdk.creatures.NecropolisFactory.CreateDefaultCreatureForTests;
+import static pl.sdk.creatures.Factory.createShootingCreatureForTests;
+import static pl.sdk.creatures.NecropolisFactory.createDefaultCreatureForTests;
 
 public class BoardMovingTest {
 
@@ -21,7 +21,7 @@ public class BoardMovingTest {
     @BeforeEach
     void init(){
         board = new Board();
-        creature = NecropolisFactory.CreateDefaultCreatureForTests();
+        creature = NecropolisFactory.createDefaultCreatureForTests();
         board.add(new Point(0,0), creature);
     }
 
@@ -49,7 +49,7 @@ public class BoardMovingTest {
     @Test
     void shouldThrowExceptionWhenCreatureIsTryingToGoToNotEmptyField(){
 
-        Creature creature2 = NecropolisFactory.CreateDefaultCreatureForTests();
+        Creature creature2 = NecropolisFactory.createDefaultCreatureForTests();
         board.add(new Point(2,3), creature2);
 
         assertThrows(IllegalArgumentException.class, () ->board.moveAndReturnDistance(new Point(0,0), new Point(2,3)));
@@ -61,10 +61,10 @@ public class BoardMovingTest {
     @Test
     void shouldThrowExceptionWhenCreatureIsTryingToBeAddedToNotEmptyField(){
 
-        Creature creature2 = NecropolisFactory.CreateDefaultCreatureForTests();
+        Creature creature2 = NecropolisFactory.createDefaultCreatureForTests();
         board.add(new Point(2,3), creature2);
 
-        assertThrows(IllegalArgumentException.class, () -> board.add(new Point(2,3), NecropolisFactory.CreateDefaultCreatureForTests()));
+        assertThrows(IllegalArgumentException.class, () -> board.add(new Point(2,3), NecropolisFactory.createDefaultCreatureForTests()));
         Creature creatureFromBoard = board.get(2,3);
 
         assertEquals(creature2, creatureFromBoard);
@@ -84,7 +84,7 @@ public class BoardMovingTest {
 
     @Test
     void shouldBeAbleToGoToFieldWhenHisMoveIsAttemptingForThis(){
-        Creature creature1 = CreateDefaultCreatureForTests(1);
+        Creature creature1 = NecropolisFactory.createDefaultCreatureForTests(1);
 
         board.add(new Point(5,5), creature1);
         assertTrue(board.isFieldFreeToTake(5,6));
@@ -95,7 +95,7 @@ public class BoardMovingTest {
 
     @Test
     void shouldNotBeAbleToGoToFieldWhenHisMoveIsNotAttemptingForThis(){
-        Creature creature1 = CreateDefaultCreatureForTests(1);
+        Creature creature1 = NecropolisFactory.createDefaultCreatureForTests(1);
 
         GameEngine engine = new GameEngine(List.of(creature1),List.of(creature));
         //creature1 is set on (0,0)
@@ -106,7 +106,7 @@ public class BoardMovingTest {
 
     @Test
     void cannotGoWhenFieldIsTaken(){
-        Creature creature1 = NecropolisFactory.CreateDefaultCreatureForTests();
+        Creature creature1 = NecropolisFactory.createDefaultCreatureForTests();
         board.add(new Point(5,5),creature1);
 
         assertFalse(board.isFieldFreeToTake(0,0));
@@ -115,7 +115,7 @@ public class BoardMovingTest {
 
     @Test
     void shouldBeAbleToGoToFieldWhenHisMoveIsAttemptingForThisInParts(){
-        Creature creature1 = CreateDefaultCreatureForTests(2);
+        Creature creature1 = NecropolisFactory.createDefaultCreatureForTests(2);
         GameEngine engine = new GameEngine(List.of(creature1),List.of(creature));
         //creature1 is set on (0,0)
         //creature is set on (WIDTH-1,0)
@@ -130,9 +130,9 @@ public class BoardMovingTest {
 
     @Test
     void shouldBeAbleToGoToFieldWhenOtherCreatureIsDead(){
-        Creature leftShootingCreature = CreateShootingCreatureForTests(Integer.MAX_VALUE,100);
-        Creature rightDeadCreature = CreateDefaultCreatureForTests(Integer.MAX_VALUE-1,1);
-        Creature rightCreature = CreateDefaultCreatureForTests(Integer.MAX_VALUE-2);
+        Creature leftShootingCreature = createShootingCreatureForTests(Integer.MAX_VALUE,100);
+        Creature rightDeadCreature = createDefaultCreatureForTests(Integer.MAX_VALUE-1,1);
+        Creature rightCreature = NecropolisFactory.createDefaultCreatureForTests(Integer.MAX_VALUE-2);
         GameEngine engine = new GameEngine(List.of(leftShootingCreature),List.of(rightDeadCreature,rightCreature));
 
         assertTrue(engine.canAttack(BOARD_WIDTH-1,0));

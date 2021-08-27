@@ -14,10 +14,14 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import pl.sdk.converter.EcoBattleConverter;
+import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
 import pl.sdk.creatures.RandomizeAmountOfCreaturesInShop;
 import pl.sdk.hero.EconomyHero;
+
+import static pl.sdk.converter.EcoBattleConverter.convert;
 
 public abstract class CreatureEconomyButton extends Button {
 
@@ -32,11 +36,15 @@ public abstract class CreatureEconomyButton extends Button {
         setAmountForStackInShop(aTier, aIsUpgraded, aHero, aRandomize);
         setAppearance(aFactory.Create(aIsUpgraded, aTier, aAmount));
         addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            EconomyCreature eCreature = aFactory.Create(aIsUpgraded, aTier, aAmount);
             if (e.getButton() == MouseButton.PRIMARY) {
-                EconomyCreature eCreature = aFactory.Create(aIsUpgraded, aTier, aAmount);
                 int amount = displayChoosingAmountAndGetCreatureAmount(eCreature, aHero);
                 tradeCreatureAndSetRandomize(aController, aFactory, aTier, aIsUpgraded, aHero, aRandomize, amount);
                 aController.refreshGui();
+            }
+            else if(e.getButton() == MouseButton.SECONDARY) {
+                Creature creature = convert(eCreature,aFactory.getFraction());
+                new UnitWindow(creature, (Stage) getScene().getWindow()).showAndWait();
             }
         });
     }

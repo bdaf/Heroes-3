@@ -1,6 +1,7 @@
 package pl.sdk.creatures;
 
 import pl.sdk.hero.EconomyHero;
+import pl.sdk.hero.Fraction;
 
 import java.util.Random;
 
@@ -63,19 +64,19 @@ public class RandomizeAmountOfCreaturesInShop {
         necropolis[13] = 1;
     }
 
-    public void setAmountOfTier(int aTier, EconomyHero.Fraction aFraction, int aAmount, boolean aIsUpgraded) {
+    public void setAmountOfTier(int aTier, Fraction aFraction, int aAmount, boolean aIsUpgraded) {
         if(aIsUpgraded) aTier+=7;
         checkRangeOfTier(aTier);
-        if (aFraction == EconomyHero.Fraction.NECROPOLIS) necropolis[aTier - 1] = aAmount;
-        else if (aFraction == EconomyHero.Fraction.CASTLE) castle[aTier - 1] = aAmount;
+        if (aFraction == Fraction.NECROPOLIS) necropolis[aTier - 1] = aAmount;
+        else if (aFraction == Fraction.CASTLE) castle[aTier - 1] = aAmount;
         else throw new IllegalArgumentException(INCORRECT_HERO_FRACTION);
     }
 
-    public int getAmountOfTier(int aTier, EconomyHero.Fraction aFraction, boolean aIsUpgraded) {
+    public int getAmountOfTier(int aTier, Fraction aFraction, boolean aIsUpgraded) {
         if(aIsUpgraded) aTier+=7;
         checkRangeOfTier(aTier);
-        if (aFraction == EconomyHero.Fraction.NECROPOLIS) return necropolis[aTier - 1];
-        else if (aFraction == EconomyHero.Fraction.CASTLE) return castle[aTier - 1];
+        if (aFraction == Fraction.NECROPOLIS) return necropolis[aTier - 1];
+        else if (aFraction == Fraction.CASTLE) return castle[aTier - 1];
         else throw new IllegalArgumentException(INCORRECT_HERO_FRACTION);
     }
 

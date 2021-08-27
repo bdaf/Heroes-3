@@ -8,7 +8,7 @@ public class ChangerAmountInStack {
 
     public EconomyCreature returnCreatureInStackWithChangedAmount(int aAmount, EconomyCreature aCreature, EconomyHero aEconomyHero){
         if(aAmount<0) throw new IllegalArgumentException("Amount of creature has to be positive!");
-        EconomyFactory factory = getProperEconomyFactoryForFractionOf(aEconomyHero);
+        EconomyFactory factory = getProperEconomyFactoryForFractionOf(aEconomyHero.getFraction());
         return factory.Create(aCreature.isUpgraded(),aCreature.getTier(),aAmount);
     }
 }

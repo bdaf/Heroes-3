@@ -12,7 +12,7 @@ public class EconomyHeroAndCreaturesTest {
 
     @BeforeEach
     void init(){
-        hero = new EconomyHero(EconomyHero.Fraction.CASTLE,1000);
+        hero = new EconomyHero(Fraction.CASTLE,1000);
     }
 
     @Test

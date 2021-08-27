@@ -9,6 +9,7 @@ import pl.sdk.creatures.*;
 import pl.sdk.gui.BattleMapController;
 import pl.sdk.gui.MusicInGame;
 import pl.sdk.hero.EconomyHero;
+import pl.sdk.hero.Fraction;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,10 +44,16 @@ public class EcoBattleConverter {
     }
 
     public static List<Creature> convert(EconomyHero aEcoHero) {
-        Factory factory = getProperFactoryForFractionOf(aEcoHero);
+        Factory factory = getProperFactoryForFractionOf(aEcoHero.getFraction());
         List<Creature> ret = new ArrayList<>();
-        aEcoHero.getHeroArmy().forEach(c -> ret.add(factory.Create(c.isUpgraded(), c.getTier(), c.getAmount())));
+        aEcoHero.getHeroArmy().forEach(c -> ret.add(factory.create(c.isUpgraded(), c.getTier(), c.getAmount())));
         return ret;
+    }
+
+    public static Creature convert(EconomyCreature aEconomyCreature, Fraction aFraction) {
+        Factory factory = getProperFactoryForFractionOf(aFraction);
+        EconomyCreature c = aEconomyCreature;
+        return factory.create(c.isUpgraded(), c.getTier(), c.getAmount());
     }
 
 }

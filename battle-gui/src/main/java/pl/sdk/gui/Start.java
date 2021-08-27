@@ -19,7 +19,7 @@ public class Start extends Application {
         Factory necropolis = new CastleFactory();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource("fxml/battleMap.fxml"));
-        loader.setController(new BattleMapController(List.of(castle.Create(true,1,1)),List.of(necropolis.Create(true,1,1))));
+        loader.setController(new BattleMapController(List.of(castle.create(true,1,1)),List.of(necropolis.create(true,1,1))));
         Scene scene = new Scene(loader.load());
         stage.setTitle("Heroes "+ VERSION);
         stage.setScene(scene);

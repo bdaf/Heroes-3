@@ -1,9 +1,13 @@
 package pl.sdk.creatures;
 
+import pl.sdk.hero.Fraction;
+
 public class NecropolisFactory extends Factory {
 
+    public NecropolisFactory() { fraction = Fraction.NECROPOLIS; }
+
     @Override
-    public Creature Create(boolean aIsUpgraded, int aTier, int amount) {
+    public Creature create(boolean aIsUpgraded, int aTier, int amount) {
         if (aIsUpgraded) {
             switch (aTier) {
                 case 1:

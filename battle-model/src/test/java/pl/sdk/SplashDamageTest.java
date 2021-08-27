@@ -1,7 +1,6 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
-import pl.sdk.Board;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 
@@ -17,7 +16,7 @@ public class SplashDamageTest {
     @Test
     void SplashDamageCreatureShouldDoSplashDmgButOthersCreatureShouldNot(){
         NecropolisFactory factory = new NecropolisFactory();
-        Creature splashCreature = factory.Create(true,5,1);
+        Creature splashCreature = factory.create(true,5,1);
         Creature defender = spy(Creature.class);
         Creature splashingCreature = spy(Creature.class);
         Creature splashingCreature1 = spy(Creature.class);
@@ -58,7 +57,7 @@ public class SplashDamageTest {
 
     @Test
     void UnitWithoutSplashDamageCreatureShouldNotDoSplashDmg(){
-        Creature notSplashCreature = NecropolisFactory.CreateDefaultCreatureForTests();
+        Creature notSplashCreature = NecropolisFactory.createDefaultCreatureForTests();
         Creature defender = spy(Creature.class);
 
         Creature notSplashingCreature = spy(Creature.class);

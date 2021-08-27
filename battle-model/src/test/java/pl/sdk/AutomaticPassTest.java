@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AutomaticPassTest {
     @Test
     void shouldPassWhenHeMovedAndCannotAttack() {
-        Creature c1 = Factory.CreateDefaultCreatureForTests(2);
-        Creature c2 = Factory.CreateDefaultCreatureForTests(1);
+        Creature c1 = Factory.createDefaultCreatureForTests(2);
+        Creature c2 = Factory.createDefaultCreatureForTests(1);
         GameEngine gameEngine = new GameEngine(List.of(c1), List.of(c2));
         assertEquals(gameEngine.getActiveCreature(),c1);
         gameEngine.move(new Point(2, 0));
@@ -21,8 +21,8 @@ public class AutomaticPassTest {
 
     @Test
     void shouldNotPassWhenHeMovedAndCanMoveAndAttack() {
-        Creature c1 = Factory.CreateDefaultCreatureForTests(100);
-        Creature c2 = Factory.CreateDefaultCreatureForTests(1);
+        Creature c1 = Factory.createDefaultCreatureForTests(100);
+        Creature c2 = Factory.createDefaultCreatureForTests(1);
         GameEngine gameEngine = new GameEngine(List.of(c1), List.of(c2));
         assertEquals(gameEngine.getActiveCreature(),c1);
         gameEngine.move(new Point(GameEngine.BOARD_WIDTH-2, 0));
@@ -31,8 +31,8 @@ public class AutomaticPassTest {
 
     @Test
     void shouldNotPassWhenHeMovedAndCannotMoveButCanAttack() {
-        Creature c1 = Factory.CreateDefaultCreatureForTests(18);
-        Creature c2 = Factory.CreateDefaultCreatureForTests(1);
+        Creature c1 = Factory.createDefaultCreatureForTests(18);
+        Creature c2 = Factory.createDefaultCreatureForTests(1);
         GameEngine gameEngine = new GameEngine(List.of(c1), List.of(c2));
         assertEquals(gameEngine.getActiveCreature(),c1);
         gameEngine.move(new Point(GameEngine.BOARD_WIDTH-2, 0));
@@ -41,8 +41,8 @@ public class AutomaticPassTest {
 
     @Test
     void shouldPassWhenHeMovedAndAttacked() {
-        Creature c1 = Factory.CreateDefaultCreatureForTests(18);
-        Creature c2 = Factory.CreateDefaultCreatureForTests(1);
+        Creature c1 = Factory.createDefaultCreatureForTests(18);
+        Creature c2 = Factory.createDefaultCreatureForTests(1);
         GameEngine gameEngine = new GameEngine(List.of(c1), List.of(c2));
         assertEquals(gameEngine.getActiveCreature(),c1);
         gameEngine.move(new Point(GameEngine.BOARD_WIDTH-2, 0));
@@ -52,8 +52,8 @@ public class AutomaticPassTest {
 
     @Test
     void shouldPassWhenHeJustAttacked() {
-        Creature c1 = Factory.CreateShootingCreatureForTests(18);
-        Creature c2 = Factory.CreateDefaultCreatureForTests(1);
+        Creature c1 = Factory.createShootingCreatureForTests(18);
+        Creature c2 = Factory.createDefaultCreatureForTests(1);
         GameEngine gameEngine = new GameEngine(List.of(c1), List.of(c2));
         assertEquals(gameEngine.getActiveCreature(),c1);
         gameEngine.attack(new Point(GameEngine.BOARD_WIDTH-1, 0));

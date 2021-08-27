@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.EconomyCastleFactory;
 import pl.sdk.creatures.EconomyNecropolisFactory;
 import pl.sdk.hero.EconomyHero;
+import pl.sdk.hero.Fraction;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static pl.sdk.EconomyEngine.FACTOR_OF_GOLD_AMOUNT_PER_ROUND;
@@ -19,8 +20,8 @@ public class EconomyEngineTest {
 
     @BeforeEach
     void init() {
-        castleHero = new EconomyHero(EconomyHero.Fraction.CASTLE, 1000);
-        necropolisHero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
+        castleHero = new EconomyHero(Fraction.CASTLE, 1000);
+        necropolisHero = new EconomyHero(Fraction.NECROPOLIS, 1000);
         engine = new EconomyEngine(castleHero, necropolisHero);
         castle = new EconomyCastleFactory();
         necropolis = new EconomyNecropolisFactory();

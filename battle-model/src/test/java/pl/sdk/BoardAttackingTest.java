@@ -15,14 +15,14 @@ public class BoardAttackingTest {
     @BeforeEach
     void init(){
         board = new Board();
-        creature = NecropolisFactory.CreateDefaultCreatureForTests();
+        creature = NecropolisFactory.createDefaultCreatureForTests();
         board.add(new Point(0,0), creature);
     }
 
 
     @Test
     void shouldBeAbleToAttackWhenHisNearToEnemyOn1Unit(){
-        Creature creature1 = NecropolisFactory.CreateDefaultCreatureForTests();
+        Creature creature1 = NecropolisFactory.createDefaultCreatureForTests();
         board.add(new Point(1,0), creature1);
 
         assertTrue(board.canAttack(creature1,0,0));
@@ -30,7 +30,7 @@ public class BoardAttackingTest {
 
     @Test
     void shouldBeAbleToAttackWhenHisNearToEnemyOnAbove1_5Unit(){
-        Creature creature1 = NecropolisFactory.CreateDefaultCreatureForTests();
+        Creature creature1 = NecropolisFactory.createDefaultCreatureForTests();
         board.add(new Point(1,2), creature1);
 
         assertFalse(board.canAttack(creature1,0,0));
@@ -38,7 +38,7 @@ public class BoardAttackingTest {
 
     @Test
     void cannotAttackWhenFieldIsEmpty(){
-        Creature creature1 = NecropolisFactory.CreateDefaultCreatureForTests();
+        Creature creature1 = NecropolisFactory.createDefaultCreatureForTests();
         board.add(new Point(1,0),creature1);
 
       assertFalse(board.canAttack(creature1, 1, 1));

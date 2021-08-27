@@ -18,8 +18,8 @@ public class RandomizeWhoBeginsRoundWithTheSameMovementSpeedTest {
         Random randomizer = mock(Random.class);
         when(randomizer.nextBoolean()).thenReturn(true);
 
-        Creature creatureFromFirstArmy = Factory.CreateDefaultCreatureForTests(5);
-        Creature creatureFromSecondArmy = Factory.CreateDefaultCreatureForTests(5);
+        Creature creatureFromFirstArmy = Factory.createDefaultCreatureForTests(5);
+        Creature creatureFromSecondArmy = Factory.createDefaultCreatureForTests(5);
         GameEngine engine = new GameEngine(List.of(creatureFromFirstArmy),List.of(creatureFromSecondArmy),new Board(),randomizer);
 
         assertEquals(creatureFromFirstArmy,engine.getActiveCreature());
@@ -30,8 +30,8 @@ public class RandomizeWhoBeginsRoundWithTheSameMovementSpeedTest {
         Random randomizer = mock(Random.class);
         when(randomizer.nextBoolean()).thenReturn(false);
 
-        Creature creatureFromFirstArmy = Factory.CreateDefaultCreatureForTests(5);
-        Creature creatureFromSecondArmy = Factory.CreateDefaultCreatureForTests(5);
+        Creature creatureFromFirstArmy = Factory.createDefaultCreatureForTests(5);
+        Creature creatureFromSecondArmy = Factory.createDefaultCreatureForTests(5);
         GameEngine engine = new GameEngine(List.of(creatureFromFirstArmy),List.of(creatureFromSecondArmy),new Board(),randomizer);
 
         assertEquals(creatureFromSecondArmy,engine.getActiveCreature());

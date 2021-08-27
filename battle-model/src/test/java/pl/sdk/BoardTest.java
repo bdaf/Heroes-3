@@ -15,7 +15,7 @@ public class BoardTest {
     @BeforeEach
     void init() {
         board = new Board();
-        creature = CreateDefaultCreatureForTests();
+        creature = createDefaultCreatureForTests();
     }
 
     @Test
@@ -29,7 +29,7 @@ public class BoardTest {
     @Test
     void shouldBeNotOverWrittenWhenyouTryToPutCreatureOnFieldWhenFieldIsTaken() {
         board.add(new Point(0, 0), creature);
-        Creature creature2 = CreateDefaultCreatureForTests();
+        Creature creature2 = createDefaultCreatureForTests();
         ;
 
         assertThrows(IllegalArgumentException.class, () -> board.add(new Point(0, 0), creature2));
@@ -40,8 +40,8 @@ public class BoardTest {
 
     @Test
     void shouldReturnCorrectLocationForGetWithArgumentCreature() {
-        Creature creature1 = CreateDefaultCreatureForTests();
-        Creature creature2 = CreateDefaultCreatureForTests();
+        Creature creature1 = createDefaultCreatureForTests();
+        Creature creature2 = createDefaultCreatureForTests();
         board.add(new Point(2, 1), creature1);
         board.add(new Point(1, 1), creature);
         board.add(new Point(1, 3), creature2);
@@ -55,7 +55,7 @@ public class BoardTest {
         }*/
     @Test
     void shouldBeAbleToAttackWheneverDefenderIsButDefenderCanNotCounterAttack() {
-        Creature attacker = CreateShootingCreatureForTests();
+        Creature attacker = createShootingCreatureForTests();
 
         board.add(new Point(10, 10), attacker);
         board.add(new Point(0, 0), creature);
@@ -68,7 +68,7 @@ public class BoardTest {
 
     @Test
     void defenderCannotCounterAttack() {
-        Creature creature1 = CreateBlockingCreatureForTests();
+        Creature creature1 = createBlockingCreatureForTests();
 
         board.add(new Point(1, 0), creature1);
         board.add(new Point(0, 0), creature1);
