@@ -22,20 +22,20 @@ public enum CreatureStatistic implements CreatureStatisticlf {
     BLACK_KNIGHT("BlackKnight",16,16,120,7,Range.closed(15,30),6,"Awesome ground unit. As any undead it cannot be blinded, so your enemies will have to look out. \nSpecial Abilities: None.", false),
     BONE_DRAGON("BoneDragon",17,15,150,9,Range.closed(25,50),7," They are truly fearsome for enemies with low morale. Simply keeping them on battlefield scares enemies. \nSpecial Abilities: None.", false),
     // CASTLE
-    HALBERDIER("Halberdier",6,5,10,5,Range.closed(2,3),1,"Now they are faster and do more damage. Will make a good defence for shooters.",true),
-    MARKSMAN("Marksman",6,3,10,6,Range.closed(2,3),2,"Awesome upgrade, but they still lack defence...",true,24),
-    ROYAL_GRIFFIN("RoyalGriffin",9,9,25,6,Range.closed(3,6),3,"Send them right in the middle of the battlefield. Everyone who comes will get some ;)",true),
-    CRUSADER("Crusader",12,12,35,6,Range.closed(7,10),4,"Good upgrade, but still lacks speed. Seem undefeatable in large numbers.",true),
-    ZEALOT("Zealot",12,10,30,7,Range.closed(10,12),5,"Zealots are skilled enough to use the same magic powers at very close range. Better defence too.",true,24),
-    CHAMPION("Champion",16,16,100,9,Range.closed(20,25),6,"That's up to 45% extra damage possible! Champions also have better aiming skills.",true),
-    ARCHANGEL("Archangel",30,20,250,18,Range.closed(50,50),7,"Best attack, defence and speed in a whole game! Resurrection is a very convenient abbility. Those fast wings take up a whole extra hex! :] Possibly the best creature in the game.",true),
-    PICKMAN("Pickman",4,5,10,4,Range.closed(1,3),1,"Toughest lvl1 unit, but a bit slow.",false),
-    ARCHER("Archer",6,3,10,4,Range.closed(2,3),2,"Archer's upgrade is literally 2 times better. Upgrade them quickly.",false,12),
-    GRIFFIN("Griffin",8,8,25,6,Range.closed(3,6),3,"High in population, griffins become castle's main unit for the midgame.",false),
-    SWORDSMAN("Swordsman",10,12,35,5,Range.closed(6,9),4,"High in population, griffins become castle's main unit for the midgame.",false),
-    MONK("Monk",12,7,30,5,Range.closed(10,12),5,"Good shooter, nice damage.",false,12),
-    CAVALIER("Cavalier",15,15,100,7,Range.closed(15,25),6,"Make sure that the path is as long as possible - they need some speed!",false),
-    ANGEL("Angel",20,20,200,12,Range.closed(50,50),7,"Nice combat ratings and great constant damage - no need to bless them. Note that before the update patches Angels and Archangels didn't cost any gems, just gold. This has been added to try to balance the castle a little. I think it's still too powerful.",false);
+    HALBERDIER("Halberdier",6,5,10,5,Range.closed(2,3),1,"Now they are faster and do more damage. Will make a good defence for shooters. \nSpecial Abilities: None.",true),
+    MARKSMAN("Marksman",6,3,10,6,Range.closed(2,3),2,"Awesome upgrade, but they still lack defence... \nSpecial Abilities: Double attack.",true,24),
+    ROYAL_GRIFFIN("RoyalGriffin",9,9,25,6,Range.closed(3,6),3,"Send them right in the middle of the battlefield. Everyone who comes will get some. \nSpecial Abilities: Unlimited retaliations.",true),
+    CRUSADER("Crusader",12,12,35,6,Range.closed(7,10),4,"Good upgrade, but still lacks speed. Seem undefeatable in large numbers. \nSpecial Abilities: Double attack.",true),
+    ZEALOT("Zealot",12,10,30,7,Range.closed(10,12),5,"Zealots are skilled enough to use the same magic powers at very close range. Better defence too.  \nSpecial Abilities: None.",true,24),
+    CHAMPION("Champion",16,16,100,9,Range.closed(20,25),6,"That's up to 45% extra damage possible! Champions also have better aiming skills. \nSpecial Abilities:  20% chance to do double damage.",true),
+    ARCHANGEL("Archangel",30,20,250,18,Range.closed(50,50),7,"Best attack, defence and speed in a whole game! He is very fast! Possibly the best creature in the game. \nSpecial Abilities: None.",true),
+    PICKMAN("Pickman",4,5,10,4,Range.closed(1,3),1,"Toughest lvl1 unit, but a bit slow. \nSpecial Abilities: None.",false),
+    ARCHER("Archer",6,3,10,4,Range.closed(2,3),2,"Archer's upgrade is literally 2 times better. Upgrade them quickly. \nSpecial Abilities: None.",false,12),
+    GRIFFIN("Griffin",8,8,25,6,Range.closed(3,6),3,"High in population, griffins become castle's main unit for the mid game. \nSpecial Abilities: 2 retaliations per turn.",false),
+    SWORDSMAN("Swordsman",10,12,35,5,Range.closed(6,9),4,"High in population, griffins become castle's main unit for the mid game. \nSpecial Abilities: None.",false),
+    MONK("Monk",12,7,30,5,Range.closed(10,12),5,"Good shooter, nice damage. \nSpecial Abilities: None. Bad buff: Gets half of damage he deals with melee attack.",false,12),
+    CAVALIER("Cavalier",15,15,100,7,Range.closed(15,25),6,"Make sure that the path is as long as possible - they need some speed! \nSpecial Abilities: None.",false),
+    ANGEL("Angel",20,20,200,12,Range.closed(50,50),7,"Nice combat ratings and great constant damage - no need to bless them. I think it's still too powerful. \nSpecial Abilities: None.",false);
 
     private String name;
     private int attack;
