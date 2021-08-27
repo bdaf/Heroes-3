@@ -38,6 +38,7 @@ public class NecropolisFactory extends Factory {
                 case 6:
                     return new Creature.Builder()
                             .amount(amount)
+                            .damageCalculator(new CalculateDamageIncreaseInRandomChance(0.2,2))
                             .statistic(CreatureStatistic.DREAD_KNIGHT)
                             .build();
                 case 7:
