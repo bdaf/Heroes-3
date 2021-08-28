@@ -9,8 +9,15 @@ Heroes III mixed with Disciples III game reconstruction made during going throug
 <h1>Caution! Game requires:</h1>
 <h3>Resolution above 1010x1760;</h3>
 <h3>2 Players.</h3>
-<h1> What's new in 1.0.1?</h1>
+<h1>Instruction</h1>
+<h3>Firstly, in 3 round you and your mate buy units from shop.</h3>
+<h3>In each round you get more gold (themorethe further round is).</h3>
+<h3>After that, you play battle.</h3>
+<h3>And next after battle you are in the shop.</h3>
+<h3>After battle cycle starts over again 3 times, game is end!</h3> 
+<h1>What's new in 1.0.1?</h1>
 <h3>You will listen to music during the game.</h3>
 <h3>Now you can see creatures' statistic by clicking right mouse click.</h3>
 <h3>In this version you play 3 battles with your friend!</h3>
 <h3>When your creature cannot do anything, you pass automatically!</h3>
+
