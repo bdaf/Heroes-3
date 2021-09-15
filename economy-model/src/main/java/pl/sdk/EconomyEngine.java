@@ -16,7 +16,7 @@ public class EconomyEngine {
     public static final String END_OF_ROUND = "END_OF_TURN";
     public static final String NEXT_ROUND_STARTED = "NEXT_ROUND_STARTED";
     public static final String HERO_SOLD_CREATURE = "HERO_SOLD_CREATURE";
-    public static final int AMOUNT_OF_ROUNDS = 3;
+    public static final int AMOUNT_OF_ROUNDS = 1;
     public static final int AMOUNT_OF_TURNS = 3;
     public static final int FACTOR_OF_GOLD_AMOUNT_PER_ROUND = 1000;
     private final CreatureShop creatureShop = new CreatureShop();

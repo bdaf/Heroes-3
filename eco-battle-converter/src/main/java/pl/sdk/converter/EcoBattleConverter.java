@@ -26,7 +26,7 @@ public class EcoBattleConverter {
             loader.setLocation(EcoBattleConverter.class.getClassLoader().getResource("fxml/battleMap.fxml"));
             List<Creature> leftArmy = convert(aEconomyEngine.getLeftHero());
             List<Creature> rightArmy = convert(aEconomyEngine.getRightHero());
-            loader.setController(new BattleMapController(leftArmy, rightArmy));
+            loader.setController(new BattleMapController(leftArmy, rightArmy, aEconomyEngine.isThisTheLastBattle()));
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setTitle("Herociples " + VERSION);

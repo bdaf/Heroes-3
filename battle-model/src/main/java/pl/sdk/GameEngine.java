@@ -181,7 +181,12 @@ public class GameEngine {
         return queue.getAttacksOfActiveCreature();
     }
 
-    public boolean ifAnyTeamWon() {
+    public boolean anyTeamWon() {
         return queue.ifAnyTeamWon();
+    }
+
+    public Creature.Team getWinningTeam() {
+        if(!anyTeamWon()) throw new IllegalStateException("Neither of teams won yet!");
+        return queue.getAliveCreature();
     }
 }

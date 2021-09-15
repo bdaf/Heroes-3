@@ -10,12 +10,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.*;
 import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.Factory;
 import pl.sdk.hero.Fraction;
 
 import java.beans.PropertyChangeEvent;
@@ -37,14 +35,16 @@ public class BattleMapController implements PropertyChangeListener {
     @FXML
     private Pane rightPainForHero;
 
+    private final boolean isLastBattle;
     private GameEngine gameEngine;
     private Stage windowForEndOfTheGame;
     private Fraction leftTeam, rightTeam;
 
-    public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight) {
+    public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight, boolean aIsLastBattle) {
         gameEngine = new GameEngine(TeamLeft, TeamRight);
         leftTeam = Fraction.NECROPOLIS;
         rightTeam = Fraction.CASTLE;
+        isLastBattle = aIsLastBattle;
     }
 
     @FXML
@@ -138,8 +138,28 @@ public class BattleMapController implements PropertyChangeListener {
         MusicInGame.MUSIC_IN_BATTLE.stop();
         MusicInGame.MUSIC_IN_ECONOMY.play();
         windowForEndOfTheGame.showAndWait();
+        if(isLastBattle){
+            Stage winWindow = new Stage();
+            winWindow.getIcons().add(new Image("jpg/icon.jpg"));
+            StackPane pane = new StackPane();
+            pane.getChildren().add(new Label(getWinnerOfTheGame()));
+            Scene scene = new Scene(pane, 450, 270);
+            scene.getStylesheets().add("fxml/main.css");
+            winWindow.setScene(scene);
+            winWindow.initOwner(gridMap.getScene().getWindow());
+            winWindow.initModality(Modality.APPLICATION_MODAL);
+            winWindow.setTitle("End Of the game!");
+            winWindow.setResizable(false);
+            winWindow.showAndWait();
+        }
         Stage stage = (Stage) gridMap.getScene().getWindow();
         stage.close();
+    }
+
+    private String getWinnerOfTheGame() {
+        if(leftTeam.getPoints()>rightTeam.getPoints()) return leftTeam.name();
+        else if(leftTeam.getPoints()<rightTeam.getPoints()) return rightTeam.name();
+        else return leftTeam.name() + " and " + rightTeam.name();
     }
 
     private void prepareSellingAndCloseButtonsAndTop(HBox aBottom, HBox aTop) {
@@ -172,7 +192,7 @@ public class BattleMapController implements PropertyChangeListener {
         windowForEndOfTheGame.setScene(scene);
         windowForEndOfTheGame.initOwner(gridMap.getScene().getWindow());
         windowForEndOfTheGame.initModality(Modality.APPLICATION_MODAL);
-        windowForEndOfTheGame.setTitle("End Of the game!");
+        windowForEndOfTheGame.setTitle("End Of the battle!");
         windowForEndOfTheGame.setResizable(false);
         aBottom.setAlignment(Pos.CENTER);
         aTop.setAlignment(Pos.CENTER);
@@ -184,8 +204,8 @@ public class BattleMapController implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         refreshGui();
         if (aPropertyChangeEvent.getPropertyName().equals(gameEngine.CURRENT_CREATURE_ATTACKED)) {
-            if (gameEngine.ifAnyTeamWon()) {
-                if(gameEngine.getActiveCreature().getTeam()==Creature.Team.LEFT_TEAM) leftTeam.increasePoints(1);
+            if (gameEngine.anyTeamWon()) {
+                if(gameEngine.getWinningTeam() == Creature.Team.LEFT_TEAM) leftTeam.increasePoints(1);
                 else rightTeam.increasePoints(1);
                 makeWindowOfWinningSideInBattle();
             }

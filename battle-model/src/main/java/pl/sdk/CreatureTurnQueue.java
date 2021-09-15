@@ -90,4 +90,10 @@ public class CreatureTurnQueue {
         }
         return true;
     }
+
+    Creature.Team getAliveCreature() {
+        removingDeadCreatures();
+        if(aliveCreatures.isEmpty()) throw new IllegalStateException("There is no living creatures!");
+        return aliveCreatures.get(0).getTeam();
+    }
 }
