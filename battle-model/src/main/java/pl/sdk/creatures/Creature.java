@@ -10,7 +10,7 @@ public class Creature implements PropertyChangeListener {
     private CreatureStatisticlf stats;
     private CalculateDamageStrategy damageCalculator;
     private int currentHp;
-    private boolean counterAttackInThisTurn;
+    private boolean counterAttackedInThisTurn;
     private int maxAmount;
     private int amount;
     private int attacksInTurn;
@@ -34,11 +34,11 @@ public class Creature implements PropertyChangeListener {
     }
 
     boolean wasCounterAttackInThisTurn() {
-        return counterAttackInThisTurn;
+        return counterAttackedInThisTurn;
     }
 
     void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
-        counterAttackInThisTurn = aCounterAttackInThisTurn;
+        counterAttackedInThisTurn = aCounterAttackInThisTurn;
     }
 
     public Team getTeam() {
@@ -119,7 +119,7 @@ public class Creature implements PropertyChangeListener {
     }
 
     public boolean canCounterAttack() {
-        return !counterAttackInThisTurn;
+        return !counterAttackedInThisTurn;
     }
 
     public int getAmount() { return amount; }
@@ -138,7 +138,7 @@ public class Creature implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        counterAttackInThisTurn = false;
+        setIfWasCounterAttackInThisTurn(false);
     }
 
     @Override

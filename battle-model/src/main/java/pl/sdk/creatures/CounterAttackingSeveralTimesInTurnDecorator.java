@@ -22,10 +22,8 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
 
     @Override
     void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
-        if (aCounterAttackInThisTurn)
-            counterAttacksInTurn--;
-        else
-            counterAttacksInTurn = maxCounterAttacksInTurn;
+        if (aCounterAttackInThisTurn) counterAttacksInTurn--;
+        else counterAttacksInTurn = maxCounterAttacksInTurn;
     }
 
     @Override
@@ -115,6 +113,7 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
+        setIfWasCounterAttackInThisTurn(false);
         decorated.propertyChange(aPropertyChangeEvent);
     }
 
