@@ -1,16 +1,12 @@
 package pl.sdk.gui;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.*;
 import pl.sdk.creatures.Creature;
@@ -37,13 +33,12 @@ public class BattleMapController implements PropertyChangeListener {
 
     private final boolean isLastBattle;
     private GameEngine gameEngine;
-    private Stage windowForEndOfTheGame;
-    private Fraction leftTeam, rightTeam;
+    private Fraction leftTeamFraction, rightTeamFraction;
 
     public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight, boolean aIsLastBattle) {
         gameEngine = new GameEngine(TeamLeft, TeamRight);
-        leftTeam = Fraction.NECROPOLIS;
-        rightTeam = Fraction.CASTLE;
+        leftTeamFraction = Fraction.NECROPOLIS;
+        rightTeamFraction = Fraction.CASTLE;
         isLastBattle = aIsLastBattle;
     }
 
@@ -89,7 +84,7 @@ public class BattleMapController implements PropertyChangeListener {
 
     private void addEventHandlerForShowingStatsOnRightClick(MapTile aMapTile, Creature aCreature) {
         aMapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-            if(e.getButton() == MouseButton.SECONDARY){
+            if (e.getButton() == MouseButton.SECONDARY) {
                 new UnitWindow(aCreature, (Stage) aMapTile.getScene().getWindow()).showAndWait();
             }
         });
@@ -128,76 +123,30 @@ public class BattleMapController implements PropertyChangeListener {
         });
     }
 
-
     private void makeWindowOfWinningSideInBattle() {
         gameEngine.pass();
-        HBox top = new HBox();
-        HBox bottom = new HBox();
-        preparingWindow(bottom, top);
-        prepareSellingAndCloseButtonsAndTop(bottom, top);
-        MusicInGame.MUSIC_IN_BATTLE.stop();
-        MusicInGame.MUSIC_IN_ECONOMY.play();
-        windowForEndOfTheGame.showAndWait();
-        if(isLastBattle){
-            Stage winWindow = new Stage();
-            winWindow.getIcons().add(new Image("jpg/icon.jpg"));
-            StackPane pane = new StackPane();
-            pane.getChildren().add(new Label(getWinnerOfTheGame()));
-            Scene scene = new Scene(pane, 450, 270);
-            scene.getStylesheets().add("fxml/main.css");
-            winWindow.setScene(scene);
-            winWindow.initOwner(gridMap.getScene().getWindow());
-            winWindow.initModality(Modality.APPLICATION_MODAL);
-            winWindow.setTitle("End Of the game!");
-            winWindow.setResizable(false);
-            winWindow.showAndWait();
+        AfterBattleWindow afterBattleWindow = new AfterBattleWindow(this);
+        afterBattleWindow.showAndWait();
+        if (isLastBattle) {
+            String winner = getWinnerOfTheGame();
+            AfterGameWindow afterGameWindow = new AfterGameWindow(this);
+            afterGameWindow.addCaption("\n" + winner + " Won the Game!");
+            afterGameWindow.addCaption("Score: " + leftTeamFraction.getPoints() + " - " + rightTeamFraction.getPoints() + " for " + winner + "!");
+            afterGameWindow.showAndWait();
         }
         Stage stage = (Stage) gridMap.getScene().getWindow();
         stage.close();
     }
 
     private String getWinnerOfTheGame() {
-        if(leftTeam.getPoints()>rightTeam.getPoints()) return leftTeam.name();
-        else if(leftTeam.getPoints()<rightTeam.getPoints()) return rightTeam.name();
-        else return leftTeam.name() + " and " + rightTeam.name();
+        if (leftTeamFraction.getPoints() > rightTeamFraction.getPoints()) return leftTeamFraction.name();
+        else if (leftTeamFraction.getPoints() < rightTeamFraction.getPoints()) return rightTeamFraction.name();
+        else return leftTeamFraction.name() + " and " + rightTeamFraction.name();
     }
 
-    private void prepareSellingAndCloseButtonsAndTop(HBox aBottom, HBox aTop) {
-        VBox vBox = new VBox(0);
-        vBox.getChildren().add(new Label("Congratulations!"));
-        vBox.getChildren().add(new Label("If You are the " + getWinner() + ", you won!\nIf You are not, sorry, train better."));
-        vBox.getChildren().add(new Label(leftTeam.name()+" | "+leftTeam.getPoints()+" - "+rightTeam.getPoints()+" | "+rightTeam.name()));
-        aTop.getChildren().add(vBox);
-        vBox.setAlignment(Pos.CENTER);
-        Button closeButton = new Button("Close");
-        closeButton.setPrefWidth(200);
-        closeButton.setAlignment(Pos.CENTER);
-        closeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-            if (e.getButton() == MouseButton.PRIMARY) windowForEndOfTheGame.close();
-        });
-        aBottom.getChildren().add(closeButton);
-    }
-
-    private String getWinner() {
-        if (gameEngine.getActiveCreature().getTeam() == Creature.Team.RIGHT_TEAM) return rightTeam.name();
-        else return leftTeam.name();
-    }
-
-    private void preparingWindow(HBox aBottom, HBox aTop) {
-        windowForEndOfTheGame = new Stage();
-        windowForEndOfTheGame.getIcons().add(new Image("jpg/icon.jpg"));
-        BorderPane pane = new BorderPane();
-        Scene scene = new Scene(pane, 450, 270);
-        scene.getStylesheets().add("fxml/main.css");
-        windowForEndOfTheGame.setScene(scene);
-        windowForEndOfTheGame.initOwner(gridMap.getScene().getWindow());
-        windowForEndOfTheGame.initModality(Modality.APPLICATION_MODAL);
-        windowForEndOfTheGame.setTitle("End Of the battle!");
-        windowForEndOfTheGame.setResizable(false);
-        aBottom.setAlignment(Pos.CENTER);
-        aTop.setAlignment(Pos.CENTER);
-        pane.setBottom(aBottom);
-        pane.setTop(aTop);
+    String getWinnerOfTheBattle() {
+        if (gameEngine.getWinnerTeam() == Creature.Team.LEFT_TEAM) return leftTeamFraction.name();
+        else return rightTeamFraction.name();
     }
 
     @Override
@@ -205,10 +154,22 @@ public class BattleMapController implements PropertyChangeListener {
         refreshGui();
         if (aPropertyChangeEvent.getPropertyName().equals(gameEngine.CURRENT_CREATURE_ATTACKED)) {
             if (gameEngine.anyTeamWon()) {
-                if(gameEngine.getWinningTeam() == Creature.Team.LEFT_TEAM) leftTeam.increasePoints(1);
-                else rightTeam.increasePoints(1);
+                if (gameEngine.getWinnerTeam() == Creature.Team.LEFT_TEAM) leftTeamFraction.increasePoints(1);
+                else rightTeamFraction.increasePoints(1);
                 makeWindowOfWinningSideInBattle();
             }
         }
+    }
+
+    Node getGridMap() {
+        return gridMap;
+    }
+
+    Fraction getLeftTeamFraction() {
+        return leftTeamFraction;
+    }
+
+    Fraction getRightTeamFraction() {
+        return rightTeamFraction;
     }
 }
