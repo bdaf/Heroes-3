@@ -12,11 +12,6 @@ public class AfterGameWindow extends AfterBattleWindow {
     protected void setLabelsToMainVBox() {}
 
     @Override
-    protected int getHeightOfWindow() {
-        return 200;
-    }
-
-    @Override
     protected String getTitle() {
         return "End Of The Game!";
     }

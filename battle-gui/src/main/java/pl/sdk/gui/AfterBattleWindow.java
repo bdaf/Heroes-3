@@ -10,6 +10,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.hero.Fraction;
@@ -35,7 +37,7 @@ public class AfterBattleWindow {
         window.setTitle(getTitle());
         window.getIcons().add(new Image("jpg/icon.jpg"));
         BorderPane pane = new BorderPane();
-        Scene scene = new Scene(pane, 450, getHeightOfWindow());
+        Scene scene = new Scene(pane, getWidthOfWindow(), getHeightOfWindow());
         scene.getStylesheets().add("fxml/main.css");
         window.setScene(scene);
         window.initOwner(battleMapController.getGridMap().getScene().getWindow());
@@ -63,13 +65,20 @@ public class AfterBattleWindow {
     protected void setLabelsToMainVBox() {
         Fraction leftFraction = battleMapController.getLeftTeamFraction();
         Fraction rightFraction = battleMapController.getRightTeamFraction();
+
         mainVBox.getChildren().add(new Label("Congratulations!"));
-        mainVBox.getChildren().add(new Label("If You are the " + battleMapController.getWinnerOfTheBattle() + ", you won!\nIf You are not, sorry, train better."));
+        Text text = new Text("If You are the " + battleMapController.getWinnerOfTheBattle() + ", you won battle!\nIf You are not, sorry, train better.");
+        text.setFont(Font.font(20));
+        mainVBox.getChildren().add(text);
         mainVBox.getChildren().add(new Label(leftFraction.name()+" | "+leftFraction.getPoints()+" - "+rightFraction.getPoints()+" | "+rightFraction.name()));
     }
 
-    protected int getHeightOfWindow() {
-        return 270;
+    private int getHeightOfWindow() {
+        return 225;
+    }
+
+    private int getWidthOfWindow() {
+        return 450;
     }
 
     protected String getTitle(){
