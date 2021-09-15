@@ -36,14 +36,14 @@ public class EconomyEngineTest {
 
     @Test
     void shouldCountRoundsCorrectly() {
-        assertEquals(1, engine.getRoundNumber());
+        assertEquals(1, engine.getTurnNumber());
         engine.pass();
-        assertEquals(1, engine.getRoundNumber());
+        assertEquals(1, engine.getTurnNumber());
         engine.pass();
-        assertEquals(2, engine.getRoundNumber());
+        assertEquals(2, engine.getTurnNumber());
         engine.pass();
         engine.pass();
-        assertEquals(3, engine.getRoundNumber());
+        assertEquals(3, engine.getTurnNumber());
     }
 
     @Test
@@ -59,24 +59,24 @@ public class EconomyEngineTest {
 
     @Test
     void shouldCountRoundsAndToursCorrectly() {
+        assertEquals(1, engine.getTurnNumber());
         assertEquals(1, engine.getRoundNumber());
-        assertEquals(1, engine.getTourNumber());
         engine.pass();
+        assertEquals(1, engine.getTurnNumber());
         assertEquals(1, engine.getRoundNumber());
-        assertEquals(1, engine.getTourNumber());
         engine.pass();
-        assertEquals(2, engine.getRoundNumber());
-        assertEquals(1, engine.getTourNumber());
+        assertEquals(2, engine.getTurnNumber());
+        assertEquals(1, engine.getRoundNumber());
         engine.pass();
         engine.pass();
-        assertEquals(3, engine.getRoundNumber());
-        assertEquals(1, engine.getTourNumber());
+        assertEquals(3, engine.getTurnNumber());
+        assertEquals(1, engine.getRoundNumber());
         engine.buy(castle.Create(true, 1, 1));
         engine.pass();
         engine.buy(necropolis.Create(true, 1, 1));
         engine.pass();
-        assertEquals(1, engine.getRoundNumber());
-        assertEquals(2, engine.getTourNumber());
+        assertEquals(1, engine.getTurnNumber());
+        assertEquals(2, engine.getRoundNumber());
     }
 
     @Test

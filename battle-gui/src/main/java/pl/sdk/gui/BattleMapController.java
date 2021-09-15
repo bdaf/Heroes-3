@@ -10,10 +10,13 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.*;
 import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.Factory;
+import pl.sdk.hero.Fraction;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -36,9 +39,12 @@ public class BattleMapController implements PropertyChangeListener {
 
     private GameEngine gameEngine;
     private Stage windowForEndOfTheGame;
+    private Fraction leftTeam, rightTeam;
 
     public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight) {
         gameEngine = new GameEngine(TeamLeft, TeamRight);
+        leftTeam = Fraction.NECROPOLIS;
+        rightTeam = Fraction.CASTLE;
     }
 
     @FXML
@@ -137,10 +143,10 @@ public class BattleMapController implements PropertyChangeListener {
     }
 
     private void prepareSellingAndCloseButtonsAndTop(HBox aBottom, HBox aTop) {
-        VBox vBox = new VBox();
+        VBox vBox = new VBox(0);
         vBox.getChildren().add(new Label("Congratulations!"));
-        vBox.getChildren().add(new Label("If You are the " + getWinner() + ", you won!"));
-        vBox.getChildren().add(new Label("If You are not, sorry, train better."));
+        vBox.getChildren().add(new Label("If You are the " + getWinner() + ", you won!\nIf You are not, sorry, train better."));
+        vBox.getChildren().add(new Label(leftTeam.name()+" | "+leftTeam.getPoints()+" - "+rightTeam.getPoints()+" | "+rightTeam.name()));
         aTop.getChildren().add(vBox);
         vBox.setAlignment(Pos.CENTER);
         Button closeButton = new Button("Close");
@@ -153,16 +159,15 @@ public class BattleMapController implements PropertyChangeListener {
     }
 
     private String getWinner() {
-        if (gameEngine.getActiveCreature().getTeam() == Creature.Team.RIGHT_TEAM) return "Castle";
-        else if (gameEngine.getActiveCreature().getTeam() == Creature.Team.LEFT_TEAM) return "Necropolis";
-        else return null;
+        if (gameEngine.getActiveCreature().getTeam() == Creature.Team.RIGHT_TEAM) return rightTeam.name();
+        else return leftTeam.name();
     }
 
     private void preparingWindow(HBox aBottom, HBox aTop) {
         windowForEndOfTheGame = new Stage();
         windowForEndOfTheGame.getIcons().add(new Image("jpg/icon.jpg"));
         BorderPane pane = new BorderPane();
-        Scene scene = new Scene(pane, 450, 250);
+        Scene scene = new Scene(pane, 450, 270);
         scene.getStylesheets().add("fxml/main.css");
         windowForEndOfTheGame.setScene(scene);
         windowForEndOfTheGame.initOwner(gridMap.getScene().getWindow());
@@ -180,6 +185,8 @@ public class BattleMapController implements PropertyChangeListener {
         refreshGui();
         if (aPropertyChangeEvent.getPropertyName().equals(gameEngine.CURRENT_CREATURE_ATTACKED)) {
             if (gameEngine.ifAnyTeamWon()) {
+                if(gameEngine.getActiveCreature().getTeam()==Creature.Team.LEFT_TEAM) leftTeam.increasePoints(1);
+                else rightTeam.increasePoints(1);
                 makeWindowOfWinningSideInBattle();
             }
         }

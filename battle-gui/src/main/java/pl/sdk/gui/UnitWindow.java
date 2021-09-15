@@ -32,7 +32,6 @@ public class UnitWindow {
         pane.setRight(getRightVBoxWithStats(aCreature));
         pane.setBottom(getDescriptionAndCloseButton(aCreature));
 
-
         Scene scene = new Scene(pane, 500, 280);
         scene.getStylesheets().add("fxml/main.css");
 

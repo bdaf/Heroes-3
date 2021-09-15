@@ -75,10 +75,10 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build();
                 case 5:
-                    return new ShootingCreatureDecorator(new SelfHealingCreatureDecorator(new Creature.Builder()
+                    return new SelfHealingCreatureDecorator(new ShootingCreatureDecorator(new Creature.Builder()
                             .statistic(CreatureStatistic.MONK)
                             .amount(amount)
-                            .build(), -0.5));
+                            .build()),-0.5);
                 case 6:
                     return new Creature.Builder()
                             .statistic(CreatureStatistic.CAVALIER)

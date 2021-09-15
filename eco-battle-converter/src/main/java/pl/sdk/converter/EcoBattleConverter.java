@@ -45,9 +45,9 @@ public class EcoBattleConverter {
 
     public static List<Creature> convert(EconomyHero aEcoHero) {
         Factory factory = getProperFactoryForFractionOf(aEcoHero.getFraction());
-        List<Creature> ret = new ArrayList<>();
-        aEcoHero.getHeroArmy().forEach(c -> ret.add(factory.create(c.isUpgraded(), c.getTier(), c.getAmount())));
-        return ret;
+        List<Creature> listOfCreatures = new ArrayList<>();
+        aEcoHero.getHeroArmy().forEach(c -> listOfCreatures.add(factory.create(c.isUpgraded(), c.getTier(), c.getAmount())));
+        return listOfCreatures;
     }
 
     public static Creature convert(EconomyCreature aEconomyCreature, Fraction aFraction) {
@@ -55,6 +55,5 @@ public class EcoBattleConverter {
         EconomyCreature c = aEconomyCreature;
         return factory.create(c.isUpgraded(), c.getTier(), c.getAmount());
     }
-
 }
 

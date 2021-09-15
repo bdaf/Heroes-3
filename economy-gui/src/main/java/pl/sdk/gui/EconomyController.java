@@ -24,7 +24,9 @@ import static pl.sdk.EconomyEngine.*;
 import static pl.sdk.converter.ProperFractionConverter.getProperEconomyFactoryForFractionOf;
 
 public class EconomyController implements PropertyChangeListener {
+
     private EconomyEngine economyEngine;
+
     @FXML
     Button readyButton;
     @FXML
@@ -54,7 +56,7 @@ public class EconomyController implements PropertyChangeListener {
         economyEngine.addObserver(HERO_BOUGHT_CREATURE, this);
         economyEngine.addObserver(ACTIVE_HERO_CHANGED, this);
         economyEngine.addObserver(NEXT_ROUND_STARTED, this);
-        economyEngine.addObserver(END_OF_TURN, this);
+        economyEngine.addObserver(END_OF_ROUND, this);
         addEventHandlerForReadyButtonAndSetPlayerLabel();
         refreshGui();
     }
@@ -96,7 +98,7 @@ public class EconomyController implements PropertyChangeListener {
         economyEngine.getActiveHero().getHeroArmy().forEach(c -> vBoxForUserArmy.getChildren().add(new CreatureEconomyButtonInHerosArmy(
                 this, factory, c.getTier(), c.isUpgraded(), economyEngine.getActiveHero(), economyEngine.getRandomizer(), c.getAmount())));
 
-        goldLabel.setText("Round: " + economyEngine.getRoundNumber() + "/" + AMOUNT_OF_ROUNDS + " Gold: " + economyEngine.getActiveHero().getGold());
+        goldLabel.setText("Round: " + economyEngine.getTurnNumber() + "/" + AMOUNT_OF_ROUNDS + " Gold: " + economyEngine.getActiveHero().getGold());
     }
 
     private void addCreatureButtonsInShopToBox(Pane aBox, EconomyFactory aFactory, boolean aIsUpgraded) {
@@ -138,7 +140,7 @@ public class EconomyController implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         if (aPropertyChangeEvent.getPropertyName().equals(ACTIVE_HERO_CHANGED)) changePlayerName();
-        if (aPropertyChangeEvent.getPropertyName().equals(END_OF_TURN)) goToBattle();
+        if (aPropertyChangeEvent.getPropertyName().equals(END_OF_ROUND)) goToBattle();
         refreshGui();
     }
 

@@ -13,18 +13,18 @@ public class EconomyEngine {
 
     public static final String HERO_BOUGHT_CREATURE = "HERO_BOUGHT_CREATURE";
     public static final String ACTIVE_HERO_CHANGED = "ACTIVE_HERO_CHANGED";
-    public static final String END_OF_TURN = "NEXT_TOUR_STARTED";
+    public static final String END_OF_ROUND = "END_OF_TURN";
     public static final String NEXT_ROUND_STARTED = "NEXT_ROUND_STARTED";
     public static final String HERO_SOLD_CREATURE = "HERO_SOLD_CREATURE";
     public static final int AMOUNT_OF_ROUNDS = 3;
-    public static final int AMOUNT_OF_TOURS = 3;
+    public static final int AMOUNT_OF_TURNS = 3;
     public static final int FACTOR_OF_GOLD_AMOUNT_PER_ROUND = 1000;
     private final CreatureShop creatureShop = new CreatureShop();
     private final EconomyHero leftHero;
     private final EconomyHero rightHero;
     private EconomyHero activeHero;
+    private int turnNumber;
     private int roundNumber;
-    private int tourNumber;
     private RandomizeAmountOfCreaturesInShop randomize;
     private PropertyChangeSupport observerSupport;
 
@@ -32,8 +32,8 @@ public class EconomyEngine {
         leftHero = aLeftHero;
         rightHero = aRightHero;
         activeHero = leftHero;
+        turnNumber = 1;
         roundNumber = 1;
-        tourNumber = 1;
         randomize = new RandomizeAmountOfCreaturesInShop();
         observerSupport = new PropertyChangeSupport(this);
     }
@@ -62,26 +62,25 @@ public class EconomyEngine {
     }
 
     private void endTurn() {
-        roundNumber += 1;
-        if (roundNumber > AMOUNT_OF_ROUNDS) {
-            nextTour();
+        turnNumber += 1;
+        if (turnNumber > AMOUNT_OF_ROUNDS) {
+            nextRound();
         } else {
             randomize = new RandomizeAmountOfCreaturesInShop();
-            leftHero.addGold(FACTOR_OF_GOLD_AMOUNT_PER_ROUND * roundNumber);
-            rightHero.addGold(FACTOR_OF_GOLD_AMOUNT_PER_ROUND * roundNumber);
-            observerSupport.firePropertyChange(NEXT_ROUND_STARTED, roundNumber - 1, roundNumber);
+            leftHero.addGold(FACTOR_OF_GOLD_AMOUNT_PER_ROUND * turnNumber);
+            rightHero.addGold(FACTOR_OF_GOLD_AMOUNT_PER_ROUND * turnNumber);
+            observerSupport.firePropertyChange(NEXT_ROUND_STARTED, turnNumber - 1, turnNumber);
         }
     }
 
-    private void nextTour() {
-        roundNumber = 1;
-        tourNumber += 1;
-        //rightHero.
-        observerSupport.firePropertyChange(END_OF_TURN, tourNumber - 1, tourNumber);
+    private void nextRound() {
+        turnNumber = 1;
+        roundNumber += 1;
+        observerSupport.firePropertyChange(END_OF_ROUND, roundNumber - 1, roundNumber);
     }
 
-    public int getRoundNumber() {
-        return roundNumber;
+    public int getTurnNumber() {
+        return turnNumber;
     }
 
     public EconomyHero getActiveHero() {
@@ -108,12 +107,12 @@ public class EconomyEngine {
         return getLeftHero().getHeroArmy().isEmpty() || getRightHero().getHeroArmy().isEmpty();
     }
 
-    int getTourNumber() {
-        return tourNumber;
+    int getRoundNumber() {
+        return roundNumber;
     }
 
     public boolean isThisTheLastBattle() {
-        return getTourNumber() > AMOUNT_OF_TOURS;
+        return getRoundNumber() > AMOUNT_OF_ROUNDS;
     }
 
     public RandomizeAmountOfCreaturesInShop getRandomizer() {
@@ -121,6 +120,7 @@ public class EconomyEngine {
     }
 
     public boolean isLastChooseBeforeBattle() {
-        return getRoundNumber() == 3 && activeHero == rightHero;
+        return getTurnNumber() == AMOUNT_OF_TURNS && activeHero == rightHero;
+
     }
 }
