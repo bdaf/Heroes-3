@@ -1,5 +1,6 @@
 package pl.sdk.gui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -45,12 +46,14 @@ public class EconomyController implements PropertyChangeListener {
     @FXML
     Label warningNeedToBuyLabel;
 
-    EconomyController(EconomyHero aLeftHero, EconomyHero aRightHero, KindOfGame aSettings) {
-        economyEngine = new EconomyEngine(aLeftHero, aRightHero, aSettings);
+    EconomyController(EconomyHero aLeftHero, EconomyHero aRightHero, KindOfGame aKindOfGame) {
+        if(aKindOfGame == KindOfGame.NOT_SETTLED) Platform.exit();
+        economyEngine = new EconomyEngine(aLeftHero, aRightHero, aKindOfGame);
     }
 
     @FXML
     void initialize() {
+
         escapeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
             if (e.getButton() == MouseButton.PRIMARY) exit();
         });
