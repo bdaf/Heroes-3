@@ -46,9 +46,9 @@
       </HBox>
    </bottom>
    <center>
-      <HBox>
-         <VBox fx:id="vBoxForUserArmy" />
-         <VBox fx:id="vBoxForArmyShop" alignment="TOP_CENTER" />
+      <HBox alignment="CENTER">
+         <VBox fx:id="vBoxForUserArmy" alignment="CENTER" />
+         <VBox fx:id="vBoxForArmyShop" alignment="CENTER" />
       </HBox>
    </center>
    <stylesheets>

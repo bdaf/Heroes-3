@@ -19,7 +19,6 @@ import java.util.List;
 import static pl.sdk.GameEngine.VERSION;
 import static pl.sdk.converter.ProperFractionConverter.getProperFactoryBasedOnFraction;
 
-
 public class EcoBattleConverter {
     public static void start(EconomyEngine aEconomyEngine, Stage aWindow) {
         try {

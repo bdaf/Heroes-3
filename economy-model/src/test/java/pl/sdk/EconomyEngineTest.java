@@ -6,9 +6,9 @@ import pl.sdk.creatures.EconomyCastleFactory;
 import pl.sdk.creatures.EconomyNecropolisFactory;
 import pl.sdk.hero.EconomyHero;
 import pl.sdk.hero.Fraction;
+import pl.sdk.settings.EconomySettings;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static pl.sdk.EconomyEngine.FACTOR_OF_GOLD_AMOUNT_PER_ROUND;
 
 public class EconomyEngineTest {
 
@@ -20,9 +20,10 @@ public class EconomyEngineTest {
 
     @BeforeEach
     void init() {
-        castleHero = new EconomyHero(Fraction.CASTLE, 1000);
-        necropolisHero = new EconomyHero(Fraction.NECROPOLIS, 1000);
-        engine = new EconomyEngine(castleHero, necropolisHero);
+        EconomySettings aSettings = new EconomySettings(3,3, 1000, 1000);
+        castleHero = new EconomyHero(Fraction.CASTLE, aSettings.getStartGold());
+        necropolisHero = new EconomyHero(Fraction.NECROPOLIS, aSettings.getStartGold());
+        engine = new EconomyEngine(castleHero, necropolisHero, aSettings);
         castle = new EconomyCastleFactory();
         necropolis = new EconomyNecropolisFactory();
     }
@@ -86,12 +87,12 @@ public class EconomyEngineTest {
         engine.pass();
         assertEquals(expectedAmount, engine.getActiveHero().getGold());
         engine.pass();
-        expectedAmount += FACTOR_OF_GOLD_AMOUNT_PER_ROUND*2;
+        expectedAmount += engine.FACTOR_OF_GOLD_AMOUNT_PER_ROUND*2;
         assertEquals(expectedAmount, engine.getLeftHero().getGold());
         assertEquals(expectedAmount, engine.getRightHero().getGold());
         engine.pass();
         engine.pass();
-        expectedAmount +=FACTOR_OF_GOLD_AMOUNT_PER_ROUND*3;
+        expectedAmount += engine.FACTOR_OF_GOLD_AMOUNT_PER_ROUND*3;
         assertEquals(expectedAmount, engine.getLeftHero().getGold());
         assertEquals(expectedAmount, engine.getRightHero().getGold());
         engine.buy(castle.Create(true, 1, 1));

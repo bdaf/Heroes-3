@@ -5,6 +5,7 @@ import pl.sdk.creatures.RandomizeAmountOfCreaturesInShop;
 import pl.sdk.hero.CopyHeroMaker;
 import pl.sdk.hero.CreatureShop;
 import pl.sdk.hero.EconomyHero;
+import pl.sdk.settings.EconomySettings;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -16,9 +17,9 @@ public class EconomyEngine {
     public static final String END_OF_ROUND = "END_OF_TURN";
     public static final String NEXT_ROUND_STARTED = "NEXT_ROUND_STARTED";
     public static final String HERO_SOLD_CREATURE = "HERO_SOLD_CREATURE";
-    public static final int AMOUNT_OF_ROUNDS = 1;
-    public static final int AMOUNT_OF_TURNS = 3;
-    public static final int FACTOR_OF_GOLD_AMOUNT_PER_ROUND = 1000;
+    public final int AMOUNT_OF_ROUNDS; // Amount of battles
+    public final int AMOUNT_OF_TURNS; // Amount of shopping each
+    public final int FACTOR_OF_GOLD_AMOUNT_PER_ROUND;
     private final CreatureShop creatureShop = new CreatureShop();
     private final EconomyHero leftHero;
     private final EconomyHero rightHero;
@@ -28,7 +29,7 @@ public class EconomyEngine {
     private RandomizeAmountOfCreaturesInShop randomize;
     private PropertyChangeSupport observerSupport;
 
-    public EconomyEngine(EconomyHero aLeftHero, EconomyHero aRightHero) {
+    public EconomyEngine(EconomyHero aLeftHero, EconomyHero aRightHero, EconomySettings aSettings) {
         leftHero = aLeftHero;
         rightHero = aRightHero;
         activeHero = leftHero;
@@ -36,6 +37,10 @@ public class EconomyEngine {
         roundNumber = 1;
         randomize = new RandomizeAmountOfCreaturesInShop();
         observerSupport = new PropertyChangeSupport(this);
+
+        AMOUNT_OF_ROUNDS = aSettings.getRoundsAmount();
+        AMOUNT_OF_TURNS = aSettings.getTurnsAmount();
+        FACTOR_OF_GOLD_AMOUNT_PER_ROUND = aSettings.getFactorOfGoldAfterRound();
     }
 
     public void buy(EconomyCreature aCreature) {
@@ -63,7 +68,7 @@ public class EconomyEngine {
 
     private void endTurn() {
         turnNumber += 1;
-        if (turnNumber > AMOUNT_OF_ROUNDS) {
+        if (turnNumber > AMOUNT_OF_TURNS) {
             nextRound();
         } else {
             randomize = new RandomizeAmountOfCreaturesInShop();
