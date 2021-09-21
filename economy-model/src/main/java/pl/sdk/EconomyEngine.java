@@ -5,7 +5,7 @@ import pl.sdk.creatures.RandomizeAmountOfCreaturesInShop;
 import pl.sdk.hero.CopyHeroMaker;
 import pl.sdk.hero.CreatureShop;
 import pl.sdk.hero.EconomyHero;
-import pl.sdk.settings.EconomySettings;
+import pl.sdk.settings.KindOfGame;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -29,7 +29,7 @@ public class EconomyEngine {
     private RandomizeAmountOfCreaturesInShop randomize;
     private PropertyChangeSupport observerSupport;
 
-    public EconomyEngine(EconomyHero aLeftHero, EconomyHero aRightHero, EconomySettings aSettings) {
+    public EconomyEngine(EconomyHero aLeftHero, EconomyHero aRightHero, KindOfGame aSettings) {
         leftHero = aLeftHero;
         rightHero = aRightHero;
         activeHero = leftHero;

@@ -6,7 +6,7 @@ import pl.sdk.creatures.EconomyCastleFactory;
 import pl.sdk.creatures.EconomyNecropolisFactory;
 import pl.sdk.hero.EconomyHero;
 import pl.sdk.hero.Fraction;
-import pl.sdk.settings.EconomySettings;
+import pl.sdk.settings.KindOfGame;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,10 +20,10 @@ public class EconomyEngineTest {
 
     @BeforeEach
     void init() {
-        EconomySettings aSettings = new EconomySettings(3,3, 1000, 1000);
-        castleHero = new EconomyHero(Fraction.CASTLE, aSettings.getStartGold());
-        necropolisHero = new EconomyHero(Fraction.NECROPOLIS, aSettings.getStartGold());
-        engine = new EconomyEngine(castleHero, necropolisHero, aSettings);
+        KindOfGame kind = KindOfGame.TOURNAMENT;
+        castleHero = new EconomyHero(Fraction.CASTLE, kind.getStartGold());
+        necropolisHero = new EconomyHero(Fraction.NECROPOLIS, kind.getStartGold());
+        engine = new EconomyEngine(castleHero, necropolisHero, kind);
         castle = new EconomyCastleFactory();
         necropolis = new EconomyNecropolisFactory();
     }
