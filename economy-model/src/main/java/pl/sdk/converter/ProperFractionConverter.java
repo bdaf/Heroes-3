@@ -6,7 +6,7 @@ import pl.sdk.hero.Fraction;
 
 public class ProperFractionConverter {
 
-    public static Factory getProperFactoryForFractionOf(Fraction aFraction) {
+    public static Factory getProperFactoryBasedOnFraction(Fraction aFraction) {
         Factory factory;
         if (aFraction == Fraction.NECROPOLIS)
             factory = new NecropolisFactory();
@@ -17,7 +17,7 @@ public class ProperFractionConverter {
         return factory;
     }
 
-    public static EconomyFactory getProperEconomyFactoryForFractionOf(Fraction aFraction) {
+    public static EconomyFactory getProperEconomyFactoryBasedOnFraction(Fraction aFraction) {
         EconomyFactory factory;
         if (aFraction == Fraction.NECROPOLIS)
             factory = new EconomyNecropolisFactory();

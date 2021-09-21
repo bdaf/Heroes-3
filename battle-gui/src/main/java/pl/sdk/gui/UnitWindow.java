@@ -90,9 +90,7 @@ public class UnitWindow {
         firstHalfOfStats.setStyle("-fx-font: 18 arial;");
         secondHalfOfStats.setStyle("-fx-font: 18 arial;");
 
-        vBox.getChildren().add(healthAndShots);
-        vBox.getChildren().add(firstHalfOfStats);
-        vBox.getChildren().add(secondHalfOfStats);
+        vBox.getChildren().addAll(healthAndShots,firstHalfOfStats,secondHalfOfStats);
         vBox.setPrefWidth(370);
         return vBox;
     }

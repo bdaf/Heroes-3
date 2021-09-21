@@ -3,7 +3,6 @@ package pl.sdk.creatures;
 import pl.sdk.hero.Fraction;
 
 public class EconomyNecropolisFactory extends EconomyFactory {
-    public static final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
 
     public EconomyNecropolisFactory() {
         fraction = Fraction.NECROPOLIS;

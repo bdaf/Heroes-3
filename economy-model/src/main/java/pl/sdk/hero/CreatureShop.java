@@ -20,21 +20,6 @@ public class CreatureShop {
         }
     }
 
-    private int changeNumberOfAmountInStack(EconomyHero aEconomyHero, EconomyCreature aCreature, Operation aOperation) {
-        List<EconomyCreature> aArmyOfHero = aEconomyHero.getHeroArmy();
-        int finalAmount = -1;
-        for (int i = 0; i < aArmyOfHero.size(); i++) {
-            if (aArmyOfHero.get(i).equals(aCreature)) {
-                int amountToChange = aCreature.getAmount() * aOperation.getMultiplier();
-                finalAmount = aArmyOfHero.get(i).getAmount() + amountToChange;
-                EconomyCreature creatureToExchange = changer.returnCreatureInStackWithChangedAmount(finalAmount, aCreature, aEconomyHero);
-                aEconomyHero.replaceCreature(creatureToExchange, i);
-                break;
-            }
-        }
-        return finalAmount;
-    }
-
     public boolean sell(EconomyHero aEconomyHero, EconomyCreature aCreature) {
         boolean result = true;
         int amountInStack = changeNumberOfAmountInStack(aEconomyHero, aCreature, Operation.subtraction);
@@ -45,6 +30,21 @@ public class CreatureShop {
         }
         aEconomyHero.addGold(aCreature.getAmount() * aCreature.getGoldCost());
         return result;
+    }
+
+    private int changeNumberOfAmountInStack(EconomyHero aEconomyHero, EconomyCreature aCreature, Operation aOperation) {
+        List<EconomyCreature> aArmyOfHero = aEconomyHero.getHeroArmy();
+        int finalAmount = -1;
+        for (int i = 0; i < aArmyOfHero.size(); i++) {
+            if (aArmyOfHero.get(i).equals(aCreature)) {
+                int amountToChange = aCreature.getAmount() * aOperation.getMultiplier();
+                finalAmount = aArmyOfHero.get(i).getAmount() + amountToChange;
+                EconomyCreature creatureToExchange = changer.getCreatureInStackWithChangedAmount(finalAmount, aCreature, aEconomyHero);
+                aEconomyHero.replaceCreature(creatureToExchange, i);
+                break;
+            }
+        }
+        return finalAmount;
     }
 
     private enum Operation {

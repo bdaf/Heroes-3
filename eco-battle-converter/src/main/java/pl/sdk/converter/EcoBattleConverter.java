@@ -2,6 +2,7 @@ package pl.sdk.converter;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.EconomyEngine;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static pl.sdk.GameEngine.VERSION;
-import static pl.sdk.converter.ProperFractionConverter.getProperFactoryForFractionOf;
+import static pl.sdk.converter.ProperFractionConverter.getProperFactoryBasedOnFraction;
 
 
 public class EcoBattleConverter {
@@ -30,6 +31,7 @@ public class EcoBattleConverter {
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setTitle("Herociples " + VERSION);
+            stage.getIcons().add(new Image("jpg/icon.jpg"));
             stage.setScene(scene);
             stage.initOwner(aWindow);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -44,14 +46,14 @@ public class EcoBattleConverter {
     }
 
     public static List<Creature> convert(EconomyHero aEcoHero) {
-        Factory factory = getProperFactoryForFractionOf(aEcoHero.getFraction());
+        Factory factory = getProperFactoryBasedOnFraction(aEcoHero.getFraction());
         List<Creature> listOfCreatures = new ArrayList<>();
         aEcoHero.getHeroArmy().forEach(c -> listOfCreatures.add(factory.create(c.isUpgraded(), c.getTier(), c.getAmount())));
         return listOfCreatures;
     }
 
     public static Creature convert(EconomyCreature aEconomyCreature, Fraction aFraction) {
-        Factory factory = getProperFactoryForFractionOf(aFraction);
+        Factory factory = getProperFactoryBasedOnFraction(aFraction);
         EconomyCreature c = aEconomyCreature;
         return factory.create(c.isUpgraded(), c.getTier(), c.getAmount());
     }

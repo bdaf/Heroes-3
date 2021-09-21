@@ -67,7 +67,7 @@ public class BattleMapController implements PropertyChangeListener {
                     mapTile.addCreature(creatureOnMapTitle);
                     addEventHandlerForShowingStatsOnRightClick(mapTile, creatureOnMapTitle);
                     if (creatureOnMapTitle == gameEngine.getActiveCreature() && gameEngine.getActiveCreature().isAlive())
-                        flagActiveCreature(x, y, mapTile, creatureOnMapTitle);
+                        flagActiveCreature(mapTile);
                     else if (!creatureOnMapTitle.isAlive())
                         flagDeadCreatureAndSetMoveOnClick(x, y, mapTile);
                     else if (gameEngine.canAttack(x, y))
@@ -90,7 +90,7 @@ public class BattleMapController implements PropertyChangeListener {
         });
     }
 
-    private void flagActiveCreature(int aX, int aY, MapTile aMapTile, Creature aCreatureOnMapTitle) {
+    private void flagActiveCreature(MapTile aMapTile) {
         if (!gameEngine.canActiveCreatureDoAnyAction()) aMapTile.setBackgroundColor(Color.GRAY);
         else aMapTile.setBackgroundColor(Color.GREEN);
     }

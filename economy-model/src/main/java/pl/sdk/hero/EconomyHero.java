@@ -7,7 +7,6 @@ import java.util.List;
 
 public class EconomyHero {
 
-
     private List<EconomyCreature> heroArmy;
     private final Fraction fraction;
     private int gold;
@@ -33,6 +32,7 @@ public class EconomyHero {
             throw new IllegalStateException("Army can't include more stacks of creatures!");
         heroArmy.add(aCreature);
     }
+
     boolean removeCreature(EconomyCreature aCreature){
         if(heroArmy.isEmpty()) throw new IllegalStateException("Army is empty! You cannot delete nothing from there!");
         for (int i = 0; i < heroArmy.size(); i++) {
@@ -43,8 +43,9 @@ public class EconomyHero {
         }
         return false;
     }
+
     void replaceCreature(EconomyCreature aCreature, int aI){
-        if(heroArmy.size() < aI+1) throw new NullPointerException("There is no creature under that number in array!");
+        if(heroArmy.size() < aI+1 || aI < 0) throw new NullPointerException("There is no creature under that number in array!");
         heroArmy.remove(aI);
         heroArmy.add(aI,aCreature);
     }

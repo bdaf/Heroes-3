@@ -4,8 +4,6 @@ import pl.sdk.hero.Fraction;
 
 public class EconomyCastleFactory extends EconomyFactory{
 
-    public static final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
-
     public EconomyCastleFactory() {
         fraction = Fraction.CASTLE;
     }

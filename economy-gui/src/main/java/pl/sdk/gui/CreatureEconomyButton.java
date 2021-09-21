@@ -14,7 +14,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
@@ -35,6 +34,7 @@ public abstract class CreatureEconomyButton extends Button {
         nameOfCreature = getText();
         setAmountForStackInShop(aTier, aIsUpgraded, aHero, aRandomize);
         setAppearance(aFactory.Create(aIsUpgraded, aTier, aAmount));
+
         addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
             EconomyCreature eCreature = aFactory.Create(aIsUpgraded, aTier, aAmount);
             if (e.getButton() == MouseButton.PRIMARY) {

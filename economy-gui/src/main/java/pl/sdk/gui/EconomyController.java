@@ -21,7 +21,7 @@ import java.beans.PropertyChangeListener;
 
 import static javafx.application.Platform.exit;
 import static pl.sdk.EconomyEngine.*;
-import static pl.sdk.converter.ProperFractionConverter.getProperEconomyFactoryForFractionOf;
+import static pl.sdk.converter.ProperFractionConverter.getProperEconomyFactoryBasedOnFraction;
 
 public class EconomyController implements PropertyChangeListener {
 
@@ -79,7 +79,7 @@ public class EconomyController implements PropertyChangeListener {
 
     void refreshGui() {
         clearingArmyAndShopBoxesAndMakingTheirLabels();
-        EconomyFactory factory = getProperEconomyFactoryForFractionOf(economyEngine.getActiveHero().getFraction());
+        EconomyFactory factory = getProperEconomyFactoryBasedOnFraction(economyEngine.getActiveHero().getFraction());
 
         VBox vBoxShopCreaturesUpgraded = new VBox();
         VBox vBoxShopCreaturesNotUpgraded = new VBox();
