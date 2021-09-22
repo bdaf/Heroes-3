@@ -67,7 +67,7 @@ public class AfterBattleWindow {
         Fraction rightFraction = battleMapController.getRightTeamFraction();
 
         mainVBox.getChildren().add(new Label("Congratulations!"));
-        Text text = new Text("If You are the " + battleMapController.getWinnerOfTheBattle() + ", you won battle!\nIf You are not, sorry, train better.");
+        Text text = new Text("If You are the " + battleMapController.getWinnerOfTheBattle().name() + ", you won battle!\nIf You are not, sorry, train better.");
         text.setFont(Font.font(20));
         mainVBox.getChildren().add(text);
         mainVBox.getChildren().add(new Label(leftFraction.name()+" | "+leftFraction.getPoints()+" - "+rightFraction.getPoints()+" | "+rightFraction.name()));

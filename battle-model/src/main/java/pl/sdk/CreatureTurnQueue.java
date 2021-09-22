@@ -32,18 +32,22 @@ public class CreatureTurnQueue {
 
     private void removingDeadCreatures() {
         for (Creature c : aliveCreatures)
-            if(!c.isAlive())
+            if (!c.isAlive())
                 creaturesToDelete.add(c);
         for (Creature c : creaturesToDelete)
             aliveCreatures.remove(c);
         creaturesToDelete.clear();
     }
 
-    void addObserver(GameEngine aObserver){
+    void addObserver(GameEngine aObserver) {
         observers.add(aObserver);
     }
-    void removeObserver(GameEngine aObserver){ observers.remove((aObserver)); }
-    void notifyObservers(){
+
+    void removeObserver(GameEngine aObserver) {
+        observers.remove((aObserver));
+    }
+
+    void notifyObservers() {
         observers.forEach(GameEngine::makeChangesOfNewTurn);
     }
 
@@ -53,13 +57,13 @@ public class CreatureTurnQueue {
     }
 
     void next() {
-        if(creatureQueue.isEmpty())
+        if (creatureQueue.isEmpty())
             initQueue();
         else {
             activeCreature = creatureQueue.poll();
             movePointsOfActiveCreature = activeCreature.getMoveRange();
             attacksOfActiveCreature = activeCreature.getMaxAttacksInTurn();
-            if(!activeCreature.isAlive())
+            if (!activeCreature.isAlive())
                 next();
         }
     }
@@ -82,18 +86,19 @@ public class CreatureTurnQueue {
 
     boolean ifAnyTeamWon() {
         removingDeadCreatures();
-        if(!aliveCreatures.isEmpty()){
+        if (aliveCreatures.isEmpty()) throw new IllegalStateException("There is no living creatures!");
+        else {
             Creature.Team team = aliveCreatures.get(0).getTeam();
             for (int i = 0; i < aliveCreatures.size(); i++) {
-                if(aliveCreatures.get(i).getTeam() != team) return false;
+                if (aliveCreatures.get(i).getTeam() != team) return false;
             }
         }
         return true;
     }
 
-    Creature.Team getAliveCreature() {
+    Creature getAliveCreature() {
         removingDeadCreatures();
-        if(aliveCreatures.isEmpty()) throw new IllegalStateException("There is no living creatures!");
-        return aliveCreatures.get(0).getTeam();
+        if (aliveCreatures.isEmpty()) throw new IllegalStateException("There is no living creatures!");
+        return aliveCreatures.get(0);
     }
 }

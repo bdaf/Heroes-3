@@ -187,6 +187,6 @@ public class GameEngine {
 
     public Creature.Team getWinnerTeam() {
         if(!anyTeamWon()) throw new IllegalStateException("Neither of teams won yet!");
-        return queue.getAliveCreature();
+        return queue.getAliveCreature().getTeam();
     }
 }

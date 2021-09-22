@@ -1,5 +1,6 @@
 package pl.sdk.gui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -129,24 +130,25 @@ public class BattleMapController implements PropertyChangeListener {
         AfterBattleWindow afterBattleWindow = new AfterBattleWindow(this);
         afterBattleWindow.showAndWait();
         if (kindOfGame.ifAnyFractionWon(leftTeamFraction,rightTeamFraction)) {
-            String winner = getWinnerOfTheGame();
+            String winner = getWinnerOfTheGame().name();
             AfterGameWindow afterGameWindow = new AfterGameWindow(this);
             afterGameWindow.addCaption("\n" + winner + " Won the Game!");
             afterGameWindow.addCaption("Score: " + leftTeamFraction.getPoints() + " - " + rightTeamFraction.getPoints() + " for " + winner + "!");
             afterGameWindow.showAndWait();
+            Platform.exit();
         }
         Stage stage = (Stage) gridMap.getScene().getWindow();
         stage.close();
     }
 
-    private String getWinnerOfTheGame() {
-        if (kindOfGame.ifFractionWon(leftTeamFraction)) return leftTeamFraction.name();
-        else return rightTeamFraction.name();
+    private Fraction getWinnerOfTheGame() {
+        if (kindOfGame.ifFractionWon(leftTeamFraction)) return leftTeamFraction;
+        else return rightTeamFraction;
     }
 
-    String getWinnerOfTheBattle() {
-        if (gameEngine.getWinnerTeam() == Creature.Team.LEFT_TEAM) return leftTeamFraction.name();
-        else return rightTeamFraction.name();
+    Fraction getWinnerOfTheBattle() {
+        if (gameEngine.getWinnerTeam() == Creature.Team.LEFT_TEAM) return leftTeamFraction;
+        else return rightTeamFraction;
     }
 
     @Override
@@ -154,8 +156,7 @@ public class BattleMapController implements PropertyChangeListener {
         refreshGui();
         if (aPropertyChangeEvent.getPropertyName().equals(gameEngine.CURRENT_CREATURE_ATTACKED)) {
             if (gameEngine.anyTeamWon()) {
-                if (gameEngine.getWinnerTeam() == Creature.Team.LEFT_TEAM) leftTeamFraction.increasePoints(1);
-                else rightTeamFraction.increasePoints(1);
+                getWinnerOfTheBattle().increasePoints(1);
                 makeWindowOfWinningSideInBattle();
             }
         }
