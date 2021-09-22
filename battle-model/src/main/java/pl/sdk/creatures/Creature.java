@@ -4,11 +4,13 @@ import com.google.common.collect.Range;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 public class Creature implements PropertyChangeListener {
 
     private CreatureStatisticlf stats;
     private CalculateDamageStrategy damageCalculator;
+    private List<Weakness> weaknesses;
     private int currentHp;
     private boolean counterAttackedInThisTurn;
     private int maxAmount;
@@ -22,6 +24,14 @@ public class Creature implements PropertyChangeListener {
         RIGHT_TEAM()
     }
 
+    int getDefense() {
+        return stats.getArmor();
+    }
+
+    int getAttack() {
+        return stats.getAttack();
+    }
+
      Creature(){
         this(new CreatureStatisticForTests());
         maxAmount = amount = 1; attacksInTurn = 1;
@@ -31,26 +41,6 @@ public class Creature implements PropertyChangeListener {
         this.stats = stats;
         currentHp = stats.getMaxHp();
         shots = stats.getShots();
-    }
-
-    boolean wasCounterAttackInThisTurn() {
-        return counterAttackedInThisTurn;
-    }
-
-    void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
-        counterAttackedInThisTurn = aCounterAttackInThisTurn;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    void setTeam(Team aTeam) {
-        team = aTeam;
-    }
-
-    public int getMaxHp(){
-        return stats.getMaxHp();
     }
 
     public void meleeAttack(Creature defender){
@@ -79,8 +69,6 @@ public class Creature implements PropertyChangeListener {
         }
     }
 
-     void performAfterAttack(int aDamageToChange) {}
-
     public void applyDamage(int aDamageToApply) {
         int hpOfWholeStack = currentHp + (amount-1)*getMaxHp();
         hpOfWholeStack-=aDamageToApply;
@@ -102,6 +90,28 @@ public class Creature implements PropertyChangeListener {
             amount = maxAmount;
             setCurrentHPToMaxHp();
         }
+    }
+
+     void performAfterAttack(int aDamageToChange) {}
+
+    boolean wasCounterAttackInThisTurn() {
+        return counterAttackedInThisTurn;
+    }
+
+    void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
+        counterAttackedInThisTurn = aCounterAttackInThisTurn;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    void setTeam(Team aTeam) {
+        team = aTeam;
+    }
+
+    public int getMaxHp(){
+        return stats.getMaxHp();
     }
 
     public boolean isAlive() {
@@ -166,9 +176,11 @@ public class Creature implements PropertyChangeListener {
         return 1.5;
     }
     public int getShots() { return shots; }
+
     void setShots(int aShots){
         this.shots = aShots;
     }
+
     void setCurrentHPToMaxHp() {
         currentHp = getMaxHp();
     }
