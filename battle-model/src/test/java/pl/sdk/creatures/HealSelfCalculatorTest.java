@@ -76,7 +76,7 @@ public class HealSelfCalculatorTest {
     }
 
     @Test
-    void shouldHeal30AndHaveMaxHpWhenHeDeal100DmgButHasCurrently70HpV2(){
+    void shouldHeal40AndHaveMaxHpWhenHeDeal100DmgButHasCurrently60HpV2(){
         attacker.setCurrentHP(60);
         attacker.meleeAttack(defender);
 
