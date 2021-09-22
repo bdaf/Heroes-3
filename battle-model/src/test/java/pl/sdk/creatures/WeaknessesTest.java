@@ -1,23 +1,64 @@
 package pl.sdk.creatures;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.sdk.GameEngine;
+import pl.sdk.Point;
+
+import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static pl.sdk.GameEngine.BOARD_WIDTH;
 
 public class WeaknessesTest {
 
+    private Random randomizer;
+
+    @BeforeEach
+    void init(){
+        randomizer = new Random();
+        randomizer = mock(Random.class);
+        when(randomizer.nextDouble()).thenReturn(0.1);
+
+    }
     @Test
     void defenderShouldHave2PointsLessAttackAndDefenseFor3Rounds(){
-        Creature attacker = new Creature.BuilderForTesting()
-                .maxHp(100).build();
+        Creature attacker = new InfectsWithWeaknessCreatureDecorator(new Creature.BuilderForTesting()
+                .maxHp(100)
+                .moveRange(100)
+                .build(), new Weakness(2,2,0.2,3), randomizer);
         Creature defender = new Creature.BuilderForTesting()
+                .moveRange(9)
                 .attack(5)
                 .armor(5)
                 .maxHp(100).build();
 
-        attacker.attack(defender);
+
+        GameEngine engine = new GameEngine(List.of(attacker),List.of(defender));
+        engine.move(new Point(BOARD_WIDTH-2,0));
+        assertTrue(engine.canAttack(BOARD_WIDTH-1,0));
+        engine.attack(BOARD_WIDTH-1,0); // attacker
 
         assertEquals(3,defender.getAttack());
         assertEquals(3,defender.getDefense());
+
+        engine.pass(); // defender // 1 round is over, 2th starts
+
+        engine.pass(); // attacker
+        engine.pass(); // defender // 2 round is over, 3th starts
+
+        assertEquals(3,defender.getAttack());
+        assertEquals(3,defender.getDefense());
+
+        engine.pass(); // attacker
+        engine.pass(); // defender // 3 round is over, 4th starts
+
+        assertEquals(5,defender.getAttack());
+        assertEquals(5,defender.getDefense());
+
     }
 }

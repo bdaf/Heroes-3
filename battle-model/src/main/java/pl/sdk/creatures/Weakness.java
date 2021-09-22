@@ -4,11 +4,13 @@ public class Weakness {
 
     final int attackToDecrease;
     final int defenseToDecrease;
+    final double percentage;
     int duration;
 
-    Weakness(int aAttackToDecrease, int aDefenseToDecrease, int aDuration) {
+    Weakness(int aAttackToDecrease, int aDefenseToDecrease, double aPercentage, int aDuration) {
         attackToDecrease = aAttackToDecrease;
         defenseToDecrease = aDefenseToDecrease;
+        percentage = aPercentage;
         duration = aDuration;
     }
 
@@ -22,5 +24,9 @@ public class Weakness {
 
     int getDuration() {
         return duration;
+    }
+
+    double getPercentage() {
+        return percentage;
     }
 }

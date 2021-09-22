@@ -4,13 +4,14 @@ import com.google.common.collect.Range;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Creature implements PropertyChangeListener {
 
-    private CreatureStatisticlf stats;
+    private final List<Weakness> weaknesses = new ArrayList<>();
     private CalculateDamageStrategy damageCalculator;
-    private List<Weakness> weaknesses;
+    private CreatureStatisticlf stats;
     private int currentHp;
     private boolean counterAttackedInThisTurn;
     private int maxAmount;
@@ -19,31 +20,39 @@ public class Creature implements PropertyChangeListener {
     private int shots;
     private Team team;
 
-    public enum Team{
+    void addWeakness(Weakness aWeakness) {
+        weaknesses.add(aWeakness);
+    }
+
+    public enum Team {
         LEFT_TEAM(),
         RIGHT_TEAM()
     }
 
-    int getDefense() {
-        return stats.getArmor();
-    }
-
-    int getAttack() {
-        return stats.getAttack();
-    }
-
-     Creature(){
+    Creature() {
         this(new CreatureStatisticForTests());
-        maxAmount = amount = 1; attacksInTurn = 1;
+        maxAmount = amount = 1;
+        attacksInTurn = 1;
         damageCalculator = new DefaultDamageCalculator();
     }
-     Creature(CreatureStatisticlf stats){
+
+    Creature(CreatureStatisticlf stats) {
         this.stats = stats;
         currentHp = stats.getMaxHp();
         shots = stats.getShots();
     }
 
-    public void meleeAttack(Creature defender){
+    int getDefense() {
+        int sumToDecrease = weaknesses.stream().mapToInt(w -> w.defenseToDecrease).sum();
+        return stats.getArmor() - sumToDecrease;
+    }
+
+    int getAttack() {
+        int sumToDecrease = weaknesses.stream().mapToInt(w -> w.attackToDecrease).sum();
+        return stats.getAttack() - sumToDecrease;
+    }
+
+    public void meleeAttack(Creature defender) {
         attack(defender);
     }
 
@@ -70,29 +79,28 @@ public class Creature implements PropertyChangeListener {
     }
 
     public void applyDamage(int aDamageToApply) {
-        int hpOfWholeStack = currentHp + (amount-1)*getMaxHp();
-        hpOfWholeStack-=aDamageToApply;
-        if(hpOfWholeStack<=0){
+        int hpOfWholeStack = currentHp + (amount - 1) * getMaxHp();
+        hpOfWholeStack -= aDamageToApply;
+        if (hpOfWholeStack <= 0) {
             amount = 0;
             currentHp = 0;
-        }
-        else{
-            if(hpOfWholeStack%getMaxHp() == 0){
-                amount = hpOfWholeStack/getMaxHp();
+        } else {
+            if (hpOfWholeStack % getMaxHp() == 0) {
+                amount = hpOfWholeStack / getMaxHp();
                 setCurrentHPToMaxHp();
-            }
-            else{
+            } else {
                 amount = hpOfWholeStack / getMaxHp() + 1;
                 currentHp = hpOfWholeStack % getMaxHp();
             }
         }
-        if(amount>maxAmount){
+        if (amount > maxAmount) {
             amount = maxAmount;
             setCurrentHPToMaxHp();
         }
     }
 
-     void performAfterAttack(int aDamageToChange) {}
+    void performAfterAttack(int aDamageToChange) {
+    }
 
     boolean wasCounterAttackInThisTurn() {
         return counterAttackedInThisTurn;
@@ -110,7 +118,7 @@ public class Creature implements PropertyChangeListener {
         team = aTeam;
     }
 
-    public int getMaxHp(){
+    public int getMaxHp() {
         return stats.getMaxHp();
     }
 
@@ -122,7 +130,9 @@ public class Creature implements PropertyChangeListener {
         return currentHp;
     }
 
-    public double getMoveRange() { return stats.getMoveRange(); }
+    public double getMoveRange() {
+        return stats.getMoveRange();
+    }
 
     public String getName() {
         return stats.getTranslatedCreatureName();
@@ -132,7 +142,9 @@ public class Creature implements PropertyChangeListener {
         return !counterAttackedInThisTurn;
     }
 
-    public int getAmount() { return amount; }
+    public int getAmount() {
+        return amount;
+    }
 
     public CreatureStatisticlf getStats() {
         return stats;
@@ -149,6 +161,13 @@ public class Creature implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         setIfWasCounterAttackInThisTurn(false);
+        weaknesses.forEach(w -> w.duration -= 1);
+        //weaknesses.stream().filter(w -> w.duration <= 0).forEach(weaknesses::remove);
+        for (int i = 0; i < weaknesses.size(); i++) {
+            if(weaknesses.get(i).getDuration() <=0 ) {
+                weaknesses.remove(weaknesses.get(i));
+            }
+        }
     }
 
     @Override
@@ -167,17 +186,20 @@ public class Creature implements PropertyChangeListener {
         sb.append(getCurrentHp());
         sb.append("/");
         sb.append(getStats().getMaxHp());
-        sb.append("  "+getAmount());
+        sb.append("  " + getAmount());
         return sb.toString();
     }
 
     public double getAttackRange() {
-        if(getShots()>0) return Double.MAX_VALUE;
+        if (getShots() > 0) return Double.MAX_VALUE;
         return 1.5;
     }
-    public int getShots() { return shots; }
 
-    void setShots(int aShots){
+    public int getShots() {
+        return shots;
+    }
+
+    void setShots(int aShots) {
         this.shots = aShots;
     }
 
@@ -215,57 +237,67 @@ public class Creature implements PropertyChangeListener {
         private Integer shots;
         private Integer attacksInTurn;
 
-        BuilderForTesting attacksInTurn(Integer aAttacksInTurn){
+        BuilderForTesting attacksInTurn(Integer aAttacksInTurn) {
             this.attacksInTurn = aAttacksInTurn;
             return this;
         }
-        BuilderForTesting shots(Integer aShots){
+
+        BuilderForTesting shots(Integer aShots) {
             this.shots = aShots;
             return this;
         }
-        BuilderForTesting amount(Integer aAmount){
+
+        BuilderForTesting amount(Integer aAmount) {
             this.amount = aAmount;
             return this;
         }
-         BuilderForTesting name(String aName){
+
+        BuilderForTesting name(String aName) {
             this.name = aName;
             return this;
         }
-         BuilderForTesting attack(Integer aAttack){
+
+        BuilderForTesting attack(Integer aAttack) {
             this.attack = aAttack;
             return this;
         }
-         BuilderForTesting armor(Integer aArmor){
+
+        BuilderForTesting armor(Integer aArmor) {
             this.armor = aArmor;
             return this;
         }
-         BuilderForTesting maxHp(Integer aMaxHp){
+
+        BuilderForTesting maxHp(Integer aMaxHp) {
             this.maxHp = aMaxHp;
             return this;
         }
-         BuilderForTesting moveRange(Integer aMoveRange){
+
+        BuilderForTesting moveRange(Integer aMoveRange) {
             this.moveRange = aMoveRange;
             return this;
         }
-         BuilderForTesting damage(Range<Integer> aDamage){
+
+        BuilderForTesting damage(Range<Integer> aDamage) {
             this.damage = aDamage;
             return this;
         }
-         BuilderForTesting damageCalculator(CalculateDamageStrategy aDamage){
+
+        BuilderForTesting damageCalculator(CalculateDamageStrategy aDamage) {
             this.damageCalculator = aDamage;
             return this;
         }
-         Creature build(){
-            if(name == null) name = "name";
-            if(attack == null) attack = 10;
-            if(armor == null) armor = 10;
-            if(maxHp == null) maxHp = 100;
-            if(moveRange == null) moveRange = 2;
-            if(damage == null) damage = Range.closed(6,14);
-            if(damageCalculator == null) damageCalculator = new DefaultDamageCalculator();
-            if(amount == null) amount = 1;
-            if(shots == null) shots = 0;
-            if(attacksInTurn == null) attacksInTurn = 1;
+
+        Creature build() {
+            if (name == null) name = "name";
+            if (attack == null) attack = 10;
+            if (armor == null) armor = 10;
+            if (maxHp == null) maxHp = 100;
+            if (moveRange == null) moveRange = 2;
+            if (damage == null) damage = Range.closed(6, 14);
+            if (damageCalculator == null) damageCalculator = new DefaultDamageCalculator();
+            if (amount == null) amount = 1;
+            if (shots == null) shots = 0;
+            if (attacksInTurn == null) attacksInTurn = 1;
             CreatureStatisticForTests stats = new CreatureStatisticForTests(name, attack, armor, maxHp, moveRange, damage, shots);
             Creature result = createInstance(stats);
             result.damageCalculator = this.damageCalculator;
@@ -276,7 +308,7 @@ public class Creature implements PropertyChangeListener {
             return result;
         }
 
-         private Creature createInstance(CreatureStatisticlf aStats) {
+        private Creature createInstance(CreatureStatisticlf aStats) {
             return new Creature(aStats);
         }
     }
@@ -287,31 +319,34 @@ public class Creature implements PropertyChangeListener {
         private Integer amount;
         private CreatureStatisticlf statistic;
 
-        Builder attacksInTurn(Integer aAttacksInTurn){
+        Builder attacksInTurn(Integer aAttacksInTurn) {
             this.attacksInTurn = aAttacksInTurn;
             return this;
         }
-        Builder damageCalculator(CalculateDamageStrategy aDamage){
+
+        Builder damageCalculator(CalculateDamageStrategy aDamage) {
             this.damageCalculator = aDamage;
             return this;
         }
-        Builder amount(Integer aAmount){
+
+        Builder amount(Integer aAmount) {
             this.amount = aAmount;
             return this;
         }
-        Builder statistic(CreatureStatisticlf aStats){
+
+        Builder statistic(CreatureStatisticlf aStats) {
             this.statistic = aStats;
             return this;
         }
 
-        Creature build(){
-            if(damageCalculator == null)
+        Creature build() {
+            if (damageCalculator == null)
                 damageCalculator = new DefaultDamageCalculator();
-            if(amount == null)
+            if (amount == null)
                 amount = 1;
-            if(attacksInTurn == null)
+            if (attacksInTurn == null)
                 attacksInTurn = 1;
-            if(statistic == null)
+            if (statistic == null)
                 statistic = CreatureStatistic.DEFAULT;
             Creature result = createInstance(statistic);
             result.damageCalculator = this.damageCalculator;
