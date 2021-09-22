@@ -26,10 +26,10 @@ public class NecropolisFactory extends Factory {
                             .statistic(CreatureStatistic.WRAITH)
                             .build());
                 case 4:
-                    return new SelfHealingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
+                    return new BlockingCounterAttackCreatureDecorator(new SelfHealingCreatureDecorator(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.VAMPIRE_LORD)
-                            .build()), 0.5);
+                            .build(), 1));
                 case 5:
                     return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
                             .amount(amount)

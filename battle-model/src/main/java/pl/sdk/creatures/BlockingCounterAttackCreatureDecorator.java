@@ -37,7 +37,6 @@ class BlockingCounterAttackCreatureDecorator extends Creature {
             int damageToDeal = countDamage(decorated, defender);
             defender.applyDamage(damageToDeal);
             performAfterAttack(damageToDeal);
-            counterAttack(defender);
         }
     }
 
@@ -53,6 +52,7 @@ class BlockingCounterAttackCreatureDecorator extends Creature {
 
     @Override
     protected void counterAttack(Creature defender) {
+        decorated.counterAttack(defender);
     }
 
     @Override
