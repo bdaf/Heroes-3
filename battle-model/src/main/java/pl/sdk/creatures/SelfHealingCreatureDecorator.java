@@ -47,7 +47,12 @@ class SelfHealingCreatureDecorator extends Creature {
 
     @Override
     protected void counterAttack(Creature defender) {
-        decorated.counterAttack(defender);
+        if (isAlive() && canCounterAttack()) {
+            int damageToDealInCounterAttack = countDamage(this, defender);
+            defender.applyDamage(damageToDealInCounterAttack);
+            performAfterAttack(damageToDealInCounterAttack);
+            setIfWasCounterAttackInThisTurn(true);
+        }
     }
 
     @Override
@@ -77,7 +82,7 @@ class SelfHealingCreatureDecorator extends Creature {
             int damageToDeal = countDamage(decorated, defender);
             defender.applyDamage(damageToDeal);
             performAfterAttack(damageToDeal);
-            counterAttack(defender);
+            defender.counterAttack(this);
         }
     }
 

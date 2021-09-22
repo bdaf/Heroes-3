@@ -22,18 +22,20 @@ public class CanCounterAttackMoreThanOnceInTurnTest {
 
         engine.move(new Point(BOARD_WIDTH -1,1)); // defender
         engine.pass();
-
-        assertTrue(defender.canCounterAttack());
+        boolean tak = defender.canCounterAttack();
+        assertTrue(tak);
 
         assertTrue(engine.canAttack(BOARD_WIDTH -1,1)); //attacker1
         engine.attack(BOARD_WIDTH-1,1);
 
-        assertTrue(defender.canCounterAttack());
+        tak = defender.canCounterAttack();
+        assertTrue(tak);
 
         assertTrue(engine.canAttack(BOARD_WIDTH -1,1)); //attacker2
         engine.attack(BOARD_WIDTH-1,1);
 
-        assertFalse(defender.canCounterAttack());
+        tak = defender.canCounterAttack();
+        assertFalse(tak);
 
         engine.move(new Point(BOARD_WIDTH -2,1));
         assertTrue(engine.canAttack(BOARD_WIDTH -1,1)); //attacker3

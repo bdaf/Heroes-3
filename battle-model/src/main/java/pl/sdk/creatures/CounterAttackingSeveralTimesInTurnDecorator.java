@@ -53,7 +53,11 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
 
     @Override
     void counterAttack(Creature defender) {
-        decorated.counterAttack(defender);
+        if (isAlive() && canCounterAttack()) {
+            int damageToDealInCounterAttack = countDamage(this, defender);
+            defender.applyDamage(damageToDealInCounterAttack);
+            setIfWasCounterAttackInThisTurn(true);
+        }
     }
 
     @Override
