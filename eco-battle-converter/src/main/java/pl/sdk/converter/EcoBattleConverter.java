@@ -1,5 +1,6 @@
 package pl.sdk.converter;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -22,11 +23,14 @@ import static pl.sdk.converter.ProperFractionConverter.getProperFactoryBasedOnFr
 public class EcoBattleConverter {
     public static void start(EconomyEngine aEconomyEngine, Stage aWindow) {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(EcoBattleConverter.class.getClassLoader().getResource("fxml/battleMap.fxml"));
             List<Creature> leftArmy = convert(aEconomyEngine.getLeftHero());
             List<Creature> rightArmy = convert(aEconomyEngine.getRightHero());
+            if (aEconomyEngine.isThisTheLastBattle()) aWindow.close();
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(EcoBattleConverter.class.getClassLoader().getResource("fxml/battleMap.fxml"));
             loader.setController(new BattleMapController(leftArmy, rightArmy, aEconomyEngine.isThisTheLastBattle()));
+
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setTitle("Herociples " + VERSION);
@@ -34,10 +38,10 @@ public class EcoBattleConverter {
             stage.setScene(scene);
             stage.initOwner(aWindow);
             stage.initModality(Modality.APPLICATION_MODAL);
-            if (aEconomyEngine.isThisTheLastBattle()) aWindow.close();
+            stage.setOnCloseRequest(aWindowEvent -> Platform.exit());
             stage.show();
-            MusicInGame.MUSIC_IN_ECONOMY.pause();
-            MusicInGame.MUSIC_IN_BATTLE.play();
+
+            manageMusic();
 
         } catch (IOException aE) {
             aE.printStackTrace();
@@ -55,6 +59,11 @@ public class EcoBattleConverter {
         Factory factory = getProperFactoryBasedOnFraction(aFraction);
         EconomyCreature c = aEconomyCreature;
         return factory.create(c.isUpgraded(), c.getTier(), c.getAmount());
+    }
+
+    private static void manageMusic() {
+        MusicInGame.MUSIC_IN_ECONOMY.pause();
+        MusicInGame.MUSIC_IN_BATTLE.play();
     }
 }
 
