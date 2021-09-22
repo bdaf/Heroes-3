@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import pl.sdk.*;
 import pl.sdk.creatures.Creature;
 import pl.sdk.hero.Fraction;
+import pl.sdk.settings.KindOfGame;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -31,15 +32,15 @@ public class BattleMapController implements PropertyChangeListener {
     @FXML
     private Pane rightPainForHero;
 
-    private final boolean isLastBattle;
     private GameEngine gameEngine;
-    private Fraction leftTeamFraction, rightTeamFraction;
+    private final Fraction leftTeamFraction, rightTeamFraction;
+    private final KindOfGame kindOfGame;
 
-    public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight, boolean aIsLastBattle) {
+    public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight, KindOfGame aKindOfGame) {
         gameEngine = new GameEngine(TeamLeft, TeamRight);
         leftTeamFraction = Fraction.NECROPOLIS;
         rightTeamFraction = Fraction.CASTLE;
-        isLastBattle = aIsLastBattle;
+        kindOfGame = aKindOfGame;
     }
 
     @FXML
@@ -127,7 +128,7 @@ public class BattleMapController implements PropertyChangeListener {
         gameEngine.pass();
         AfterBattleWindow afterBattleWindow = new AfterBattleWindow(this);
         afterBattleWindow.showAndWait();
-        if (isLastBattle) {
+        if (kindOfGame.ifAnyFractionWon(leftTeamFraction,rightTeamFraction)) {
             String winner = getWinnerOfTheGame();
             AfterGameWindow afterGameWindow = new AfterGameWindow(this);
             afterGameWindow.addCaption("\n" + winner + " Won the Game!");
@@ -139,9 +140,8 @@ public class BattleMapController implements PropertyChangeListener {
     }
 
     private String getWinnerOfTheGame() {
-        if (leftTeamFraction.getPoints() > rightTeamFraction.getPoints()) return leftTeamFraction.name();
-        else if (leftTeamFraction.getPoints() < rightTeamFraction.getPoints()) return rightTeamFraction.name();
-        else return leftTeamFraction.name() + " and " + rightTeamFraction.name();
+        if (kindOfGame.ifFractionWon(leftTeamFraction)) return leftTeamFraction.name();
+        else return rightTeamFraction.name();
     }
 
     String getWinnerOfTheBattle() {

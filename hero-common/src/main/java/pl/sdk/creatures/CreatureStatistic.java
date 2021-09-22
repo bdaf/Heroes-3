@@ -13,7 +13,7 @@ public enum CreatureStatistic implements CreatureStatisticlf {
     VAMPIRE("Vampire",10,9,30,6,Range.closed(5,8),4,"NOTHING compared to their upgraded brothers. Keep the population growing and recruit after the upgrade. \nSpecial Abilities: No enemy retaliation.", false),
     LICH("Lich",13,10,30,6,Range.closed(11,13),5,"Cloud won't damage your undead units, so aim right in that crowd! \nSpecial Abilities: Death cloud range attack - damages living creatures on adjacent squares to target.", false,12),
     BLACK_KNIGHT("BlackKnight",16,16,120,7,Range.closed(15,30),6,"Awesome ground unit. As any undead it cannot be blinded, so your enemies will have to look out. \nSpecial Abilities: None.", false),
-    BONE_DRAGON("BoneDragon",17,15,150,9,Range.closed(25,50),7," They are truly fearsome for enemies with low morale. Simply keeping them on battlefield scares enemies. \nSpecial Abilities: None.", false),
+    BONE_DRAGON("BoneDragon",17,15,150,9,Range.closed(25,50),7,"They are truly fearsome for enemies with low morale. Simply keeping them on battlefield scares enemies. \nSpecial Abilities: None.", false),
     // UPGRADED
     SKELETON_WARRIOR("SkeletonWarrior",6,6,6,5,Range.closed(1,3),1,"Average lvl1 foot soldier, but always in huge numbers thanks to necromancy skill and skeleton transformer. \nSpecial Abilities: None.", true),
     ZOMBIE("Zombie",5,5,20,4,Range.closed(2,3),2,"Numerous skeletons become even better, but running back to town and upgrading is a problem... It might be a good idea not to upgrade cursed temple at all. \n Special Abilities: None.", true),

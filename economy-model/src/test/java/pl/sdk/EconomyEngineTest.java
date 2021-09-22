@@ -87,12 +87,12 @@ public class EconomyEngineTest {
         engine.pass();
         assertEquals(expectedAmount, engine.getActiveHero().getGold());
         engine.pass();
-        expectedAmount += engine.FACTOR_OF_GOLD_AMOUNT_PER_ROUND*2;
+        expectedAmount += engine.getFactorOfGoldAfterRounds()*2;
         assertEquals(expectedAmount, engine.getLeftHero().getGold());
         assertEquals(expectedAmount, engine.getRightHero().getGold());
         engine.pass();
         engine.pass();
-        expectedAmount += engine.FACTOR_OF_GOLD_AMOUNT_PER_ROUND*3;
+        expectedAmount += engine.getFactorOfGoldAfterRounds()*3;
         assertEquals(expectedAmount, engine.getLeftHero().getGold());
         assertEquals(expectedAmount, engine.getRightHero().getGold());
         engine.buy(castle.Create(true, 1, 1));

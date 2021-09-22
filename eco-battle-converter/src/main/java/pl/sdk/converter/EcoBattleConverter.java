@@ -25,11 +25,10 @@ public class EcoBattleConverter {
         try {
             List<Creature> leftArmy = convert(aEconomyEngine.getLeftHero());
             List<Creature> rightArmy = convert(aEconomyEngine.getRightHero());
-            if (aEconomyEngine.isThisTheLastBattle()) aWindow.close();
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(EcoBattleConverter.class.getClassLoader().getResource("fxml/battleMap.fxml"));
-            loader.setController(new BattleMapController(leftArmy, rightArmy, aEconomyEngine.isThisTheLastBattle()));
+            loader.setController(new BattleMapController(leftArmy, rightArmy, aEconomyEngine.getKindOfGame()));
 
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();

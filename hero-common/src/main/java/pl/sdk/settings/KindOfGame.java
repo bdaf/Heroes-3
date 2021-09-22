@@ -1,5 +1,7 @@
 package pl.sdk.settings;
 
+import pl.sdk.hero.Fraction;
+
 public enum KindOfGame {
 
     QUICK_GAME(1,1,5000,0),
@@ -27,11 +29,21 @@ public enum KindOfGame {
         return turnsAmount;
     }
 
-    public int getFactorOfGoldAfterRound() {
+    public int getFactorOfGoldAfterRounds() {
         return factorOfGoldAfterRound;
     }
 
     public int getStartGold() {
         return startGold;
+    }
+
+    public boolean ifFractionWon(Fraction aFraction){
+        if(aFraction.getPoints() >= getRoundsAmount()/2+1) return true;
+        else return false;
+    }
+    public boolean ifAnyFractionWon(Fraction aF0, Fraction aF1){
+        if(ifFractionWon(aF0) || ifFractionWon(aF1))
+            return true;
+        return false;
     }
 }

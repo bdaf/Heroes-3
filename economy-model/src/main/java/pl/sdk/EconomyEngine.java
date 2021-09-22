@@ -17,10 +17,8 @@ public class EconomyEngine {
     public static final String END_OF_ROUND = "END_OF_TURN";
     public static final String NEXT_ROUND_STARTED = "NEXT_ROUND_STARTED";
     public static final String HERO_SOLD_CREATURE = "HERO_SOLD_CREATURE";
-    public final int AMOUNT_OF_ROUNDS; // Amount of battles
-    public final int AMOUNT_OF_TURNS; // Amount of shopping each
-    public final int FACTOR_OF_GOLD_AMOUNT_PER_ROUND;
     private final CreatureShop creatureShop = new CreatureShop();
+    private final KindOfGame kindOfGame;
     private final EconomyHero leftHero;
     private final EconomyHero rightHero;
     private EconomyHero activeHero;
@@ -29,7 +27,7 @@ public class EconomyEngine {
     private RandomizeAmountOfCreaturesInShop randomize;
     private PropertyChangeSupport observerSupport;
 
-    public EconomyEngine(EconomyHero aLeftHero, EconomyHero aRightHero, KindOfGame aSettings) {
+    public EconomyEngine(EconomyHero aLeftHero, EconomyHero aRightHero, KindOfGame aKindOfGame) {
         leftHero = aLeftHero;
         rightHero = aRightHero;
         activeHero = leftHero;
@@ -38,9 +36,7 @@ public class EconomyEngine {
         randomize = new RandomizeAmountOfCreaturesInShop();
         observerSupport = new PropertyChangeSupport(this);
 
-        AMOUNT_OF_ROUNDS = aSettings.getRoundsAmount();
-        AMOUNT_OF_TURNS = aSettings.getTurnsAmount();
-        FACTOR_OF_GOLD_AMOUNT_PER_ROUND = aSettings.getFactorOfGoldAfterRound();
+        kindOfGame = aKindOfGame;
     }
 
     public void buy(EconomyCreature aCreature) {
@@ -68,12 +64,12 @@ public class EconomyEngine {
 
     private void endTurn() {
         turnNumber += 1;
-        if (turnNumber > AMOUNT_OF_TURNS) {
+        if (turnNumber > getTurnsAmount()) {
             nextRound();
         } else {
             randomize = new RandomizeAmountOfCreaturesInShop();
-            leftHero.addGold(FACTOR_OF_GOLD_AMOUNT_PER_ROUND * turnNumber);
-            rightHero.addGold(FACTOR_OF_GOLD_AMOUNT_PER_ROUND * turnNumber);
+            leftHero.addGold(getFactorOfGoldAfterRounds() * turnNumber);
+            rightHero.addGold(getFactorOfGoldAfterRounds() * turnNumber);
             observerSupport.firePropertyChange(NEXT_ROUND_STARTED, turnNumber - 1, turnNumber);
         }
     }
@@ -116,16 +112,29 @@ public class EconomyEngine {
         return roundNumber;
     }
 
-    public boolean isThisTheLastBattle() {
-        return getRoundNumber() > AMOUNT_OF_ROUNDS;
-    }
-
     public RandomizeAmountOfCreaturesInShop getRandomizer() {
         return randomize;
     }
 
     public boolean isLastChooseBeforeBattle() {
-        return getTurnNumber() == AMOUNT_OF_TURNS && activeHero == rightHero;
+        return getTurnNumber() == getTurnsAmount() && activeHero == rightHero;
 
     }
+
+    public KindOfGame getKindOfGame() {
+        return kindOfGame;
+    }
+
+    int getRoundsAmount() {
+        return kindOfGame.getRoundsAmount();
+    }
+
+    public int getTurnsAmount() {
+        return kindOfGame.getTurnsAmount();
+    }
+
+    int getFactorOfGoldAfterRounds() {
+        return kindOfGame.getFactorOfGoldAfterRounds();
+    }
+
 }
