@@ -42,7 +42,9 @@ public class Creature implements PropertyChangeListener {
     }
 
     void addWeakness(Weakness aWeakness) {
-        weaknesses.add(aWeakness);
+        if(weaknesses.contains(aWeakness))
+            aWeakness.restartDuration();
+        else weaknesses.add(aWeakness);
     }
 
     Range<Integer> getDamage() {
@@ -169,10 +171,11 @@ public class Creature implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         setIfWasCounterAttackInThisTurn(false);
         weaknesses.forEach(w -> w.duration -= 1);
-        //weaknesses.stream().filter(w -> w.duration <= 0).forEach(weaknesses::remove);
         for (int i = 0; i < weaknesses.size(); i++) {
-            if(weaknesses.get(i).getDuration() <=0 ) {
-                weaknesses.remove(weaknesses.get(i));
+            Weakness weakness = weaknesses.get(i);
+            if(weakness.getDuration() <=0 ) {
+                weaknesses.remove(i);
+                weakness.restartDuration();
             }
         }
     }

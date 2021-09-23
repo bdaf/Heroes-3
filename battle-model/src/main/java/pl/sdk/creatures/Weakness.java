@@ -6,6 +6,7 @@ public class Weakness {
     final int attackToDecrease;
     final int defenseToDecrease;
     final double percentage;
+    final int startDuration;
     int duration;
 
     Weakness(int aAttackToDecrease, int aDefenseToDecrease, double aPercentage, int aDuration) {
@@ -17,7 +18,7 @@ public class Weakness {
         attackToDecrease = aAttackToDecrease;
         defenseToDecrease = aDefenseToDecrease;
         percentage = aPercentage;
-        duration = aDuration;
+        startDuration = duration = aDuration;
     }
 
     int getAttackToDecrease() {
@@ -28,7 +29,7 @@ public class Weakness {
         return defenseToDecrease;
     }
 
-    int getDuration() {
+    public int getDuration() {
         return duration;
     }
 
@@ -38,5 +39,9 @@ public class Weakness {
 
     public String getName() {
         return name;
+    }
+
+    void restartDuration() {
+        duration = startDuration;
     }
 }

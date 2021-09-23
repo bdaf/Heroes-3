@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.sdk.creatures.Creature;
+import pl.sdk.creatures.Weakness;
 
 public class UnitWindow {
     private final Stage window;
@@ -64,7 +65,8 @@ public class UnitWindow {
         if (!aCreature.getWeaknesses().isEmpty()) {
             String weaknesses = " Weaknesses: ";
             for (int i = 0; i < aCreature.getWeaknesses().size(); i++) {
-                weaknesses += aCreature.getWeaknesses().get(i).getName() + ", ";
+                Weakness weakness = aCreature.getWeaknesses().get(i);
+                weaknesses += weakness.getName() +" ("+weakness.getDuration()+")" +", ";
             }
             weaknesses = weaknesses.substring(0, weaknesses.length() - 2);
             weaknesses += ".";
