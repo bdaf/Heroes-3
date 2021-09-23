@@ -16,10 +16,10 @@ public class NecropolisFactory extends Factory {
                             .statistic(CreatureStatistic.SKELETON_WARRIOR)
                             .build();
                 case 2:
-                    return new Creature.Builder()
+                    return new InfectsWithWeaknessCreatureDecorator(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.ZOMBIE)
-                            .build();
+                            .build(), new Weakness(2,2,0.2,3));
                 case 3:
                     return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
                             .amount(amount)

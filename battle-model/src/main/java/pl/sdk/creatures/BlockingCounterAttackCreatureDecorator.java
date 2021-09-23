@@ -1,5 +1,7 @@
 package pl.sdk.creatures;
 
+import com.google.common.collect.Range;
+
 import java.beans.PropertyChangeEvent;
 
 class BlockingCounterAttackCreatureDecorator extends Creature {
@@ -8,6 +10,26 @@ class BlockingCounterAttackCreatureDecorator extends Creature {
 
     BlockingCounterAttackCreatureDecorator(Creature aDecorated) {
         decorated = aDecorated;
+    }
+
+    @Override
+    void addWeakness(Weakness aWeakness) {
+        decorated.addWeakness(aWeakness);
+    }
+
+    @Override
+    Range<Integer> getDamage() {
+        return decorated.getDamage();
+    }
+
+    @Override
+    int getArmor() {
+        return decorated.getArmor();
+    }
+
+    @Override
+    public int getAttack() {
+        return decorated.getAttack();
     }
 
     @Override

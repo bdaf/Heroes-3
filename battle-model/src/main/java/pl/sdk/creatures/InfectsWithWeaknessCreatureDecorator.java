@@ -1,5 +1,7 @@
 package pl.sdk.creatures;
 
+import com.google.common.collect.Range;
+
 import java.beans.PropertyChangeEvent;
 import java.util.Random;
 
@@ -20,12 +22,22 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
     }
 
     @Override
-    int getDefense() {
-        return decorated.getDefense();
+    void addWeakness(Weakness aWeakness) {
+        decorated.addWeakness(aWeakness);
     }
 
     @Override
-    int getAttack() {
+    Range<Integer> getDamage() {
+        return decorated.getDamage();
+    }
+
+    @Override
+    int getArmor() {
+        return decorated.getArmor();
+    }
+
+    @Override
+    public int getAttack() {
         return decorated.getAttack();
     }
 

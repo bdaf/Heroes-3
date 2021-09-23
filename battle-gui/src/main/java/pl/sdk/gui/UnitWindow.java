@@ -69,6 +69,7 @@ public class UnitWindow {
     }
 
     private VBox getRightVBoxWithStats(Creature aCreature) {
+        String resultOfWeaknesses = "";
         VBox vBox = new VBox(10);
         vBox.setAlignment(Pos.CENTER);
         vBox.setPadding(new Insets(0,0,20,0));
@@ -78,6 +79,7 @@ public class UnitWindow {
         Text healthAndShots = new Text("Health: " + aCreature.getCurrentHp() + "/" + aCreature.getMaxHp() + shots);
         //healthAndShots.setAlignment(Pos.CENTER);
 
+        if(aCreature.getStats().getAttack() != aCreature.getAttack()) resultOfWeaknesses = "("++")";
         Text firstHalfOfStats = new Text("Attack: " + aCreature.getStats().getAttack()
                 + " | Damage: " + aCreature.getStats().getDamage().lowerEndpoint() + " - " + aCreature.getStats().getDamage().upperEndpoint());
         //firstHalfOfStats.setAlignment(Pos.CENTER);

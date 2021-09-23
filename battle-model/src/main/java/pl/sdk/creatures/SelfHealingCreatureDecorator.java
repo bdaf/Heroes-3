@@ -1,5 +1,7 @@
 package pl.sdk.creatures;
 
+import com.google.common.collect.Range;
+
 import java.beans.PropertyChangeEvent;
 
 class SelfHealingCreatureDecorator extends Creature {
@@ -13,6 +15,26 @@ class SelfHealingCreatureDecorator extends Creature {
     SelfHealingCreatureDecorator(Creature aDecorated, double aSelfHealingPercentage) {
         this(aDecorated);
         selfHealingPercentage = aSelfHealingPercentage;
+    }
+
+    @Override
+    void addWeakness(Weakness aWeakness) {
+        decorated.addWeakness(aWeakness);
+    }
+
+    @Override
+    Range<Integer> getDamage() {
+        return decorated.getDamage();
+    }
+
+    @Override
+    int getArmor() {
+        return decorated.getArmor();
+    }
+
+    @Override
+    public int getAttack() {
+        return decorated.getAttack();
     }
 
     @Override

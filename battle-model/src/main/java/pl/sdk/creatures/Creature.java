@@ -20,15 +20,10 @@ public class Creature implements PropertyChangeListener {
     private int shots;
     private Team team;
 
-    void addWeakness(Weakness aWeakness) {
-        weaknesses.add(aWeakness);
-    }
-
     public enum Team {
         LEFT_TEAM(),
-        RIGHT_TEAM()
+        RIGHT_TEAM();
     }
-
     Creature() {
         this(new CreatureStatisticForTests());
         maxAmount = amount = 1;
@@ -42,12 +37,20 @@ public class Creature implements PropertyChangeListener {
         shots = stats.getShots();
     }
 
-    int getDefense() {
+    void addWeakness(Weakness aWeakness) {
+        weaknesses.add(aWeakness);
+    }
+
+    Range<Integer> getDamage() {
+        return getStats().getDamage();
+    }
+
+    int getArmor() {
         int sumToDecrease = weaknesses.stream().mapToInt(w -> w.defenseToDecrease).sum();
         return stats.getArmor() - sumToDecrease;
     }
 
-    int getAttack() {
+    public int getAttack() {
         int sumToDecrease = weaknesses.stream().mapToInt(w -> w.attackToDecrease).sum();
         return stats.getAttack() - sumToDecrease;
     }

@@ -1,5 +1,6 @@
 package pl.sdk.creatures;
 
+import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.GameEngine;
@@ -10,6 +11,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static pl.sdk.GameEngine.BOARD_WIDTH;
@@ -23,6 +25,7 @@ public class WeaknessesTest {
         randomizer = new Random();
         randomizer = mock(Random.class);
         when(randomizer.nextDouble()).thenReturn(0.1);
+        when(randomizer.nextInt(anyInt())).thenReturn(0);
 
     }
     @Test
@@ -44,7 +47,7 @@ public class WeaknessesTest {
         engine.attack(BOARD_WIDTH-1,0); // attacker
 
         assertEquals(3,defender.getAttack());
-        assertEquals(3,defender.getDefense());
+        assertEquals(3,defender.getArmor());
 
         engine.pass(); // defender // 1 round is over, 2th starts
 
@@ -52,13 +55,60 @@ public class WeaknessesTest {
         engine.pass(); // defender // 2 round is over, 3th starts
 
         assertEquals(3,defender.getAttack());
-        assertEquals(3,defender.getDefense());
+        assertEquals(3,defender.getArmor());
 
         engine.pass(); // attacker
         engine.pass(); // defender // 3 round is over, 4th starts
 
         assertEquals(5,defender.getAttack());
-        assertEquals(5,defender.getDefense());
+        assertEquals(5,defender.getArmor());
+
+    }
+
+    @Test
+    void defenderShouldHave2PointsLessAttackAndDefenseFor3RoundsAndThenAttacksLess(){
+        Creature attacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
+                .maxHp(100)
+                .attack(3)
+                .armor(3)
+                .moveRange(100)
+                .build()), new Weakness(2,2,0.2,3), randomizer);
+        Creature defender = new Creature.BuilderForTesting()
+                .damage(Range.closed(10,12))
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
+                .moveRange(9)
+                .attack(5)
+                .armor(5)
+                .maxHp(100).build();
+
+
+        GameEngine engine = new GameEngine(List.of(attacker),List.of(defender));
+        engine.move(new Point(BOARD_WIDTH-2,0));
+        assertTrue(engine.canAttack(BOARD_WIDTH-1,0));
+        engine.attack(BOARD_WIDTH-1,0); // attacker
+
+        assertEquals(3,defender.getAttack());
+        assertEquals(3,defender.getArmor());
+
+        engine.pass(); // defender // 1 round is over, 2th starts
+
+        engine.pass(); // attacker
+        engine.pass(); // defender // 2 round is over, 3th starts
+
+        assertEquals(3,defender.getAttack());
+        assertEquals(3,defender.getArmor());
+
+        engine.pass(); // attacker
+        engine.attack(BOARD_WIDTH-2,0); // defender // 3 round is over, 4th starts
+
+        assertEquals(90,attacker.getCurrentHp());
+        assertEquals(5,defender.getAttack());
+        assertEquals(5,defender.getArmor());
+
+        engine.pass(); // attacker
+        engine.attack(BOARD_WIDTH-2,0); // defender
+
+        assertEquals(79,attacker.getCurrentHp());
 
     }
 }

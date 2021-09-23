@@ -1,5 +1,7 @@
 package pl.sdk.creatures;
 
+import com.google.common.collect.Range;
+
 import java.beans.PropertyChangeEvent;
 
 public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
@@ -11,6 +13,26 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
     CounterAttackingSeveralTimesInTurnDecorator(Creature aDecorated, int aCounterAttacksInTurn) {
         decorated = aDecorated;
         maxCounterAttacksInTurn = counterAttacksInTurn = aCounterAttacksInTurn;
+    }
+
+    @Override
+    void addWeakness(Weakness aWeakness) {
+        decorated.addWeakness(aWeakness);
+    }
+
+    @Override
+    Range<Integer> getDamage() {
+        return decorated.getDamage();
+    }
+
+    @Override
+    int getArmor() {
+        return decorated.getArmor();
+    }
+
+    @Override
+    public int getAttack() {
+        return decorated.getAttack();
     }
 
     @Override
