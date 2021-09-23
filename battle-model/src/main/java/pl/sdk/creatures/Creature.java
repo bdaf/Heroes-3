@@ -20,14 +20,11 @@ public class Creature implements PropertyChangeListener {
     private int shots;
     private Team team;
 
-    public List<Weakness> getWeaknesses() {
-        return weaknesses;
-    }
-
     public enum Team {
         LEFT_TEAM(),
         RIGHT_TEAM();
     }
+
     Creature() {
         this(new CreatureStatisticForTests());
         maxAmount = amount = 1;
@@ -39,6 +36,10 @@ public class Creature implements PropertyChangeListener {
         this.stats = stats;
         currentHp = stats.getMaxHp();
         shots = stats.getShots();
+    }
+
+    public List<Weakness> getWeaknesses() {
+        return weaknesses;
     }
 
     void addWeakness(Weakness aWeakness) {
@@ -108,8 +109,7 @@ public class Creature implements PropertyChangeListener {
         }
     }
 
-    void performAfterAttack(int aDamageToChange) {
-    }
+    void performAfterAttack(int aDamageToChange) {}
 
     boolean wasCounterAttackInThisTurn() {
         return counterAttackedInThisTurn;

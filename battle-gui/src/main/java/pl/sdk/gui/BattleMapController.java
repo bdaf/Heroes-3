@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import pl.sdk.*;
 import pl.sdk.creatures.Creature;
 import pl.sdk.hero.Fraction;
-import pl.sdk.settings.KindOfGame;
+import pl.sdk.settings.ModeOfGame;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -35,13 +35,13 @@ public class BattleMapController implements PropertyChangeListener {
 
     private GameEngine gameEngine;
     private final Fraction leftTeamFraction, rightTeamFraction;
-    private final KindOfGame kindOfGame;
+    private final ModeOfGame modeOfGame;
 
-    public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight, KindOfGame aKindOfGame) {
+    public BattleMapController(List<Creature> TeamLeft, List<Creature> TeamRight, ModeOfGame aModeOfGame) {
         gameEngine = new GameEngine(TeamLeft, TeamRight);
         leftTeamFraction = Fraction.NECROPOLIS;
         rightTeamFraction = Fraction.CASTLE;
-        kindOfGame = aKindOfGame;
+        modeOfGame = aModeOfGame;
     }
 
     @FXML
@@ -129,7 +129,7 @@ public class BattleMapController implements PropertyChangeListener {
         gameEngine.pass();
         AfterBattleWindow afterBattleWindow = new AfterBattleWindow(this);
         afterBattleWindow.showAndWait();
-        if (kindOfGame.ifAnyFractionWon(leftTeamFraction,rightTeamFraction)) {
+        if (modeOfGame.ifAnyFractionWon(leftTeamFraction,rightTeamFraction)) {
             String winner = getWinnerOfTheGame().name();
             AfterGameWindow afterGameWindow = new AfterGameWindow(this);
             afterGameWindow.addCaption("\n" + winner + " Won the Game!");
@@ -142,7 +142,7 @@ public class BattleMapController implements PropertyChangeListener {
     }
 
     private Fraction getWinnerOfTheGame() {
-        if (kindOfGame.ifFractionWon(leftTeamFraction)) return leftTeamFraction;
+        if (modeOfGame.ifFractionWon(leftTeamFraction)) return leftTeamFraction;
         else return rightTeamFraction;
     }
 

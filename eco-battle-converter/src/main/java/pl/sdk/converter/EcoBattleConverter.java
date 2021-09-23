@@ -28,7 +28,7 @@ public class EcoBattleConverter {
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(EcoBattleConverter.class.getClassLoader().getResource("fxml/battleMap.fxml"));
-            loader.setController(new BattleMapController(leftArmy, rightArmy, aEconomyEngine.getKindOfGame()));
+            loader.setController(new BattleMapController(leftArmy, rightArmy, aEconomyEngine.getModeOfGame()));
 
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();

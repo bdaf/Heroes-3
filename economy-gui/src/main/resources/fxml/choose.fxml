@@ -34,7 +34,7 @@
                   </Label>
                   <RadioButton fx:id="quickGameRadioButton" mnemonicParsing="false" selected="true">
                      <toggleGroup>
-                        <ToggleGroup fx:id="kindOfGame" />
+                        <ToggleGroup fx:id="modeOfGame" />
                      </toggleGroup>
                   </RadioButton>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Play 1 vs 1 fast game with your mate having 5000 gold to spend in one shopping turn and one round, it is one big battle!" wrappingWidth="250.0">
@@ -51,7 +51,7 @@
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="tournamentRadioButton" mnemonicParsing="false" toggleGroup="$kindOfGame" />
+                  <RadioButton fx:id="tournamentRadioButton" mnemonicParsing="false" toggleGroup="$modeOfGame" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Play to 2 battle wins and find out how good you are in properly spending money and fighting with the same oponent in long term! Look at his tactics and try to take advantage from it! Initially you have 1000 gold and in every next turn you will have more and more! Try to have the best score! (to 3 battles and every battle is after 3 turns of shopping)." wrappingWidth="250.0">
                      <font>
                         <Font size="14.0" />

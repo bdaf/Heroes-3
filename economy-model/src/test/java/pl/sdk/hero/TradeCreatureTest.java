@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.EconomyEngine;
 import pl.sdk.creatures.EconomyCastleFactory;
-import pl.sdk.settings.KindOfGame;
+import pl.sdk.settings.ModeOfGame;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static pl.sdk.hero.Fraction.CASTLE;
@@ -18,11 +18,11 @@ public class TradeCreatureTest {
 
     @BeforeEach
     void init() {
-        KindOfGame kind = KindOfGame.TOURNAMENT;
+        ModeOfGame mode = ModeOfGame.TOURNAMENT;
         factory = new EconomyCastleFactory();
         leftHero = new EconomyHero(CASTLE,10000);
         rightHero = new EconomyHero(CASTLE,10000);
-        engine = new EconomyEngine(leftHero,rightHero, kind);
+        engine = new EconomyEngine(leftHero,rightHero, mode);
     }
 
     @Test

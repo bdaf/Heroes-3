@@ -2,7 +2,7 @@ package pl.sdk.settings;
 
 import pl.sdk.hero.Fraction;
 
-public enum KindOfGame {
+public enum ModeOfGame {
 
     QUICK_GAME(1,1,5000,0),
     TOURNAMENT(3,3,1000,1000),
@@ -14,7 +14,7 @@ public enum KindOfGame {
     private final int startGold;
 
 
-    KindOfGame(int aRoundsAmount, int aTurnsAmount, int aStartGold, int aFactorOfGoldAfterRound) {
+    ModeOfGame(int aRoundsAmount, int aTurnsAmount, int aStartGold, int aFactorOfGoldAfterRound) {
         roundsAmount = aRoundsAmount;
         turnsAmount = aTurnsAmount;
         startGold = aStartGold;

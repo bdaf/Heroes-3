@@ -16,7 +16,7 @@ import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.EconomyCreature;
 import pl.sdk.creatures.EconomyFactory;
 import pl.sdk.hero.EconomyHero;
-import pl.sdk.settings.KindOfGame;
+import pl.sdk.settings.ModeOfGame;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -46,9 +46,9 @@ public class EconomyController implements PropertyChangeListener {
     @FXML
     Label warningNeedToBuyLabel;
 
-    EconomyController(EconomyHero aLeftHero, EconomyHero aRightHero, KindOfGame aKindOfGame) {
-        if(aKindOfGame == KindOfGame.NOT_SETTLED) Platform.exit();
-        economyEngine = new EconomyEngine(aLeftHero, aRightHero, aKindOfGame);
+    EconomyController(EconomyHero aLeftHero, EconomyHero aRightHero, ModeOfGame aModeOfGame) {
+        if(aModeOfGame == ModeOfGame.NOT_SETTLED) Platform.exit();
+        economyEngine = new EconomyEngine(aLeftHero, aRightHero, aModeOfGame);
     }
 
     @FXML

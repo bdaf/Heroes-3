@@ -5,7 +5,7 @@ import pl.sdk.creatures.RandomizeAmountOfCreaturesInShop;
 import pl.sdk.hero.CopyHeroMaker;
 import pl.sdk.hero.CreatureShop;
 import pl.sdk.hero.EconomyHero;
-import pl.sdk.settings.KindOfGame;
+import pl.sdk.settings.ModeOfGame;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -18,7 +18,7 @@ public class EconomyEngine {
     public static final String NEXT_ROUND_STARTED = "NEXT_ROUND_STARTED";
     public static final String HERO_SOLD_CREATURE = "HERO_SOLD_CREATURE";
     private final CreatureShop creatureShop = new CreatureShop();
-    private final KindOfGame kindOfGame;
+    private final ModeOfGame modeOfGame;
     private final EconomyHero leftHero;
     private final EconomyHero rightHero;
     private EconomyHero activeHero;
@@ -27,7 +27,7 @@ public class EconomyEngine {
     private RandomizeAmountOfCreaturesInShop randomize;
     private PropertyChangeSupport observerSupport;
 
-    public EconomyEngine(EconomyHero aLeftHero, EconomyHero aRightHero, KindOfGame aKindOfGame) {
+    public EconomyEngine(EconomyHero aLeftHero, EconomyHero aRightHero, ModeOfGame aModeOfGame) {
         leftHero = aLeftHero;
         rightHero = aRightHero;
         activeHero = leftHero;
@@ -36,7 +36,7 @@ public class EconomyEngine {
         randomize = new RandomizeAmountOfCreaturesInShop();
         observerSupport = new PropertyChangeSupport(this);
 
-        kindOfGame = aKindOfGame;
+        modeOfGame = aModeOfGame;
     }
 
     public void buy(EconomyCreature aCreature) {
@@ -121,20 +121,20 @@ public class EconomyEngine {
 
     }
 
-    public KindOfGame getKindOfGame() {
-        return kindOfGame;
+    public ModeOfGame getModeOfGame() {
+        return modeOfGame;
     }
 
     int getRoundsAmount() {
-        return kindOfGame.getRoundsAmount();
+        return modeOfGame.getRoundsAmount();
     }
 
     public int getTurnsAmount() {
-        return kindOfGame.getTurnsAmount();
+        return modeOfGame.getTurnsAmount();
     }
 
     int getFactorOfGoldAfterRounds() {
-        return kindOfGame.getFactorOfGoldAfterRounds();
+        return modeOfGame.getFactorOfGoldAfterRounds();
     }
 
 }
