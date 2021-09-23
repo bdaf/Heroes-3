@@ -7,8 +7,8 @@ import javafx.scene.media.MediaPlayer;
 import java.net.URL;
 
 public enum MusicInGame {
-    MUSIC_IN_ECONOMY("economyMusic.mp3",0.1),
-    MUSIC_IN_BATTLE("battleMusic.mp3",0.3);
+    MUSIC_IN_ECONOMY("economyMusic.mp3",0.05),
+    MUSIC_IN_BATTLE("battleMusic.mp3",0.1);
 
     private MediaPlayer mediaPlayer;
 
