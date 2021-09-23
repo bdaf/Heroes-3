@@ -60,10 +60,21 @@ public class UnitWindow {
             if (e.getButton() == MouseButton.PRIMARY) window.close();
         });
         Text description = new Text(aCreature.getStats().getDescription());
+
+        if (!aCreature.getWeaknesses().isEmpty()) {
+            String weaknesses = " Weaknesses: ";
+            for (int i = 0; i < aCreature.getWeaknesses().size(); i++) {
+                weaknesses += aCreature.getWeaknesses().get(i).getName() + ", ";
+            }
+            weaknesses = weaknesses.substring(0, weaknesses.length() - 2);
+            weaknesses += ".";
+            description.setText(description.getText() + weaknesses);
+        }
+
         description.setStyle("-fx-font: 12 arial;");
 
         description.setWrappingWidth(480);
-        VBox vBox = new VBox(5,description,closeButton);
+        VBox vBox = new VBox(5, description, closeButton);
         vBox.setAlignment(Pos.CENTER);
         return vBox;
     }
@@ -72,19 +83,22 @@ public class UnitWindow {
         String resultOfWeaknesses = "";
         VBox vBox = new VBox(10);
         vBox.setAlignment(Pos.CENTER);
-        vBox.setPadding(new Insets(0,0,20,0));
+        vBox.setPadding(new Insets(0, 0, 20, 0));
         String shots = "";
         if (aCreature.getShots() > 0) shots = " - " + aCreature.getShots() + " shots";
 
         Text healthAndShots = new Text("Health: " + aCreature.getCurrentHp() + "/" + aCreature.getMaxHp() + shots);
         //healthAndShots.setAlignment(Pos.CENTER);
 
-        if(aCreature.getStats().getAttack() != aCreature.getAttack()) resultOfWeaknesses = "("++")";
-        Text firstHalfOfStats = new Text("Attack: " + aCreature.getStats().getAttack()
+        if (aCreature.getStats().getAttack() != aCreature.getAttack())
+            resultOfWeaknesses = "(" + (aCreature.getAttack() - aCreature.getStats().getAttack()) + ")";
+        Text firstHalfOfStats = new Text("Attack: " + aCreature.getStats().getAttack() + " " + resultOfWeaknesses
                 + " | Damage: " + aCreature.getStats().getDamage().lowerEndpoint() + " - " + aCreature.getStats().getDamage().upperEndpoint());
         //firstHalfOfStats.setAlignment(Pos.CENTER);
 
-        Text secondHalfOfStats = new Text("Defense: " + aCreature.getStats().getArmor()
+        if (aCreature.getStats().getArmor() != aCreature.getArmor())
+            resultOfWeaknesses = "(" + (aCreature.getArmor() - aCreature.getStats().getArmor()) + ")";
+        Text secondHalfOfStats = new Text("Defense: " + aCreature.getStats().getArmor() + " " + resultOfWeaknesses
                 + " | Movement: " + aCreature.getStats().getMoveRange());
         //secondHalfOfStats.setAlignment(Pos.CENTER);
 
@@ -92,7 +106,7 @@ public class UnitWindow {
         firstHalfOfStats.setStyle("-fx-font: 18 arial;");
         secondHalfOfStats.setStyle("-fx-font: 18 arial;");
 
-        vBox.getChildren().addAll(healthAndShots,firstHalfOfStats,secondHalfOfStats);
+        vBox.getChildren().addAll(healthAndShots, firstHalfOfStats, secondHalfOfStats);
         vBox.setPrefWidth(370);
         return vBox;
     }

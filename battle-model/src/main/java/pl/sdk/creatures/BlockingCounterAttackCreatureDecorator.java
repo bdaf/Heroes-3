@@ -23,7 +23,7 @@ class BlockingCounterAttackCreatureDecorator extends Creature {
     }
 
     @Override
-    int getArmor() {
+    public int getArmor() {
         return decorated.getArmor();
     }
 

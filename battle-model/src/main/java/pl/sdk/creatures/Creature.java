@@ -20,6 +20,10 @@ public class Creature implements PropertyChangeListener {
     private int shots;
     private Team team;
 
+    public List<Weakness> getWeaknesses() {
+        return weaknesses;
+    }
+
     public enum Team {
         LEFT_TEAM(),
         RIGHT_TEAM();
@@ -45,7 +49,7 @@ public class Creature implements PropertyChangeListener {
         return getStats().getDamage();
     }
 
-    int getArmor() {
+    public int getArmor() {
         int sumToDecrease = weaknesses.stream().mapToInt(w -> w.defenseToDecrease).sum();
         return stats.getArmor() - sumToDecrease;
     }

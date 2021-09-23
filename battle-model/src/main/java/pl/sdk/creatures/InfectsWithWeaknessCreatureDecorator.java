@@ -32,7 +32,7 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
     }
 
     @Override
-    int getArmor() {
+    public int getArmor() {
         return decorated.getArmor();
     }
 
