@@ -53,12 +53,12 @@ public class Creature implements PropertyChangeListener {
 
     public int getArmor() {
         int sumToDecrease = weaknesses.stream().mapToInt(w -> w.defenseToDecrease).sum();
-        return stats.getArmor() - sumToDecrease;
+        return Integer.max(1,stats.getArmor() - sumToDecrease);
     }
 
     public int getAttack() {
         int sumToDecrease = weaknesses.stream().mapToInt(w -> w.attackToDecrease).sum();
-        return stats.getAttack() - sumToDecrease;
+        return Integer.max(1,stats.getAttack() - sumToDecrease);
     }
 
     public void meleeAttack(Creature defender) {

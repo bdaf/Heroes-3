@@ -3,6 +3,7 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 
 import java.beans.PropertyChangeEvent;
+import java.util.List;
 import java.util.Random;
 
 public class InfectsWithWeaknessCreatureDecorator extends Creature {
@@ -39,6 +40,11 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
     @Override
     public int getAttack() {
         return decorated.getAttack();
+    }
+
+    @Override
+    public List<Weakness> getWeaknesses() {
+        return decorated.getWeaknesses();
     }
 
     @Override

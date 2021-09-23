@@ -19,7 +19,7 @@ public class NecropolisFactory extends Factory {
                     return new InfectsWithWeaknessCreatureDecorator(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.ZOMBIE)
-                            .build(), new Weakness(2,2,1,3, "Disease"));
+                            .build(), new Weakness(2,2,0.8,3, "Disease"));
                 case 3:
                     return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
                             .amount(amount)

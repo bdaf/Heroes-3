@@ -3,6 +3,7 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 
 import java.beans.PropertyChangeEvent;
+import java.util.List;
 
 class SelfHealingCreatureDecorator extends Creature {
     private Creature decorated;
@@ -30,6 +31,11 @@ class SelfHealingCreatureDecorator extends Creature {
     @Override
     public int getArmor() {
         return decorated.getArmor();
+    }
+
+    @Override
+    public List<Weakness> getWeaknesses() {
+        return decorated.getWeaknesses();
     }
 
     @Override
