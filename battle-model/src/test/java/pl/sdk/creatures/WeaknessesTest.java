@@ -72,7 +72,7 @@ public class WeaknessesTest {
     }
 
     @Test
-    void defenderShouldHave2PointsLessAttackAndDefenseFor3RoundsAndThenAttacksLess() {
+    void defenderShouldHave2PointsLessAttackAndArmorFor3RoundsAndThenAttacksLess() {
         engine.move(new Point(BOARD_WIDTH - 2, 0));
         assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
         engine.attack(BOARD_WIDTH - 1, 0); // attacker
@@ -92,8 +92,18 @@ public class WeaknessesTest {
         engine.attack(BOARD_WIDTH - 2, 0); // defender // 3 round is over, 4th starts
 
         assertEquals(90, attacker.getCurrentHp());
-        assertEquals(5, defender.getAttack());
-        assertEquals(5, defender.getArmor());
+        assertEquals(3, defender.getAttack());
+        assertEquals(3, defender.getArmor());
+        assertEquals(2, defender.getWeaknesses().get(0).getDuration());
+
+        // w8ing for weakness to get over
+        engine.pass(); // attacker
+        engine.pass(); // defender // 4 round is over, 5th starts
+
+        engine.pass(); // attacker
+        engine.pass(); // defender // 5 round is over, 6th starts
+
+        assertEquals(0, defender.getWeaknesses().size());
 
         engine.pass(); // attacker
         engine.attack(BOARD_WIDTH - 2, 0); // defender
@@ -217,7 +227,7 @@ public class WeaknessesTest {
         assertEquals(5, defender.getAttack());
         assertEquals(5, defender.getArmor());
 
-        
+
     }
 
 }

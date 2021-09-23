@@ -61,6 +61,8 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
     @Override
     void counterAttack(Creature defender) {
         decorated.counterAttack(defender);
+        if(rand.nextDouble() <= weakness.getPercentage())
+            defender.addWeakness(weakness);
     }
 
     @Override
