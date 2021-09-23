@@ -21,11 +21,10 @@ public class WeaknessesTest {
     private Random randomizer;
     private Creature attacker;
     private Creature defender;
-    private Weakness weakness;
+    private GameEngine engine;
 
     @BeforeEach
     void init() {
-        weakness = new Weakness(2,2,0.2,3);
         randomizer = new Random();
         randomizer = mock(Random.class);
         when(randomizer.nextDouble()).thenReturn(0.1);
@@ -36,7 +35,7 @@ public class WeaknessesTest {
                 .attack(3)
                 .armor(3)
                 .moveRange(100)
-                .build()), weakness, randomizer);
+                .build()), new Weakness(2,2,0.2,3), randomizer);
         defender = new Creature.BuilderForTesting()
                 .damage(Range.closed(10, 12))
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
@@ -44,12 +43,11 @@ public class WeaknessesTest {
                 .attack(5)
                 .armor(5)
                 .maxHp(100).build();
-
+        engine = new GameEngine(List.of(attacker), List.of(defender));
     }
 
     @Test
     void defenderShouldHave2PointsLessAttackAndDefenseFor3Rounds() {
-        GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         engine.move(new Point(BOARD_WIDTH - 2, 0));
         assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
         engine.attack(BOARD_WIDTH - 1, 0); // attacker
@@ -75,8 +73,6 @@ public class WeaknessesTest {
 
     @Test
     void defenderShouldHave2PointsLessAttackAndDefenseFor3RoundsAndThenAttacksLess() {
-
-        GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         engine.move(new Point(BOARD_WIDTH - 2, 0));
         assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
         engine.attack(BOARD_WIDTH - 1, 0); // attacker
@@ -108,8 +104,6 @@ public class WeaknessesTest {
 
     @Test
     void defenderShouldWeaknessFor3RoundsButWhenHeGetsWeaknessItShouldReset() {
-
-        GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         engine.move(new Point(BOARD_WIDTH - 2, 0));
         assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
         engine.attack(BOARD_WIDTH - 1, 0); // attacker
@@ -148,8 +142,6 @@ public class WeaknessesTest {
 
     @Test
     void defenderShouldWeaknessFor3RoundsAndAfterThatWhenGetsWeaknessShouldGetItAgain() {
-
-        GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         engine.move(new Point(BOARD_WIDTH - 2, 0));
         assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
         engine.attack(BOARD_WIDTH - 1, 0); // attacker
@@ -193,6 +185,39 @@ public class WeaknessesTest {
         assertEquals(5, defender.getAttack());
         assertEquals(5, defender.getArmor());
 
+    }
+
+    @Test
+    void defenderShouldGetWeaknessFor3RoundsBecauseOfAttackersCounterAttack() {
+        engine.move(new Point(BOARD_WIDTH - 2, 0));
+        assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
+        engine.pass();
+
+        assertEquals(5, defender.getAttack());
+        assertEquals(5, defender.getArmor());
+        assertEquals(0, defender.getWeaknesses().size());
+
+        engine.attack(BOARD_WIDTH-2,0); // defender // 1 round is over, 2th starts
+
+        assertEquals(3, defender.getAttack());
+        assertEquals(3, defender.getArmor());
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(2, defender.getWeaknesses().get(0).getDuration());
+
+        engine.pass(); // attacker
+        engine.pass(); // defender // 2 round is over, 3th starts
+
+        assertEquals(1, defender.getWeaknesses().get(0).getDuration());
+        assertEquals(3, defender.getArmor());
+
+        engine.pass();
+        engine.pass(); // defender // 3 round is over, 4th starts
+
+        assertEquals(0,defender.getWeaknesses().size());
+        assertEquals(5, defender.getAttack());
+        assertEquals(5, defender.getArmor());
+
+        
     }
 
 }
