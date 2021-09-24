@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static pl.sdk.GameEngine.BOARD_WIDTH;
 
-public class WeaknessesTest {
+public class WeaknessDiseaseTest {
 
     private Random randomizer;
     private Creature attacker;
@@ -230,8 +230,24 @@ public class WeaknessesTest {
         assertEquals(0,defender.getWeaknesses().size());
         assertEquals(5, defender.getAttack());
         assertEquals(5, defender.getArmor());
-
-
     }
 
+    @Test
+    void defenderShouldNotGetWeaknessBecauseOfRandomChance() {
+        when(randomizer.nextDouble()).thenReturn(0.21);
+
+        engine.move(new Point(BOARD_WIDTH - 2, 0));
+        assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
+        engine.pass();
+
+        assertEquals(5, defender.getAttack());
+        assertEquals(5, defender.getArmor());
+        assertEquals(0, defender.getWeaknesses().size());
+
+        engine.attack(BOARD_WIDTH-2,0); // defender // 1 round is over, 2th starts
+
+        assertEquals(5, defender.getAttack());
+        assertEquals(5, defender.getArmor());
+        assertEquals(0, defender.getWeaknesses().size());
+    }
 }

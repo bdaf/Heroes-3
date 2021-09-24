@@ -3,6 +3,7 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 
 import java.util.List;
+import java.util.Objects;
 
 class Weakness {
 
@@ -13,26 +14,20 @@ class Weakness {
     final int startDuration;
     int duration;
 
-    private final Integer minDamage;
-    private final Integer maxDamage;
+    Integer minDamageToDecrease;
+    Integer maxDamageToDecrease;
 
-    Weakness(int aAttackToDecrease, int aDefenseToDecrease, double aPercentage, int aDuration, String aName, Integer aMinDamage, Integer aMaxDamage) {
+    Weakness(int aAttackToDecrease, int aDefenseToDecrease, double aPercentage, int aDuration, String aName, Integer aMinDamageToDecrease, Integer aMaxDamageToDecrease) {
         name = aName;
         attackToDecrease = aAttackToDecrease;
         defenseToDecrease = aDefenseToDecrease;
         percentage = aPercentage;
         startDuration = duration = aDuration;
-        minDamage = aMinDamage;
-        maxDamage = aMaxDamage;
+        minDamageToDecrease = aMinDamageToDecrease;
+        maxDamageToDecrease = aMaxDamageToDecrease;
     }
 
-    static Range<Integer> filterDamageWithWeaknesses(List<Weakness> aWeaknesses, Range<Integer> aRange) {
-        for (Weakness weakness : aWeaknesses) {
-            if (weakness.getMinDamage() != null && weakness.getMaxDamage() != null) {
-                aRange = Range.closed(weakness.getMinDamage(), weakness.getMaxDamage());
-            }
-        }
-        return aRange;
+    void setWeak(Creature aCreature) {
     }
 
     int getAttackToDecrease() {
@@ -59,14 +54,60 @@ class Weakness {
         duration = startDuration;
     }
 
-    Integer getMinDamage() {
-        return minDamage;
+    Integer getMinDamageToDecrease() {
+        return minDamageToDecrease;
     }
 
-    Integer getMaxDamage() {
-        return maxDamage;
+    Integer getMaxDamageToDecrease() {
+        return maxDamageToDecrease;
     }
 
+    static Range<Integer> filterDamageWithWeaknesses(List<Weakness> aWeaknesses, Range<Integer> aRange) {
+        for (Weakness weakness : aWeaknesses) {
+            if (weakness.getMinDamageToDecrease() != null && weakness.getMaxDamageToDecrease() != null) {
+                aRange = Range.closed(aRange.lowerEndpoint() - weakness.getMinDamageToDecrease(),
+                        aRange.upperEndpoint() - weakness.getMaxDamageToDecrease());
+            }
+        }
+        return aRange;
+    }
+
+    static Weakness copyOf(Weakness aWeakness) {
+        return new Builder()
+                .attackToDecrease(aWeakness.getAttackToDecrease())
+                .defenseToDecrease(aWeakness.getDefenseToDecrease())
+                .percentage(aWeakness.getPercentage())
+                .duration(aWeakness.getDuration())
+                .name(aWeakness.getName())
+                .minDamage(aWeakness.getMinDamageToDecrease())
+                .maxDamage(aWeakness.getMaxDamageToDecrease())
+                .build();
+    }
+
+    static void addWeakness(List<Weakness> aWeaknesses, Weakness aWeakness) {
+        for (Weakness weakness : aWeaknesses) {
+            if (weakness.equals(aWeakness)) {
+                weakness.restartDuration();
+                return;
+            }
+        }
+        aWeaknesses.add(aWeakness);
+    }
+
+
+    @Override
+    public boolean equals(Object aO) {
+        if (this == aO) return true;
+        if (!(aO instanceof Weakness)) return false;
+        Weakness weakness = (Weakness) aO;
+        return getAttackToDecrease() == weakness.getAttackToDecrease() &&
+                getDefenseToDecrease() == weakness.getDefenseToDecrease() &&
+                Double.compare(weakness.getPercentage(), getPercentage()) == 0 &&
+                startDuration == weakness.startDuration &&
+                getName().equals(weakness.getName()) &&
+                Objects.equals(getMinDamageToDecrease(), weakness.getMinDamageToDecrease()) &&
+                Objects.equals(getMaxDamageToDecrease(), weakness.getMaxDamageToDecrease());
+    }
 
     static class Builder {
         private String name;
@@ -77,45 +118,46 @@ class Weakness {
         private Integer minDamage;
         private Integer maxDamage;
 
-        Weakness build(){
-            if(name == null) name = "Unnamed weakness";
-            if(attackToDecrease == null) attackToDecrease = 0;
-            if(defenseToDecrease == null) defenseToDecrease = 0;
-            if(percentage == null) percentage = 0.5;
-            if(duration == null) duration = 3;
-            return new Weakness(attackToDecrease,defenseToDecrease,percentage,duration,name,minDamage,maxDamage);
+        Weakness build() {
+            if (name == null) name = "Unnamed weakness";
+            if (attackToDecrease == null) attackToDecrease = 0;
+            if (defenseToDecrease == null) defenseToDecrease = 0;
+            if (percentage == null) percentage = 0.5;
+            if (duration == null) duration = 3;
+            return new Weakness(attackToDecrease, defenseToDecrease, percentage, duration, name, minDamage, maxDamage);
         }
 
-        Builder name(String aName){
+        Builder name(String aName) {
             name = aName;
             return this;
         }
 
-        Builder attackToDecrease(Integer aAttackToDecrease){
+        Builder attackToDecrease(Integer aAttackToDecrease) {
             attackToDecrease = aAttackToDecrease;
             return this;
         }
 
-        Builder defenseToDecrease(Integer aDefenseToDecrease){
+        Builder defenseToDecrease(Integer aDefenseToDecrease) {
             defenseToDecrease = aDefenseToDecrease;
             return this;
         }
 
-        Builder percentage(Double aPercentage){
+        Builder percentage(Double aPercentage) {
             percentage = aPercentage;
             return this;
         }
 
-        Builder duration(Integer aDuration){
+        Builder duration(Integer aDuration) {
             duration = aDuration;
             return this;
         }
 
-        Builder minDamage(Integer aMinDamage){
+        Builder minDamage(Integer aMinDamage) {
             minDamage = aMinDamage;
             return this;
         }
-        Builder maxDamage(Integer aMaxDamage){
+
+        Builder maxDamage(Integer aMaxDamage) {
             maxDamage = aMaxDamage;
             return this;
         }

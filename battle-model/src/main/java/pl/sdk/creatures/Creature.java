@@ -43,9 +43,7 @@ public class Creature implements PropertyChangeListener {
     }
 
     void addWeakness(Weakness aWeakness) {
-        if(weaknesses.contains(aWeakness))
-            aWeakness.restartDuration();
-        else weaknesses.add(aWeakness);
+        Weakness.addWeakness(weaknesses,aWeakness);
     }
 
     Range<Integer> getDamage() {
