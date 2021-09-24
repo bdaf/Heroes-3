@@ -11,7 +11,6 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static pl.sdk.GameEngine.BOARD_WIDTH;
@@ -28,7 +27,12 @@ public class WeaknessCurseTest {
         randomizer = new Random();
         randomizer = mock(Random.class);
         when(randomizer.nextDouble()).thenReturn(0.1);
-        Weakness weakness = new ReduceDamageToLessThanMinimumWeakness(0,0,0.2,Integer.MAX_VALUE,"Curse",null, null);
+        Weakness weakness = new ReduceDamageToLessThanMinimumWeaknessDecorator(
+                new Weakness.Builder()
+                        .percentage(0.2)
+                        .duration(Integer.MAX_VALUE)
+                        .name("Curse")
+                        .build());
 
         attacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(100)
@@ -47,7 +51,7 @@ public class WeaknessCurseTest {
     }
 
     @Test
-    void defenderShouldAttackWithMinimumDamageMinusOneAfterHeBecameCursed(){
+    void defenderShouldAttackWithMinimumDamageMinusOneAfterHeBecameCursed() {
         engine.move(new Point(BOARD_WIDTH - 2, 0));
         assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
         engine.attack(BOARD_WIDTH - 1, 0); // attacker
@@ -63,7 +67,7 @@ public class WeaknessCurseTest {
     }
 
     @Test
-    void defenderShouldHaveMinimumDamageMinusOneAfterHeBecameCursedByCounterAttack(){
+    void defenderShouldHaveMinimumDamageMinusOneAfterHeBecameCursedByCounterAttack() {
         engine.move(new Point(BOARD_WIDTH - 2, 0));
         assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
         engine.pass(); // attacker

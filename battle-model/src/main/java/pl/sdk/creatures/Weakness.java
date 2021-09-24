@@ -7,15 +7,17 @@ import java.util.Objects;
 
 class Weakness {
 
-    final private String name;
-    final int attackToDecrease;
-    final int defenseToDecrease;
-    final double percentage;
-    final int startDuration;
+    private String name;
+    int attackToDecrease;
+    int defenseToDecrease;
+    double percentage;
+    int startDuration;
     int duration;
 
     Integer minDamageToDecrease;
     Integer maxDamageToDecrease;
+
+    Weakness() {}
 
     Weakness(int aAttackToDecrease, int aDefenseToDecrease, double aPercentage, int aDuration, String aName, Integer aMinDamageToDecrease, Integer aMaxDamageToDecrease) {
         name = aName;
@@ -60,6 +62,11 @@ class Weakness {
 
     Integer getMaxDamageToDecrease() {
         return maxDamageToDecrease;
+    }
+
+    protected void setDamageToDecrease(int aMinDamageToDecrease, int aMaxDamageToDecrease) {
+        minDamageToDecrease = aMinDamageToDecrease;
+        maxDamageToDecrease = aMaxDamageToDecrease;
     }
 
     static Range<Integer> filterDamageWithWeaknesses(List<Weakness> aWeaknesses, Range<Integer> aRange) {
