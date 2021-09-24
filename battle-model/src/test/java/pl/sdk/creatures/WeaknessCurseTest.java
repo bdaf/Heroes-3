@@ -85,4 +85,29 @@ public class WeaknessCurseTest {
 
     }
 
+    @Test
+    void defenderShouldCurseButOnlyOneEvenIfThereWillBeOtherInflicts() {
+        engine.move(new Point(BOARD_WIDTH - 2, 0));
+        assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
+        engine.attack(BOARD_WIDTH - 1, 0); // attacker
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(9, defender.getDamage().lowerEndpoint());
+        assertEquals(9, defender.getDamage().upperEndpoint());
+
+        assertTrue(engine.canAttack(BOARD_WIDTH - 2, 0));
+        engine.attack(BOARD_WIDTH - 2, 0); // defender
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(9, defender.getDamage().lowerEndpoint());
+        assertEquals(9, defender.getDamage().upperEndpoint());
+
+        engine.attack(BOARD_WIDTH - 1, 0); // attacker
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(9, defender.getDamage().lowerEndpoint());
+        assertEquals(9, defender.getDamage().upperEndpoint());
+
+    }
+
 }
