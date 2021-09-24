@@ -15,7 +15,7 @@ public class AttackWithSplashDamageTest {
     @Test
     void splashDamageShouldAttackEnemiesButNotAllies(){
         NecropolisFactory factory = new NecropolisFactory();
-        Creature splashDamageCreature = new SplashDamageCreature(new Creature.BuilderForTesting()
+        Creature splashDamageCreature = new SplashDamageCreatureDecorator(new Creature.BuilderForTesting()
                 .attack(Integer.MAX_VALUE)
                 .damage(Range.closed(Integer.MAX_VALUE,Integer.MAX_VALUE))
                 .moveRange(Integer.MAX_VALUE)

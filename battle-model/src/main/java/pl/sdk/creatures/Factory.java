@@ -6,8 +6,8 @@ public abstract class Factory {
 
     public static final String ERROR_MSG = "Incorrect number of Tier, it should be from 1 to 7";
 
-    public static final double CHANCE_TO_CRITICAL_ATTACK = 0.1;
-    public static final double INCREASE_FACTOR_OF_CRITICAL_ATTACK = 1.5;
+    public static final double CHANCE_TO_CRITICAL_ATTACK = 0.1; // 10%
+    public static final double INCREASE_FACTOR_OF_CRITICAL_ATTACK = 1.5; // 150%
 
     Fraction fraction;
 

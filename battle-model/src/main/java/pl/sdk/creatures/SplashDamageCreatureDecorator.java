@@ -1,14 +1,42 @@
 package pl.sdk.creatures;
 
-import java.beans.PropertyChangeEvent;
+import com.google.common.collect.Range;
 
-public class SplashDamageCreature extends Creature {
+import java.beans.PropertyChangeEvent;
+import java.util.List;
+
+public class SplashDamageCreatureDecorator extends Creature {
     private final Creature decorated;
     private final boolean[][] splashDamageTable;
 
-    public SplashDamageCreature(Creature aDecorated, boolean[][] aSplashDamageTable) {
+    public SplashDamageCreatureDecorator(Creature aDecorated, boolean[][] aSplashDamageTable) {
         decorated = aDecorated;
         this.splashDamageTable = aSplashDamageTable;
+    }
+
+    @Override
+    public List<Weakness> getWeaknesses() {
+        return decorated.getWeaknesses();
+    }
+
+    @Override
+    void addWeakness(Weakness aWeakness) {
+        decorated.addWeakness(aWeakness);
+    }
+
+    @Override
+    Range<Integer> getDamage() {
+        return decorated.getDamage();
+    }
+
+    @Override
+    public int getArmor() {
+        return decorated.getArmor();
+    }
+
+    @Override
+    public int getAttack() {
+        return decorated.getAttack();
     }
 
     @Override

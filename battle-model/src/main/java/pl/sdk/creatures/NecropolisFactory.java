@@ -4,7 +4,9 @@ import pl.sdk.hero.Fraction;
 
 public class NecropolisFactory extends Factory {
 
-    public NecropolisFactory() { fraction = Fraction.NECROPOLIS; }
+    public NecropolisFactory() {
+        fraction = Fraction.NECROPOLIS;
+    }
 
     @Override
     public Creature create(boolean aIsUpgraded, int aTier, int amount) {
@@ -21,7 +23,12 @@ public class NecropolisFactory extends Factory {
                             .amount(amount)
                             .statistic(CreatureStatistic.ZOMBIE)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
-                            .build(), new Weakness(2,2,0.8,3, "Disease"));
+                            .build(), new Weakness.Builder()
+                            .attackToDecrease(2)
+                            .defenseToDecrease(2)
+                            .percentage(0.8)
+                            .duration(3)
+                            .name("Disease").build());
                 case 3:
                     return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
                             .amount(amount)
@@ -35,7 +42,7 @@ public class NecropolisFactory extends Factory {
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
                             .build(), 1));
                 case 5:
-                    return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
+                    return new SplashDamageCreatureDecorator(new ShootingCreatureDecorator(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.POWER_LICH)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
@@ -44,7 +51,7 @@ public class NecropolisFactory extends Factory {
                     return new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.DREAD_KNIGHT)
-                            .damageCalculator(new CalculateDamageIncreaseInRandomChance(0.2,2))
+                            .damageCalculator(new CalculateDamageIncreaseInRandomChance(0.2, 2))
                             .build();
                 case 7:
                     return new Creature.Builder()
@@ -82,7 +89,7 @@ public class NecropolisFactory extends Factory {
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
                             .build());
                 case 5:
-                    return new SplashDamageCreature(new ShootingCreatureDecorator(new Creature.Builder()
+                    return new SplashDamageCreatureDecorator(new ShootingCreatureDecorator(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.LICH)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
@@ -105,7 +112,7 @@ public class NecropolisFactory extends Factory {
         }
     }
 
-     boolean[][] getSplashForLich() {
+    boolean[][] getSplashForLich() {
         boolean[][] splashDamageTable = new boolean[3][3];
         splashDamageTable[1][1] = true;
         splashDamageTable[0][1] = true;

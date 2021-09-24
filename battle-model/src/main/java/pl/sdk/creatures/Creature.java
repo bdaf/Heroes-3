@@ -49,7 +49,8 @@ public class Creature implements PropertyChangeListener {
     }
 
     Range<Integer> getDamage() {
-        return getStats().getDamage();
+        Range<Integer> range = getStats().getDamage();
+        return Weakness.filterDamageWithWeaknesses(weaknesses,range);
     }
 
     public int getArmor() {

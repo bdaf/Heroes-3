@@ -29,13 +29,17 @@ public class WeaknessesTest {
         randomizer = mock(Random.class);
         when(randomizer.nextDouble()).thenReturn(0.1);
         when(randomizer.nextInt(anyInt())).thenReturn(0);
-
+        Weakness weakness = new Weakness.Builder()
+                .attackToDecrease(2)
+                .defenseToDecrease(2)
+                .percentage(0.2)
+                .duration(3).build();
         attacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(100)
                 .attack(3)
                 .armor(3)
                 .moveRange(100)
-                .build()), new Weakness(2,2,0.2,3), randomizer);
+                .build()), weakness, randomizer);
         defender = new Creature.BuilderForTesting()
                 .damage(Range.closed(10, 12))
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
