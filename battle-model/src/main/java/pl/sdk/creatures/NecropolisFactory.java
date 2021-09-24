@@ -23,12 +23,7 @@ public class NecropolisFactory extends Factory {
                             .amount(amount)
                             .statistic(CreatureStatistic.ZOMBIE)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
-                            .build(), new Weakness.Builder()
-                            .attackToDecrease(2)
-                            .defenseToDecrease(2)
-                            .percentage(0.8)
-                            .duration(3)
-                            .name("Disease").build());
+                            .build(), getDisease());
                 case 3:
                     return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
                             .amount(amount)
@@ -48,11 +43,11 @@ public class NecropolisFactory extends Factory {
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
                             .build()), getSplashForLich());
                 case 6:
-                    return new Creature.Builder()
+                    return new InfectsWithWeaknessCreatureDecorator(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.DREAD_KNIGHT)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(0.2, 2))
-                            .build();
+                            .build(), getCurse());
                 case 7:
                     return new Creature.Builder()
                             .amount(amount)
@@ -95,11 +90,11 @@ public class NecropolisFactory extends Factory {
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
                             .build()), getSplashForLich());
                 case 6:
-                    return new Creature.Builder()
+                    return new InfectsWithWeaknessCreatureDecorator(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.BLACK_KNIGHT)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
-                            .build();
+                            .build(), getCurse());
                 case 7:
                     return new Creature.Builder()
                             .amount(amount)
@@ -110,6 +105,24 @@ public class NecropolisFactory extends Factory {
                     throw new IllegalArgumentException(ERROR_MSG);
             }
         }
+    }
+
+    private Weakness getDisease() {
+        return new Weakness.Builder()
+        .attackToDecrease(2)
+        .defenseToDecrease(2)
+        .percentage(0.8)
+        .duration(3)
+        .name("Disease").build();
+    }
+
+    private ReduceDamageToLessThanMinimumWeaknessDecorator getCurse() {
+        return new ReduceDamageToLessThanMinimumWeaknessDecorator(
+                new Weakness.Builder()
+                        .percentage(0.2)
+                        .duration(Integer.MAX_VALUE)
+                        .name("Curse")
+                        .build());
     }
 
     boolean[][] getSplashForLich() {

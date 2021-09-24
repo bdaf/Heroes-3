@@ -35,7 +35,7 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
     }
 
     @Override
-    Range<Integer> getDamage() {
+    public Range<Integer> getDamage() {
         return decorated.getDamage();
     }
 

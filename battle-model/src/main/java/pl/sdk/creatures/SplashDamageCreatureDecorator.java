@@ -25,7 +25,7 @@ public class SplashDamageCreatureDecorator extends Creature {
     }
 
     @Override
-    Range<Integer> getDamage() {
+    public Range<Integer> getDamage() {
         return decorated.getDamage();
     }
 

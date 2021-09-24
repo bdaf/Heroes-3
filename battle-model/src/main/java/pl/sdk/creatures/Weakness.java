@@ -64,7 +64,11 @@ public class Weakness {
         return maxDamageToDecrease;
     }
 
-    protected void setDamageToDecrease(int aMinDamageToDecrease, int aMaxDamageToDecrease) {
+    int getStartDuration() {
+        return startDuration;
+    }
+
+    void setDamageToDecrease(int aMinDamageToDecrease, int aMaxDamageToDecrease) {
         minDamageToDecrease = aMinDamageToDecrease;
         maxDamageToDecrease = aMaxDamageToDecrease;
     }
@@ -84,7 +88,7 @@ public class Weakness {
                 .attackToDecrease(aWeakness.getAttackToDecrease())
                 .defenseToDecrease(aWeakness.getDefenseToDecrease())
                 .percentage(aWeakness.getPercentage())
-                .duration(aWeakness.getDuration())
+                .duration(aWeakness.getStartDuration())
                 .name(aWeakness.getName())
                 .minDamage(aWeakness.getMinDamageToDecrease())
                 .maxDamage(aWeakness.getMaxDamageToDecrease())
@@ -111,9 +115,7 @@ public class Weakness {
                 getDefenseToDecrease() == weakness.getDefenseToDecrease() &&
                 Double.compare(weakness.getPercentage(), getPercentage()) == 0 &&
                 startDuration == weakness.startDuration &&
-                getName().equals(weakness.getName()) &&
-                Objects.equals(getMinDamageToDecrease(), weakness.getMinDamageToDecrease()) &&
-                Objects.equals(getMaxDamageToDecrease(), weakness.getMaxDamageToDecrease());
+                getName().equals(weakness.getName());
     }
 
     static class Builder {

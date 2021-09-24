@@ -74,26 +74,35 @@ public class UnitWindow {
 
     private VBox getRightVBoxWithStats(Creature aCreature) {
         String resultOfWeaknesses = "";
+        String statsString = "";
         VBox vBox = new VBox(10);
         vBox.setAlignment(Pos.CENTER);
         vBox.setPadding(new Insets(0, 0, 20, 0));
         String shots = "";
         if (aCreature.getShots() > 0) shots = " - " + aCreature.getShots() + " shots";
 
-        Text healthAndShots = new Text("Health: " + aCreature.getCurrentHp() + "/" + aCreature.getMaxHp() + shots);
-        //healthAndShots.setAlignment(Pos.CENTER);
+        statsString = "Health: " + aCreature.getCurrentHp() + "/" + aCreature.getMaxHp() + shots;
+        Text healthAndShots = new Text(statsString);
 
         if (aCreature.getStats().getAttack() != aCreature.getAttack())
             resultOfWeaknesses = "(" + (aCreature.getAttack() - aCreature.getStats().getAttack()) + ")";
-        Text firstHalfOfStats = new Text("Attack: " + aCreature.getStats().getAttack() + " " + resultOfWeaknesses
-                + " | Damage: " + aCreature.getStats().getDamage().lowerEndpoint() + " - " + aCreature.getStats().getDamage().upperEndpoint());
-        //firstHalfOfStats.setAlignment(Pos.CENTER);
 
+        statsString = "Attack: " + aCreature.getStats().getAttack() + " " + resultOfWeaknesses;
+
+        resultOfWeaknesses = "";
+        if (aCreature.getStats().getDamage() != aCreature.getDamage())
+            resultOfWeaknesses = "(" + (aCreature.getDamage().lowerEndpoint() - aCreature.getStats().getDamage().lowerEndpoint()) + ", "
+                    + (aCreature.getDamage().upperEndpoint() - aCreature.getStats().getDamage().upperEndpoint()) + ")";
+
+        statsString += " | Damage: " + aCreature.getStats().getDamage().lowerEndpoint() + " - " + aCreature.getStats().getDamage().upperEndpoint()+ " " + resultOfWeaknesses;
+        Text firstHalfOfStats = new Text(statsString);
+
+        resultOfWeaknesses = "";
         if (aCreature.getStats().getArmor() != aCreature.getArmor())
             resultOfWeaknesses = "(" + (aCreature.getArmor() - aCreature.getStats().getArmor()) + ")";
+
         Text secondHalfOfStats = new Text("Defense: " + aCreature.getStats().getArmor() + " " + resultOfWeaknesses
                 + " | Movement: " + aCreature.getStats().getMoveRange());
-        //secondHalfOfStats.setAlignment(Pos.CENTER);
 
         healthAndShots.setStyle("-fx-font: 18 arial;");
         firstHalfOfStats.setStyle("-fx-font: 18 arial;");
@@ -110,7 +119,7 @@ public class UnitWindow {
             for (int i = 0; i < aCreature.getWeaknesses().size(); i++) {
                 Weakness weakness = aCreature.getWeaknesses().get(i);
                 String duration = String.valueOf(weakness.getDuration());
-                if(weakness.getDuration() > 100); duration = "inf";
+                if(weakness.getDuration() > 100) duration = "inf";
                 weaknesses += weakness.getName() +" ("+duration+")" +", ";
             }
             weaknesses = weaknesses.substring(0, weaknesses.length() - 2);

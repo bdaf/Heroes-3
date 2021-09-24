@@ -8,6 +8,11 @@ public class ReduceDamageToLessThanMinimumWeaknessDecorator extends Weakness {
     }
 
     @Override
+    int getStartDuration() {
+        return decorated.getStartDuration();
+    }
+
+    @Override
     void setWeak(Creature aCreature) {
         decorated.setDamageToDecrease(1,1 + aCreature.getDamage().upperEndpoint() - aCreature.getDamage().lowerEndpoint());
     }
