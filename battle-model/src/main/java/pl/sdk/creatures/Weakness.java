@@ -5,7 +5,7 @@ import com.google.common.collect.Range;
 import java.util.List;
 import java.util.Objects;
 
-class Weakness {
+public class Weakness {
 
     private String name;
     int attackToDecrease;

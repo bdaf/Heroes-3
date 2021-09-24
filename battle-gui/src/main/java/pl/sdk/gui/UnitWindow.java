@@ -62,16 +62,7 @@ public class UnitWindow {
         });
         Text description = new Text(aCreature.getStats().getDescription());
 
-        if (!aCreature.getWeaknesses().isEmpty()) {
-            String weaknesses = " Weaknesses: ";
-            for (int i = 0; i < aCreature.getWeaknesses().size(); i++) {
-                Weakness weakness = aCreature.getWeaknesses().get(i);
-                weaknesses += weakness.getName() +" ("+weakness.getDuration()+")" +", ";
-            }
-            weaknesses = weaknesses.substring(0, weaknesses.length() - 2);
-            weaknesses += ".";
-            description.setText(description.getText() + weaknesses);
-        }
+        addWeaknessesToDescription(aCreature, description);
 
         description.setStyle("-fx-font: 12 arial;");
 
@@ -111,6 +102,21 @@ public class UnitWindow {
         vBox.getChildren().addAll(healthAndShots, firstHalfOfStats, secondHalfOfStats);
         vBox.setPrefWidth(370);
         return vBox;
+    }
+
+    private void addWeaknessesToDescription(Creature aCreature, Text aDescription) {
+        if (!aCreature.getWeaknesses().isEmpty()) {
+            String weaknesses = " Weaknesses: ";
+            for (int i = 0; i < aCreature.getWeaknesses().size(); i++) {
+                Weakness weakness = aCreature.getWeaknesses().get(i);
+                String duration = String.valueOf(weakness.getDuration());
+                if(weakness.getDuration() > 100); duration = "inf";
+                weaknesses += weakness.getName() +" ("+duration+")" +", ";
+            }
+            weaknesses = weaknesses.substring(0, weaknesses.length() - 2);
+            weaknesses += ".";
+            aDescription.setText(aDescription.getText() + weaknesses);
+        }
     }
 
     void showAndWait() {
