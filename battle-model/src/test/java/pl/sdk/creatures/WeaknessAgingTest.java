@@ -43,14 +43,16 @@ public class WeaknessAgingTest {
                 .moveRange(100)
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .damage(Range.closed(1, 2))
-                .amount(10)
+                .amount(60)
                 .build()), weakness, randomizer);
+        attacker.setAmount(10);
         defender = new Creature.BuilderForTesting()
                 .damage(Range.closed(10, 12))
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .moveRange(9)
                 .attack(5)
                 .armor(5)
+                .amount(5)
                 .maxHp(100).build();
         engine = new GameEngine(List.of(attacker), List.of(defender));
     }
@@ -70,6 +72,27 @@ public class WeaknessAgingTest {
 
         assertEquals(30, defender.getCurrentHp());
     }
+
+    @Test
+    void defenderShouldGetAgingAndHaveCurrentHpEquals1WhenDealtHpIsAboveHalfOfMax(){
+        attacker.setAmount(60);
+        defender.setAmount(5);
+        engine.move(new Point(BOARD_WIDTH - 2, 0));
+        assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
+        engine.attack(BOARD_WIDTH - 1, 0); // attacker
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(50,defender.getMaxHp());
+        assertEquals(1, defender.getCurrentHp());
+        assertEquals(5, defender.getAmount());
+
+        assertTrue(engine.canAttack(BOARD_WIDTH - 2, 0));
+        engine.attack(BOARD_WIDTH - 2, 0); // defender
+
+        assertEquals(3, defender.getAmount());
+        assertEquals(41, defender.getCurrentHp());
+    }
+
 
     @Test
     void defenderShouldGetAgingAndHisMaxHPShouldBeHalvedButOnlyFor3Turns(){
@@ -99,7 +122,5 @@ public class WeaknessAgingTest {
         assertEquals(0, defender.getWeaknesses().size());
         assertEquals(100, defender.getMaxHp());
         assertEquals(40, defender.getCurrentHp());
-
-
     }
 }
