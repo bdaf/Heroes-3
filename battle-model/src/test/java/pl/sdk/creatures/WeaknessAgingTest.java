@@ -62,13 +62,44 @@ public class WeaknessAgingTest {
         engine.attack(BOARD_WIDTH - 1, 0); // attacker
 
         assertEquals(1, defender.getWeaknesses().size());
-        int tak = defender.getMaxHp();
-        assertEquals(50,tak);
+        assertEquals(50,defender.getMaxHp());
         assertEquals(40, defender.getCurrentHp());
 
         assertTrue(engine.canAttack(BOARD_WIDTH - 2, 0));
         engine.attack(BOARD_WIDTH - 2, 0); // defender
 
         assertEquals(30, defender.getCurrentHp());
+    }
+
+    @Test
+    void defenderShouldGetAgingAndHisMaxHPShouldBeHalvedButOnlyFor3Turns(){
+        engine.move(new Point(BOARD_WIDTH - 2, 0));
+        assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
+        engine.attack(BOARD_WIDTH - 1, 0); // attacker
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(50,defender.getMaxHp());
+        assertEquals(40, defender.getCurrentHp());
+
+        engine.pass(); // defender
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(50, defender.getMaxHp());
+        assertEquals(40, defender.getCurrentHp());
+
+        engine.pass(); // attacker
+        engine.pass(); // defender
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(50, defender.getMaxHp());
+        assertEquals(40, defender.getCurrentHp());
+
+        engine.pass(); // attacker
+        engine.pass(); // defender
+        assertEquals(0, defender.getWeaknesses().size());
+        assertEquals(100, defender.getMaxHp());
+        assertEquals(40, defender.getCurrentHp());
+
+
     }
 }
