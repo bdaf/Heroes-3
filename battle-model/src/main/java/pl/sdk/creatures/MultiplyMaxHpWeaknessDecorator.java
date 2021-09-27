@@ -1,39 +1,18 @@
 package pl.sdk.creatures;
 
-public class ReduceDamageToLessThanMinimumWeaknessDecorator extends Weakness {
-    public final int FACTOR_UNDER_MINIMUM;
+public class MultiplyMaxHpWeaknessDecorator extends Weakness{
     private final Weakness decorated;
+    private final double FACTOR_MULTIPLYING_MAX_HP;
 
-    public ReduceDamageToLessThanMinimumWeaknessDecorator(Weakness aDecorated, int aFactorUnderMinimum) {
-        decorated = aDecorated;
-        FACTOR_UNDER_MINIMUM = aFactorUnderMinimum;
-    }
-
-
-    @Override
-    int getStartDuration() {
-        return decorated.getStartDuration();
+    MultiplyMaxHpWeaknessDecorator(Weakness aWeakness, double aFactorOfMultiplyingMaxHp) {
+        decorated = aWeakness;
+        FACTOR_MULTIPLYING_MAX_HP = aFactorOfMultiplyingMaxHp;
     }
 
     @Override
     void setWeak(Creature aCreature) {
-        setDamageToDecrease(FACTOR_UNDER_MINIMUM, FACTOR_UNDER_MINIMUM + aCreature.getDamage().upperEndpoint() - aCreature.getDamage().lowerEndpoint());
+        setMaxHpToDecrease(aCreature.getMaxHp()/2);
         super.setWeak(aCreature);
-    }
-
-    @Override
-    Integer getMaxHpToDecrease() {
-        return decorated.getMaxHpToDecrease();
-    }
-
-    @Override
-    void setMaxHpToDecrease(int aMaxHpToDecrease) {
-        decorated.setMaxHpToDecrease(aMaxHpToDecrease);
-    }
-
-    @Override
-    protected void setDamageToDecrease(int aMinDamageToDecrease, int aMaxDamageToDecrease) {
-        decorated.setDamageToDecrease(aMinDamageToDecrease, aMaxDamageToDecrease);
     }
 
     @Override
@@ -67,6 +46,11 @@ public class ReduceDamageToLessThanMinimumWeaknessDecorator extends Weakness {
     }
 
     @Override
+    int getStartDuration() {
+        return decorated.getStartDuration();
+    }
+
+    @Override
     Integer getMinDamageToDecrease() {
         return decorated.getMinDamageToDecrease();
     }
@@ -74,6 +58,21 @@ public class ReduceDamageToLessThanMinimumWeaknessDecorator extends Weakness {
     @Override
     Integer getMaxDamageToDecrease() {
         return decorated.getMaxDamageToDecrease();
+    }
+
+    @Override
+    Integer getMaxHpToDecrease() {
+        return decorated.getMaxHpToDecrease();
+    }
+
+    @Override
+    void setDamageToDecrease(int aMinDamageToDecrease, int aMaxDamageToDecrease) {
+        decorated.setDamageToDecrease(aMinDamageToDecrease, aMaxDamageToDecrease);
+    }
+
+    @Override
+    void setMaxHpToDecrease(int aMaxHpToDecrease) {
+        decorated.setMaxHpToDecrease(aMaxHpToDecrease);
     }
 
     @Override

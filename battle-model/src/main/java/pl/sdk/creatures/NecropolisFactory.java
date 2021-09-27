@@ -122,7 +122,7 @@ public class NecropolisFactory extends Factory {
                         .percentage(0.2)
                         .duration(Integer.MAX_VALUE)
                         .name("Curse")
-                        .build());
+                        .build(),1);
     }
 
     boolean[][] getSplashForLich() {

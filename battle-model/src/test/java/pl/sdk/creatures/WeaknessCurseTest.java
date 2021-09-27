@@ -32,7 +32,7 @@ public class WeaknessCurseTest {
                         .percentage(0.2)
                         .duration(Integer.MAX_VALUE)
                         .name("Curse")
-                        .build());
+                        .build(),1);
 
         attacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(100)

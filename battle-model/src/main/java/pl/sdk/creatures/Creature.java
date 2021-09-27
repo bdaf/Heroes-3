@@ -48,7 +48,7 @@ public class Creature implements PropertyChangeListener {
 
     public Range<Integer> getDamage() {
         Range<Integer> range = getStats().getDamage();
-        return Weakness.filterDamageWithWeaknesses(weaknesses,range);
+        return Weakness.damageFilterWithWeaknesses(weaknesses,range);
     }
 
     public int getArmor() {
@@ -127,7 +127,7 @@ public class Creature implements PropertyChangeListener {
     }
 
     public int getMaxHp() {
-        return stats.getMaxHp();
+        return Weakness.maxHpFilterWithWeaknesses(weaknesses,stats.getMaxHp());
     }
 
     public boolean isAlive() {
@@ -186,7 +186,7 @@ public class Creature implements PropertyChangeListener {
         sb.append(System.lineSeparator());
         sb.append(getCurrentHp());
         sb.append("/");
-        sb.append(getStats().getMaxHp());
+        sb.append(getMaxHp());
         return sb.toString();
     }
 
@@ -194,7 +194,7 @@ public class Creature implements PropertyChangeListener {
         StringBuilder sb = new StringBuilder();
         sb.append(getCurrentHp());
         sb.append("/");
-        sb.append(getStats().getMaxHp());
+        sb.append(getMaxHp());
         sb.append("  " + getAmount());
         return sb.toString();
     }

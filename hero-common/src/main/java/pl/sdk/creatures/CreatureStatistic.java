@@ -20,7 +20,7 @@ public enum CreatureStatistic implements CreatureStatisticlf {
     WRAITH("Wraith",7,7,18,7,Range.closed(3,5),3,"Will get to those shooters even faster! \nSpecial Abilities: Top wight of the stack regenerates all lost damage in the beginning of each round.", true),
     VAMPIRE_LORD("VampireLord",10,10,40,8,Range.closed(5,8),4,"Use them as main striking unit and you might end up with no losses! \nSpecial Abilities: No enemy retaliation; Resurrects members of their own stack by restoring health equal to the amount of damage they do to enemies.", true),
     POWER_LICH("PowerLich",13,10,40,4,Range.closed(11,15),5,"Now they last longer and are able to do more damage! A must for good necropolis army. \nSpecial Abilities: Death cloud range attack - damages living creatures on adjacent squares to target.", true,24),
-    DREAD_KNIGHT("DreadKnight",18,18,120,9,Range.closed(15,30),6,"I think it's the best lvl6 unit in the game! Double damage ability puts Dread Knights above Naga Queens. \nSpecial Abilities: Special: 20% chance to curse enemy; 20% chance to do double damage.", true),
+    DREAD_KNIGHT("DreadKnight",18,18,120,9,Range.closed(15,30),6,"Propably the best lvl6 unit in the game! Double damage ability puts Dread Knights above! \nSpecial Abilities: Special: 20% chance to curse enemy; 20% chance to do double damage.", true),
     GHOST_DRAGON("GhostDragon",19,17,200,14,Range.closed(25,50),7,"Ageing ability makes ghost dragons as dangerous as other lvl7 creatures. \nSpecial Abilities: None.", true),
     // CASTLE
     PICKMAN("Pickman",4,5,10,4,Range.closed(1,3),1,"Toughest lvl1 unit, but a bit slow. \nSpecial Abilities: None.",false),

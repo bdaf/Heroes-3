@@ -3,7 +3,6 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Weakness {
 
@@ -16,6 +15,7 @@ public class Weakness {
 
     Integer minDamageToDecrease;
     Integer maxDamageToDecrease;
+    Integer maxHpToDecrease;
 
     Weakness() {}
 
@@ -29,8 +29,48 @@ public class Weakness {
         maxDamageToDecrease = aMaxDamageToDecrease;
     }
 
-    void setWeak(Creature aCreature) {
+    static void addWeakness(List<Weakness> aWeaknesses, Weakness aWeakness) {
+        for (Weakness weakness : aWeaknesses) {
+            if (weakness.equals(aWeakness)) {
+                weakness.restartDuration();
+                return;
+            }
+        }
+        aWeaknesses.add(aWeakness);
     }
+
+    static Integer maxHpFilterWithWeaknesses(List<Weakness> aWeaknesses, Integer aMaxHp) {
+        for (Weakness weakness : aWeaknesses) {
+            if (weakness.getMaxHpToDecrease() != null) {
+                aMaxHp -= Integer.max(1,weakness.getMaxHpToDecrease());
+            }
+        }
+        return aMaxHp;
+    }
+
+    static Range<Integer> damageFilterWithWeaknesses(List<Weakness> aWeaknesses, Range<Integer> aRange) {
+        for (Weakness weakness : aWeaknesses) {
+            if (weakness.getMinDamageToDecrease() != null && weakness.getMaxDamageToDecrease() != null) {
+                aRange = Range.closed(aRange.lowerEndpoint() - weakness.getMinDamageToDecrease(),
+                        aRange.upperEndpoint() - weakness.getMaxDamageToDecrease());
+            }
+        }
+        return aRange;
+    }
+
+    static Weakness copyOf(Weakness aWeakness) {
+        return new Builder()
+                .attackToDecrease(aWeakness.getAttackToDecrease())
+                .defenseToDecrease(aWeakness.getDefenseToDecrease())
+                .percentage(aWeakness.getPercentage())
+                .duration(aWeakness.getStartDuration())
+                .name(aWeakness.getName())
+                .minDamage(aWeakness.getMinDamageToDecrease())
+                .maxDamage(aWeakness.getMaxDamageToDecrease())
+                .build();
+    }
+
+    void setWeak(Creature aCreature) {}
 
     int getAttackToDecrease() {
         return attackToDecrease;
@@ -56,6 +96,10 @@ public class Weakness {
         duration = startDuration;
     }
 
+    int getStartDuration() {
+        return startDuration;
+    }
+
     Integer getMinDamageToDecrease() {
         return minDamageToDecrease;
     }
@@ -64,45 +108,15 @@ public class Weakness {
         return maxDamageToDecrease;
     }
 
-    int getStartDuration() {
-        return startDuration;
-    }
+    Integer getMaxHpToDecrease() { return maxHpToDecrease; }
 
     void setDamageToDecrease(int aMinDamageToDecrease, int aMaxDamageToDecrease) {
         minDamageToDecrease = aMinDamageToDecrease;
         maxDamageToDecrease = aMaxDamageToDecrease;
     }
 
-    static Range<Integer> filterDamageWithWeaknesses(List<Weakness> aWeaknesses, Range<Integer> aRange) {
-        for (Weakness weakness : aWeaknesses) {
-            if (weakness.getMinDamageToDecrease() != null && weakness.getMaxDamageToDecrease() != null) {
-                aRange = Range.closed(aRange.lowerEndpoint() - weakness.getMinDamageToDecrease(),
-                        aRange.upperEndpoint() - weakness.getMaxDamageToDecrease());
-            }
-        }
-        return aRange;
-    }
-
-    static Weakness copyOf(Weakness aWeakness) {
-        return new Builder()
-                .attackToDecrease(aWeakness.getAttackToDecrease())
-                .defenseToDecrease(aWeakness.getDefenseToDecrease())
-                .percentage(aWeakness.getPercentage())
-                .duration(aWeakness.getStartDuration())
-                .name(aWeakness.getName())
-                .minDamage(aWeakness.getMinDamageToDecrease())
-                .maxDamage(aWeakness.getMaxDamageToDecrease())
-                .build();
-    }
-
-    static void addWeakness(List<Weakness> aWeaknesses, Weakness aWeakness) {
-        for (Weakness weakness : aWeaknesses) {
-            if (weakness.equals(aWeakness)) {
-                weakness.restartDuration();
-                return;
-            }
-        }
-        aWeaknesses.add(aWeakness);
+    void setMaxHpToDecrease(int aMaxHpToDecrease){
+        maxHpToDecrease = aMaxHpToDecrease;
     }
 
 
