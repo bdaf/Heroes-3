@@ -119,7 +119,7 @@ public class NecropolisFactory extends Factory {
     private Weakness getCurse() {
         return new ReduceDamageToLessThanMinimumWeaknessDecorator(
                 new Weakness.Builder()
-                        .percentage(0.2)
+                        .percentage(1.2)
                         .duration(Integer.MAX_VALUE)
                         .name("Curse")
                         .build(), 1);
@@ -128,7 +128,7 @@ public class NecropolisFactory extends Factory {
     private Weakness getAging() {
         return new MultiplyMaxHpWeaknessDecorator(
                 new Weakness.Builder()
-                        .percentage(0.2)
+                        .percentage(1.0)
                         .duration(3)
                         .name("Aging")
                         .build(), 0.5);
