@@ -49,11 +49,11 @@ public class NecropolisFactory extends Factory {
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(0.2, 2))
                             .build(), getCurse());
                 case 7:
-                    return new Creature.Builder()
+                    return new InfectsWithWeaknessCreatureDecorator(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.GHOST_DRAGON)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
-                            .build();
+                            .build(),getAging());
                 default:
                     throw new IllegalArgumentException(ERROR_MSG);
             }
@@ -109,21 +109,31 @@ public class NecropolisFactory extends Factory {
 
     private Weakness getDisease() {
         return new Weakness.Builder()
-        .attackToDecrease(2)
-        .defenseToDecrease(2)
-        .percentage(0.8)
-        .duration(3)
-        .name("Disease").build();
+                .attackToDecrease(2)
+                .defenseToDecrease(2)
+                .percentage(0.8)
+                .duration(3)
+                .name("Disease").build();
     }
 
-    private ReduceDamageToLessThanMinimumWeaknessDecorator getCurse() {
+    private Weakness getCurse() {
         return new ReduceDamageToLessThanMinimumWeaknessDecorator(
                 new Weakness.Builder()
                         .percentage(0.2)
                         .duration(Integer.MAX_VALUE)
                         .name("Curse")
-                        .build(),1);
+                        .build(), 1);
     }
+
+    private Weakness getAging() {
+        return new MultiplyMaxHpWeaknessDecorator(
+                new Weakness.Builder()
+                        .percentage(0.2)
+                        .duration(3)
+                        .name("Aging")
+                        .build(), 0.5);
+    }
+
 
     boolean[][] getSplashForLich() {
         boolean[][] splashDamageTable = new boolean[3][3];
