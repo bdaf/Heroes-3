@@ -14,11 +14,6 @@ class BlockingCounterAttackCreatureDecorator extends Creature {
     }
 
     @Override
-    void addWeakness(Weakness aWeakness) {
-        decorated.addWeakness(aWeakness);
-    }
-
-    @Override
     public List<Weakness> getWeaknesses() {
         return decorated.getWeaknesses();
     }

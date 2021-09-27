@@ -17,11 +17,6 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
     }
 
     @Override
-    void addWeakness(Weakness aWeakness) {
-        decorated.addWeakness(aWeakness);
-    }
-
-    @Override
     public Range<Integer> getDamage() {
         return decorated.getDamage();
     }

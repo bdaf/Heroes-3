@@ -31,20 +31,21 @@ public class Weakness {
         maxHpToDecrease = aMaxHpToDecrease;
     }
 
-    static void addWeakness(List<Weakness> aWeaknesses, Weakness aWeakness) {
+    static boolean addWeakness(List<Weakness> aWeaknesses, Weakness aWeakness) {
         for (Weakness weakness : aWeaknesses) {
             if (weakness.equals(aWeakness)) {
                 weakness.restartDuration();
-                return;
+                return false;
             }
         }
         aWeaknesses.add(aWeakness);
+        return true;
     }
 
     static Integer maxHpFilterWithWeaknesses(List<Weakness> aWeaknesses, Integer aMaxHp) {
         for (Weakness weakness : aWeaknesses) {
             if (weakness.getMaxHpToDecrease() != null) {
-                aMaxHp -= Integer.max(1,weakness.getMaxHpToDecrease());
+                aMaxHp = Integer.max(1,aMaxHp-weakness.getMaxHpToDecrease());
             }
         }
         return aMaxHp;
@@ -73,7 +74,7 @@ public class Weakness {
                 .build();
     }
 
-    void setWeak(Creature aCreature) {}
+    void setWeak(Creature aCreature, Integer aDealtDmg) {}
 
     int getAttackToDecrease() {
         return attackToDecrease;

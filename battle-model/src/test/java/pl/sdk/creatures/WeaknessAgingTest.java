@@ -41,6 +41,7 @@ public class WeaknessAgingTest {
                 .attack(5)
                 .armor(5)
                 .moveRange(100)
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .damage(Range.closed(1, 2))
                 .amount(10)
                 .build()), weakness, randomizer);
@@ -63,11 +64,11 @@ public class WeaknessAgingTest {
         assertEquals(1, defender.getWeaknesses().size());
         int tak = defender.getMaxHp();
         assertEquals(50,tak);
-        assertEquals(49, defender.getCurrentHp());
+        assertEquals(40, defender.getCurrentHp());
 
         assertTrue(engine.canAttack(BOARD_WIDTH - 2, 0));
         engine.attack(BOARD_WIDTH - 2, 0); // defender
 
-        //assertEquals(91, attacker.getCurrentHp());
+        assertEquals(30, defender.getCurrentHp());
     }
 }

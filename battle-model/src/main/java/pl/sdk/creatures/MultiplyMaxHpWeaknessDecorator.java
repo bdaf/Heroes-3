@@ -10,9 +10,12 @@ public class MultiplyMaxHpWeaknessDecorator extends Weakness{
     }
 
     @Override
-    void setWeak(Creature aCreature) {
+    void setWeak(Creature aCreature, Integer aDealtDmg) {
         setMaxHpToDecrease((int) (aCreature.getMaxHp()*FACTOR_MULTIPLYING_MAX_HP));
-        super.setWeak(aCreature);
+        int currentHp = aCreature.getCurrentHp() + aDealtDmg;
+        currentHp = Integer.max(1,currentHp/2 - aDealtDmg);
+        aCreature.setCurrentHP(currentHp);
+        super.setWeak(aCreature, aDealtDmg);
     }
 
     @Override

@@ -16,9 +16,9 @@ public class ReduceDamageToLessThanMinimumWeaknessDecorator extends Weakness {
     }
 
     @Override
-    void setWeak(Creature aCreature) {
+    void setWeak(Creature aCreature, Integer aDealtDmg) {
         setDamageToDecrease(FACTOR_UNDER_MINIMUM, FACTOR_UNDER_MINIMUM + aCreature.getDamage().upperEndpoint() - aCreature.getDamage().lowerEndpoint());
-        super.setWeak(aCreature);
+        super.setWeak(aCreature, aDealtDmg);
     }
 
     @Override

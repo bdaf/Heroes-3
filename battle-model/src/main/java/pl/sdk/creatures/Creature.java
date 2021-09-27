@@ -42,10 +42,6 @@ public class Creature implements PropertyChangeListener {
         return weaknesses;
     }
 
-    void addWeakness(Weakness aWeakness) {
-        Weakness.addWeakness(weaknesses,aWeakness);
-    }
-
     public Range<Integer> getDamage() {
         Range<Integer> range = getStats().getDamage();
         return Weakness.damageFilterWithWeaknesses(weaknesses,range);

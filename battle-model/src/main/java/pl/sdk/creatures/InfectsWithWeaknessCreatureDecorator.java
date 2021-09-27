@@ -13,7 +13,7 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
 
 
     public InfectsWithWeaknessCreatureDecorator(Creature aDecorated, Weakness aWeakness) {
-        this(aDecorated,aWeakness,new Random());
+        this(aDecorated, aWeakness, new Random());
     }
 
     public InfectsWithWeaknessCreatureDecorator(Creature aDecorated, Weakness aWeakness, Random aRandom) {
@@ -23,15 +23,16 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
     }
 
     private void infect(Creature defender, Integer aDealtDmg) {
-        if(rand.nextDouble() <= weakness.getPercentage()){
-            weakness.setWeak(defender);
-            defender.addWeakness(Weakness.copyOf(weakness));
+        if (rand.nextDouble() <= weakness.getPercentage()) {
+            for (Weakness weakness : defender.getWeaknesses()) {
+                if (weakness.equals(weakness)) {
+                    weakness.restartDuration();
+                    return;
+                }
+            }
+            weakness.setWeak(defender, aDealtDmg);
+            defender.getWeaknesses().add(Weakness.copyOf(weakness));
         }
-    }
-
-    @Override
-    void addWeakness(Weakness aWeakness) {
-        decorated.addWeakness(aWeakness);
     }
 
     @Override
