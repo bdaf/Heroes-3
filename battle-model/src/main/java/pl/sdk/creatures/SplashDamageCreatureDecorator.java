@@ -70,8 +70,8 @@ public class SplashDamageCreatureDecorator extends Creature {
     }
 
     @Override
-    public void attack(Creature defender) {
-        decorated.attack(defender);
+    public Integer attack(Creature defender) {
+        return decorated.attack(defender);
     }
 
     @Override
@@ -80,8 +80,8 @@ public class SplashDamageCreatureDecorator extends Creature {
     }
 
     @Override
-    void counterAttack(Creature defender) {
-        decorated.counterAttack(defender);
+    Integer counterAttack(Creature defender) {
+        return decorated.counterAttack(defender);
     }
 
     @Override

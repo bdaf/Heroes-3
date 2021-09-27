@@ -59,8 +59,8 @@ class RegenerationOnEndOfTurnCreatureDecorator extends Creature {
     }
 
     @Override
-    public void attack(Creature defender) {
-        decorated.attack(defender);
+    public Integer attack(Creature defender) {
+        return decorated.attack(defender);
     }
 
     @Override
@@ -79,8 +79,8 @@ class RegenerationOnEndOfTurnCreatureDecorator extends Creature {
     }
 
     @Override
-    protected void counterAttack(Creature defender) {
-        decorated.counterAttack(defender);
+    protected Integer counterAttack(Creature defender) {
+        return decorated.counterAttack(defender);
     }
 
     @Override

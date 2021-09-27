@@ -59,13 +59,15 @@ class BlockingCounterAttackCreatureDecorator extends Creature {
     }
 
     @Override
-    public void attack(Creature defender) {
+    public Integer attack(Creature defender) {
         if (decorated == defender) throw new IllegalArgumentException();
         if (decorated.isAlive()) {
             int damageToDeal = countDamage(decorated, defender);
             defender.applyDamage(damageToDeal);
             performAfterAttack(damageToDeal);
+            return damageToDeal;
         }
+        return null;
     }
 
     @Override
@@ -79,8 +81,8 @@ class BlockingCounterAttackCreatureDecorator extends Creature {
     }
 
     @Override
-    protected void counterAttack(Creature defender) {
-        decorated.counterAttack(defender);
+    protected Integer counterAttack(Creature defender) {
+        return decorated.counterAttack(defender);
     }
 
     @Override

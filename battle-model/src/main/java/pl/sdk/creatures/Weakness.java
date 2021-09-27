@@ -19,7 +19,8 @@ public class Weakness {
 
     Weakness() {}
 
-    Weakness(int aAttackToDecrease, int aDefenseToDecrease, double aPercentage, int aDuration, String aName, Integer aMinDamageToDecrease, Integer aMaxDamageToDecrease) {
+    Weakness(int aAttackToDecrease, int aDefenseToDecrease, double aPercentage, int aDuration, String aName, Integer aMinDamageToDecrease, Integer aMaxDamageToDecrease,
+    Integer aMaxHpToDecrease) {
         name = aName;
         attackToDecrease = aAttackToDecrease;
         defenseToDecrease = aDefenseToDecrease;
@@ -27,6 +28,7 @@ public class Weakness {
         startDuration = duration = aDuration;
         minDamageToDecrease = aMinDamageToDecrease;
         maxDamageToDecrease = aMaxDamageToDecrease;
+        maxHpToDecrease = aMaxHpToDecrease;
     }
 
     static void addWeakness(List<Weakness> aWeaknesses, Weakness aWeakness) {
@@ -67,6 +69,7 @@ public class Weakness {
                 .name(aWeakness.getName())
                 .minDamage(aWeakness.getMinDamageToDecrease())
                 .maxDamage(aWeakness.getMaxDamageToDecrease())
+                .maxHp(aWeakness.getMaxHpToDecrease())
                 .build();
     }
 
@@ -138,8 +141,9 @@ public class Weakness {
         private Integer defenseToDecrease;
         private Double percentage;
         private Integer duration;
-        private Integer minDamage;
-        private Integer maxDamage;
+        private Integer minDamageToDecrease;
+        private Integer maxDamageToDecrease;
+        private Integer maxHpToDecrease;
 
         Weakness build() {
             if (name == null) name = "Unnamed weakness";
@@ -147,7 +151,7 @@ public class Weakness {
             if (defenseToDecrease == null) defenseToDecrease = 0;
             if (percentage == null) percentage = 0.5;
             if (duration == null) duration = 3;
-            return new Weakness(attackToDecrease, defenseToDecrease, percentage, duration, name, minDamage, maxDamage);
+            return new Weakness(attackToDecrease, defenseToDecrease, percentage, duration, name, minDamageToDecrease, maxDamageToDecrease, maxHpToDecrease);
         }
 
         Builder name(String aName) {
@@ -176,12 +180,17 @@ public class Weakness {
         }
 
         Builder minDamage(Integer aMinDamage) {
-            minDamage = aMinDamage;
+            minDamageToDecrease = aMinDamage;
             return this;
         }
 
         Builder maxDamage(Integer aMaxDamage) {
-            maxDamage = aMaxDamage;
+            maxDamageToDecrease = aMaxDamage;
+            return this;
+        }
+
+        Builder maxHp(Integer aMaxHpToDecrease) {
+            maxHpToDecrease = aMaxHpToDecrease;
             return this;
         }
     }

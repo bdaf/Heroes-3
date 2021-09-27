@@ -70,8 +70,8 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
     }
 
     @Override
-    public void attack(Creature defender) {
-        decorated.attack(defender);
+    public Integer attack(Creature defender) {
+        return decorated.attack(defender);
     }
 
     @Override
@@ -80,12 +80,14 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
     }
 
     @Override
-    void counterAttack(Creature defender) {
+    Integer counterAttack(Creature defender) {
         if (isAlive() && canCounterAttack()) {
             int damageToDealInCounterAttack = countDamage(this, defender);
             defender.applyDamage(damageToDealInCounterAttack);
             setIfWasCounterAttackInThisTurn(true);
+            return damageToDealInCounterAttack;
         }
+        return null;
     }
 
     @Override

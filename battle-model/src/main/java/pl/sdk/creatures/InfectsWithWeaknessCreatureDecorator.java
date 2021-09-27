@@ -22,7 +22,7 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
         rand = aRandom;
     }
 
-    private void infect(Creature defender) {
+    private void infect(Creature defender, Integer aDealtDmg) {
         if(rand.nextDouble() <= weakness.getPercentage()){
             weakness.setWeak(defender);
             defender.addWeakness(Weakness.copyOf(weakness));
@@ -60,9 +60,10 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
     }
 
     @Override
-    public void attack(Creature defender) {
-        decorated.attack(defender);
-        infect(defender);
+    public Integer attack(Creature defender) {
+        int dealtDmg = decorated.attack(defender);
+        infect(defender, dealtDmg);
+        return dealtDmg;
     }
 
     @Override
@@ -71,9 +72,10 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
     }
 
     @Override
-    void counterAttack(Creature defender) {
-        decorated.counterAttack(defender);
-        infect(defender);
+    Integer counterAttack(Creature defender) {
+        Integer counterAttackDamage = decorated.counterAttack(defender);
+        infect(defender, counterAttackDamage);
+        return counterAttackDamage;
     }
 
     @Override
