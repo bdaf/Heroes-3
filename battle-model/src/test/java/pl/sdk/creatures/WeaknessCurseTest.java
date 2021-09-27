@@ -109,5 +109,4 @@ public class WeaknessCurseTest {
         assertEquals(9, defender.getDamage().upperEndpoint());
 
     }
-
 }

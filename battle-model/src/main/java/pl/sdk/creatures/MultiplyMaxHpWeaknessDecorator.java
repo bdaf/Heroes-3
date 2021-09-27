@@ -1,6 +1,6 @@
 package pl.sdk.creatures;
 
-public class MultiplyMaxHpWeaknessDecorator extends Weakness{
+public class MultiplyMaxHpWeaknessDecorator extends Weakness {
     private final Weakness decorated;
     private final double FACTOR_MULTIPLYING_MAX_HP;
 
@@ -11,9 +11,9 @@ public class MultiplyMaxHpWeaknessDecorator extends Weakness{
 
     @Override
     void setWeak(Creature aCreature, Integer aDealtDmg) {
-        setMaxHpToDecrease((int) (aCreature.getMaxHp()*FACTOR_MULTIPLYING_MAX_HP));
-        int currentHp = aCreature.getCurrentHp() + aCreature.getMaxHp()%aDealtDmg;
-        currentHp = Integer.max(1,currentHp/2 - aDealtDmg);
+        setMaxHpToDecrease((int) (aCreature.getMaxHp() * FACTOR_MULTIPLYING_MAX_HP));
+        int currentHp = aCreature.getCurrentHp() + aDealtDmg % aCreature.getMaxHp();
+        currentHp = Integer.max(1, currentHp / 2 - aDealtDmg);
         aCreature.setCurrentHP(currentHp);
         super.setWeak(aCreature, aDealtDmg);
     }

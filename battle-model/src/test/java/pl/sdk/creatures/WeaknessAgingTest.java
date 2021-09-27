@@ -58,7 +58,7 @@ public class WeaknessAgingTest {
     }
 
     @Test
-    void defenderShouldGetAgingAndHisMaxHPShouldBeHalved(){
+    void defenderShouldGetAgingAndHisMaxHPShouldBeHalvedAndAgingShouldNotStack(){
         engine.move(new Point(BOARD_WIDTH - 2, 0));
         assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
         engine.attack(BOARD_WIDTH - 1, 0); // attacker
@@ -70,7 +70,37 @@ public class WeaknessAgingTest {
         assertTrue(engine.canAttack(BOARD_WIDTH - 2, 0));
         engine.attack(BOARD_WIDTH - 2, 0); // defender
 
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(50,defender.getMaxHp());
         assertEquals(30, defender.getCurrentHp());
+        assertEquals(2, defender.getWeaknesses().get(0).getDuration());
+
+        assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
+        engine.attack(BOARD_WIDTH - 1, 0); // attacker
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(50,defender.getMaxHp());
+        assertEquals(20, defender.getCurrentHp());
+        assertEquals(3, defender.getWeaknesses().get(0).getDuration());
+    }
+
+
+
+    @Test
+    void defenderShouldGetAgingAndHisMaxHPShouldBeHalvedEvenByCounterAttack(){
+        engine.move(new Point(BOARD_WIDTH - 2, 0)); // attacker
+        engine.pass();
+
+        assertEquals(0, defender.getWeaknesses().size());
+        assertEquals(100,defender.getMaxHp());
+        assertEquals(100, defender.getCurrentHp());
+
+        assertTrue(engine.canAttack(BOARD_WIDTH - 2, 0));
+        engine.attack(BOARD_WIDTH - 2, 0); // defender
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(50,defender.getMaxHp());
+        assertEquals(40, defender.getCurrentHp());
     }
 
     @Test
