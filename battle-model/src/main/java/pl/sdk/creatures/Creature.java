@@ -226,6 +226,7 @@ public class Creature implements PropertyChangeListener {
     void setAmount(int aAmount) {
         if (aAmount <= maxAmount && aAmount > 0)
             amount = aAmount;
+        else throw new IllegalArgumentException("Cannot set higher amount of creature in stack than it was initialized in \"maxAmount\"");
     }
 
     public int getMaxAttacksInTurn() {
