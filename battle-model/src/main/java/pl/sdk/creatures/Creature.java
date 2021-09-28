@@ -173,17 +173,20 @@ public class Creature implements PropertyChangeListener {
         this.stats = stats;
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        setIfWasCounterAttackInThisTurn(false);
+    private void deleteOutdatedWeaknesses() {
         weaknesses.forEach(w -> w.duration -= 1);
         for (int i = 0; i < weaknesses.size(); i++) {
             Weakness weakness = weaknesses.get(i);
             if (weakness.getDuration() <= 0) {
                 weaknesses.remove(i);
-                weakness.restartDuration();
             }
         }
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
+        setIfWasCounterAttackInThisTurn(false);
+        deleteOutdatedWeaknesses();
     }
 
     @Override
@@ -226,7 +229,7 @@ public class Creature implements PropertyChangeListener {
     void setAmount(int aAmount) {
         if (aAmount <= maxAmount && aAmount > 0)
             amount = aAmount;
-        else throw new IllegalArgumentException("Cannot set higher amount of creature in stack than it was initialized in \"maxAmount\"");
+        else throw new IllegalArgumentException("Cannot set higher amount of creature in stack than it was initialized in \"maxAmount\".");
     }
 
     public int getMaxAttacksInTurn() {
