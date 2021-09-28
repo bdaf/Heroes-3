@@ -109,7 +109,6 @@ public class GameEngine {
         queue.next();
         Creature newCreature = queue.getActiveCreature();
         notifyObserver(new PropertyChangeEvent(this, CURRENT_CREATURE_CHANGED, oldCreature, newCreature));
-
     }
 
     public double getLeftMovePointsOfActiveCreature() {

@@ -4,7 +4,7 @@ import pl.sdk.hero.Fraction;
 
 public enum ModeOfGame {
 
-    QUICK_GAME(1,1,15000,0),
+    QUICK_GAME(1,1,5000,0),
     TOURNAMENT(3,3,1000,1000),
     NOT_SETTLED(1,1,0,0);
 

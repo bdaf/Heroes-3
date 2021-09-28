@@ -154,6 +154,9 @@ public class BattleMapController implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         refreshGui();
+        if(aPropertyChangeEvent.getPropertyName().equals(gameEngine.CURRENT_CREATURE_CHANGED)){
+            SoundsInGame.PASS_VOICE.play();
+        }
         if (aPropertyChangeEvent.getPropertyName().equals(gameEngine.CURRENT_CREATURE_ATTACKED)) {
             if (gameEngine.anyTeamWon()) {
                 getWinnerOfTheBattle().increasePoints(1);
