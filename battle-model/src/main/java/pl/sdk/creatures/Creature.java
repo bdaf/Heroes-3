@@ -57,8 +57,8 @@ public class Creature implements PropertyChangeListener {
         return Integer.max(1,stats.getAttack() - sumToDecrease);
     }
 
-    public void meleeAttack(Creature defender) {
-        attack(defender);
+    public Integer meleeAttack(Creature defender) {
+        return attack(defender);
     }
 
     public Integer attack(Creature defender) {

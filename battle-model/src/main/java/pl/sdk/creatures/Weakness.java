@@ -97,7 +97,7 @@ public class Weakness {
     }
 
     void restartDuration() {
-        duration = startDuration;
+        duration = getStartDuration();
     }
 
     int getStartDuration() {
@@ -132,7 +132,7 @@ public class Weakness {
         return getAttackToDecrease() == weakness.getAttackToDecrease() &&
                 getDefenseToDecrease() == weakness.getDefenseToDecrease() &&
                 Double.compare(weakness.getPercentage(), getPercentage()) == 0 &&
-                startDuration == weakness.startDuration &&
+                getStartDuration() == weakness.getStartDuration() &&
                 getName().equals(weakness.getName());
     }
 

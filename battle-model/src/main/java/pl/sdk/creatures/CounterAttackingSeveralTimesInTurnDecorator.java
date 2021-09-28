@@ -167,8 +167,8 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
     }
 
     @Override
-    public void meleeAttack(Creature defender) {
-        decorated.meleeAttack(defender);
+    public Integer meleeAttack(Creature defender) {
+        return decorated.meleeAttack(defender);
     }
 
     @Override

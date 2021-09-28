@@ -101,14 +101,16 @@ class SelfHealingCreatureDecorator extends Creature {
     }
 
     @Override
-    public void meleeAttack(Creature defender) {
+    public Integer meleeAttack(Creature defender) {
         if (decorated == defender) throw new IllegalArgumentException();
         if (decorated.isAlive()) {
             int damageToDeal = countDamage(decorated, defender);
             defender.applyDamage(damageToDeal);
             performAfterAttack(damageToDeal);
             defender.counterAttack(this);
+            return damageToDeal;
         }
+        return null;
     }
 
     @Override

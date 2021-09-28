@@ -24,9 +24,9 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
 
     private void infect(Creature defender, Integer aDealtDmg) {
         if (rand.nextDouble() <= weakness.getPercentage()) {
-            for (Weakness weakness : defender.getWeaknesses()) {
-                if (weakness.equals(weakness)) {
-                    weakness.restartDuration();
+            for (Weakness w : defender.getWeaknesses()) {
+                if (w.equals(weakness)) {
+                    w.restartDuration();
                     return;
                 }
             }
@@ -56,8 +56,8 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
     }
 
     @Override
-    public void meleeAttack(Creature defender) {
-        attack(defender);
+    public Integer meleeAttack(Creature defender) {
+        return attack(defender);
     }
 
     @Override

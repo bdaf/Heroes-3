@@ -121,8 +121,8 @@ class BlockingCounterAttackCreatureDecorator extends Creature {
     }
 
     @Override
-    public void meleeAttack(Creature defender) {
-        attack(defender);
+    public Integer meleeAttack(Creature defender) {
+        return attack(defender);
     }
 
     @Override
