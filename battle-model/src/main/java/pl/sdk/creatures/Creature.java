@@ -1,6 +1,7 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import pl.sdk.hero.Fraction;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -36,6 +37,7 @@ public class Creature implements PropertyChangeListener {
         this.stats = stats;
         currentHp = stats.getMaxHp();
         shots = stats.getShots();
+
     }
 
     public List<Weakness> getWeaknesses() {
@@ -117,7 +119,9 @@ public class Creature implements PropertyChangeListener {
     void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
         counterAttackedInThisTurn = aCounterAttackInThisTurn;
     }
-
+    public Fraction getFraction(){
+        return stats.getFraction();
+    }
     public Team getTeam() {
         return team;
     }

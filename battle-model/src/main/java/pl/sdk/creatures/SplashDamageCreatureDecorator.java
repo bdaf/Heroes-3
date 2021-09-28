@@ -1,6 +1,7 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import pl.sdk.hero.Fraction;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
@@ -47,6 +48,11 @@ public class SplashDamageCreatureDecorator extends Creature {
     @Override
     void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
         decorated.setIfWasCounterAttackInThisTurn(aCounterAttackInThisTurn);
+    }
+
+    @Override
+    public Fraction getFraction() {
+        return decorated.getFraction();
     }
 
     @Override

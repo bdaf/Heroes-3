@@ -1,6 +1,7 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import pl.sdk.hero.Fraction;
 
 public interface CreatureStatisticlf {
 
@@ -23,5 +24,7 @@ public interface CreatureStatisticlf {
     boolean isUpgraded();
 
     int getShots();
+
+    Fraction getFraction();
 
 }

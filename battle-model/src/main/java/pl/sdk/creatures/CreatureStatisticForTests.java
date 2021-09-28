@@ -1,6 +1,7 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import pl.sdk.hero.Fraction;
 
 class CreatureStatisticForTests implements CreatureStatisticlf{
 
@@ -11,6 +12,7 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
     final private int moveRange;
     final private Range<Integer> damage;
     final private int shoots;
+    final private Fraction fraction;
 
     public CreatureStatisticForTests(){
         this("name", 10, 10, 100, 10, Range.closed(8,12), 0);
@@ -24,6 +26,7 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
         this.moveRange = moveRange;
         this.damage = damage;
         this.shoots = aShoots;
+        this.fraction = Fraction.NON_SETTLED;
     }
 
     @Override
@@ -71,4 +74,9 @@ class CreatureStatisticForTests implements CreatureStatisticlf{
 
     @Override
     public int getShots() { return shoots; }
+
+    @Override
+    public Fraction getFraction() {
+        return fraction;
+    }
 }

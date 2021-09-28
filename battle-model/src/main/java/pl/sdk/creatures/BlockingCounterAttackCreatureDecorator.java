@@ -1,6 +1,7 @@
 package pl.sdk.creatures;
 
 import com.google.common.collect.Range;
+import pl.sdk.hero.Fraction;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
@@ -11,6 +12,11 @@ class BlockingCounterAttackCreatureDecorator extends Creature {
 
     BlockingCounterAttackCreatureDecorator(Creature aDecorated) {
         decorated = aDecorated;
+    }
+
+    @Override
+    public Fraction getFraction() {
+        return decorated.getFraction();
     }
 
     @Override
