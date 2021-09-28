@@ -23,7 +23,7 @@ public class Creature implements PropertyChangeListener {
 
     public enum Team {
         LEFT_TEAM(),
-        RIGHT_TEAM();
+        RIGHT_TEAM()
     }
 
     Creature() {
@@ -46,17 +46,17 @@ public class Creature implements PropertyChangeListener {
 
     public Range<Integer> getDamage() {
         Range<Integer> range = getStats().getDamage();
-        return Weakness.damageFilterWithWeaknesses(weaknesses,range);
+        return Weakness.damageFilterWithWeaknesses(weaknesses, range);
     }
 
     public int getArmor() {
         int sumToDecrease = weaknesses.stream().mapToInt(w -> w.defenseToDecrease).sum();
-        return Integer.max(1,stats.getArmor() - sumToDecrease);
+        return Integer.max(1, stats.getArmor() - sumToDecrease);
     }
 
     public int getAttack() {
         int sumToDecrease = weaknesses.stream().mapToInt(w -> w.attackToDecrease).sum();
-        return Integer.max(1,stats.getAttack() - sumToDecrease);
+        return Integer.max(1, stats.getAttack() - sumToDecrease);
     }
 
     public Integer meleeAttack(Creature defender) {
@@ -110,7 +110,8 @@ public class Creature implements PropertyChangeListener {
         }
     }
 
-    void performAfterAttack(int aDamageToChange) {}
+    void performAfterAttack(int aDamageToChange) {
+    }
 
     boolean wasCounterAttackInThisTurn() {
         return counterAttackedInThisTurn;
@@ -119,9 +120,11 @@ public class Creature implements PropertyChangeListener {
     void setIfWasCounterAttackInThisTurn(boolean aCounterAttackInThisTurn) {
         counterAttackedInThisTurn = aCounterAttackInThisTurn;
     }
-    public Fraction getFraction(){
+
+    public Fraction getFraction() {
         return stats.getFraction();
     }
+
     public Team getTeam() {
         return team;
     }
@@ -131,7 +134,7 @@ public class Creature implements PropertyChangeListener {
     }
 
     public int getMaxHp() {
-        return Weakness.maxHpFilterWithWeaknesses(weaknesses,stats.getMaxHp());
+        return Weakness.maxHpFilterWithWeaknesses(weaknesses, stats.getMaxHp());
     }
 
     public boolean isAlive() {
@@ -176,7 +179,7 @@ public class Creature implements PropertyChangeListener {
         weaknesses.forEach(w -> w.duration -= 1);
         for (int i = 0; i < weaknesses.size(); i++) {
             Weakness weakness = weaknesses.get(i);
-            if(weakness.getDuration() <=0 ) {
+            if (weakness.getDuration() <= 0) {
                 weaknesses.remove(i);
                 weakness.restartDuration();
             }
@@ -221,7 +224,8 @@ public class Creature implements PropertyChangeListener {
     }
 
     void setAmount(int aAmount) {
-        amount = aAmount;
+        if (aAmount <= maxAmount && aAmount > 0)
+            amount = aAmount;
     }
 
     public int getMaxAttacksInTurn() {
