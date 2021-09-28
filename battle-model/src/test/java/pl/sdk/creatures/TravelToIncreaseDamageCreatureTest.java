@@ -59,4 +59,16 @@ public class TravelToIncreaseDamageCreatureTest {
 
         assertEquals(79, defender.getCurrentHp());
     }
+
+    @Test
+    void attackersDamageShouldGetHigherAbout40PercentBecauseOfTravel8Square(){
+        engine.move(0,9);
+        engine.pass(); // defender
+
+        engine.move(0,8);
+        assertTrue(engine.canAttack(0, 9));
+        engine.attack(0,9); // attacker
+
+        assertEquals(72, defender.getCurrentHp());
+    }
 }
