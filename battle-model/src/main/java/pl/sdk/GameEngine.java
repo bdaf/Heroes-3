@@ -82,6 +82,10 @@ public class GameEngine {
         if (!canActiveCreatureDoAnyAction()) pass();
     }
 
+    public void move(int aX, int aY){
+        move(new Point(aX,aY));
+    }
+
     public boolean canActiveCreatureDoAnyAction() {
         return getLeftMovePointsOfActiveCreature() >= 1 ||
                 (getLeftAttacksInTurn() > 0 && (
