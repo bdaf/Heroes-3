@@ -26,7 +26,7 @@ public class TravelToIncreaseDamageCreatureTest {
         randomizer = mock(Random.class);
         when(randomizer.nextInt(anyInt())).thenReturn(0);
 
-        attacker = new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
+        attacker = new TravelToIncreaseDamageCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .attack(5)
                 .armor(5)
@@ -34,7 +34,7 @@ public class TravelToIncreaseDamageCreatureTest {
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .damage(Range.closed(20, 25))
                 .amount(1)
-                .build());
+                .build()),0.05);
         defender = new Creature.BuilderForTesting()
                 .damage(Range.closed(10, 12))
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
@@ -53,7 +53,7 @@ public class TravelToIncreaseDamageCreatureTest {
 
         engine.move(0,1);
         assertTrue(engine.canAttack(0, 2));
-        engine.attack(0,2); // attacker
+         engine.attack(0,2); // attacker
 
         assertEquals(79, defender.getCurrentHp());
     }

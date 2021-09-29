@@ -46,7 +46,7 @@ import java.util.Objects;
         return Objects.hash(x, y);
     }
 
-     double distance(Point aPoint) {
+     public double distance(Point aPoint) {
         double tmpX = x-aPoint.getX();
         double tmpY = y-aPoint.getY();
          return Math.sqrt(tmpX*tmpX + tmpY*tmpY);
