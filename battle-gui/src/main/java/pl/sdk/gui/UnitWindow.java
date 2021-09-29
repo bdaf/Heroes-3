@@ -108,7 +108,7 @@ public class UnitWindow {
     }
 
     private String correctIfIsWeakness(Integer aStatsValue, Integer aCreatureValue) {
-        if (aStatsValue != aCreatureValue) {
+        if (aStatsValue != aCreatureValue) { // displays difference between values from stats and changed ones
             String differenceBetweenValues = "";
             if (aCreatureValue - aStatsValue > 0)
                 differenceBetweenValues += "+";
