@@ -6,6 +6,8 @@ import pl.sdk.hero.Fraction;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
+import static pl.sdk.GameEngine.UPDATE_AFTER_EVERY_TURN;
+
 public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
 
     private Creature decorated;
@@ -148,7 +150,8 @@ public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        setIfWasCounterAttackInThisTurn(false);
+        if(aPropertyChangeEvent.getPropertyName().equals(UPDATE_AFTER_EVERY_TURN))
+            setIfWasCounterAttackInThisTurn(false);
         decorated.propertyChange(aPropertyChangeEvent);
     }
 

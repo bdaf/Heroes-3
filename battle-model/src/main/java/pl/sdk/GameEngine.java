@@ -38,7 +38,10 @@ public class GameEngine {
 
         observerSupport = new PropertyChangeSupport(this);
         queue.addObserver(this);
-        creaturesOnBothSides.forEach(c -> addObserver(UPDATE_AFTER_EVERY_TURN, c));
+        creaturesOnBothSides.forEach(c -> {
+            addObserver(UPDATE_AFTER_EVERY_TURN, c);
+            addObserver(CREATURE_MOVED, c);
+        });
     }
 
     private void sortBasedOnMovementSpeedAndThenRandomly(List<Creature> aCreaturesOnBothSides, Random aRandomizer) {

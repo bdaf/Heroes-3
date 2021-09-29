@@ -8,6 +8,9 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static pl.sdk.GameEngine.CREATURE_MOVED;
+import static pl.sdk.GameEngine.UPDATE_AFTER_EVERY_TURN;
+
 public class Creature implements PropertyChangeListener {
 
     private final List<Weakness> weaknesses = new ArrayList<>();
@@ -185,8 +188,10 @@ public class Creature implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        setIfWasCounterAttackInThisTurn(false);
-        deleteOutdatedWeaknesses();
+        if(aPropertyChangeEvent.getPropertyName().equals(UPDATE_AFTER_EVERY_TURN)){
+            setIfWasCounterAttackInThisTurn(false);
+            deleteOutdatedWeaknesses();
+        }
     }
 
     @Override

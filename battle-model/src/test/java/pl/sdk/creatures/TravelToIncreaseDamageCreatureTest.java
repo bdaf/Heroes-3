@@ -4,7 +4,6 @@ import com.google.common.collect.Range;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.GameEngine;
-import pl.sdk.Point;
 
 import java.util.List;
 import java.util.Random;
@@ -14,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static pl.sdk.GameEngine.BOARD_WIDTH;
 
 public class TravelToIncreaseDamageCreatureTest {
     private Random randomizer;

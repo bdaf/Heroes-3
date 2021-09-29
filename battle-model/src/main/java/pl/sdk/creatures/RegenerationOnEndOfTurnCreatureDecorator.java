@@ -6,6 +6,8 @@ import pl.sdk.hero.Fraction;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
+import static pl.sdk.GameEngine.UPDATE_AFTER_EVERY_TURN;
+
 class RegenerationOnEndOfTurnCreatureDecorator extends Creature {
 
     private final Creature decorated;
@@ -172,8 +174,10 @@ class RegenerationOnEndOfTurnCreatureDecorator extends Creature {
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
         decorated.propertyChange(aPropertyChangeEvent);
-        if (decorated.getAmount() > 0)
-            setCurrentHPToMaxHp();
+        if (aPropertyChangeEvent.getPropertyName().equals(UPDATE_AFTER_EVERY_TURN)){
+            if (decorated.getAmount() > 0)
+                setCurrentHPToMaxHp();
+        }
     }
 
     @Override
