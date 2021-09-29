@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static pl.sdk.GameEngine.BOARD_WIDTH;
 
 public class TravelToIncreaseDamageCreatureTest {
     private Random randomizer;
@@ -28,15 +27,7 @@ public class TravelToIncreaseDamageCreatureTest {
         randomizer = mock(Random.class);
         when(randomizer.nextInt(anyInt())).thenReturn(0);
 
-        attacker = new TravelToIncreaseDamageCreatureDecorator(new Creature.BuilderForTesting()
-                .maxHp(1000)
-                .attack(5)
-                .armor(5)
-                .moveRange(50)
-                .damageCalculator(new DefaultDamageCalculator(randomizer))
-                .damage(Range.closed(20, 25))
-                .amount(1)
-                .build(), 0.05);
+        attacker = getTravelToIncreaseDamageCreature(50);
         defender = new Creature.BuilderForTesting()
                 .damage(Range.closed(10, 12))
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
@@ -45,11 +36,11 @@ public class TravelToIncreaseDamageCreatureTest {
                 .armor(5)
                 .amount(5)
                 .maxHp(100).build();
+        engine = new GameEngine(List.of(attacker), List.of(defender));
     }
 
     @Test
     void attackersDamageShouldGetHigherAbout5PercentBecauseOfTravel1SquareButNoLonger() {
-        engine = new GameEngine(List.of(attacker), List.of(defender));
         engine.move(0, 2);
         engine.pass(); // defender
 
@@ -68,7 +59,6 @@ public class TravelToIncreaseDamageCreatureTest {
 
     @Test
     void attackersDamageShouldGetHigherAbout40PercentBecauseOfTravel8SquareButNoLonger() {
-        engine = new GameEngine(List.of(attacker), List.of(defender));
         engine.move(0, 9);
         engine.pass(); // defender
 
@@ -130,5 +120,42 @@ public class TravelToIncreaseDamageCreatureTest {
         engine.attack(0,9); // attacker
 
         assertEquals(55, defender.getCurrentHp());
+    }
+
+    @Test
+    void attackersDamageShouldGetHigherEvenInFirstMoveInTheGame() {
+        attacker = getTravelToIncreaseDamageCreature(101);
+        engine = new GameEngine(List.of(attacker), List.of(defender));
+
+        engine.move(new Point(8, 0)); // attacker
+
+        assertEquals(28, attacker.getDamage().lowerEndpoint());
+        assertEquals(35, attacker.getDamage().upperEndpoint());
+
+    }
+
+    @Test
+    void attackersDamageShouldNotGetHigherIfItIsFirstMoveOfOtherCreature() {
+        assertEquals(20, attacker.getDamage().lowerEndpoint());
+        assertEquals(25, attacker.getDamage().upperEndpoint());
+        engine.move(0, 2);
+        assertEquals(20, attacker.getDamage().lowerEndpoint());
+        assertEquals(25, attacker.getDamage().upperEndpoint());
+        engine.pass(); // defender
+        assertEquals(20, attacker.getDamage().lowerEndpoint());
+        assertEquals(25, attacker.getDamage().upperEndpoint());
+
+    }
+
+    private TravelToIncreaseDamageCreatureDecorator getTravelToIncreaseDamageCreature(int aMoveRange) {
+        return new TravelToIncreaseDamageCreatureDecorator(new Creature.BuilderForTesting()
+                .maxHp(1000)
+                .attack(5)
+                .armor(5)
+                .moveRange(aMoveRange)
+                .damageCalculator(new DefaultDamageCalculator(randomizer))
+                .damage(Range.closed(20, 25))
+                .amount(1)
+                .build(), 0.05);
     }
 }

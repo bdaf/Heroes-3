@@ -13,7 +13,7 @@ public class TravelToIncreaseDamageCreatureDecorator extends Creature {
     private final Creature decorated;
     private final double percentageOfAttackIncreasePerPoint;
     private int traveledPoints;
-    private boolean shouldSetTravelPoints;
+    private boolean shouldCountTravelPoints;
 
     public TravelToIncreaseDamageCreatureDecorator(Creature aDecorated, double aPercentageOfAttackIncreasePerPoint) {
         decorated = aDecorated;
@@ -159,24 +159,14 @@ public class TravelToIncreaseDamageCreatureDecorator extends Creature {
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        if (shouldSetTravelPoints && aPropertyChangeEvent.getPropertyName().equals(CREATURE_MOVED)) {
+        if (shouldCountTravelPoints && aPropertyChangeEvent.getPropertyName().equals(CREATURE_MOVED)) {
             Point oldPoint = (Point) aPropertyChangeEvent.getOldValue();
             Point newPoint = (Point) aPropertyChangeEvent.getNewValue();
             traveledPoints = (int) oldPoint.distance(newPoint);
         } else if (aPropertyChangeEvent.getPropertyName().equals(CURRENT_CREATURE_CHANGED)) {
-            if (aPropertyChangeEvent.getNewValue() == this){
-                shouldSetTravelPoints = true;
-            }
-            else {
-                shouldSetTravelPoints = false;
-                traveledPoints = 0;
-            }
-        }
-        else if(aPropertyChangeEvent.getPropertyName().equals(BEGINNING_OF_GAME)){
-            if (aPropertyChangeEvent.getNewValue() == this){
-                shouldSetTravelPoints = true;
-            }
-        }
+            setIfShouldCountTravelPoints(aPropertyChangeEvent);
+        } else if (aPropertyChangeEvent.getPropertyName().equals(BEGINNING_OF_GAME) && aPropertyChangeEvent.getNewValue() == this)
+            setIfShouldCountTravelPoints(aPropertyChangeEvent);
         decorated.propertyChange(aPropertyChangeEvent);
     }
 
@@ -228,5 +218,14 @@ public class TravelToIncreaseDamageCreatureDecorator extends Creature {
     @Override
     public boolean[][] getSplashDamage() {
         return decorated.getSplashDamage();
+    }
+
+    private void setIfShouldCountTravelPoints(PropertyChangeEvent aPropertyChangeEvent) {
+        if (aPropertyChangeEvent.getNewValue() == this) {
+            shouldCountTravelPoints = true;
+        } else {
+            shouldCountTravelPoints = false;
+            traveledPoints = 0;
+        }
     }
 }
