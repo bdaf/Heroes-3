@@ -18,7 +18,7 @@ public class CreatureTurnQueue {
         aliveCreatures = aAliveCreatures;
         creaturesToDelete = new LinkedList<>();
         creatureQueue = new LinkedList<>();
-        observers = new HashSet<GameEngine>();
+        observers = new HashSet<>();
         initQueue();
 
     }

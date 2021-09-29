@@ -1,6 +1,7 @@
 package pl.sdk;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
 
@@ -10,9 +11,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static pl.sdk.GameEngine.BOARD_WIDTH;
+import static org.mockito.Mockito.*;
+import static pl.sdk.GameEngine.*;
 import static pl.sdk.creatures.NecropolisFactory.createDefaultCreatureForTests;
 
 public class EndOfTurnTest {
@@ -54,9 +54,17 @@ public class EndOfTurnTest {
     void shouldResetAttackFlagAfterEndOfTurnBySpy(){
         Creature attacker = spy(Creature.class);
         Creature defender = NecropolisFactory.createDefaultCreatureForTests();
+        ArgumentCaptor<PropertyChangeEvent> argument = ArgumentCaptor.forClass(PropertyChangeEvent.class);
+
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
         engine.pass();
+        verify(attacker, times(1)).propertyChange(argument.capture());
+        assertEquals(CURRENT_CREATURE_CHANGED, argument.getValue().getPropertyName());
         engine.pass();
-        verify(attacker).propertyChange(any(PropertyChangeEvent.class));
+        verify(attacker, times(3)).propertyChange(argument.capture());
+        assertEquals(CURRENT_CREATURE_CHANGED, argument.getAllValues().get(0).getPropertyName());
+        assertEquals(CURRENT_CREATURE_CHANGED, argument.getAllValues().get(1).getPropertyName());
+        assertEquals(UPDATE_AFTER_EVERY_TURN, argument.getAllValues().get(2).getPropertyName());
+
     }
 }
