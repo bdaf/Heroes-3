@@ -57,14 +57,17 @@ public class EndOfTurnTest {
         ArgumentCaptor<PropertyChangeEvent> argument = ArgumentCaptor.forClass(PropertyChangeEvent.class);
 
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
-        engine.pass();
         verify(attacker, times(1)).propertyChange(argument.capture());
+        assertEquals(BEGINNING_OF_GAME, argument.getValue().getPropertyName());
+        engine.pass();
+        verify(attacker, times(2)).propertyChange(argument.capture());
         assertEquals(CURRENT_CREATURE_CHANGED, argument.getValue().getPropertyName());
         engine.pass();
-        verify(attacker, times(3)).propertyChange(argument.capture());
-        assertEquals(CURRENT_CREATURE_CHANGED, argument.getAllValues().get(0).getPropertyName());
-        assertEquals(CURRENT_CREATURE_CHANGED, argument.getAllValues().get(1).getPropertyName());
-        assertEquals(UPDATE_AFTER_EVERY_TURN, argument.getAllValues().get(2).getPropertyName());
+        verify(attacker, times(4)).propertyChange(argument.capture());
+        assertEquals(BEGINNING_OF_GAME, argument.getAllValues().get(0).getPropertyName());
+        assertEquals(BEGINNING_OF_GAME, argument.getAllValues().get(1).getPropertyName());
+        assertEquals(CURRENT_CREATURE_CHANGED, argument.getAllValues().get(2).getPropertyName());
+        assertEquals(BEGINNING_OF_GAME, argument.getAllValues().get(3).getPropertyName());
 
     }
 }

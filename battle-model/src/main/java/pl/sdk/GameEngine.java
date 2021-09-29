@@ -19,6 +19,7 @@ public class GameEngine {
     public static final String CREATURE_MOVED = "CREATURE_MOVED";
     public static final String UPDATE_AFTER_EVERY_TURN = "UPDATE_AFTER_EVERY_TURN";
     public static final String CURRENT_CREATURE_ATTACKED = "CURRENT_CREATURE_ATTACKED";
+    public static final String BEGINNING_OF_GAME = "BEGINNING_OF_GAME";
     private final Board board;
     private final CreatureTurnQueue queue;
     private PropertyChangeSupport observerSupport;
@@ -39,10 +40,13 @@ public class GameEngine {
         observerSupport = new PropertyChangeSupport(this);
         queue.addObserver(this);
         creaturesOnBothSides.forEach(c -> {
+            addObserver(BEGINNING_OF_GAME, c);
             addObserver(UPDATE_AFTER_EVERY_TURN, c);
             addObserver(CURRENT_CREATURE_CHANGED, c);
             addObserver(CREATURE_MOVED, c);
         });
+
+        notifyObserver(new PropertyChangeEvent(this, BEGINNING_OF_GAME, null, getActiveCreature()));
     }
 
     private void sortBasedOnMovementSpeedAndThenRandomly(List<Creature> aCreaturesOnBothSides, Random aRandomizer) {
@@ -86,8 +90,8 @@ public class GameEngine {
         if (!canActiveCreatureDoAnyAction()) pass();
     }
 
-    public void move(int aX, int aY){
-        move(new Point(aX,aY));
+    public void move(int aX, int aY) {
+        move(new Point(aX, aY));
     }
 
     public boolean canActiveCreatureDoAnyAction() {
@@ -193,7 +197,7 @@ public class GameEngine {
     }
 
     public Creature.Team getWinnerTeam() {
-        if(!anyTeamWon()) throw new IllegalStateException("Neither of teams won yet!");
+        if (!anyTeamWon()) throw new IllegalStateException("Neither of teams won yet!");
         return queue.getAliveCreature().getTeam();
     }
 }

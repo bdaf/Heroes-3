@@ -81,20 +81,20 @@ public class UnitWindow {
         String shots = "";
         if (aCreature.getShots() > 0) shots = " - " + aCreature.getShots() + " shots";
 
-        resultOfWeaknesses = correctIfIsWeakness(aCreature.getStats().getMaxHp(),aCreature.getMaxHp());
+        resultOfWeaknesses = correctIfIsWeakness(aCreature.getStats().getMaxHp(), aCreature.getMaxHp());
         statsString = "Health: " + aCreature.getCurrentHp() + "/" + aCreature.getStats().getMaxHp() + " " + resultOfWeaknesses + shots;
         Text healthAndShots = new Text(statsString);
 
-        resultOfWeaknesses = correctIfIsWeakness(aCreature.getStats().getAttack(),aCreature.getAttack());
+        resultOfWeaknesses = correctIfIsWeakness(aCreature.getStats().getAttack(), aCreature.getAttack());
         statsString = "Attack: " + aCreature.getStats().getAttack() + " " + resultOfWeaknesses;
 
-        shots = correctIfIsWeakness(aCreature.getStats().getDamage().lowerEndpoint(),aCreature.getDamage().lowerEndpoint());
-        resultOfWeaknesses = correctIfIsWeakness(aCreature.getStats().getDamage().upperEndpoint(),aCreature.getDamage().upperEndpoint());
+        shots = correctIfIsWeakness(aCreature.getStats().getDamage().lowerEndpoint(), aCreature.getDamage().lowerEndpoint());
+        resultOfWeaknesses = correctIfIsWeakness(aCreature.getStats().getDamage().upperEndpoint(), aCreature.getDamage().upperEndpoint());
 
-        statsString += " | Damage: " + aCreature.getStats().getDamage().lowerEndpoint() + shots + " - " + aCreature.getStats().getDamage().upperEndpoint()+ " " + resultOfWeaknesses;
+        statsString += " | Damage: " + aCreature.getStats().getDamage().lowerEndpoint() + shots + " - " + aCreature.getStats().getDamage().upperEndpoint() + " " + resultOfWeaknesses;
         Text firstHalfOfStats = new Text(statsString);
 
-        resultOfWeaknesses = correctIfIsWeakness(aCreature.getStats().getArmor(),aCreature.getArmor());
+        resultOfWeaknesses = correctIfIsWeakness(aCreature.getStats().getArmor(), aCreature.getArmor());
         Text secondHalfOfStats = new Text("Defense: " + aCreature.getStats().getArmor() + " " + resultOfWeaknesses
                 + " | Movement: " + aCreature.getStats().getMoveRange());
 
@@ -108,8 +108,13 @@ public class UnitWindow {
     }
 
     private String correctIfIsWeakness(Integer aStatsValue, Integer aCreatureValue) {
-        if (aStatsValue != aCreatureValue)
-            return "(" + (aCreatureValue - aStatsValue) + ")";
+        if (aStatsValue != aCreatureValue) {
+            String differenceBetweenValues = "";
+            if (aCreatureValue - aStatsValue > 0)
+                differenceBetweenValues += "+";
+            differenceBetweenValues += String.valueOf(aCreatureValue - aStatsValue);
+            return "(" + (differenceBetweenValues) + ")";
+        }
         return "";
     }
 
@@ -119,8 +124,8 @@ public class UnitWindow {
             for (int i = 0; i < aCreature.getWeaknesses().size(); i++) {
                 Weakness weakness = aCreature.getWeaknesses().get(i);
                 String duration = String.valueOf(weakness.getDuration());
-                if(weakness.getDuration() > 100) duration = "inf";
-                weaknesses += weakness.getName() +" ("+duration+")" +", ";
+                if (weakness.getDuration() > 100) duration = "inf";
+                weaknesses += weakness.getName() + " (" + duration + ")" + ", ";
             }
             weaknesses = weaknesses.substring(0, weaknesses.length() - 2);
             weaknesses += ".";

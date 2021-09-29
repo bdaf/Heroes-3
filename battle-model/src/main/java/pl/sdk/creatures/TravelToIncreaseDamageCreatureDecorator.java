@@ -7,8 +7,7 @@ import pl.sdk.hero.Fraction;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
-import static pl.sdk.GameEngine.CREATURE_MOVED;
-import static pl.sdk.GameEngine.CURRENT_CREATURE_CHANGED;
+import static pl.sdk.GameEngine.*;
 
 public class TravelToIncreaseDamageCreatureDecorator extends Creature {
     private final Creature decorated;
@@ -19,7 +18,6 @@ public class TravelToIncreaseDamageCreatureDecorator extends Creature {
     public TravelToIncreaseDamageCreatureDecorator(Creature aDecorated, double aPercentageOfAttackIncreasePerPoint) {
         decorated = aDecorated;
         percentageOfAttackIncreasePerPoint = aPercentageOfAttackIncreasePerPoint;
-        shouldSetTravelPoints = true;
     }
 
     @Override
@@ -172,6 +170,11 @@ public class TravelToIncreaseDamageCreatureDecorator extends Creature {
             else {
                 shouldSetTravelPoints = false;
                 traveledPoints = 0;
+            }
+        }
+        else if(aPropertyChangeEvent.getPropertyName().equals(BEGINNING_OF_GAME)){
+            if (aPropertyChangeEvent.getNewValue() == this){
+                shouldSetTravelPoints = true;
             }
         }
         decorated.propertyChange(aPropertyChangeEvent);
