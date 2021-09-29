@@ -40,6 +40,7 @@ public class GameEngine {
         queue.addObserver(this);
         creaturesOnBothSides.forEach(c -> {
             addObserver(UPDATE_AFTER_EVERY_TURN, c);
+            addObserver(CURRENT_CREATURE_CHANGED, c);
             addObserver(CREATURE_MOVED, c);
         });
     }

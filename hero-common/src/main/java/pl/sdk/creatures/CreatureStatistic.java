@@ -29,7 +29,7 @@ public enum CreatureStatistic implements CreatureStatisticlf {
     GRIFFIN("Griffin",8,8,25,6,Range.closed(3,6),3,"High in population, griffins become castle's main unit for the mid game. \nSpecial Abilities: 2 retaliations per turn.",false, Fraction.CASTLE),
     SWORDSMAN("Swordsman",10,12,35,5,Range.closed(6,9),4,"High in population, griffins become castle's main unit for the mid game. \nSpecial Abilities: None.",false, Fraction.CASTLE),
     MONK("Monk",12,7,30,3,Range.closed(10,12),5,"Good shooter, nice damage. \nSpecial Abilities: None. Bad buff: Gets half of damage he deals with melee attack.",false, Fraction.CASTLE,12),
-    CAVALIER("Cavalier",15,15,100,7,Range.closed(15,25),6,"Make sure that the path is as long as possible - they need some speed! \nSpecial Abilities: None.",false, Fraction.CASTLE),
+    CAVALIER("Cavalier",15,15,100,7,Range.closed(15,25),6,"Make sure that the path is as long as possible - they need some speed! \nSpecial Abilities: +5% damage for each square traveled to creature attacked.",false, Fraction.CASTLE),
     ANGEL("Angel",20,20,200,12,Range.closed(50,50),7,"Nice combat ratings and great constant damage - no need to bless them. I think it's still too powerful. \nSpecial Abilities: None.",false, Fraction.CASTLE),
     // UPGRADED
     HALBERDIER("Halberdier",6,5,10,5,Range.closed(2,3),1,"Now they are faster and do more damage. Will make a good defence for shooters. \nSpecial Abilities: None.",true, Fraction.CASTLE),
@@ -37,7 +37,7 @@ public enum CreatureStatistic implements CreatureStatisticlf {
     ROYAL_GRIFFIN("RoyalGriffin",9,9,25,6,Range.closed(3,6),3,"Send them right in the middle of the battlefield. Everyone who comes will get some. \nSpecial Abilities: Unlimited retaliations.",true, Fraction.CASTLE),
     CRUSADER("Crusader",12,12,35,6,Range.closed(7,10),4,"Good upgrade, but still lacks speed. Seem undefeatable in large numbers. \nSpecial Abilities: Double attack.",true, Fraction.CASTLE),
     ZEALOT("Zealot",12,10,30,4,Range.closed(10,12),5,"Zealots are skilled enough to use the same magic powers at very close range. Better defence too.  \nSpecial Abilities: None.",true, Fraction.CASTLE,24),
-    CHAMPION("Champion",16,16,100,9,Range.closed(20,25),6,"That's up to 45% extra damage possible! Champions also have better aiming skills. \nSpecial Abilities:  20% chance to do double damage.",true, Fraction.CASTLE),
+    CHAMPION("Champion",16,16,100,9,Range.closed(20,25),6,"That's up to 45% extra damage possible! Champions also have better aiming skills. \nSpecial Abilities: +5% damage for each square traveled to creature attacked.",true, Fraction.CASTLE),
     ARCHANGEL("Archangel",30,20,250,18,Range.closed(50,50),7,"Best attack, defence and speed in a whole game! He is very fast! Possibly the best creature in the game. \nSpecial Abilities: None.",true, Fraction.CASTLE);
 
     private final Fraction fraction;

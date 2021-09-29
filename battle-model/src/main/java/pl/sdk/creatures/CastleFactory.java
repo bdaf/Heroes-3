@@ -43,12 +43,12 @@ public class CastleFactory extends Factory {
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
                             .build());
                 case 6:
-                    return new Creature.Builder()
+                    return new TravelToIncreaseDamageCreatureDecorator(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.CHAMPION)
-                            .damageCalculator(new CalculateDamageIncreaseInRandomChance(0.2, 2))
+                            .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
                             .amount(amount)
-                            .build();
+                            .build(),0.05);
                 case 7:
                     return new Creature.Builder()
                             .statistic(CreatureStatistic.ARCHANGEL)
@@ -91,11 +91,11 @@ public class CastleFactory extends Factory {
                             .amount(amount)
                             .build()),-0.5);
                 case 6:
-                    return new Creature.Builder()
+                    return new TravelToIncreaseDamageCreatureDecorator(new Creature.Builder()
                             .statistic(CreatureStatistic.CAVALIER)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
                             .amount(amount)
-                            .build();
+                            .build(),0.05);
                 case 7:
                     return new Creature.Builder()
                             .statistic(CreatureStatistic.ANGEL)

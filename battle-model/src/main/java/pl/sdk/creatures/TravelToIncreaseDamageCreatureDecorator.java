@@ -8,15 +8,18 @@ import java.beans.PropertyChangeEvent;
 import java.util.List;
 
 import static pl.sdk.GameEngine.CREATURE_MOVED;
+import static pl.sdk.GameEngine.CURRENT_CREATURE_CHANGED;
 
 public class TravelToIncreaseDamageCreatureDecorator extends Creature {
     private final Creature decorated;
     private final double percentageOfAttackIncreasePerPoint;
     private int traveledPoints;
+    private boolean shouldSetTravelPoints;
 
     public TravelToIncreaseDamageCreatureDecorator(Creature aDecorated, double aPercentageOfAttackIncreasePerPoint) {
         decorated = aDecorated;
         percentageOfAttackIncreasePerPoint = aPercentageOfAttackIncreasePerPoint;
+        shouldSetTravelPoints = true;
     }
 
     @Override
@@ -27,10 +30,10 @@ public class TravelToIncreaseDamageCreatureDecorator extends Creature {
     @Override
     public Range<Integer> getDamage() {
         Range<Integer> range = decorated.getDamage();
-        double increase = 1+traveledPoints* percentageOfAttackIncreasePerPoint;
-        int lowerEndPoint = (int) (range.lowerEndpoint()*increase);
-        int upperEndPoint = (int) (range.upperEndpoint()*increase);
-        return Range.closed(lowerEndPoint,upperEndPoint);
+        double increase = 1 + traveledPoints * percentageOfAttackIncreasePerPoint;
+        int lowerEndPoint = (int) (range.lowerEndpoint() * increase);
+        int upperEndPoint = (int) (range.upperEndpoint() * increase);
+        return Range.closed(lowerEndPoint, upperEndPoint);
     }
 
     @Override
@@ -68,13 +71,7 @@ public class TravelToIncreaseDamageCreatureDecorator extends Creature {
 
     @Override
     Integer counterAttack(Creature defender) {
-        if (isAlive() && canCounterAttack()) {
-            int damageToDealInCounterAttack = countDamage(this, defender);
-            defender.applyDamage(damageToDealInCounterAttack);
-            setIfWasCounterAttackInThisTurn(true);
-            return damageToDealInCounterAttack;
-        }
-        return null;
+        return decorated.counterAttack(defender);
     }
 
     @Override
@@ -164,10 +161,18 @@ public class TravelToIncreaseDamageCreatureDecorator extends Creature {
 
     @Override
     public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        if(aPropertyChangeEvent.getPropertyName().equals(CREATURE_MOVED)){
+        if (shouldSetTravelPoints && aPropertyChangeEvent.getPropertyName().equals(CREATURE_MOVED)) {
             Point oldPoint = (Point) aPropertyChangeEvent.getOldValue();
             Point newPoint = (Point) aPropertyChangeEvent.getNewValue();
             traveledPoints = (int) oldPoint.distance(newPoint);
+        } else if (aPropertyChangeEvent.getPropertyName().equals(CURRENT_CREATURE_CHANGED)) {
+            if (aPropertyChangeEvent.getNewValue() == this){
+                shouldSetTravelPoints = true;
+            }
+            else {
+                shouldSetTravelPoints = false;
+                traveledPoints = 0;
+            }
         }
         decorated.propertyChange(aPropertyChangeEvent);
     }
