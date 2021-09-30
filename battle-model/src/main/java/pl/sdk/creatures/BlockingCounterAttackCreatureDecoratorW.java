@@ -6,11 +6,11 @@ import pl.sdk.hero.Fraction;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
-class BlockingCounterAttackCreatureDecorator extends Creature {
+class BlockingCounterAttackCreatureDecoratorW extends Creature {
 
     protected final Creature decorated;
 
-    BlockingCounterAttackCreatureDecorator(Creature aDecorated) {
+    BlockingCounterAttackCreatureDecoratorW(Creature aDecorated) {
         decorated = aDecorated;
     }
 

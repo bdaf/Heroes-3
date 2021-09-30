@@ -8,13 +8,13 @@ import java.util.List;
 
 import static pl.sdk.GameEngine.UPDATE_AFTER_EVERY_TURN;
 
-public class CounterAttackingSeveralTimesInTurnDecorator extends Creature {
+public class CounterAttackingSeveralTimesInTurnCreatureDecoratorW extends Creature {
 
     private Creature decorated;
     private final int maxCounterAttacksInTurn;
     private int counterAttacksInTurn;
 
-    CounterAttackingSeveralTimesInTurnDecorator(Creature aDecorated, int aCounterAttacksInTurn) {
+    CounterAttackingSeveralTimesInTurnCreatureDecoratorW(Creature aDecorated, int aCounterAttacksInTurn) {
         decorated = aDecorated;
         maxCounterAttacksInTurn = counterAttacksInTurn = aCounterAttacksInTurn;
     }

@@ -30,7 +30,7 @@ public class HealSelfCalculatorTest {
                 .damageCalculator(new DefaultDamageCalculator(rand))
                 .amount(10)
                 .build();
-        attacker = new SelfHealingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(attacker),0.5);
+        attacker = new SelfHealingCreatureDecoratorW(new BlockingCounterAttackCreatureDecoratorW(attacker),0.5);
         defender = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
@@ -50,7 +50,7 @@ public class HealSelfCalculatorTest {
 
     @Test
     void shouldHeal160AndItShouldBeJustMaxHpAndAmountShouldNotChangeWhenHeDeal360Dmg(){
-        attacker = new SelfHealingCreatureDecorator(new Creature.BuilderForTesting()
+        attacker = new SelfHealingCreatureDecoratorW(new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)
                 .maxHp(100)
@@ -104,7 +104,7 @@ public class HealSelfCalculatorTest {
                 .damageCalculator(new DefaultDamageCalculator(rand))
                 .amount(15)
                 .build();
-        attacker = new SelfHealingCreatureDecorator(new BlockingCounterAttackCreatureDecorator(attacker),0.5);
+        attacker = new SelfHealingCreatureDecoratorW(new BlockingCounterAttackCreatureDecoratorW(attacker),0.5);
         attacker.setCurrentHP(60);
         attacker.setAmount(5);
         attacker.meleeAttack(defender);

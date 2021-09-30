@@ -34,7 +34,7 @@ public class WeaknessDiseaseTest {
                 .defenseToDecrease(2)
                 .percentage(0.2)
                 .duration(3).build();
-        attacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
+        attacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecoratorW(new Creature.BuilderForTesting()
                 .maxHp(100)
                 .attack(3)
                 .armor(3)

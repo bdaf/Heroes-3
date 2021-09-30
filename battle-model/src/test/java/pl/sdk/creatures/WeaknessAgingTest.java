@@ -36,7 +36,7 @@ public class WeaknessAgingTest {
                         .name("Aging")
                         .build(),0.5);
 
-        attacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
+        attacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecoratorW(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .attack(5)
                 .armor(5)

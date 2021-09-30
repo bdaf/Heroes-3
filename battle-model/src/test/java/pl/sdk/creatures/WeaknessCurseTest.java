@@ -34,7 +34,7 @@ public class WeaknessCurseTest {
                         .name("Curse")
                         .build(),1);
 
-        attacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
+        attacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecoratorW(new Creature.BuilderForTesting()
                 .maxHp(100)
                 .attack(5)
                 .armor(5)

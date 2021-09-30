@@ -31,7 +31,7 @@ public abstract class Factory {
                 .shots(12)
                 .attack(aAttack)
                 .build();
-        return new ShootingCreatureDecorator(c);
+        return new ShootingCreatureDecoratorW(c);
     }
 
     public static Creature createBlockingCreatureForTests() {
@@ -39,7 +39,7 @@ public abstract class Factory {
     }
 
     public static Creature createBlockingCreatureForTests(int aMoveRange) {
-        return new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting().moveRange(aMoveRange).build());
+        return new BlockingCounterAttackCreatureDecoratorW(new Creature.BuilderForTesting().moveRange(aMoveRange).build());
     }
 
     public static Creature createDefaultCreatureForTests() {
@@ -59,6 +59,6 @@ public abstract class Factory {
     }
 
     public static Creature createCounterAttackSeveralTimesInTurnCreature(int counterAttacks, int aMoveRange) {
-        return new CounterAttackingSeveralTimesInTurnDecorator(new Creature.BuilderForTesting().moveRange(aMoveRange).build(), counterAttacks);
+        return new CounterAttackingSeveralTimesInTurnCreatureDecoratorW(new Creature.BuilderForTesting().moveRange(aMoveRange).build(), counterAttacks);
     }
 }

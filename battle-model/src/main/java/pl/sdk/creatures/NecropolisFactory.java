@@ -31,13 +31,13 @@ public class NecropolisFactory extends Factory {
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
                             .build());
                 case 4:
-                    return new BlockingCounterAttackCreatureDecorator(new SelfHealingCreatureDecorator(new Creature.Builder()
+                    return new BlockingCounterAttackCreatureDecoratorW(new SelfHealingCreatureDecoratorW(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.VAMPIRE_LORD)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
                             .build(), 1));
                 case 5:
-                    return new SplashDamageCreatureDecorator(new ShootingCreatureDecorator(new Creature.Builder()
+                    return new SplashDamageCreatureDecorator(new ShootingCreatureDecoratorW(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.POWER_LICH)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
@@ -78,13 +78,13 @@ public class NecropolisFactory extends Factory {
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
                             .build());
                 case 4:
-                    return new BlockingCounterAttackCreatureDecorator(new Creature.Builder()
+                    return new BlockingCounterAttackCreatureDecoratorW(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.VAMPIRE)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))
                             .build());
                 case 5:
-                    return new SplashDamageCreatureDecorator(new ShootingCreatureDecorator(new Creature.Builder()
+                    return new SplashDamageCreatureDecorator(new ShootingCreatureDecoratorW(new Creature.Builder()
                             .amount(amount)
                             .statistic(CreatureStatistic.LICH)
                             .damageCalculator(new CalculateDamageIncreaseInRandomChance(CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK))

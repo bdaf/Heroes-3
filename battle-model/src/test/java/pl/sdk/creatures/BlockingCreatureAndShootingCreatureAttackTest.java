@@ -18,7 +18,7 @@ public class BlockingCreatureAndShootingCreatureAttackTest {
 
     @Test
     void ShootingCreatureCanAttackEvenWithLargeDistance(){
-        Creature attacker = new ShootingCreatureDecorator(new Creature.BuilderForTesting()
+        Creature attacker = new ShootingCreatureDecoratorW(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(BIGGER_THAN_DEFENDERS)
                 .shots(12)
@@ -45,7 +45,7 @@ public class BlockingCreatureAndShootingCreatureAttackTest {
                 .maxHp(1000)
                 .moveRange(FEWER_THAN_DEFENDERS)
                 .build();
-        attacker = new ShootingCreatureDecorator(attacker);
+        attacker = new ShootingCreatureDecoratorW(attacker);
         attacker.attack(defender);
         assertEquals(1000,attacker.getCurrentHp());
         assertEquals(1,attacker.getAmount());
@@ -63,7 +63,7 @@ public class BlockingCreatureAndShootingCreatureAttackTest {
                 .maxHp(1000)
                 .moveRange(FEWER_THAN_DEFENDERS)
                 .build();
-        attacker = new BlockingCounterAttackCreatureDecorator(attacker);
+        attacker = new BlockingCounterAttackCreatureDecoratorW(attacker);
         attacker.attack(defender);
         assertEquals(1000,attacker.getCurrentHp());
         assertEquals(1,attacker.getAmount());

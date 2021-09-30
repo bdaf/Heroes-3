@@ -9,13 +9,13 @@ import java.util.List;
 
 import static pl.sdk.GameEngine.*;
 
-public class TravelToIncreaseDamageCreatureDecorator extends Creature {
+public class TravelToIncreaseDamageCreatureDecoratorW extends Creature {
     private final Creature decorated;
     private final double percentageOfAttackIncreasePerPoint;
     private int traveledPoints;
     private boolean shouldCountTravelPoints;
 
-    public TravelToIncreaseDamageCreatureDecorator(Creature aDecorated, double aPercentageOfAttackIncreasePerPoint) {
+    public TravelToIncreaseDamageCreatureDecoratorW(Creature aDecorated, double aPercentageOfAttackIncreasePerPoint) {
         decorated = aDecorated;
         percentageOfAttackIncreasePerPoint = aPercentageOfAttackIncreasePerPoint;
     }

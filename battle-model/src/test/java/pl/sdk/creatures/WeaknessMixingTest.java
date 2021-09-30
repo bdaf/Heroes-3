@@ -38,7 +38,7 @@ public class WeaknessMixingTest {
                         .name("Aging")
                         .build(), 0.5);
 
-        agingAattacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
+        agingAattacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecoratorW(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .attack(5)
                 .armor(5)
@@ -57,7 +57,7 @@ public class WeaknessMixingTest {
                         .name("Curse")
                         .build(), 1);
 
-        curseAttacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
+        curseAttacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecoratorW(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .attack(5)
                 .armor(5)
@@ -77,7 +77,7 @@ public class WeaknessMixingTest {
                 .name("Disease")
                 .build();
 
-        diseaseAttacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
+        diseaseAttacker = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecoratorW(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .attack(5)
                 .armor(5)

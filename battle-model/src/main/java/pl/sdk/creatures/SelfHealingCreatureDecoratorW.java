@@ -6,17 +6,17 @@ import pl.sdk.hero.Fraction;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
-class ShootingCreatureDecorator extends Creature {
+class SelfHealingCreatureDecoratorW extends Creature {
+    private Creature decorated;
+    private double selfHealingPercentage;
 
-    private final Creature decorated;
-
-    ShootingCreatureDecorator(Creature aDecorated) {
+    SelfHealingCreatureDecoratorW(Creature aDecorated) {
         decorated = aDecorated;
     }
 
-    @Override
-    public List<Weakness> getWeaknesses() {
-        return decorated.getWeaknesses();
+    SelfHealingCreatureDecoratorW(Creature aDecorated, double aSelfHealingPercentage) {
+        this(aDecorated);
+        selfHealingPercentage = aSelfHealingPercentage;
     }
 
     @Override
@@ -30,23 +30,55 @@ class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
+    public List<Weakness> getWeaknesses() {
+        return decorated.getWeaknesses();
+    }
+
+    @Override
     public int getAttack() {
         return decorated.getAttack();
     }
 
     @Override
-    public double getMoveRange() {
-        return decorated.getMoveRange();
+    protected void performAfterAttack(int aDamageToChange) {
+        decorated.applyDamage((int) (-aDamageToChange * selfHealingPercentage));
     }
 
     @Override
-    public int getMaxAttacksInTurn() {
-        return decorated.getMaxAttacksInTurn();
+    public int getMaxHp() {
+        return decorated.getMaxHp();
     }
 
     @Override
-    void setAttacksInTurn(int aAttacksInTurn) {
-        decorated.setAttacksInTurn(aAttacksInTurn);
+    void setAmount(int aAmount) {
+        decorated.setAmount(aAmount);
+    }
+
+    @Override
+    public Integer attack(Creature defender) {
+        return decorated.attack(defender);
+    }
+
+    @Override
+    protected void setCurrentHPToMaxHp() {
+        decorated.setCurrentHPToMaxHp();
+    }
+
+    @Override
+    int countDamage(Creature aAttacker, Creature defender) {
+        return decorated.countDamage(aAttacker, defender);
+    }
+
+    @Override
+    protected Integer counterAttack(Creature defender) {
+        if (isAlive() && canCounterAttack()) {
+            int damageToDealInCounterAttack = countDamage(this, defender);
+            defender.applyDamage(damageToDealInCounterAttack);
+            performAfterAttack(damageToDealInCounterAttack);
+            setIfWasCounterAttackInThisTurn(true);
+            return damageToDealInCounterAttack;
+        }
+        return null;
     }
 
     @Override
@@ -76,44 +108,20 @@ class ShootingCreatureDecorator extends Creature {
 
     @Override
     public Integer meleeAttack(Creature defender) {
-        return decorated.meleeAttack(defender);
-    }
-
-    @Override
-    void setAmount(int aAmount) {
-        decorated.setAmount(aAmount);
-    }
-
-    @Override
-    public int getMaxHp() {
-        return decorated.getMaxHp();
-    }
-
-    @Override
-    public Integer attack(Creature defender) {
         if (decorated == defender) throw new IllegalArgumentException();
         if (decorated.isAlive()) {
             int damageToDeal = countDamage(decorated, defender);
             defender.applyDamage(damageToDeal);
             performAfterAttack(damageToDeal);
+            defender.counterAttack(this);
             return damageToDeal;
         }
         return null;
     }
 
     @Override
-    int countDamage(Creature aAttacker, Creature defender) {
-        return decorated.countDamage(aAttacker, defender);
-    }
-
-    @Override
-    protected Integer counterAttack(Creature defender) {
-        return decorated.counterAttack(defender);
-    }
-
-    @Override
-    protected void performAfterAttack(int aDamageToChange) {
-        decorated.performAfterAttack(aDamageToChange);
+    public boolean[][] getSplashDamage() {
+        return decorated.getSplashDamage();
     }
 
     @Override
@@ -122,14 +130,18 @@ class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
-    public boolean[][] getSplashDamage() {
-
-        return decorated.getSplashDamage();
+    public boolean isAlive() {
+        return decorated.isAlive();
     }
 
     @Override
-    public boolean isAlive() {
-        return decorated.isAlive();
+    public int getShots() {
+        return decorated.getShots();
+    }
+
+    @Override
+    void setShots(int aShoots) {
+        decorated.setShots(aShoots);
     }
 
     @Override
@@ -148,18 +160,23 @@ class ShootingCreatureDecorator extends Creature {
     }
 
     @Override
-    public int getShots() {
-        return decorated.getShots();
-    }
-
-    @Override
-    void setShots(int aShoots) {
-        decorated.setShots(aShoots);
-    }
-
-    @Override
     void setStats(CreatureStatisticForTests stats) {
         decorated.setStats(stats);
+    }
+
+    @Override
+    public double getMoveRange() {
+        return decorated.getMoveRange();
+    }
+
+    @Override
+    public int getMaxAttacksInTurn() {
+        return decorated.getMaxAttacksInTurn();
+    }
+
+    @Override
+    void setAttacksInTurn(int aAttacksInTurn) {
+        decorated.setAttacksInTurn(aAttacksInTurn);
     }
 
     @Override
@@ -170,11 +187,6 @@ class ShootingCreatureDecorator extends Creature {
     @Override
     public boolean canCounterAttack() {
         return decorated.canCounterAttack();
-    }
-
-    @Override
-    protected void setCurrentHPToMaxHp() {
-        decorated.setCurrentHPToMaxHp();
     }
 
     @Override
@@ -194,13 +206,7 @@ class ShootingCreatureDecorator extends Creature {
 
     @Override
     public String getStringOfCurrentHp() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("S:\n" + getShots() + "\n");
-        sb.append(getCurrentHp());
-        sb.append("/");
-        sb.append(getStats().getMaxHp());
-        sb.append("  " + getAmount());
-        return sb.toString();
+        return decorated.getStringOfCurrentHp();
     }
 
     @Override

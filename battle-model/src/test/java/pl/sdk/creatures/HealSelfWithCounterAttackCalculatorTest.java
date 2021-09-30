@@ -29,7 +29,7 @@ public class HealSelfWithCounterAttackCalculatorTest {
                 .damageCalculator(new DefaultDamageCalculator(rand))
                 .amount(10)
                 .build();
-        attacker = new SelfHealingCreatureDecorator(attacker,-0.5);
+        attacker = new SelfHealingCreatureDecoratorW(attacker,-0.5);
         defender = new Creature.BuilderForTesting()
                 .attack(THE_SAME_FOR_BOTH_CREATURES)
                 .armor(THE_SAME_FOR_BOTH_CREATURES)

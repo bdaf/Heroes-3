@@ -85,7 +85,7 @@ public class TravelToIncreaseDamageCreatureTest {
                         .name("Curse")
                         .build(),1);
 
-        Creature curseDefender = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecorator(new Creature.BuilderForTesting()
+        Creature curseDefender = new InfectsWithWeaknessCreatureDecorator(new BlockingCounterAttackCreatureDecoratorW(new Creature.BuilderForTesting()
                 .maxHp(100)
                 .attack(5)
                 .armor(5)
@@ -147,8 +147,8 @@ public class TravelToIncreaseDamageCreatureTest {
 
     }
 
-    private TravelToIncreaseDamageCreatureDecorator getTravelToIncreaseDamageCreature(int aMoveRange) {
-        return new TravelToIncreaseDamageCreatureDecorator(new Creature.BuilderForTesting()
+    private TravelToIncreaseDamageCreatureDecoratorW getTravelToIncreaseDamageCreature(int aMoveRange) {
+        return new TravelToIncreaseDamageCreatureDecoratorW(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .attack(5)
                 .armor(5)

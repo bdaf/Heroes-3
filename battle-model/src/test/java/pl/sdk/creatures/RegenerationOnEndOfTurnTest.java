@@ -16,7 +16,7 @@ public class RegenerationOnEndOfTurnTest {
 
     @Test
     void ShootingCreatureCanAttackEvenWithLargeDistanceAndDefenderShouldRegenerateOnEndOfTurn(){
-        Creature attacker = new ShootingCreatureDecorator(new Creature.BuilderForTesting()
+        Creature attacker = new ShootingCreatureDecoratorW(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .moveRange(BIGGER_THAN_DEFENDERS)
                 .damage(Range.closed(1,1))
