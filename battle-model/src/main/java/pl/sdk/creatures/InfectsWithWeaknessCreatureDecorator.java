@@ -4,6 +4,7 @@ import com.google.common.collect.Range;
 import pl.sdk.hero.Fraction;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,14 +26,17 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
 
     private void infect(Creature defender, Integer aDealtDmg) {
         if (rand.nextDouble() <= weakness.getPercentage()) {
-            for (Weakness w : defender.getWeaknesses()) {
+            ArrayList<Weakness> weaknesses =  new ArrayList<>(defender.getWeaknesses());
+            for (Weakness w : weaknesses) {
                 if (w.equals(weakness)) {
                     w.restartDuration();
+                    defender.setWeaknesses(weaknesses);
                     return;
                 }
             }
             weakness.setWeak(defender, aDealtDmg);
-            defender.getWeaknesses().add(Weakness.copyOf(weakness));
+            weaknesses.add(Weakness.copyOf(weakness));
+            defender.setWeaknesses(weaknesses);
         }
     }
 
@@ -54,6 +58,11 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
     @Override
     public List<Weakness> getWeaknesses() {
         return decorated.getWeaknesses();
+    }
+
+    @Override
+    void setWeaknesses(List<Weakness> aWeaknesses) {
+        decorated.setWeaknesses(aWeaknesses);
     }
 
     @Override

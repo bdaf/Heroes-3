@@ -12,7 +12,7 @@ import static pl.sdk.GameEngine.UPDATE_AFTER_EVERY_TURN;
 
 public class Creature implements PropertyChangeListener {
 
-    private final List<Weakness> weaknesses = new ArrayList<>();
+    private List<Weakness> weaknesses;
     private CalculateDamageStrategy damageCalculator;
     private CreatureStatisticlf stats;
     private int currentHp;
@@ -39,11 +39,15 @@ public class Creature implements PropertyChangeListener {
         this.stats = stats;
         currentHp = stats.getMaxHp();
         shots = stats.getShots();
+        weaknesses = new ArrayList<>();
+    }
 
+    void setWeaknesses(List<Weakness> aWeaknesses) {
+        weaknesses = aWeaknesses;
     }
 
     public List<Weakness> getWeaknesses() {
-        return weaknesses;
+        return List.copyOf(weaknesses);
     }
 
     public Range<Integer> getDamage() {

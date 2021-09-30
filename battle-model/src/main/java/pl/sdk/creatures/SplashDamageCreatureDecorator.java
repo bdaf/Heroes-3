@@ -21,6 +21,11 @@ public class SplashDamageCreatureDecorator extends Creature {
     }
 
     @Override
+    void setWeaknesses(List<Weakness> aWeaknesses) {
+        decorated.setWeaknesses(aWeaknesses);
+    }
+
+    @Override
     public Range<Integer> getDamage() {
         return decorated.getDamage();
     }

@@ -26,6 +26,11 @@ public class TravelToIncreaseDamageCreatureDecoratorW extends Creature {
     }
 
     @Override
+    void setWeaknesses(List<Weakness> aWeaknesses) {
+        decorated.setWeaknesses(aWeaknesses);
+    }
+
+    @Override
     public Range<Integer> getDamage() {
         Range<Integer> range = decorated.getDamage();
         double increase = 1 + traveledPoints * percentageOfAttackIncreasePerPoint;

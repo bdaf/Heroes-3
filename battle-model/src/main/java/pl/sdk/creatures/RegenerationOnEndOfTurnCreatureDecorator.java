@@ -42,6 +42,11 @@ class RegenerationOnEndOfTurnCreatureDecorator extends Creature {
     }
 
     @Override
+    void setWeaknesses(List<Weakness> aWeaknesses) {
+        decorated.setWeaknesses(aWeaknesses);
+    }
+
+    @Override
     public int getMaxAttacksInTurn() {
         return decorated.getMaxAttacksInTurn();
     }

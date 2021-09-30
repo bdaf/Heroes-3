@@ -101,6 +101,7 @@ public class TravelToIncreaseDamageCreatureTest {
         engine.attack(0,0); // curseDefender
 
         assertEquals(999, attacker.getCurrentHp());
+        attacker.getDamage();
         assertEquals(Range.closed(19,19), attacker.getDamage());
         assertEquals(1, attacker.getWeaknesses().size());
 

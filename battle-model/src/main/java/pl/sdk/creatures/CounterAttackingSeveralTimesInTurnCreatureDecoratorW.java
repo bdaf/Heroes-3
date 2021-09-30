@@ -40,6 +40,11 @@ public class CounterAttackingSeveralTimesInTurnCreatureDecoratorW extends Creatu
     }
 
     @Override
+    void setWeaknesses(List<Weakness> aWeaknesses) {
+        decorated.setWeaknesses(aWeaknesses);
+    }
+
+    @Override
     boolean wasCounterAttackInThisTurn() {
         if (counterAttacksInTurn > 0)
             return false;

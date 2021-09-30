@@ -35,6 +35,11 @@ class SelfHealingCreatureDecoratorW extends Creature {
     }
 
     @Override
+    void setWeaknesses(List<Weakness> aWeaknesses) {
+        decorated.setWeaknesses(aWeaknesses);
+    }
+
+    @Override
     public int getAttack() {
         return decorated.getAttack();
     }
