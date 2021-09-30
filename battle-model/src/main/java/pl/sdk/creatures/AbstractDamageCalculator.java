@@ -25,7 +25,8 @@ import java.util.Random;
                 defencePoints = _28; // it is typed like this because when I put this '28' it doesn't work - debugger says: "28*0.025 = 0.7000..1
             damageToDeal = (randedDamage * (1 - (defencePoints * 0.025)));
         }
-        damageToDeal = changeDamageAfter(damageToDeal*aAttacker.getAmount());
+        damageToDeal *= aAttacker.getAmount();
+        if(shouldChangeDamage(aDefender)) damageToDeal = changeDamageAfter(damageToDeal);
         int maxDamageToDeal = (aDefender.getAmount()-1)*aDefender.getMaxHp()+aDefender.getCurrentHp();
         if(damageToDeal>maxDamageToDeal)
             damageToDeal = maxDamageToDeal;
@@ -33,7 +34,11 @@ import java.util.Random;
         return (int) damageToDeal;
     }
 
-    protected double changeDamageAfter(double aDamageToChange) {
+     protected boolean shouldChangeDamage(Creature aDefender) {
+         return false;
+     }
+
+     protected double changeDamageAfter(double aDamageToChange) {
         return aDamageToChange;
     }
 

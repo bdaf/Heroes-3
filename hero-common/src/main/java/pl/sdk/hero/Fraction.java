@@ -2,7 +2,7 @@ package pl.sdk.hero;
 
 public enum Fraction {
 
-    NECROPOLIS, CASTLE, NON_SETTLED;
+    NECROPOLIS, CASTLE, INFERNO, NON_SETTLED;
 
     int points;
 
