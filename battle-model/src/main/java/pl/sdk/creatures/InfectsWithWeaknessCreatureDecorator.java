@@ -63,7 +63,8 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
 
     @Override
     public Integer attack(Creature defender) {
-        int dealtDmg = decorated.attack(defender);
+        Integer dealtDmg = decorated.attack(defender);
+        if(dealtDmg == null) throw new NullPointerException("Method \"attack()\" returns null");
         infect(defender, dealtDmg);
         return dealtDmg;
     }
