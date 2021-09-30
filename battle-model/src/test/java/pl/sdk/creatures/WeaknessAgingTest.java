@@ -43,7 +43,7 @@ public class WeaknessAgingTest {
                 .moveRange(100)
                 .damageCalculator(new DefaultDamageCalculator(randomizer))
                 .damage(Range.closed(1, 2))
-                .amount(60)
+                .amount(120)
                 .build()), weakness, randomizer);
         attacker.setAmount(10);
         defender = new Creature.BuilderForTesting()
@@ -121,6 +121,20 @@ public class WeaknessAgingTest {
 
         assertEquals(3, defender.getAmount());
         assertEquals(41, defender.getCurrentHp());
+    }
+
+    @Test
+    void defenderShouldGetAgingAndHaveCurrentHpEquals30WhenDealtHpIsAboveOneAmountAbout20(){ //
+        attacker.setAmount(120);
+        defender.setAmount(5);
+        engine.move(new Point(BOARD_WIDTH - 2, 0));
+        assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
+        engine.attack(BOARD_WIDTH - 1, 0); // attacker
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(50,defender.getMaxHp());
+        assertEquals(4, defender.getAmount());
+        assertEquals(30, defender.getCurrentHp());
     }
 
 
