@@ -15,8 +15,10 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static pl.sdk.GameEngine.BOARD_WIDTH;
+import static pl.sdk.creatures.Factory.CHANCE_TO_CRITICAL_ATTACK;
+import static pl.sdk.creatures.Factory.INCREASE_FACTOR_OF_CRITICAL_ATTACK;
 
-public class DamageIncreaseAgainstParticularFractionTest {
+public class DamageIncreaseAgainstParticularNameTest {
     private Random randomizer;
     private Creature attacker;
     private Creature devil;
@@ -28,13 +30,16 @@ public class DamageIncreaseAgainstParticularFractionTest {
         randomizer = new Random();
         randomizer = mock(Random.class);
         when(randomizer.nextInt(anyInt())).thenReturn(0);
+        when(randomizer.nextDouble()).thenReturn(0.2);
 
         attacker = new BlockingCounterAttackCreatureDecoratorW(new Creature.BuilderForTesting()
                 .maxHp(1000)
                 .attack(5)
                 .armor(5)
                 .moveRange(100)
-                .damageCalculator(new DamageIncreaseAgainstParticularCreatureNameCalculator("devil", 1.5, randomizer))
+                .damageCalculator(new DamageIncreaseAgainstParticularCreatureNameCalcDecorator(
+                        new DamageIncreaseInRandomChanceCalculator(new DefaultDamageCalculator(randomizer), CHANCE_TO_CRITICAL_ATTACK, INCREASE_FACTOR_OF_CRITICAL_ATTACK),
+                        "devil", 1.5))
                 .damage(Range.closed(10, 12))
                 .amount(10)
                 .build());
@@ -79,6 +84,28 @@ public class DamageIncreaseAgainstParticularFractionTest {
 
         assertEquals(1, archDevil.getCurrentHp());
         assertEquals(1, archDevil.getAmount());
+
+    }
+
+    @Test
+    void angelShouldAttack150PercentOfHisDamageToDevilsAndAgain150PercentOfItBecauseOfCriticalAttack() {
+        when(randomizer.nextDouble()).thenReturn(0.1);
+        engine.move(new Point(BOARD_WIDTH - 2, 0));
+        assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
+        engine.attack(BOARD_WIDTH - 1, 0); // attacker
+
+        assertEquals(75, devil.getCurrentHp());
+        assertEquals(3, devil.getAmount());
+
+        engine.pass(); // devil
+        engine.pass(); // arch devil
+
+        engine.move(new Point(BOARD_WIDTH - 2, 2));
+        assertTrue(engine.canAttack(BOARD_WIDTH - 1, 2));
+        engine.attack(BOARD_WIDTH - 1, 2); // attacker
+
+        assertEquals(0, archDevil.getCurrentHp());
+        assertEquals(0, archDevil.getAmount());
 
     }
 }

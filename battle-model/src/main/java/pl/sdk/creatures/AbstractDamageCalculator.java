@@ -2,17 +2,22 @@ package pl.sdk.creatures;
 
 import java.util.Random;
 
- abstract class AbstractDamageCalculator implements CalculateDamageStrategy {
+abstract class AbstractDamageCalculator implements CalculateDamageStrategy {
     public static final double _28 = 27.9999999;
-    Random rand;
+    protected Random rand;
 
-    AbstractDamageCalculator() { this(new Random()); }
-    AbstractDamageCalculator(Random aRand) { rand = aRand; }
+    AbstractDamageCalculator() {
+        this(new Random());
+    }
+
+    AbstractDamageCalculator(Random aRand) {
+        rand = aRand;
+    }
 
     public int calculateDamage(Creature aAttacker, Creature aDefender) {
         int upper = aAttacker.getDamage().upperEndpoint();
         int lower = aAttacker.getDamage().lowerEndpoint();
-        int randedDamage = rand.nextInt(upper-lower +1) + lower;
+        int randedDamage = rand.nextInt(upper - lower + 1) + lower;
         double damageToDeal;
         if (aAttacker.getAttack() >= aDefender.getArmor()) {
             double attackPoints = aAttacker.getAttack() - aDefender.getArmor();
@@ -26,20 +31,14 @@ import java.util.Random;
             damageToDeal = (randedDamage * (1 - (defencePoints * 0.025)));
         }
         damageToDeal *= aAttacker.getAmount();
-        if(shouldChangeDamage(aDefender)) damageToDeal = changeDamageAfter(damageToDeal);
-        int maxDamageToDeal = (aDefender.getAmount()-1)*aDefender.getMaxHp()+aDefender.getCurrentHp();
-        if(damageToDeal>maxDamageToDeal)
+        int maxDamageToDeal = (aDefender.getAmount() - 1) * aDefender.getMaxHp() + aDefender.getCurrentHp();
+        if (damageToDeal > maxDamageToDeal)
             damageToDeal = maxDamageToDeal;
 
         return (int) damageToDeal;
     }
 
-     protected boolean shouldChangeDamage(Creature aDefender) {
-         return false;
-     }
-
-     protected double changeDamageAfter(double aDamageToChange) {
-        return aDamageToChange;
+    protected Random getRand() {
+        return rand;
     }
-
 }

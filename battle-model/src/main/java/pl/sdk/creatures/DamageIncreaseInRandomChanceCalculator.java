@@ -1,29 +1,24 @@
 package pl.sdk.creatures;
 
-import java.util.Random;
 
 public class DamageIncreaseInRandomChanceCalculator extends AbstractDamageCalculator {
     private final double chanceToIncrease;
     private final double increaseFactor;
+    private AbstractDamageCalculator decorated;
 
-    DamageIncreaseInRandomChanceCalculator(double aChanceToIncrease, double aIncreaseFactor) {
-        this(aChanceToIncrease, aIncreaseFactor, new Random());
-    }
 
-    DamageIncreaseInRandomChanceCalculator(double aChanceToIncrease, double aIncreaseFactor, Random aRand) {
-        super(aRand);
+    DamageIncreaseInRandomChanceCalculator(AbstractDamageCalculator aCalculator, double aChanceToIncrease, double aIncreaseFactor) {
+        decorated = aCalculator;
         chanceToIncrease = aChanceToIncrease;
         increaseFactor = aIncreaseFactor;
     }
 
     @Override
-    protected boolean shouldChangeDamage(Creature aDefender) {
-        return rand.nextDouble()<= chanceToIncrease;
-    }
-
-    @Override
-    protected double changeDamageAfter(double aDamageToChange) {
-        aDamageToChange*= increaseFactor;
+    public int calculateDamage(Creature aAttacker, Creature aDefender) {
+        int aDamageToChange = decorated.calculateDamage(aAttacker, aDefender);
+        if (decorated.getRand().nextDouble() <= chanceToIncrease){
+            aDamageToChange *= increaseFactor;
+        }
         return aDamageToChange;
     }
 }
