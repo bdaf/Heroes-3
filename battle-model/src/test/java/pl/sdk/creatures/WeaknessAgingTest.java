@@ -118,6 +118,21 @@ public class WeaknessAgingTest {
     }
 
     @Test
+    void defenderStackShouldHaveLossOneAndAfterItMaxHpShouldBeHalved(){
+        attacker.setAmount(120);
+        defender.setAmount(2);
+        engine.move(new Point(BOARD_WIDTH - 2, 0));
+        assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
+        engine.attack(BOARD_WIDTH - 1, 0); // attacker
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(50,defender.getMaxHp());
+        assertEquals(30, defender.getCurrentHp());
+        assertEquals(1, defender.getAmount());
+        assertTrue(defender.isAlive());
+    }
+
+    @Test
     void defenderShouldGetAgingAndHaveCurrentHpEquals1WhenDealtHpIsAboveHalfOfMax(){
         attacker.setAmount(60);
         defender.setAmount(5);
