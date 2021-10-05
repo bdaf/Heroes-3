@@ -173,6 +173,11 @@ class ShootingCreatureDecoratorW extends Creature {
     }
 
     @Override
+    void setHpIfNotAlive() {
+        decorated.setHpIfNotAlive();
+    }
+
+    @Override
     public boolean canCounterAttack() {
         return decorated.canCounterAttack();
     }

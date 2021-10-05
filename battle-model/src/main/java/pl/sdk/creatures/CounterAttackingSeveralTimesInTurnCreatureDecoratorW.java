@@ -124,6 +124,11 @@ public class CounterAttackingSeveralTimesInTurnCreatureDecoratorW extends Creatu
     }
 
     @Override
+    void setHpIfNotAlive() {
+        decorated.setHpIfNotAlive();
+    }
+
+    @Override
     public String getName() {
         return decorated.getName();
     }

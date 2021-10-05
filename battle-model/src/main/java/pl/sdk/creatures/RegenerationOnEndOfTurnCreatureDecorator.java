@@ -37,6 +37,11 @@ class RegenerationOnEndOfTurnCreatureDecorator extends Creature {
     }
 
     @Override
+    void setHpIfNotAlive() {
+        decorated.setHpIfNotAlive();
+    }
+
+    @Override
     public List<Weakness> getWeaknesses() {
         return decorated.getWeaknesses();
     }

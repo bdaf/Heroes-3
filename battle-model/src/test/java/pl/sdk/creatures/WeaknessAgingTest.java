@@ -9,8 +9,7 @@ import pl.sdk.Point;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -101,6 +100,21 @@ public class WeaknessAgingTest {
         assertEquals(1, defender.getWeaknesses().size());
         assertEquals(50,defender.getMaxHp());
         assertEquals(40, defender.getCurrentHp());
+    }
+
+    @Test
+    void defenderShouldGetKilledWhenDmgIsGreaterThanDefendersHp(){
+        attacker.setAmount(120);
+        defender.setAmount(1);
+        engine.move(new Point(BOARD_WIDTH - 2, 0));
+        assertTrue(engine.canAttack(BOARD_WIDTH - 1, 0));
+        engine.attack(BOARD_WIDTH - 1, 0); // attacker
+
+        assertEquals(1, defender.getWeaknesses().size());
+        assertEquals(50,defender.getMaxHp());
+        assertEquals(0, defender.getCurrentHp());
+        assertEquals(0, defender.getAmount());
+        assertFalse(defender.isAlive());
     }
 
     @Test

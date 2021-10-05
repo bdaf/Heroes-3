@@ -23,11 +23,12 @@ public class Creature implements PropertyChangeListener {
     private int shots;
     private Team team;
 
+
+
     public enum Team {
         LEFT_TEAM(),
-        RIGHT_TEAM()
+        RIGHT_TEAM();
     }
-
     Creature() {
         this(new CreatureStatisticForTests());
         maxAmount = amount = 1;
@@ -144,12 +145,14 @@ public class Creature implements PropertyChangeListener {
     }
 
     public boolean isAlive() {
-        return currentHp > 0;
+        return currentHp > 0 || amount > 0;
     }
 
     public int getCurrentHp() {
         return currentHp;
     }
+
+    void setHpIfNotAlive() { if(amount <= 0) currentHp = 0; }
 
     public double getMoveRange() {
         return stats.getMoveRange();

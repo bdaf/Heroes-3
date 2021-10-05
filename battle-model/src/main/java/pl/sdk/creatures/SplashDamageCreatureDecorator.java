@@ -126,6 +126,11 @@ public class SplashDamageCreatureDecorator extends Creature {
     }
 
     @Override
+    void setHpIfNotAlive() {
+        decorated.setHpIfNotAlive();
+    }
+
+    @Override
     public String getName() {
         return decorated.getName();
     }

@@ -41,7 +41,6 @@ public class AttackCreatureTest {
     }
 
 
-
     //////////////////////////// AFTER NEW DMG CALCULATOR //////////////////////////////
 
 

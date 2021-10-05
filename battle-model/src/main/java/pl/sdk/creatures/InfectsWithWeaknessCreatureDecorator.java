@@ -41,6 +41,11 @@ public class InfectsWithWeaknessCreatureDecorator extends Creature {
     }
 
     @Override
+    void setHpIfNotAlive() {
+        decorated.setHpIfNotAlive();
+    }
+
+    @Override
     public Range<Integer> getDamage() {
         return decorated.getDamage();
     }

@@ -162,6 +162,11 @@ class BlockingCounterAttackCreatureDecoratorW extends Creature {
     }
 
     @Override
+    void setHpIfNotAlive() {
+        decorated.setHpIfNotAlive();
+    }
+
+    @Override
     public int getMaxAttacksInTurn() {
         return decorated.getMaxAttacksInTurn();
     }
