@@ -32,6 +32,7 @@
             <groupId>pl.sdk</groupId>
             <artifactId>battle-model</artifactId>
             <version>${project.version}</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 

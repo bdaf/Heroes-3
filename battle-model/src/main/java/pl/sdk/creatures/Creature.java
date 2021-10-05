@@ -23,12 +23,11 @@ public class Creature implements PropertyChangeListener {
     private int shots;
     private Team team;
 
-
-
     public enum Team {
         LEFT_TEAM(),
         RIGHT_TEAM();
     }
+
     Creature() {
         this(new CreatureStatisticForTests());
         maxAmount = amount = 1;
@@ -207,7 +206,7 @@ public class Creature implements PropertyChangeListener {
         sb.append(System.lineSeparator());
         sb.append(getCurrentHp());
         sb.append("/");
-        sb.append(stats.getMaxHp());
+        sb.append(getMaxHp());
         return sb.toString();
     }
 
@@ -215,7 +214,7 @@ public class Creature implements PropertyChangeListener {
         StringBuilder sb = new StringBuilder();
         sb.append(getCurrentHp());
         sb.append("/");
-        sb.append(stats.getMaxHp());
+        sb.append(getMaxHp());
         sb.append("  " + getAmount());
         return sb.toString();
     }
