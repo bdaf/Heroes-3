@@ -1,8 +1,8 @@
 # Herociples III
 Heroes III game reconstruction mixed with Disciples III made during going through course of objective programming with good programmers' habits and beyond it.
 <hr>
-<h1> To play the game (version 1.1.0):</h1>
-<h3>1.<a href="https://drive.google.com/file/d/1I-_RTH97gbRdr6-dhgtAXSrg5lcmpb53/view?usp=sharing"> Download</a> zip file.</h3> 
+<h1> To play the game (version 1.1.1):</h1>
+<h3>1.<a href="https://drive.google.com/u/0/uc?export=download&confirm=kpLx&id=1s3lA_I09giyPaSXfBTW0lxJpV_BuCxHD"> Download</a> zip file.</h3> 
 <h3>2. Extract it.</h3> 
 <h3>3. Execute start.bat.</h3> 
 <h3>4. Enjoy the game!</h3> 
