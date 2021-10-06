@@ -32,6 +32,7 @@ public class EconomyStart extends Application {
 
         Scene scene = new Scene(loader.load());
         stage.setTitle("Herociples "+ VERSION);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 
@@ -45,6 +46,7 @@ public class EconomyStart extends Application {
         stage.getIcons().add(new Image("jpg/icon.jpg"));
         Scene scene = new Scene(loader.load());
         stage.setTitle("Herociples "+ VERSION + " - choosing game mode!");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.showAndWait();
         if(modeOfGame == null) {

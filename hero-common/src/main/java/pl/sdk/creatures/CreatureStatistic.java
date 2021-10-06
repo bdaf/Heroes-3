@@ -37,7 +37,7 @@ public enum CreatureStatistic implements CreatureStatisticlf {
     ROYAL_GRIFFIN("RoyalGriffin",9,9,25,8,Range.closed(3,6),3,"Send them right in the middle of the battlefield. Everyone who comes will get some. \nSpecial Abilities: Unlimited retaliations.",true, Fraction.CASTLE),
     CRUSADER("Crusader",12,12,35,8,Range.closed(7,10),4,"Good upgrade, but still lacks speed. Seem undefeatable in large numbers. \nSpecial Abilities: Double attack.",true, Fraction.CASTLE),
     ZEALOT("Zealot",12,10,30,4,Range.closed(10,12),5,"Zealots are skilled enough to use the same magic powers at very close range. Better defence too.  \nSpecial Abilities: None.",true, Fraction.CASTLE,24),
-    CHAMPION("Champion",16,16,100,11,Range.closed(20,25),6,"That's up to 45% extra damage possible! Champions also have better aiming skills. \nSpecial Abilities: +5% damage for each square traveled to creature attacked.",true, Fraction.CASTLE),
+    CHAMPION("Champion",16,16,100,11,Range.closed(20,25),6,"That's up to 55% extra damage possible! Champions also have better aiming skills. \nSpecial Abilities: +5% damage for each square traveled to creature attacked.",true, Fraction.CASTLE),
     ARCHANGEL("Archangel",30,20,250,20,Range.closed(50,50),7,"Best attack, defence and speed in a whole game! He is very fast! Possibly the best creature in the game. \nSpecial Abilities: 150% damage to devils.",true, Fraction.CASTLE);
 
     private final Fraction fraction;

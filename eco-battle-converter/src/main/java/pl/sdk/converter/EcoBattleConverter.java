@@ -33,6 +33,7 @@ public class EcoBattleConverter {
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setTitle("Herociples " + VERSION);
+            stage.setResizable(false);
             stage.getIcons().add(new Image("jpg/icon.jpg"));
             stage.setScene(scene);
             stage.initOwner(aWindow);
